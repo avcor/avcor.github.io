@@ -1,7 +1,11 @@
+import CursorGlow from './components/CursorGlow'
+import Home from './pages/Home'
+
 export default function App() {
   return (
-    <main>
-      <h1>abhishek android</h1>
-    </main>
+    <>
+      <CursorGlow />
+      <Home />
+    </>
   )
 }

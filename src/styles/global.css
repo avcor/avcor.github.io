@@ -1,5 +1,6 @@
-/* Global reset and base styles */
+@import "tailwindcss";
 
+/* ─── Reset ─── */
 *,
 *::before,
 *::after {
@@ -14,13 +15,14 @@ html {
 }
 
 body {
-  background-color: var(--color-bg-base);
+  background-color: #050505;
   color: var(--color-text-primary);
-  font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: none;
 }
 
 #root {
@@ -28,12 +30,8 @@ body {
 }
 
 a {
-  color: var(--color-primary);
+  color: inherit;
   text-decoration: none;
-}
-
-a:hover {
-  color: var(--color-primary-dim);
 }
 
 img,
@@ -43,8 +41,10 @@ svg {
 }
 
 button {
-  cursor: pointer;
+  cursor: none;
   font-family: inherit;
+  background: none;
+  border: none;
 }
 
 ul,
