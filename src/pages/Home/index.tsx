@@ -17,10 +17,13 @@ function fadeUp(delay: number, duration = 0.9) {
 
 // ─── Headline lines ──────────────────────────────────────────────────────────
 
-const headline = [
+const headlinePrimary = [
   'The best engineered',
   'products are the ones',
   'users never notice',
+]
+
+const headlineSecondary = [
   'because they never',
   'get in the way.',
 ]
@@ -93,19 +96,33 @@ export default function Home() {
               fontWeight: 300,
               letterSpacing: '-0.028em',
               lineHeight: 1.06,
-              color: '#e6edf3',
               marginBottom: 32,
               maxWidth: '52vw',
             }}
           >
-            {headline.map((line, i) => (
+            {headlinePrimary.map((line, i) => (
               <motion.span
                 key={line}
                 className="block"
-                style={{ fontSize: 'clamp(2.8rem, 5.2vw, 5rem)' }}
+                style={{ fontSize: 'clamp(2.8rem, 5.2vw, 5rem)', color: '#e6edf3' }}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.55 + i * 0.1, ease }}
+              >
+                {line}
+              </motion.span>
+            ))}
+            {headlineSecondary.map((line, i) => (
+              <motion.span
+                key={line}
+                className="block"
+                style={{
+                  fontSize: 'clamp(1.4rem, 2.8vw, 2.8rem)',
+                  color: 'rgba(230, 237, 243, 0.4)',
+                }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.85 + i * 0.1, ease }}
               >
                 {line}
               </motion.span>
