@@ -30,14 +30,14 @@ export default function CursorGlow() {
           translateX: '-50%',
           translateY: '-50%',
           zIndex: 20,
-          width: 600,
-          height: 600,
+          width: 380,
+          height: 380,
           borderRadius: '50%',
           background: `radial-gradient(
             circle,
-            rgba(74,222,128,0.22) 0%,
-            rgba(74,222,128,0.10) 30%,
-            rgba(74,222,128,0.04) 55%,
+            rgba(74,222,128,0.38) 0%,
+            rgba(74,222,128,0.18) 30%,
+            rgba(74,222,128,0.07) 55%,
             rgba(74,222,128,0)    75%
           )`,
         }}
