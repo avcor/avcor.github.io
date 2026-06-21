@@ -19,9 +19,10 @@ function fadeUp(delay: number, duration = 0.9) {
 
 const headline = [
   'The best engineered',
-  'products are the',
-  'ones users never',
-  'notice.',
+  'products are the ones',
+  'users never notice',
+  'because they never',
+  'get in the way.',
 ]
 
 // ─── Component ───────────────────────────────────────────────────────────────

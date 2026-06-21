@@ -47,8 +47,8 @@ export default function HeroCanvas() {
 
     function draw() {
       // Spring-smooth the cursor position for a calm, unhurried glow
-      smooth.x += (mouse.x - smooth.x) * 0.07
-      smooth.y += (mouse.y - smooth.y) * 0.07
+      smooth.x += (mouse.x - smooth.x) * 0.18
+      smooth.y += (mouse.y - smooth.y) * 0.18
 
       ctx.clearRect(0, 0, W, H)
 
@@ -56,7 +56,7 @@ export default function HeroCanvas() {
 
       // ── Layer 1: ghost name — always present at ~4% ──────────────────────
       ctx.save()
-      ctx.globalAlpha = 0.04
+      ctx.globalAlpha = 0.022
       ctx.fillStyle   = '#ffffff'
       ctx.textAlign   = 'right'
       ctx.font        = font
@@ -64,21 +64,7 @@ export default function HeroCanvas() {
       ctx.fillText('VERMA',    textX, textY + lineH)
       ctx.restore()
 
-      // ── Layer 2: green atmospheric glow following cursor ─────────────────
-      if (hasMouse) {
-        const glow = ctx.createRadialGradient(
-          smooth.x, smooth.y, 0,
-          smooth.x, smooth.y, 440,
-        )
-        glow.addColorStop(0,    'rgba(61,220,132,0.13)')
-        glow.addColorStop(0.35, 'rgba(61,220,132,0.06)')
-        glow.addColorStop(0.7,  'rgba(61,220,132,0)')
-        glow.addColorStop(1,    'rgba(61,220,132,0)')
-        ctx.fillStyle = glow
-        ctx.fillRect(0, 0, W, H)
-      }
-
-      // ── Layer 3: cursor-reveal — name brightens inside the glow ─────────
+      // ── Layer 2: cursor-reveal — name brightens under the CSS glow ──────
       //    Technique: draw a soft radial gradient as a luminance mask on the
       //    off-screen canvas, then composite the brighter name into that shape.
       if (hasMouse) {
@@ -98,7 +84,7 @@ export default function HeroCanvas() {
 
         // Step B — paint the bright name, clipped to that mask shape
         rCtx.globalCompositeOperation = 'source-in'
-        rCtx.fillStyle = 'rgba(255,255,255,0.32)'
+        rCtx.fillStyle = 'rgba(255,255,255,0.52)'
         rCtx.font      = font
         rCtx.textAlign = 'right'
         rCtx.fillText('ABHISHEK', textX, textY)
