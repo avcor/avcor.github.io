@@ -39,20 +39,8 @@ export default function Home() {
       {/* ── Particle canvas — full viewport, behind content ─────────────── */}
       <HeroCanvas />
 
-      {/* ── Left-edge canvas fade ────────────────────────────────────────── */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-          zIndex: 2,
-          background:
-            'linear-gradient(to right, #050505 0%, #050505 28%, rgba(5,5,5,0.7) 42%, transparent 62%)',
-        }}
-      />
 
-      {/* ── Content layer ────────────────────────────────────────────────── */}
+{/* ── Content layer ────────────────────────────────────────────────── */}
       <div
         style={{
           position: 'absolute',
