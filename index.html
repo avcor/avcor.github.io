@@ -1,13 +1,99 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>app</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An interactive work index by AV." />
+  <title>AV — Work Index</title>
+  <style>
+    :root { --green:#5ec77a; --bg:#05080a; --text:#edf2ee; --muted:#929b94; --line:rgba(132,173,144,.18); }
+    * { box-sizing:border-box; } html,body { height:100%; margin:0; background:var(--bg); }
+    body { overflow:hidden; color:var(--text); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    canvas { position:fixed; inset:0; display:block; outline:none; }
+    .chrome { position:fixed; inset:0; pointer-events:none; transition:opacity .35s ease; }
+    .chrome.is-dim { opacity:.18; }
+    header { position:absolute; top:0; left:0; right:0; height:58px; display:flex; align-items:center; justify-content:space-between; padding:0 28px; border-bottom:1px solid rgba(255,255,255,.035); }
+    .monogram { color:#c6d0c8; font-size:10px; font-weight:800; letter-spacing:-.08em; }
+    nav { display:flex; align-items:center; gap:13px; } nav a { color:#89938c; font-size:10px; text-decoration:none; pointer-events:auto; } nav a.active { color:var(--text); border-bottom:1px solid var(--green); padding-bottom:3px; } .nav-dot { color:var(--green); font-size:8px; }
+    .intro { position:absolute; top:18%; left:clamp(24px,3vw,52px); width:250px; }
+    .eyebrow { display:flex; align-items:center; gap:10px; color:var(--green); font-size:9px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
+    .eyebrow i { width:7px; height:7px; display:block; border-radius:50%; background:var(--green); box-shadow:0 0 10px rgba(94,199,122,.65); }
+    h1 { margin:17px 0 13px; font-size:clamp(38px,4.1vw,61px); line-height:.98; font-weight:500; letter-spacing:-.06em; }
+    .intro p { margin:0; color:var(--muted); font-size:12px; line-height:1.5; }
+    .explore { position:absolute; left:clamp(24px,3vw,52px); bottom:29px; display:flex; align-items:center; gap:12px; color:#929b94; font-size:10px; pointer-events:auto; }
+    .back-button { width:25px; height:25px; border:1px solid rgba(94,199,122,.55); background:rgba(6,14,9,.7); color:var(--green); font-size:15px; cursor:pointer; transition:background .2s ease; } .back-button:hover,.back-button:focus-visible { background:rgba(94,199,122,.16); outline:2px solid var(--green); outline-offset:2px; }
+    #labels { position:fixed; inset:0; pointer-events:none; }
+    .planet-label { position:absolute; max-width:145px; pointer-events:auto; cursor:pointer; color:var(--text); background:transparent; border:0; padding:5px; text-align:left; font-family:inherit; transform:translate(7px,-50%); transition:transform .18s ease,opacity .25s ease; }
+    .planet-label:hover,.planet-label:focus-visible,.planet-label.hot { transform:translate(7px,-50%) scale(1.08); outline:none; } .planet-label:focus-visible { box-shadow:0 0 0 1px var(--green); }
+    .label-num { display:block; margin-bottom:3px; color:var(--green); font-size:11px; font-weight:700; } .label-title { display:block; color:#dde3de; font-size:14px; font-weight:500; line-height:1.08; letter-spacing:-.02em; }
+    .planet-label small { display:block; max-height:0; overflow:hidden; color:#9ba59e; font-size:9px; line-height:1.35; opacity:0; transition:max-height .2s ease,opacity .2s ease; } .planet-label.hot small { max-height:34px; margin-top:5px; opacity:1; }
+    .case-study { position:fixed; right:clamp(18px,5vw,75px); top:50%; width:min(360px,calc(100vw - 36px)); padding:28px; transform:translateY(-45%); opacity:0; pointer-events:none; background:rgba(8,14,10,.88); border:1px solid rgba(94,199,122,.42); box-shadow:0 20px 65px rgba(0,0,0,.48), inset 0 0 30px rgba(94,199,122,.04); transition:opacity .35s ease,transform .35s cubic-bezier(.2,.8,.2,1); }
+    .case-study.visible { opacity:1; pointer-events:auto; transform:translateY(-50%); } .case-num { color:var(--green); font-size:11px; font-weight:700; letter-spacing:.1em; } .case-study h2 { margin:10px 0 13px; font-size:28px; line-height:1.02; letter-spacing:-.05em; font-weight:500; } .case-study p { margin:0; color:#b8c1ba; font-size:12px; line-height:1.55; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:22px; } .tag { color:#a2dfb2; border:1px solid rgba(94,199,122,.38); padding:4px 6px; font-size:9px; } .close { position:absolute; top:12px; right:12px; border:0; background:none; color:#a7b1a9; font-size:20px; cursor:pointer; } .close:focus-visible { outline:1px solid var(--green); }
+    @media (max-width:700px) { header{padding:0 18px;} nav{gap:7px;} nav a{font-size:9px;} .intro{top:84px;left:22px;width:190px;} h1{font-size:38px;} .intro p{font-size:10px;} .planet-label{max-width:95px; transform:translate(3px,-50%) scale(.82); transform-origin:left center;} .planet-label:hover,.planet-label:focus-visible,.planet-label.hot{transform:translate(3px,-50%) scale(.9);} .label-title{font-size:12px;} .case-study{top:auto;bottom:20px;right:18px;transform:translateY(14px);padding:22px;} .case-study.visible{transform:translateY(0);} }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;} }
+  </style>
+</head>
+<body>
+  <div class="chrome" id="chrome">
+    <header><span class="monogram">AV</span><nav aria-label="Primary"><a class="active" href="#work">Work</a><span class="nav-dot">•</span><a href="#about">About</a><span class="nav-dot">•</span><a href="#writing">Writing</a><span class="nav-dot">•</span><a href="#contact">Contact</a></nav></header>
+    <section class="intro"><div class="eyebrow"><i></i><span>03</span><span>Work Index</span></div><h1>Explore my<br>work.</h1><p>Hover a planet to preview.<br>Click to jump to case study.</p></section>
+    <div class="explore"><button class="back-button" id="back" aria-label="Return to work overview">←</button><span>Use mouse to explore</span></div>
+  </div>
+  <div id="labels" aria-label="Projects"></div>
+  <aside class="case-study" id="case-study" aria-live="polite" aria-label="Project case study"><button class="close" id="close" aria-label="Close case study">×</button><div class="case-num" id="case-num"></div><h2 id="case-title"></h2><p id="case-detail"></p><div class="tags" id="case-tags"></div></aside>
+  <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const data = [
+      ['01','Attendance Verification','On-device liveness verification that rejects static photos and replayed video to stop proxy attendance, making check-ins trustworthy.',['Liveness','Security','Computer Vision']],
+      ['02','Flutter Integration','Pre-warmed the Flutter engine and cached the first frame so screens render near-instantly, cutting cold-start from ~4s to instant.',['Flutter','Performance','Cold Start']],
+      ['03','Legacy Modernization','Refactored 100+ files off deprecated APIs, dropped unmaintained libraries, and moved the project onto a modern, maintainable Android stack.',['Refactor','Android','Migration']],
+      ['04','Payments Redesign','Reworked the payments flow for clarity and reliability — fewer steps, clearer states, and resilient handling of failures and retries.',['Payments','UX','Reliability']],
+      ['05','Multi-Tenant Switching','Isolated session handling so users switch between roles and tenants instantly, with no data leakage and no re-login required.',['Multi-Tenant','Auth','Sessions']],
+      ['06','Medical Charts Optimization','Optimized data aggregation and chart rendering to handle 9000+ points smoothly, dropping render time from ~5s to under 2s.',['Charts','Performance','Rendering']]
+    ].map(([number,title,detail,tags],i)=>({number,title,detail,tags,radius:3.15+i*1.04,scale:.28+(i%3)*.055,angle:[2.8,.7,5.25,1.1,3.7,4.25][i],speed:.16-i*.014}));
+    const scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,100), renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+    renderer.setPixelRatio(Math.min(devicePixelRatio,1.5)); renderer.setSize(innerWidth,innerHeight); renderer.setClearColor(0x05080a,1); renderer.domElement.setAttribute('aria-label','Interactive solar system project map'); document.body.prepend(renderer.domElement);
+    camera.position.set(0,6.7,16.5); const home=new THREE.Vector3(0,6.7,16.5), look=new THREE.Vector3();
+    const controls=new OrbitControls(camera,renderer.domElement); controls.target.set(0,0,0); controls.enableDamping=true; controls.dampingFactor=.055; controls.enablePan=false; controls.minDistance=8; controls.maxDistance=25; controls.minPolarAngle=.42; controls.maxPolarAngle=1.48;
+    scene.add(new THREE.HemisphereLight(0x78da92,0x020403,.55)); const point=new THREE.PointLight(0x6cff91,13,18,2); scene.add(point);
+    const sun=new THREE.Mesh(new THREE.SphereGeometry(.39,32,32),new THREE.MeshBasicMaterial({color:0x8aff9e})); scene.add(sun);
+    const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTexture(),color:0x5ec77a,transparent:true,opacity:.72,blending:THREE.AdditiveBlending,depthWrite:false})); halo.scale.set(3.2,3.2,1); scene.add(halo);
+    function glowTexture(){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d'),g=x.createRadialGradient(64,64,1,64,64,64);g.addColorStop(0,'rgba(170,255,183,1)');g.addColorStop(.15,'rgba(94,199,122,.8)');g.addColorStop(1,'rgba(94,199,122,0)');x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c)}
+    const stars=new THREE.BufferGeometry(), starPos=[], starCount=innerWidth<700?1200:3500; for(let i=0;i<starCount;i++){starPos.push((Math.random()-.5)*32,(Math.random()-.5)*18,(Math.random()-.5)*16-5)} stars.setAttribute('position',new THREE.Float32BufferAttribute(starPos,3)); scene.add(new THREE.Points(stars,new THREE.PointsMaterial({color:0x8fb39a,size:.012,transparent:true,opacity:.35})));
+    const planets=[], raycaster=new THREE.Raycaster(), pointer=new THREE.Vector2(), labels=document.querySelector('#labels');
+    function planetTexture(base, accent) { const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d'); canvas.width=canvas.height=512; ctx.fillStyle=base;ctx.fillRect(0,0,512,512);
+      for(let y=-16;y<528;y+=12+Math.random()*18){const h=6+Math.random()*22,shade=Math.random()>.48?accent:'rgba(0,0,0,.62)';ctx.beginPath();ctx.moveTo(0,y);for(let x=0;x<=512;x+=24)ctx.lineTo(x,y+Math.sin(x*.031+y*.11)*10+(Math.random()-.5)*10);ctx.lineTo(512,y+h);for(let x=512;x>=0;x-=24)ctx.lineTo(x,y+h+Math.sin(x*.031+y*.11)*10);ctx.closePath();ctx.globalAlpha=.2+Math.random()*.3;ctx.fillStyle=shade;ctx.fill()}
+      for(let i=0;i<64;i++){const x=Math.random()*512,y=Math.random()*512,rx=12+Math.random()*68,ry=4+Math.random()*22,g=ctx.createRadialGradient(x,y,2,x,y,rx);g.addColorStop(0,'rgba(225,255,230,.32)');g.addColorStop(.4,accent);g.addColorStop(1,'rgba(0,0,0,0)');ctx.save();ctx.translate(x,y);ctx.scale(1,ry/rx);ctx.fillStyle=g;ctx.globalAlpha=.26;ctx.beginPath();ctx.arc(0,0,rx,0,Math.PI*2);ctx.fill();ctx.restore()}
+      for(let i=0;i<44;i++){const x=Math.random()*512,y=Math.random()*512,r=3+Math.random()*19;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle='rgba(0,0,0,.55)';ctx.globalAlpha=.55;ctx.fill()}ctx.globalAlpha=1; const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.wrapS=texture.wrapT=THREE.RepeatWrapping;return texture; }
+    const atmosphereVertex='varying vec3 vNormal; void main(){vNormal=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}';
+    const atmosphereFragment='uniform vec3 glow; varying vec3 vNormal; void main(){float edge=pow(1.0-abs(vNormal.z),2.4);gl_FragColor=vec4(glow,edge*.34);}';
+    data.forEach((item,i)=>{
+      const points=[]; for(let j=0;j<=72;j++){const a=j/72*Math.PI*2;points.push(new THREE.Vector3(Math.cos(a)*item.radius,0,Math.sin(a)*item.radius*.52));} const orbit=new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),new THREE.LineBasicMaterial({color:0x4d7657,transparent:true,opacity:.24})); orbit.rotation.x=.18; scene.add(orbit);
+      const planetColors=[0x10271d,0x16311f,0x0d2925,0x293016,0x112a2d,0x20331c];
+      const planetGlow=[0x2e9b5a,0x62a84a,0x258d82,0x9a9f35,0x2a9cac,0x6aa34a];
+      const surface=planetTexture('#'+planetColors[i].toString(16).padStart(6,'0'),'#'+planetGlow[i].toString(16).padStart(6,'0'));
+      const mesh=new THREE.Mesh(new THREE.SphereGeometry(item.scale,36,36),new THREE.MeshStandardMaterial({map:surface,bumpMap:surface,bumpScale:.16,color:0xffffff,roughness:.62,metalness:.1,emissive:planetGlow[i],emissiveIntensity:.32}));
+      const atmosphere=new THREE.Mesh(new THREE.SphereGeometry(item.scale*1.16,24,24),new THREE.ShaderMaterial({uniforms:{glow:{value:new THREE.Color(planetGlow[i])}},vertexShader:atmosphereVertex,fragmentShader:atmosphereFragment,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending})); mesh.add(atmosphere); mesh.userData={item,orbit}; scene.add(mesh); planets.push(mesh);
+      const label=document.createElement('button'); label.className='planet-label'; label.innerHTML=`<span class="label-num">${item.number}</span><span class="label-title">${item.title}</span>`; label.setAttribute('aria-label',`${item.number}: ${item.title}. Open case study`); label.addEventListener('click',()=>focusPlanet(mesh)); label.addEventListener('mouseenter',()=>setHover(mesh)); label.addEventListener('mouseleave',()=>setHover(null)); label.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focusPlanet(mesh)}}); labels.append(label); mesh.userData.label=label;
+    });
+    let hovered=null, focused=null, focusedTarget=null, returning=false;
+    function setHover(mesh){if(hovered===mesh)return;if(hovered){hovered.scale.setScalar(1);hovered.material.emissiveIntensity=.32;hovered.userData.label.classList.remove('hot')} hovered=mesh; if(mesh){mesh.scale.setScalar(1.18);mesh.material.emissiveIntensity=1.5;mesh.userData.label.classList.add('hot');renderer.domElement.style.cursor='pointer'}else renderer.domElement.style.cursor='default'}
+    function focusPlanet(mesh){focused=mesh;focusedTarget=mesh.position.clone();returning=false;controls.enabled=false; document.querySelector('#chrome').classList.add('is-dim');document.querySelector('#case-study').classList.add('visible'); const d=mesh.userData.item;document.querySelector('#case-num').textContent=d.number+' / WORK INDEX';document.querySelector('#case-title').textContent=d.title;document.querySelector('#case-detail').textContent=d.detail;document.querySelector('#case-tags').innerHTML=d.tags.map(t=>`<span class="tag">${t}</span>`).join('');}
+    function reset(){focused=null;focusedTarget=null;returning=true;controls.enabled=false;document.querySelector('#chrome').classList.remove('is-dim');document.querySelector('#case-study').classList.remove('visible');setHover(null)} document.querySelector('#back').onclick=reset;document.querySelector('#close').onclick=reset;
+    addEventListener('pointermove',e=>{pointer.x=e.clientX/innerWidth*2-1;pointer.y=-(e.clientY/innerHeight)*2+1}); renderer.domElement.addEventListener('click',e=>{const clickPoint=new THREE.Vector2(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);raycaster.setFromCamera(clickPoint,camera);const hit=raycaster.intersectObjects(planets)[0]?.object;if(hit)focusPlanet(hit)});
+    addEventListener('keydown',e=>{if(e.key==='Escape')reset();const n=Number(e.key);if(n>0&&n<=6)focusPlanet(planets[n-1])});
+    function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)} addEventListener('resize',resize);
+    const clock=new THREE.Clock(); const temp=new THREE.Vector3();
+    function animate(){requestAnimationFrame(animate);const delta=Math.min(clock.getDelta(),.05),t=clock.getElapsedTime(); sun.scale.setScalar(1+Math.sin(t*2)*.04);halo.scale.setScalar(3.2+Math.sin(t*2)*.1); if(!focused&&!reduced)data.forEach(d=>d.angle+=d.speed*delta*2.1);
+      data.forEach((d,i)=>{const m=planets[i],a=d.angle; m.position.set(Math.cos(a)*d.radius,Math.sin(.18)*Math.sin(a)*d.radius*.12,Math.sin(a)*d.radius*.52);m.rotation.y+=delta*.16;});
+      if(!focused&&!returning){controls.update();raycaster.setFromCamera(pointer,camera);setHover(raycaster.intersectObjects(planets)[0]?.object||null)} else if(focused) {const desired=focused.position.clone().normalize().multiplyScalar(2.2).add(focused.position);desired.y+=.65;camera.position.lerp(desired,reduced?1:.07);look.lerp(focused.position,reduced?1:.09);camera.lookAt(look)} else {camera.position.lerp(home,reduced?1:.06);look.lerp(new THREE.Vector3(),reduced?1:.08);camera.lookAt(look);if(camera.position.distanceTo(home)<.08){returning=false;controls.target.set(0,0,0);controls.enabled=true;controls.update()}}
+      scene.updateMatrixWorld(); data.forEach((d,i)=>{const m=planets[i],p=m.getWorldPosition(temp).clone().project(camera);m.userData.label.style.left=`${(p.x*.5+.5)*innerWidth}px`;m.userData.label.style.top=`${(-p.y*.5+.5)*innerHeight}px`;m.userData.label.style.display=p.z>1?'none':'block';}); renderer.render(scene,camera)} animate();
+  </script>
+</body>
 </html>
