@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact at a Glance — Portfolio Section</title>
+<style>
+  :root {
+    --color-bg-base: #08100b;
+    --color-bg-surface: #0c1610;
+    --color-accent: #5ec77a;
+    --color-accent-dim: #3f9a5c;
+    --color-accent-faint: rgba(94, 199, 122, 0.12);
+    --color-text-primary: #f2f5f3;
+    --color-text-secondary: #9aa79f;
+    --color-text-muted: #6b7770;
+    --color-border: rgba(94, 199, 122, 0.18);
+    --color-border-hairline: rgba(255, 255, 255, 0.07);
+    --color-accent-2: #6fb8ff;
+    --glass-bg: linear-gradient(155deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02) 45%, rgba(94, 199, 122, 0.05));
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --glass-highlight: rgba(255, 255, 255, 0.14);
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  /* ---------- Layout shell ---------- */
+
+  .page {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- Nav ---------- */
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0;
+  }
+
+  .nav-logo {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--color-text-primary);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  .nav-links a {
+    padding: 4px 2px;
+    color: var(--color-text-secondary);
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    color: var(--color-text-primary);
+  }
+
+  .nav-links a[aria-current="page"] {
+    color: var(--color-text-primary);
+  }
+
+  .nav-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex: none;
+  }
+
+  .nav a:focus-visible,
+  .skip-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- Impact section ---------- */
+
+  .impact {
+    padding: 56px 0 96px;
+  }
+
+  .impact-layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+  }
+
+  .impact-layout::before,
+  .impact-layout::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(70px);
+    z-index: 0;
+  }
+
+  .impact-layout::before {
+    width: 380px;
+    height: 380px;
+    top: -80px;
+    right: 8%;
+    background: rgba(94, 199, 122, 0.3);
+  }
+
+  .impact-layout::after {
+    width: 320px;
+    height: 320px;
+    bottom: -100px;
+    right: 22%;
+    background: rgba(111, 184, 255, 0.18);
+  }
+
+  .impact-intro {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 10px 1px var(--color-accent-dim);
+    flex: none;
+  }
+
+  .impact-heading {
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+    max-width: 18ch;
+  }
+
+  .impact-heading .accent {
+    color: var(--color-accent);
+  }
+
+  .impact-sub {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    max-width: 34ch;
+  }
+
+  .scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  .scroll-hint-tick {
+    width: 1px;
+    height: 26px;
+    background: linear-gradient(to bottom, var(--color-accent), transparent);
+    flex: none;
+  }
+
+  /* ---------- Card grid ---------- */
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-slot {
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .card-slot:hover {
+    transform: translateY(-6px);
+  }
+
+  /* perspective wrapper — entrance transform lives here */
+  .card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    perspective: 1200px;
+    border-radius: 20px;
+    box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.35);
+    will-change: transform, opacity;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    border-radius: 20px;
+  }
+
+  .card.is-flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 20px;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      inset 0 1px 0 var(--glass-highlight),
+      inset 0 0 32px rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+  }
+
+  .card-face::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -25%;
+    width: 65%;
+    height: 200%;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.12), transparent 65%);
+    transform: rotate(8deg);
+    pointer-events: none;
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 22px 22px 20px;
+  }
+
+  /* ---------- Glow edge ---------- */
+
+  .card-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    pointer-events: none;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    z-index: 2;
+  }
+
+  .card:hover .card-glow,
+  .card:focus-within .card-glow {
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+      0 0 0 1px var(--color-accent-faint),
+      0 0 32px 4px rgba(94, 199, 122, 0.2),
+      0 0 56px 12px rgba(111, 184, 255, 0.12),
+      inset 0 0 20px rgba(94, 199, 122, 0.06);
+  }
+
+  .card-inner:focus-visible {
+    outline: none;
+  }
+
+  .card-inner:focus-visible ~ .card-glow,
+  .card:focus-within .card-glow {
+    border-color: var(--color-accent-dim);
+    box-shadow:
+      0 0 0 1px var(--color-accent-faint),
+      0 0 32px 4px rgba(94, 199, 122, 0.26);
+  }
+
+  .card-sheen {
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.16),
+      rgba(94, 199, 122, 0.14) 45%,
+      transparent 70%
+    );
+    z-index: 1;
+  }
+
+  .card:hover .card-sheen {
+    opacity: 1;
+  }
+
+  /* ---------- Card content ---------- */
+
+  .card-metric {
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.1;
+    text-shadow: 0 0 18px rgba(94, 199, 122, 0.35);
+  }
+
+  .card-metric .arrow {
+    color: var(--color-text-muted);
+    font-weight: 400;
+    font-size: 0.7em;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .card-back .card-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .card-desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+    list-style: none;
+  }
+
+  .card-tag {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--color-accent);
+    background: linear-gradient(135deg, rgba(94, 199, 122, 0.18), rgba(94, 199, 122, 0.05));
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    padding: 3px 10px;
+    backdrop-filter: blur(6px);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* ---------- Entrance: deck-shuffle ---------- */
+
+  .card {
+    opacity: 0;
+    transform:
+      translate(var(--deck-x, 0), var(--deck-y, 0))
+      rotate(var(--deck-r, 0deg))
+      scale(0.82);
+    transition:
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.45s ease-out;
+  }
+
+  .card-grid.is-dealt .card {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+
+  .card-grid.is-dealt .card {
+    transition-delay: var(--deal-delay, 0ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card {
+      transform: none !important;
+      transition: opacity 0.5s ease-out !important;
+    }
+    .card-inner {
+      transition: opacity 0.25s ease-out !important;
+    }
+    .card.is-flipped .card-inner {
+      transform: none;
+    }
+    .card-back {
+      transform: none;
+    }
+    .card-face {
+      transition: opacity 0.25s ease-out;
+    }
+    .card:not(.is-flipped) .card-back {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .card.is-flipped .card-front {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .card-slot:hover {
+      transform: none;
+    }
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (min-width: 860px) {
+    .impact-layout {
+      grid-template-columns: minmax(280px, 35%) 1fr;
+      align-items: start;
+    }
+    .impact-intro {
+      min-height: 380px;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 859px) {
+    .card-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .page {
+      padding: 0 20px;
+    }
+    .nav {
+      flex-wrap: wrap;
+      row-gap: 8px;
+    }
+    .nav-links {
+      gap: 6px;
+      font-size: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .card-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .impact-layout::before,
+    .impact-layout::after {
+      opacity: 0.5;
+    }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link sr-only" href="#impact-grid">Skip to impact metrics</a>
+
+<div class="page">
+  <nav class="nav" aria-label="Primary">
+    <a class="nav-logo" href="#">AV</a>
+    <div class="nav-links">
+      <a href="#work" aria-current="page">Work</a>
+      <span class="nav-dot" aria-hidden="true"></span>
+      <a href="#about">About</a>
+      <span class="nav-dot" aria-hidden="true"></span>
+      <a href="#writing">Writing</a>
+      <span class="nav-dot" aria-hidden="true"></span>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="impact" aria-labelledby="impact-heading">
+    <div class="impact-layout">
+      <div class="impact-intro">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>02&nbsp;&nbsp;Impact at a glance</p>
+          <h2 class="impact-heading" id="impact-heading">
+            Engineering decisions that drive <span class="accent">real impact.</span>
+          </h2>
+          <p class="impact-sub">Metrics that reflect performance, productivity and trust at scale.</p>
+        </div>
+        <p class="scroll-hint"><span class="scroll-hint-tick" aria-hidden="true"></span>Scroll to explore work</p>
+      </div>
+
+      <div class="card-grid" id="impact-grid" role="list" aria-label="Impact metrics">
+        <!-- cards injected by JS -->
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CARDS = [
+    {
+      metricParts: ["4s", "Instant"],
+      title: "Flutter Engine Startup",
+      desc: "Pre-warmed the Flutter engine and cached the first frame so screens render with no perceptible delay, cutting cold-start from ~4s to near-instant.",
+      tags: ["Flutter", "Engine Warmup", "Cold Start"]
+    },
+    {
+      metricParts: ["90m", "18m"],
+      title: "CI/CD Pipeline",
+      desc: "Parallelized build stages, added Gradle/dependency caching, and streamlined deploy to Firebase App Distribution — an 80% faster pipeline.",
+      tags: ["CI/CD", "Gradle", "Firebase"]
+    },
+    {
+      metric: "100+",
+      title: "Files Modernized",
+      desc: "Refactored 100+ files off deprecated APIs, dropped unmaintained libraries, and moved the project onto a modern, maintainable Android stack.",
+      tags: ["Refactor", "Android", "Migration"]
+    },
+    {
+      metric: "Fraud Prevented",
+      title: "Attendance Verification",
+      desc: "Added on-device liveness checks that reject static photos and replayed video, stopping proxy attendance and making check-ins trustworthy.",
+      tags: ["Liveness", "Security", "CV"]
+    },
+    {
+      metric: "20%",
+      title: "Faster Development",
+      desc: "Standardized on Kotlin, Coroutines, Flow and Jetpack, reducing boilerplate and review cycles — about 20% faster feature delivery.",
+      tags: ["Kotlin", "Coroutines", "Jetpack"]
+    },
+    {
+      metric: "15%",
+      title: "Reduced UI Testing Time",
+      desc: "Cleaner architecture and predictable state management made UI flows easier to test, trimming test cycle time by ~15%.",
+      tags: ["Testing", "Architecture", "State"]
+    },
+    {
+      metric: "Seamless",
+      title: "Multi-Tenant Switching",
+      desc: "Built isolated session handling so users switch between roles and tenants instantly, with no data leakage and no re-login.",
+      tags: ["Multi-Tenant", "Auth", "Sessions"]
+    },
+    {
+      metric: "9000+",
+      title: "Data Points Processed",
+      desc: "Reworked data aggregation and chart rendering to handle 9000+ points smoothly, dropping render time from ~5s to under 2s.",
+      tags: ["Charts", "Performance", "Rendering"]
+    },
+    {
+      metric: "Offline",
+      title: "Reliable Data Sync",
+      desc: "Queued writes locally and synced via WorkManager with retry/backoff, guaranteeing zero data loss even when the device is offline.",
+      tags: ["WorkManager", "Offline", "Sync"]
+    }
+  ];
+
+  var grid = document.getElementById("impact-grid");
+
+  function renderMetric(card) {
+    if (card.metricParts) {
+      return (
+        card.metricParts[0] +
+        ' <span class="arrow" aria-hidden="true">&rarr;</span> ' +
+        card.metricParts[1]
+      );
+    }
+    return card.metric;
+  }
+
+  function metricPlainText(card) {
+    return card.metricParts ? card.metricParts.join(" to ") : card.metric;
+  }
+
+  function buildCard(card, index) {
+    var slot = document.createElement("div");
+    slot.className = "card-slot";
+    slot.setAttribute("role", "listitem");
+
+    var outer = document.createElement("div");
+    outer.className = "card";
+
+    var inner = document.createElement("div");
+    inner.className = "card-inner";
+    inner.setAttribute("tabindex", "0");
+    inner.setAttribute("role", "button");
+    inner.setAttribute("aria-pressed", "false");
+    inner.setAttribute(
+      "aria-label",
+      metricPlainText(card) + " — " + card.title + ". Activate to read details."
+    );
+
+    var front = document.createElement("div");
+    front.className = "card-face card-front";
+    front.setAttribute("aria-hidden", "false");
+    front.innerHTML =
+      '<p class="card-metric">' + renderMetric(card) + "</p>" +
+      '<p class="card-title">' + card.title + "</p>";
+
+    var back = document.createElement("div");
+    back.className = "card-face card-back";
+    back.setAttribute("aria-hidden", "true");
+
+    var tagsHtml = card.tags
+      .map(function (tag) {
+        return '<li class="card-tag">' + tag + "</li>";
+      })
+      .join("");
+
+    back.innerHTML =
+      '<p class="card-title">' + card.title + "</p>" +
+      '<p class="card-desc">' + card.desc + "</p>" +
+      '<ul class="card-tags">' + tagsHtml + "</ul>";
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+
+    var glow = document.createElement("div");
+    glow.className = "card-glow";
+    glow.setAttribute("aria-hidden", "true");
+
+    var sheen = document.createElement("div");
+    sheen.className = "card-sheen";
+    sheen.setAttribute("aria-hidden", "true");
+
+    outer.appendChild(inner);
+    outer.appendChild(glow);
+    outer.appendChild(sheen);
+    slot.appendChild(outer);
+
+    // ---- deck-shuffle entrance: random pre-deal pose + stagger ----
+    var randRot = (Math.random() * 16 - 8).toFixed(2);
+    var randX = (Math.random() * 10 - 5).toFixed(1);
+    var randY = (Math.random() * 10 - 5).toFixed(1);
+    outer.style.setProperty("--deck-r", randRot + "deg");
+    outer.style.setProperty("--deck-x", randX + "px");
+    outer.style.setProperty("--deck-y", randY + "px");
+    outer.style.setProperty("--deal-delay", index * 70 + "ms");
+
+    // ---- flip behavior ----
+    function setFlipped(flipped) {
+      outer.classList.toggle("is-flipped", flipped);
+      inner.setAttribute("aria-pressed", String(flipped));
+      front.setAttribute("aria-hidden", String(flipped));
+      back.setAttribute("aria-hidden", String(!flipped));
+    }
+
+    inner.addEventListener("click", function () {
+      setFlipped(!outer.classList.contains("is-flipped"));
+    });
+
+    inner.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        setFlipped(!outer.classList.contains("is-flipped"));
+      }
+    });
+
+    // ---- pointer-tracking sheen ----
+    outer.addEventListener("pointermove", function (e) {
+      var rect = outer.getBoundingClientRect();
+      var x = ((e.clientX - rect.left) / rect.width) * 100;
+      var y = ((e.clientY - rect.top) / rect.height) * 100;
+      sheen.style.setProperty("--mx", x + "%");
+      sheen.style.setProperty("--my", y + "%");
+    });
+
+    return slot;
+  }
+
+  CARDS.forEach(function (card, index) {
+    grid.appendChild(buildCard(card, index));
+  });
+
+  // ---- trigger deck-shuffle entrance once, after mount ----
+  var prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (prefersReducedMotion) {
+    grid.classList.add("is-dealt");
+  } else {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        grid.classList.add("is-dealt");
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
