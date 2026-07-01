@@ -33,6 +33,7 @@ const headlineSecondary = [
 export default function Home() {
   return (
     <main
+      id="hero-section"
       style={{
         position: 'relative',
         height: '100svh',
