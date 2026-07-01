@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  background-color: #050505;
+  background-color: var(--color-bg-base);
   color: var(--color-text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;

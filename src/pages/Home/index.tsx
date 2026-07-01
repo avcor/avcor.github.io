@@ -37,7 +37,7 @@ export default function Home() {
         position: 'relative',
         height: '100svh',
         overflow: 'hidden',
-        background: '#050505',
+        background: '#050608',
       }}
     >
       {/* ── Particle canvas — full viewport, behind content ─────────────── */}

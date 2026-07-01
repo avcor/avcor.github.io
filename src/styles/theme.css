@@ -1,39 +1,42 @@
 /* ============================================================
-   ACTIVE PALETTE: Android Green (Dark)
+   ACTIVE PALETTE: Neon Green (Dark)
    To swap palettes: replace the values below with a palette
    from src/styles/palettes/ — nothing else needs to change.
    ============================================================ */
 
 :root {
   /* Backgrounds */
-  --color-bg-base:        #0d1117;
-  --color-bg-surface:     #161b22;
-  --color-bg-elevated:    #1c2128;
-  --color-bg-subtle:      #21262d;
+  --color-bg-base:        #050608;   /* Page background */
+  --color-bg-surface:     #0B0E11;   /* Cards, panels */
+  --color-bg-elevated:    #0f1318;   /* Modals, dropdowns */
+  --color-bg-subtle:      #141920;   /* Hover states, dividers */
 
   /* Brand / Primary */
-  --color-primary:        #3ddc84;
-  --color-primary-dim:    #2ea86a;
-  --color-primary-faint:  #1a3d2e;
+  --color-primary:        #5BFF6A;   /* Primary accent */
+  --color-primary-dim:    #2ECC71;   /* Dark green glow / pressed state */
+  --color-primary-faint:  #0a1f0d;   /* Subtle tint backgrounds */
 
   /* Text */
   --color-text-primary:   #e6edf3;
-  --color-text-secondary: #8b949e;
-  --color-text-disabled:  #484f58;
-  --color-text-inverse:   #0d1117;
+  --color-text-secondary: #63D471;   /* Muted green labels */
+  --color-text-disabled:  #2a3530;
+  --color-text-inverse:   #050608;
 
   /* Borders */
-  --color-border:         #30363d;
-  --color-border-muted:   #21262d;
+  --color-border:         #1A1F24;
+  --color-border-muted:   #141920;
 
   /* Semantic */
-  --color-success:        #3ddc84;
+  --color-success:        #5BFF6A;
   --color-warning:        #e3b341;
   --color-error:          #f85149;
   --color-info:           #58a6ff;
 
+  /* Glow */
+  --color-glow:           #7DFF8A;   /* Hover/glow accent */
+
   /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.7);
 }

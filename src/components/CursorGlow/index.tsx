@@ -38,10 +38,10 @@ export default function CursorGlow() {
         borderRadius: '50%',
         background: `radial-gradient(
           circle,
-          rgba(74,222,128,0.38) 0%,
-          rgba(74,222,128,0.18) 30%,
-          rgba(74,222,128,0.07) 55%,
-          rgba(74,222,128,0)    75%
+          rgba(91,255,106,0.32) 0%,
+          rgba(46,204,113,0.16) 35%,
+          rgba(46,204,113,0.06) 60%,
+          rgba(46,204,113,0)    78%
         )`,
       }}
     />
