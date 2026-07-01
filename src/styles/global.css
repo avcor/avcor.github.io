@@ -22,7 +22,6 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: none;
 }
 
 #root {
@@ -41,7 +40,6 @@ svg {
 }
 
 button {
-  cursor: none;
   font-family: inherit;
   background: none;
   border: none;
