@@ -95,10 +95,6 @@ const stats = [
   { icon: CalendarDays, value: '5+', label: 'Years of Engineering' },
 ]
 
-// ─── Concentric ring sizes ────────────────────────────────────────────────────
-
-const RINGS = [360, 270, 180, 90]
-
 // ─── Nav links ────────────────────────────────────────────────────────────────
 
 const NAV = ['Work', 'About', 'Writing', 'Contact']
@@ -215,38 +211,49 @@ export default function ImpactPage() {
             paddingBottom: 4,
           }}
         >
-          {/* Concentric glow rings */}
-          <div
+          {/* Central radial glow + concentric rings */}
+          <motion.div
+            animate={{ opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               position: 'absolute',
-              top: '44%',
+              top: '42%',
               left: '40%',
               transform: 'translate(-50%, -50%)',
               pointerEvents: 'none',
               zIndex: 0,
             }}
           >
-            <motion.div
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              {RINGS.map((size) => (
-                <div
-                  key={size}
-                  style={{
-                    position: 'absolute',
-                    width: size,
-                    height: size,
-                    borderRadius: '50%',
-                    border: '1px solid rgba(91,255,106,0.1)',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                  }}
-                />
-              ))}
-            </motion.div>
-          </div>
+            {/* Soft glow blob at center */}
+            <div
+              style={{
+                position: 'absolute',
+                width: 320,
+                height: 320,
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(91,255,106,0.12) 0%, rgba(91,255,106,0.04) 45%, transparent 70%)',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
+            {/* Concentric ring outlines */}
+            {[360, 270, 180, 90].map((size) => (
+              <div
+                key={size}
+                style={{
+                  position: 'absolute',
+                  width: size,
+                  height: size,
+                  borderRadius: '50%',
+                  border: '1px solid rgba(91,255,106,0.1)',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }}
+              />
+            ))}
+          </motion.div>
 
           {/* ── Top text block ── */}
           <div style={{ position: 'relative', zIndex: 1, paddingTop: 2 }}>
@@ -434,7 +441,7 @@ export default function ImpactPage() {
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
             gridTemplateRows: 'repeat(3, 1fr)',
-            gap: '14px',
+            gap: '10px',
             minHeight: 0,
           }}
         >
