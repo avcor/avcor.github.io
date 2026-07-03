@@ -440,7 +440,7 @@ export default function ImpactPage() {
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
             gridTemplateRows: 'repeat(3, 1fr)',
-            gap: '10px',
+            gap: '15px',
             minHeight: 0,
           }}
         >

@@ -72,7 +72,7 @@ export default function MetricCard({
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <GlassBadge icon={Icon} size={52} color="#4ADE80" />
 
-          <div style={{ fontSize: '1.45rem', fontWeight: 600, lineHeight: 1.2, minWidth: 0, flexShrink: 1 }}>
+          <div style={{ fontSize: '1.75rem', fontWeight: 600, lineHeight: 1.2, minWidth: 0, flexShrink: 1 }}>
             {metricPrefix && (
               <span style={{ color: '#FFFFFF', fontWeight: 500, marginRight: '0.25em' }}>
                 {metricPrefix}
@@ -83,12 +83,12 @@ export default function MetricCard({
         </div>
 
         {/* ── Title ── */}
-        <div style={{ fontSize: '1.1rem', fontWeight: 600, color: '#FFFFFF', lineHeight: 1.3 }}>
+        <div style={{ fontSize: '1.25rem', fontWeight: 600, color: '#FFFFFF', lineHeight: 1.3 }}>
           {title}
         </div>
 
         {/* ── Description ── */}
-        <div style={{ fontSize: '0.95rem', fontWeight: 400, color: '#82888B', lineHeight: 1.4 }}>
+        <div style={{ fontSize: '1.05rem', fontWeight: 400, color: '#82888B', lineHeight: 1.4 }}>
           {description}
         </div>
       </div>
