@@ -494,7 +494,7 @@ export default function ImpactPage() {
             <div>
               <div
                 style={{
-                  fontSize: '0.82rem',
+                  fontSize: '1.3rem',
                   fontWeight: 600,
                   color: '#5BFF6A',
                   marginBottom: 4,
@@ -505,9 +505,9 @@ export default function ImpactPage() {
               </div>
               <div
                 style={{
-                  fontSize: '0.7rem',
-                  color: 'rgba(255,255,255,0.35)',
-                  lineHeight: 1.55,
+                  fontSize: '0.8rem',
+                  color: '#82888B',
+                  lineHeight: 1.5,
                   maxWidth: 420,
                 }}
               >
@@ -542,14 +542,14 @@ export default function ImpactPage() {
                     }}
                   />
                 )}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <StatIcon size={18} color="rgba(255,255,255,0.3)" strokeWidth={1.5} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 16px' }}>
+                  <StatIcon size={30} color="#82888B" strokeWidth={1.5} />
                   <div>
                     <div
                       style={{
-                        fontSize: '1.1rem',
-                        fontWeight: 600,
-                        color: '#FFFFFF',
+                        fontSize: '1.6rem',
+                        fontWeight: 500,
+                        color: '#5BFF6A',
                         lineHeight: 1,
                         letterSpacing: '-0.02em',
                       }}
@@ -558,8 +558,8 @@ export default function ImpactPage() {
                     </div>
                     <div
                       style={{
-                        fontSize: '0.62rem',
-                        color: 'rgba(255,255,255,0.3)',
+                        fontSize: '0.85rem',
+                        color: '#82888B',
                         marginTop: 3,
                         whiteSpace: 'nowrap',
                       }}
