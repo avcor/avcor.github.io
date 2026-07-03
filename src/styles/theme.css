@@ -35,6 +35,9 @@
   /* Glow */
   --color-glow:           #7DFF8A;   /* Hover/glow accent */
 
+  /* Typography — change this one line to test a different font family */
+  --font-primary: 'Google Sans Flex', 'Inter', sans-serif;
+
   /* Shadows */
   --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.5);
   --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.6);

@@ -111,8 +111,7 @@ export default function ImpactPage() {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        fontFamily:
-          "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
+        fontFamily: 'var(--font-primary)',
       }}
     >
       {/* ══ Navigation ══════════════════════════════════════════════════════ */}
