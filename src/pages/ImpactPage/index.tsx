@@ -459,7 +459,7 @@ export default function ImpactPage() {
       </div>
 
       {/* ══ Bottom stats bar ════════════════════════════════════════════════ */}
-      <div style={{ padding: '12px 48px 20px', flexShrink: 0 }}>
+      <div style={{ padding: '18px 48px 20px', flexShrink: 0 }}>
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
