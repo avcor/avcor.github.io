@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import type { LucideIcon } from 'lucide-react'
+import styles from './GlassBadge.module.css'
 
 interface GlassBadgeProps {
   icon: LucideIcon
@@ -12,7 +13,7 @@ interface GlassBadgeProps {
  * outer gradient ring + inner ring + radial glow + top-left specular highlight.
  * The Lucide icon is overlaid in the centre via HTML so it stays crisp.
  */
-export default function GlassBadge({ icon: Icon, size = 52, color = '#4ADE80' }: GlassBadgeProps) {
+export default function GlassBadge({ icon: Icon, size = 52, color = 'var(--color-primary)' }: GlassBadgeProps) {
   const uid = useId().replace(/:/g, '')
 
   const ids = {
@@ -29,14 +30,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = '#4ADE80' }:
   const innerR  = 46
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: size,
-        height: size,
-        flexShrink: 0,
-      }}
-    >
+    <div className={styles.container} style={{ width: size, height: size }}>
       {/* SVG layer — rings, glow, glass background */}
       <svg
         width={size}
@@ -44,7 +38,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = '#4ADE80' }:
         viewBox="0 0 120 120"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ position: 'absolute', inset: 0 }}
+        className={styles.svg}
       >
         <defs>
           <radialGradient id={ids.bgGlow} cx="50%" cy="50%" r="50%">
@@ -89,7 +83,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = '#4ADE80' }:
         />
 
         {/* Dark glass fill */}
-        <circle cx={C} cy={C} r={outerR} fill="#050d07" fillOpacity="0.93" />
+        <circle cx={C} cy={C} r={outerR} className={styles.glassFill} fillOpacity="0.93" />
 
         {/* Outer ring — gradient stroke + glow */}
         <circle
@@ -117,15 +111,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = '#4ADE80' }:
       </svg>
 
       {/* Lucide icon — centred on top of the SVG layer */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+      <div className={styles.iconLayer}>
         <Icon
           size={Math.round(size * 0.38)}
           color={color}

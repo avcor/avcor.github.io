@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import Nav from '../../components/Nav'
 import ScrollIndicator from '../../components/ScrollIndicator'
 import HeroCanvas from '../../components/HeroCanvas'
+import styles from './Home.module.css'
 
 // ─── Animation presets ───────────────────────────────────────────────────────
 
@@ -32,81 +33,27 @@ const headlineSecondary = [
 
 export default function Home() {
   return (
-    <main
-      id="hero-section"
-      style={{
-        position: 'relative',
-        height: '100svh',
-        overflow: 'hidden',
-        background: '#050608',
-        fontFamily: 'var(--font-primary)',
-      }}
-    >
-      {/* ── Particle canvas — full viewport, behind content ─────────────── */}
+    <main id="hero-section" className={styles.page}>
+      {/* ── Particle canvas — full viewport, behind content ── */}
       <HeroCanvas />
 
-
-{/* ── Content layer ────────────────────────────────────────────────── */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 10,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      {/* ── Content layer ── */}
+      <div className={styles.contentLayer}>
         {/* Header */}
-        <header
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '36px 48px 0',
-          }}
-        >
-          {/* AV logo */}
+        <header className={styles.header}>
           <motion.div {...fadeUp(0.1, 0.7)}>
-            <span
-              style={{
-                fontSize: '0.9rem',
-                fontWeight: 500,
-                letterSpacing: '0.05em',
-                color: 'rgba(230, 237, 243, 0.85)',
-              }}
-            >
-              AV
-            </span>
+            <span className={styles.logo}>AV</span>
           </motion.div>
-
           <Nav />
         </header>
 
         {/* Hero text */}
-        <section
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            padding: '0 48px',
-          }}
-        >
-          {/* Headline */}
-          <h1
-            style={{
-              fontWeight: 300,
-              letterSpacing: '-0.028em',
-              lineHeight: 1.06,
-              marginBottom: 32,
-              maxWidth: '52vw',
-            }}
-          >
+        <section className={styles.heroSection}>
+          <h1 className={styles.headline}>
             {headlinePrimary.map((line, i) => (
               <motion.span
                 key={line}
-                className="block"
-                style={{ fontSize: 'clamp(2.8rem, 5.2vw, 5rem)', color: '#e6edf3', fontWeight: 700 }}
+                className={styles.headlinePrimary}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.55 + i * 0.1, ease }}
@@ -117,11 +64,7 @@ export default function Home() {
             {headlineSecondary.map((line, i) => (
               <motion.span
                 key={line}
-                className="block"
-                style={{
-                  fontSize: 'clamp(1.4rem, 2.8vw, 2.8rem)',
-                  color: 'rgba(230, 237, 243, 0.4)',
-                }}
+                className={styles.headlineSecondary}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.85 + i * 0.1, ease }}
@@ -131,25 +74,12 @@ export default function Home() {
             ))}
           </h1>
 
-          {/* Supporting text */}
-          <motion.p
-            {...fadeUp(1.05)}
-            style={{
-              fontSize: '0.9rem',
-              lineHeight: 1.7,
-              color: 'rgba(139, 148, 158, 0.6)',
-              fontWeight: 300,
-              letterSpacing: '0.01em',
-              maxWidth: 360,
-              marginBottom: 40,
-            }}
-          >
+          <motion.p {...fadeUp(1.05)} className={styles.subtext}>
             I build digital experiences that disappear
             <br />
             behind what truly matters.
           </motion.p>
 
-          {/* Scroll indicator */}
           <ScrollIndicator />
         </section>
       </div>

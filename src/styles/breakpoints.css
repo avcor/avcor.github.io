@@ -1,0 +1,10 @@
+/* src/styles/breakpoints.css
+   Define all breakpoints here — never scatter magic numbers across components. */
+
+:root {
+  --bp-sm:  640px;   /* Large phones, landscape */
+  --bp-md:  768px;   /* Tablets */
+  --bp-lg:  1024px;  /* Small desktops / laptops */
+  --bp-xl:  1280px;  /* Standard desktop */
+  --bp-2xl: 1536px;  /* Large screens */
+}
