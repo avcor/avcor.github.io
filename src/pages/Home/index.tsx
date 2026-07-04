@@ -33,11 +33,13 @@ const headlineSecondary = [
 export default function Home() {
   return (
     <main
+      id="hero-section"
       style={{
         position: 'relative',
         height: '100svh',
         overflow: 'hidden',
-        background: '#050505',
+        background: '#050608',
+        fontFamily: 'var(--font-primary)',
       }}
     >
       {/* ── Particle canvas — full viewport, behind content ─────────────── */}
@@ -104,7 +106,7 @@ export default function Home() {
               <motion.span
                 key={line}
                 className="block"
-                style={{ fontSize: 'clamp(2.8rem, 5.2vw, 5rem)', color: '#e6edf3' }}
+                style={{ fontSize: 'clamp(2.8rem, 5.2vw, 5rem)', color: '#e6edf3', fontWeight: 700 }}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.55 + i * 0.1, ease }}
