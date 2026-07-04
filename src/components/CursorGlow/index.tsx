@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
+import styles from './CursorGlow.module.css'
 
 // Fade-out starts this many px before the first-page boundary
 const FADE_ZONE = 160
@@ -51,24 +52,13 @@ export default function CursorGlow() {
 
   return (
     <motion.div
-      className="pointer-events-none fixed"
+      className={styles.glow}
       style={{
         x: glowX,
         y: glowY,
         opacity: glowOpacity,
         translateX: '-50%',
         translateY: '-50%',
-        zIndex: 20,
-        width: 380,
-        height: 380,
-        borderRadius: '50%',
-        background: `radial-gradient(
-          circle,
-          rgba(91,255,106,0.32) 0%,
-          rgba(46,204,113,0.16) 35%,
-          rgba(46,204,113,0.06) 60%,
-          rgba(46,204,113,0)    78%
-        )`,
       }}
     />
   )

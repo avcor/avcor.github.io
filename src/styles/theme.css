@@ -42,4 +42,56 @@
   --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.5);
   --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.6);
   --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.7);
+
+  /* ── Extended fills ──────────────────────────────────────── */
+  --color-white:              #FFFFFF;
+  --color-bg-card:            #000000;      /* Ultra-dark card inner fill */
+  --color-bg-glass:           #050d07;      /* SVG glass badge dark fill */
+  --color-bg-stats:           rgba(10, 13, 16, 0.95);  /* Frosted stats panel */
+  --color-text-muted:         #82888B;      /* Muted description text */
+
+  /* text-primary at opacity */
+  --color-text-primary-a38:   rgba(230, 237, 243, 0.38);
+  --color-text-primary-a40:   rgba(230, 237, 243, 0.40);
+  --color-text-primary-a85:   rgba(230, 237, 243, 0.85);
+
+  /* text-secondary at opacity */
+  --color-text-secondary-a60: rgba(139, 148, 158, 0.60);
+
+  /* White overlays */
+  --color-white-a03:          rgba(255, 255, 255, 0.03);
+  --color-white-a07:          rgba(255, 255, 255, 0.07);
+  --color-white-a08:          rgba(255, 255, 255, 0.08);
+  --color-white-a12:          rgba(255, 255, 255, 0.12);
+  --color-white-a15:          rgba(255, 255, 255, 0.15);
+  --color-white-a22:          rgba(255, 255, 255, 0.22);
+  --color-white-a25:          rgba(255, 255, 255, 0.25);
+  --color-white-a28:          rgba(255, 255, 255, 0.28);
+  --color-white-a40:          rgba(255, 255, 255, 0.40);
+  --color-white-a45:          rgba(255, 255, 255, 0.45);
+
+  /* Primary color at opacity (update with --color-primary when swapping palette) */
+  --color-primary-a06:        rgba(91, 255, 106, 0.06);
+  --color-primary-a10:        rgba(91, 255, 106, 0.10);
+  --color-primary-a12:        rgba(91, 255, 106, 0.12);
+  --color-primary-a15:        rgba(91, 255, 106, 0.15);
+  --color-primary-a18:        rgba(91, 255, 106, 0.18);
+  --color-primary-a32:        rgba(91, 255, 106, 0.32);
+  --color-primary-a55:        rgba(91, 255, 106, 0.55);
+  --color-primary-a60:        rgba(91, 255, 106, 0.60);
+  --color-primary-a80:        rgba(91, 255, 106, 0.80);
+
+  /* Primary-dim at opacity */
+  --color-primary-dim-a06:    rgba(46, 204, 113, 0.06);
+  --color-primary-dim-a16:    rgba(46, 204, 113, 0.16);
+
+  /* Card gradient border (update with palette primary when swapping) */
+  --color-card-grad-bright:   rgba(160, 255, 210, 0.18);
+  --color-card-grad-mid:      rgba(120, 255, 180, 0.08);
+  --color-card-grad-subtle:   rgba(80,  255, 150, 0.03);
+
+  /* Card inner glow shadows (update with palette primary when swapping) */
+  --color-card-glow-outer:    rgba(110, 255, 170, 0.10);
+  --color-card-glow-top:      rgba(160, 255, 210, 0.08);
+  --color-card-glow-bottom:   rgba(80,  255, 150, 0.025);
 }

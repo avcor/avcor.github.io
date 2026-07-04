@@ -1,0 +1,15 @@
+.glow {
+  position: fixed;
+  z-index: 20;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    var(--color-primary-a32)     0%,
+    var(--color-primary-dim-a16) 35%,
+    var(--color-primary-dim-a06) 60%,
+    transparent                  78%
+  );
+}

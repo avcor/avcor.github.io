@@ -1,0 +1,100 @@
+.container {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.connector {
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: var(--color-white-a08);
+  pointer-events: none;
+}
+
+.dotWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.label {
+  pointer-events: none;
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 0.58rem;
+  font-weight: 500;
+  color: var(--color-white-a40);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+
+.dotWrapper:hover .label {
+  opacity: 1;
+}
+
+.labelActive {
+  color: var(--color-primary-a80);
+}
+
+.dotButton {
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+.dot {
+  border-radius: 50%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dotInactive {
+  width: 5px;
+  height: 5px;
+  background-color: var(--color-white-a25);
+  box-shadow: none;
+}
+
+.dotActive {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-a15), 0 0 10px var(--color-primary-a60);
+}
+
+.pageNum {
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--color-primary-a60);
+  letter-spacing: 0.1em;
+  font-family: 'Inter', sans-serif;
+  pointer-events: none;
+}

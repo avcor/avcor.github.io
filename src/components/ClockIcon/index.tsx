@@ -8,7 +8,7 @@ interface ClockIconProps {
 
 export default function ClockIcon({
   size = 120,
-  color = '#6BFFA2',
+  color = 'var(--color-primary)',
   className,
 }: ClockIconProps) {
   // Unique prefix so multiple instances don't share filter/gradient IDs
@@ -94,7 +94,7 @@ export default function ClockIcon({
       />
 
       {/* ── Dark glass background circle ─────────────────────────────────── */}
-      <circle cx={C} cy={C} r={outerR} fill="#050d07" fillOpacity="0.93" />
+      <circle cx={C} cy={C} r={outerR} fill="var(--color-bg-glass)" fillOpacity="0.93" />
 
       {/* ── Outer ring — gradient stroke + glow ──────────────────────────── */}
       <circle

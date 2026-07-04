@@ -1,0 +1,21 @@
+.container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+}
+
+.glassFill {
+  fill: var(--color-bg-glass);
+}
+
+.iconLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
