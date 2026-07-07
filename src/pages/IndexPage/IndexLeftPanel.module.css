@@ -1,0 +1,127 @@
+.column {
+  width: 34%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+/* ── Top content group ── */
+.topGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 1. Section label ── */
+.label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.labelDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.labelText {
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: var(--color-white-a40);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ── 2. Hero heading ── */
+.heading {
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 0 0 20px;
+}
+
+.headingLine {
+  display: block;
+  font-size: clamp(2.6rem, 4vw, 4.4rem);
+  color: var(--color-white);
+}
+
+.headingLineAccent {
+  display: block;
+  font-size: clamp(2.6rem, 4vw, 4.4rem);
+  color: var(--color-primary);
+}
+
+/* ── 3. Description ── */
+.description {
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--color-white-a45);
+  line-height: 1.7;
+  max-width: 30ch;
+  margin-bottom: 28px;
+}
+
+/* ── 4 & 5. Cards group ── */
+.cardsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── 6. Scroll indicator ── */
+.scrollIndicator {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.scrollCapsule {
+  width: 18px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-white-a22);
+  display: flex;
+  justify-content: center;
+  padding: 7px 0;
+  flex-shrink: 0;
+}
+
+.scrollTrackDot {
+  width: 3px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--color-primary);
+}
+
+.scrollMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.scrollLabel {
+  font-size: 0.63rem;
+  color: var(--color-white-a28);
+  letter-spacing: 0.06em;
+}
+
+.scrollArrow {
+  font-size: 0.68rem;
+  color: var(--color-white-a28);
+  display: inline-block;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .column {
+    width: 100%;
+    padding-bottom: 0;
+  }
+}
