@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { Activity } from 'lucide-react'
 import styles from './IndexImpactCard.module.css'
 
 export default function IndexImpactCard() {
@@ -6,31 +6,15 @@ export default function IndexImpactCard() {
     <div className={styles.card}>
       <div className={styles.inner}>
 
-        {/* Status icon */}
-        <div className={styles.statusRow}>
-          <div className={styles.statusDot}>
-            <motion.div
-              className={styles.statusPulse}
-              animate={{ scale: [1, 2.4, 1], opacity: [0.5, 0, 0.5] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-            />
-          </div>
+        <div className={styles.iconCircle}>
+          <Activity size={16} strokeWidth={1.5} className={styles.icon} />
         </div>
 
-        {/* Body */}
         <p className={styles.body}>
-          Every connection represents<br />
-          a problem solved.<br />
-          <br />
-          Every signal represents<br />
-          <span className={styles.bodyEmphasis}>impact delivered.</span>
+          Every connection represents a problem solved.
+          <br /><br />
+          Every signal represents impact delivered.
         </p>
-
-        {/* Inline action */}
-        <button className={styles.action} type="button">
-          View Impact Overview
-          <span className={styles.arrow}>→</span>
-        </button>
 
       </div>
     </div>
