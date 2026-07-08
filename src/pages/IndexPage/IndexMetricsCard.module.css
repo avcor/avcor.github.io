@@ -1,17 +1,16 @@
 /* ── Card shell ── */
 .card {
-  background: var(--color-white-a08);
   border-radius: 16px;
   padding: 1px;
 }
 
 /* ── Three-column grid ── */
 .grid {
-  background: var(--color-bg-card);
+  background: transparent;
   border-radius: 15px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 0 8px;
+  padding: 0;
   box-shadow:
     inset 0 0 0 1px var(--color-white-a07),
     inset 0 1px 0   var(--color-white-a08);
@@ -27,13 +26,6 @@
   gap: 10px;
   padding: 24px 16px;
   border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.metric:hover {
-  transform: translateY(-3px);
-  background: var(--color-white-a03);
 }
 
 /* ── Icon container (rounded square, outlined) ── */
@@ -45,11 +37,6 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.metric:hover .iconContainer {
-  transform: scale(1.07);
 }
 
 .icon {
@@ -67,11 +54,9 @@
 
 /* ── Label ── */
 .label {
-  font-size: 0.62rem;
-  font-weight: 500;
+  font-size: 1.05rem;
+  font-weight: 400;
   color: var(--color-white-a40);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
 }

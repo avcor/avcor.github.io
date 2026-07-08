@@ -12,8 +12,8 @@ export default function IndexImpactCard() {
 
         <p className={styles.body}>
           Every connection represents a problem solved.
-          <br /><br />
-          Every signal represents impact delivered.
+          <br />
+          Every signal represents <span className={styles.emphasis}>impact delivered.</span>
         </p>
 
       </div>

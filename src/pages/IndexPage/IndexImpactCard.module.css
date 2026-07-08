@@ -1,12 +1,11 @@
 .card {
-  background: var(--color-white-a08);
   border-radius: 16px;
   padding: 1px;
   cursor: default;
 }
 
 .inner {
-  background: var(--color-bg-card);
+  background: transparent;
   border-radius: 15px;
   padding: 18px 20px;
   display: flex;
@@ -36,10 +35,14 @@
 
 /* ── Body text ── */
 .body {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 400;
   color: var(--color-white-a45);
-  line-height: 1.78;
+  line-height: 1.5;
   margin: 0;
-  padding-top: 6px;
+  padding-top: 3px;
+}
+
+.emphasis {
+  color: var(--color-primary);
 }
