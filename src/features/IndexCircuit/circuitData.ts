@@ -23,7 +23,7 @@ export interface CircuitDomain {
 }
 
 export const CIRCUIT_VIEWBOX = '0 0 758 462'
-export const LABEL_LINE_HEIGHT = 9
+export const LABEL_LINE_HEIGHT = 10
 /** Vertical gap between the last label line's baseline and the chip's top edge */
 export const LABEL_CHIP_GAP = 20
 

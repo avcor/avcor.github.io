@@ -60,7 +60,7 @@
 
 /* ── 3. Description ── */
 .description {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 400;
   color: var(--color-white-a45);
   line-height: 1.7;
@@ -72,7 +72,7 @@
 .cardsGroup {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 
 /* ── 6. Scroll indicator ── */
