@@ -1,5 +1,5 @@
 import type { CircuitDomain } from './circuitData'
-import { LABEL_LINE_HEIGHT } from './circuitData'
+import { LABEL_CHIP_GAP, LABEL_LINE_HEIGHT } from './circuitData'
 import styles from './IndexCircuit.module.css'
 
 interface CircuitDomainChipProps {
@@ -7,7 +7,10 @@ interface CircuitDomainChipProps {
 }
 
 export default function CircuitDomainChip({ domain }: CircuitDomainChipProps) {
-  const { rect, label } = domain
+  const { rect, lines } = domain
+  const lastLineY = rect.y - LABEL_CHIP_GAP
+  const firstLineY = lastLineY - (lines.length - 1) * LABEL_LINE_HEIGHT
+
   return (
     <g data-domain={domain.id}>
       <rect
@@ -18,9 +21,9 @@ export default function CircuitDomainChip({ domain }: CircuitDomainChipProps) {
         rx={rect.rx}
         className={styles.stroke}
       />
-      <text className={styles.text}>
-        {domain.lines.map((line, i) => (
-          <tspan key={line} x={label.x} y={label.y + i * LABEL_LINE_HEIGHT}>
+      <text className={`${styles.text} ${styles.textLeft}`}>
+        {lines.map((line, i) => (
+          <tspan key={line} x={rect.x} y={firstLineY + i * LABEL_LINE_HEIGHT}>
             {line}
           </tspan>
         ))}

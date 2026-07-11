@@ -29,6 +29,11 @@
 .text {
   fill: var(--color-text-primary);
   font-family: var(--font-primary);
-  font-size: 6px;
+  font-size: 8px;
   font-weight: var(--font-weight-regular);
+  text-anchor: middle;
+}
+
+.textLeft {
+  text-anchor: start;
 }
