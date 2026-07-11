@@ -75,49 +75,6 @@
   gap: 20px;
 }
 
-/* ── 6. Scroll indicator ── */
-.scrollIndicator {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.scrollCapsule {
-  width: 18px;
-  height: 44px;
-  border-radius: 12px;
-  border: 1.5px solid var(--color-white-a22);
-  display: flex;
-  justify-content: center;
-  padding: 7px 0;
-  flex-shrink: 0;
-}
-
-.scrollTrackDot {
-  width: 3px;
-  height: 10px;
-  border-radius: 3px;
-  background: var(--color-primary);
-}
-
-.scrollMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.scrollLabel {
-  font-size: 0.63rem;
-  color: var(--color-white-a28);
-  letter-spacing: 0.06em;
-}
-
-.scrollArrow {
-  font-size: 0.68rem;
-  color: var(--color-white-a28);
-  display: inline-block;
-}
-
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .column {

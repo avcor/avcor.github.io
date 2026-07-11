@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import ScrollHint from '../../components/ScrollHint'
 import IndexMetricsCard from './IndexMetricsCard'
 import IndexImpactCard from './IndexImpactCard'
 import styles from './IndexLeftPanel.module.css'
@@ -45,30 +46,7 @@ export default function IndexLeftPanel() {
       </div>
 
       {/* 6. Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.8 }}
-        className={styles.scrollIndicator}
-      >
-        <div className={styles.scrollCapsule}>
-          <motion.div
-            className={styles.scrollTrackDot}
-            animate={{ y: [0, 14, 0], opacity: [1, 0.3, 1] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </div>
-        <div className={styles.scrollMeta}>
-          <span className={styles.scrollLabel}>Scroll to explore</span>
-          <motion.span
-            className={styles.scrollArrow}
-            animate={{ y: [0, 3, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            ↓
-          </motion.span>
-        </div>
-      </motion.div>
+      <ScrollHint label="Scroll to explore" />
 
     </div>
   )

@@ -9,6 +9,8 @@
   width: 100%;
   height: auto;
   border-radius: 12px;
+  mask-image: radial-gradient(ellipse 70% 70% at center, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, black 55%, transparent 100%);
 }
 
 .overlay {

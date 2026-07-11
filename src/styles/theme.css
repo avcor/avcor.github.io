@@ -6,7 +6,7 @@
 
 :root {
   /* Backgrounds */
-  --color-bg-base:        #050608;   /* Page background */
+  --color-bg-base:        #000104;   /* Page background */
   --color-bg-surface:     #0B0E11;   /* Cards, panels */
   --color-bg-elevated:    #0f1318;   /* Modals, dropdowns */
   --color-bg-subtle:      #141920;   /* Hover states, dividers */
