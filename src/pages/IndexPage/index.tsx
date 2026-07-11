@@ -1,4 +1,5 @@
 import Nav from '../../components/Nav'
+import IndexCircuit from '../../features/IndexCircuit'
 import IndexLeftPanel from './IndexLeftPanel'
 import styles from './IndexPage.module.css'
 
@@ -12,7 +13,9 @@ export default function IndexPage() {
 
       <div className={styles.content}>
         <IndexLeftPanel />
-        <div className={styles.rightColumn} />
+        <div className={styles.rightColumn}>
+          <IndexCircuit />
+        </div>
       </div>
     </section>
   )

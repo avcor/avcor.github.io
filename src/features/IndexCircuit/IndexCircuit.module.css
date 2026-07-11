@@ -1,0 +1,34 @@
+/* Board = background image + blueprint SVG overlay, 1:1 aligned */
+.board {
+  position: relative;
+  width: 100%;
+}
+
+.background {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Blueprint line work — thin lines only (iteration 1) */
+.stroke {
+  fill: none;
+  stroke: var(--color-white-a40);
+  stroke-width: 1;
+}
+
+/* Blueprint text — sizes are in SVG viewBox units, scale with the board */
+.text {
+  fill: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: 6px;
+  font-weight: var(--font-weight-regular);
+}
