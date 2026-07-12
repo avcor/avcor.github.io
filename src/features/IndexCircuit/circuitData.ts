@@ -12,6 +12,8 @@ export interface CircuitCaseStudy {
   text: { x: number; y: number }
   /** Connector endpoint dot on the pill edge */
   dot: { cx: number; cy: number }
+  /** Optional vertical accent line rendered to the left of the pill, with a gap before it */
+  accentLine?: { x: number; y1: number; y2: number }
 }
 
 export interface CircuitDomain {
@@ -55,6 +57,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M97 242.5H175C178.59 242.5 181.5 245.41 181.5 249V259C181.5 262.59 178.59 265.5 175 265.5H97C93.4101 265.5 90.5 262.59 90.5 259V249C90.5 245.41 93.4101 242.5 97 242.5Z',
     text: { x: 136, y: 254 },
     dot: { cx: 90, cy: 254 },
+    accentLine: { x: 82.5, y1: 242.5, y2: 265.5 },
   },
   {
     id: 'medical-chart-optimization',
@@ -87,6 +90,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M573 259.5H677C680.59 259.5 683.5 262.41 683.5 266V276C683.5 279.59 680.59 282.5 677 282.5H573C569.41 282.5 566.5 279.59 566.5 276V266C566.5 262.41 569.41 259.5 573 259.5Z',
     text: { x: 625, y: 271 },
     dot: { cx: 684, cy: 272 },
+    accentLine: { x: 691.5, y1: 259.5, y2: 282.5 },
   },
   {
     id: 'ecg-background-sync',
@@ -97,6 +101,17 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
     dot: { cx: 640, cy: 398 },
   },
 ]
+
+/**
+ * Horizontal position of the "Android 14 Migration" accent line, as a fraction
+ * of the circuit's viewBox width. Used to align the left-bleed pcb image so it
+ * never renders that pill's label underneath the left panel's text.
+ */
+export const LEFT_BLEED_MARKER_FRACTION = (() => {
+  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'android-14-migration')?.accentLine
+  const viewBoxWidth = Number(CIRCUIT_VIEWBOX.split(' ')[2])
+  return marker ? marker.x / viewBoxWidth : 0
+})()
 
 export const CIRCUIT_DOMAINS: CircuitDomain[] = [
   {

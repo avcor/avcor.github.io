@@ -1,3 +1,4 @@
+import { forwardRef, type CSSProperties } from 'react'
 import CircuitCaseStudyPill from './CircuitCaseStudyPill'
 import CircuitDomainChip from './CircuitDomainChip'
 import {
@@ -9,9 +10,16 @@ import {
 import pcb from '../../assets/pcb.png'
 import styles from './IndexCircuit.module.css'
 
-export default function IndexCircuit() {
+interface IndexCircuitProps {
+  style?: CSSProperties
+}
+
+const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function IndexCircuit(
+  { style },
+  ref,
+) {
   return (
-    <div className={styles.board}>
+    <div className={styles.board} style={style} ref={ref}>
       <img src={pcb} alt="" className={styles.background} />
 
       <svg
@@ -33,4 +41,6 @@ export default function IndexCircuit() {
       </svg>
     </div>
   )
-}
+})
+
+export default IndexCircuit

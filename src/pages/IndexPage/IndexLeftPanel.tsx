@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { motion } from 'framer-motion'
 import ScrollHint from '../../components/ScrollHint'
 import IndexMetricsCard from './IndexMetricsCard'
@@ -14,9 +15,9 @@ function fadeUp(delay: number) {
   }
 }
 
-export default function IndexLeftPanel() {
+const IndexLeftPanel = forwardRef<HTMLDivElement>(function IndexLeftPanel(_props, ref) {
   return (
-    <div className={styles.column}>
+    <div className={styles.column} ref={ref}>
 
       <div className={styles.topGroup}>
 
@@ -50,4 +51,6 @@ export default function IndexLeftPanel() {
 
     </div>
   )
-}
+})
+
+export default IndexLeftPanel

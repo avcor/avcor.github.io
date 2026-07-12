@@ -5,6 +5,8 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  z-index: 2;
+  background: var(--color-bg-base);
   padding-bottom: 4px;
 }
 
