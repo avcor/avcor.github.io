@@ -1,3 +1,6 @@
+import { CloudOff, Gauge, Layers, Package, Rocket, Shield } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+
 /**
  * Geometry extracted 1:1 from the blueprint SVG (Frame 2.svg, viewBox 0 0 758 462).
  * Coordinates are the single source of truth — do not reposition or resize.
@@ -22,6 +25,8 @@ export interface CircuitDomain {
   lines: string[]
   /** Chip region rect, verbatim from the blueprint — label anchors flush-left to rect.x */
   rect: { x: number; y: number; width: number; height: number; rx: number }
+  /** Icon representing the domain, rendered centered inside the chip's rect */
+  icon: LucideIcon
 }
 
 export const CIRCUIT_VIEWBOX = '0 0 758 462'
@@ -130,30 +135,36 @@ export const CIRCUIT_DOMAINS: CircuitDomain[] = [
     id: 'platform-engineering',
     lines: ['01', 'Platform', 'Engineering'],
     rect: { x: 268.5, y: 100.5, width: 40, height: 41, rx: 4.5 },
+    icon: Layers,
   },
   {
     id: 'security-engineering',
     lines: ['02', 'Security', 'Engineering'],
     rect: { x: 431.5, y: 104.5, width: 38, height: 40, rx: 4.5 },
+    icon: Shield,
   },
   {
     id: 'platform-modernization',
     lines: ['03', 'Platform', 'Modernization'],
     rect: { x: 203.5, y: 257.5, width: 37, height: 40, rx: 4.5 },
+    icon: Rocket,
   },
   {
     id: 'product-engineering',
     lines: ['04', 'Product', 'Engineering'],
     rect: { x: 483.5, y: 264.5, width: 38, height: 41, rx: 4.5 },
+    icon: Package,
   },
   {
     id: 'performance-engineering',
     lines: ['05', 'Performance', 'Engineering'],
     rect: { x: 263.5, y: 382.5, width: 41, height: 42, rx: 4.5 },
+    icon: Gauge,
   },
   {
     id: 'offline-first-architecture',
     lines: ['06', 'Offline-first', 'Architecture'],
     rect: { x: 446.5, y: 382.5, width: 40, height: 42, rx: 4.5 },
+    icon: CloudOff,
   },
 ]

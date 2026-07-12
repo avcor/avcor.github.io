@@ -6,8 +6,10 @@ interface CircuitDomainChipProps {
   domain: CircuitDomain
 }
 
+const ICON_SIZE = 18
+
 export default function CircuitDomainChip({ domain }: CircuitDomainChipProps) {
-  const { rect, lines } = domain
+  const { rect, lines, icon: Icon } = domain
   const lastLineY = rect.y - LABEL_CHIP_GAP
   const firstLineY = lastLineY - (lines.length - 1) * LABEL_LINE_HEIGHT
 
@@ -20,6 +22,13 @@ export default function CircuitDomainChip({ domain }: CircuitDomainChipProps) {
         height={rect.height}
         rx={rect.rx}
         className={styles.stroke}
+      />
+      <Icon
+        x={rect.x + (rect.width - ICON_SIZE) / 2}
+        y={rect.y + (rect.height - ICON_SIZE) / 2}
+        width={ICON_SIZE}
+        height={ICON_SIZE}
+        className={styles.chipIcon}
       />
       <text className={`${styles.text} ${styles.textLeft}`}>
         {lines.map((line, i) => (

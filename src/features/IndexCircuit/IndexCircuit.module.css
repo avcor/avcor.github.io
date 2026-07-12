@@ -51,3 +51,10 @@
   fill: var(--color-connector-dot);
   stroke: none;
 }
+
+/* Domain chip icon — matches label text color, bolder than the blueprint line work */
+.chipIcon {
+  fill: none;
+  stroke: var(--color-text-primary);
+  stroke-width: 1.2;
+}
