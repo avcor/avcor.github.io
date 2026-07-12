@@ -1,6 +1,7 @@
 import { forwardRef, useMemo, useState, type CSSProperties } from 'react'
 import CircuitCaseStudyPill from './CircuitCaseStudyPill'
 import CircuitDomainChip from './CircuitDomainChip'
+import CircuitWirePulse from './CircuitWirePulse'
 import {
   CIRCUIT_CASE_STUDIES,
   CIRCUIT_DOMAINS,
@@ -39,12 +40,38 @@ function getHighlightedWireIds(hovered: HoveredNode): Set<string> {
   return new Set(trunkWire ? [leafWire.id, trunkWire.id] : [leafWire.id])
 }
 
+/** Combined path data for the traveling pulse: leaf → domain → center for a
+ *  leaf hover, or every wire touching the domain (trunk first) for a domain
+ *  hover. Only one pulse ever renders at a time since `hovered` is singular. */
+function getPulsePath(hovered: HoveredNode): string | null {
+  if (!hovered) return null
+
+  if (hovered.type === 'domain') {
+    const wires = CIRCUIT_WIRES.filter((wire) => wire.nodeIds.includes(hovered.id)).sort(
+      (a, b) => a.nodeIds.length - b.nodeIds.length,
+    )
+    if (wires.length === 0) return null
+    return wires.map((wire) => wire.d).join(' ')
+  }
+
+  const leafWire = CIRCUIT_WIRES.find((wire) => wire.nodeIds.includes(hovered.id))
+  if (!leafWire) return null
+
+  const domainId = leafWire.nodeIds.find((id) => id !== hovered.id)
+  const trunkWire = CIRCUIT_WIRES.find(
+    (wire) => wire.nodeIds.length === 1 && wire.nodeIds[0] === domainId,
+  )
+
+  return trunkWire ? `${leafWire.d} ${trunkWire.d}` : leafWire.d
+}
+
 const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function IndexCircuit(
   { style },
   ref,
 ) {
   const [hovered, setHovered] = useState<HoveredNode>(null)
   const highlightedWireIds = useMemo(() => getHighlightedWireIds(hovered), [hovered])
+  const pulsePath = useMemo(() => getPulsePath(hovered), [hovered])
 
   const highlightedLeafIds = useMemo(() => {
     const ids = new Set<string>()
@@ -77,6 +104,10 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
             }
           />
         ))}
+
+        {hovered && pulsePath && (
+          <CircuitWirePulse d={pulsePath} pulseKey={`${hovered.type}-${hovered.id}`} />
+        )}
 
         {CIRCUIT_DOMAINS.map((domain) => (
           <CircuitDomainChip
