@@ -41,15 +41,30 @@
   text-anchor: start;
 }
 
+/* Never steals hover from the pill/chip box beneath it */
+.textLeft,
+.text {
+  pointer-events: none;
+}
+
 /* Case study pill labels (leaf nodes) — smaller than domain chip labels */
 .pillText {
   font-size: 7px;
 }
 
-/* Connector dot at each pill's wire edge — solid fill, no outline */
+/* Connector dot at each pill's wire edge — solid fill, glowing */
 .dot {
   fill: var(--color-connector-dot);
   stroke: none;
+  pointer-events: none;
+  filter: drop-shadow(0 0 1.5px var(--color-connector-dot)) drop-shadow(0 0 3px var(--color-connector-dot));
+}
+
+/* Connector dot whose wire is currently highlighted — glows green */
+.dotHighlight {
+  fill: var(--color-primary);
+  filter: drop-shadow(0 0 2px var(--color-primary)) drop-shadow(0 0 4px var(--color-primary));
+  transition: fill 0.15s ease;
 }
 
 /* Domain chip icon — matches label text color, bolder than the blueprint line work */
@@ -57,4 +72,26 @@
   fill: none;
   stroke: var(--color-text-primary);
   stroke-width: 1.2;
+  pointer-events: none;
+  transition: stroke 0.15s ease;
+}
+
+/* Domain chip icon whose wire is currently highlighted — glows green like the connector dots */
+.chipIconHighlight {
+  stroke: var(--color-primary);
+  filter: drop-shadow(0 0 2px var(--color-primary));
+}
+
+/* Wire segment touching a hovered leaf node or chip */
+.wireHighlight {
+  stroke: var(--color-primary);
+  stroke-width: 1.5;
+  transition: stroke 0.15s ease, stroke-width 0.15s ease;
+}
+
+/* Hover targets — pill path and chip rect, hit-tested over their full area
+   (not just the visible outline) so hovering anywhere in the box counts */
+.hoverTarget {
+  cursor: pointer;
+  pointer-events: all;
 }

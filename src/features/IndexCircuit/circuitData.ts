@@ -34,9 +34,91 @@ export const LABEL_LINE_HEIGHT = 10
 /** Vertical gap between the last label line's baseline and the chip's top edge */
 export const LABEL_CHIP_GAP = 20
 
-/** All connector lines, verbatim from the blueprint */
-export const CIRCUIT_WIRING_PATH =
-  'M200.5 74.5H215L232.5 92V108.5L241.5 117.5H259.5M200.5 104.5H219L237 122.5H259.5M186 254.5L194 262.5M227.5 398H241.5L247.5 404H254M317.5 132.5H323.5L342 151V189M250.5 266H265.5L290 241.5H313M311.5 399H324.5L331 392.5V384.5L351.5 364V318L349.768 317V307M378 189V170L379.5 168.5V135.5L397.5 117.5H422M479 122.5H491L509 104.5H524.5M421.5 248H456.5L474.5 266M530 267L544 253V248.5L555.5 237H561M530 282H541L551 272H561.5M378 307V369L425.5 416.5H438.5M494.5 408.5H503L513 398.5H533'
+export interface CircuitWire {
+  id: string
+  /** Path segment, verbatim from the blueprint */
+  d: string
+  /** Case-study / domain ids this wire touches — used to highlight it on hover */
+  nodeIds: string[]
+}
+
+/**
+ * Connector wires, verbatim from the blueprint, split into individually
+ * addressable segments (rather than one combined path) so hovering a leaf
+ * node or a domain chip can highlight just the wires touching it.
+ */
+export const CIRCUIT_WIRES: CircuitWire[] = [
+  {
+    id: 'flutter-integration_platform-engineering',
+    d: 'M200.5 74.5H215L232.5 92V108.5L241.5 117.5H259.5',
+    nodeIds: ['flutter-integration', 'platform-engineering'],
+  },
+  {
+    id: 'logging-system_platform-engineering',
+    d: 'M200.5 104.5H219L237 122.5H259.5',
+    nodeIds: ['logging-system', 'platform-engineering'],
+  },
+  {
+    id: 'android-14-migration_platform-modernization',
+    d: 'M186 254.5L194 262.5',
+    nodeIds: ['android-14-migration', 'platform-modernization'],
+  },
+  {
+    id: 'medical-chart-optimization_performance-engineering',
+    d: 'M227.5 398H241.5L247.5 404H254',
+    nodeIds: ['medical-chart-optimization', 'performance-engineering'],
+  },
+  {
+    id: 'platform-engineering_center',
+    d: 'M317.5 132.5H323.5L342 151V189',
+    nodeIds: ['platform-engineering'],
+  },
+  {
+    id: 'platform-modernization_center',
+    d: 'M250.5 266H265.5L290 241.5H313',
+    nodeIds: ['platform-modernization'],
+  },
+  {
+    id: 'performance-engineering_center',
+    d: 'M311.5 399H324.5L331 392.5V384.5L351.5 364V318L349.768 317V307',
+    nodeIds: ['performance-engineering'],
+  },
+  {
+    id: 'security-engineering_center',
+    d: 'M378 189V170L379.5 168.5V135.5L397.5 117.5H422',
+    nodeIds: ['security-engineering'],
+  },
+  {
+    id: 'security-engineering_attendance-fraud-prevention',
+    d: 'M479 122.5H491L509 104.5H524.5',
+    nodeIds: ['security-engineering', 'attendance-fraud-prevention'],
+  },
+  {
+    id: 'product-engineering_center',
+    d: 'M421.5 248H456.5L474.5 266',
+    nodeIds: ['product-engineering'],
+  },
+  {
+    id: 'product-engineering_payment-experience',
+    d: 'M530 267L544 253V248.5L555.5 237H561',
+    nodeIds: ['product-engineering', 'payment-experience'],
+  },
+  {
+    id: 'product-engineering_multi-account-architecture',
+    d: 'M530 282H541L551 272H561.5',
+    nodeIds: ['product-engineering', 'multi-account-architecture'],
+  },
+  {
+    id: 'offline-first-architecture_center',
+    d: 'M378 307V369L425.5 416.5H438.5',
+    nodeIds: ['offline-first-architecture'],
+  },
+  {
+    id: 'offline-first-architecture_ecg-background-sync',
+    d: 'M494.5 408.5H503L513 398.5H533',
+    nodeIds: ['offline-first-architecture', 'ecg-background-sync'],
+  },
+]
 
 export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
   {
