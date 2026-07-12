@@ -94,15 +94,7 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
         aria-label="Engineering domains circuit map"
       >
         {CIRCUIT_WIRES.map((wire) => (
-          <path
-            key={wire.id}
-            d={wire.d}
-            className={
-              highlightedWireIds.has(wire.id)
-                ? `${styles.stroke} ${styles.wireHighlight}`
-                : styles.stroke
-            }
-          />
+          <path key={wire.id} d={wire.d} className={styles.stroke} />
         ))}
 
         {hovered && pulsePath && (
