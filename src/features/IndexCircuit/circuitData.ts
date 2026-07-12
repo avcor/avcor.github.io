@@ -113,6 +113,18 @@ export const LEFT_BLEED_MARKER_FRACTION = (() => {
   return marker ? marker.x / viewBoxWidth : 0
 })()
 
+/**
+ * Horizontal position of the "Multi-Account Architecture" accent line, as a
+ * fraction of the circuit's viewBox width. Used to cap how far the board's
+ * right-bleed growth can shift content before that label crosses the
+ * viewport's right edge.
+ */
+export const RIGHT_BLEED_MARKER_FRACTION = (() => {
+  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'multi-account-architecture')?.accentLine
+  const viewBoxWidth = Number(CIRCUIT_VIEWBOX.split(' ')[2])
+  return marker ? marker.x / viewBoxWidth : 1
+})()
+
 export const CIRCUIT_DOMAINS: CircuitDomain[] = [
   {
     id: 'platform-engineering',
