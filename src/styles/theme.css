@@ -49,6 +49,7 @@
   --color-bg-glass:           #050d07;      /* SVG glass badge dark fill */
   --color-bg-stats:           rgba(10, 13, 16, 0.95);  /* Frosted stats panel */
   --color-text-muted:         #82888B;      /* Muted description text */
+  --color-connector-dot:      #a0a0a1;      /* Solid fill for circuit connector dots */
 
   /* text-primary at opacity */
   --color-text-primary-a38:   rgba(230, 237, 243, 0.38);

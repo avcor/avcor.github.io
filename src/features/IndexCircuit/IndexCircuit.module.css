@@ -45,3 +45,9 @@
 .pillText {
   font-size: 7px;
 }
+
+/* Connector dot at each pill's wire edge — solid fill, no outline */
+.dot {
+  fill: var(--color-connector-dot);
+  stroke: none;
+}
