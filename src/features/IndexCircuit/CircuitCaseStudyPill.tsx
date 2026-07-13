@@ -56,7 +56,7 @@ export default function CircuitCaseStudyPill({
         x={study.text.x}
         y={study.text.y}
         dominantBaseline="central"
-        className={`${styles.text} ${styles.pillText} ${isHighlighted ? styles.pillTextHighlight : ''}`}
+        className={`${styles.text} ${styles.pillText} ${isHighlighted ? styles.textHighlight : ''}`}
       >
         {study.label}
       </text>

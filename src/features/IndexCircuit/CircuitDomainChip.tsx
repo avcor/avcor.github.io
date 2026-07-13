@@ -58,7 +58,9 @@ export default function CircuitDomainChip({
         height={ICON_SIZE}
         className={isHighlighted ? `${styles.chipIcon} ${styles.chipIconHighlight}` : styles.chipIcon}
       />
-      <text className={`${styles.text} ${styles.textLeft}`}>
+      <text
+        className={`${styles.text} ${styles.textLeft} ${isHighlighted ? styles.textHighlight : ''}`}
+      >
         {lines.map((line, i) => (
           <tspan key={line} x={rect.x} y={firstLineY + i * LABEL_LINE_HEIGHT}>
             {line}

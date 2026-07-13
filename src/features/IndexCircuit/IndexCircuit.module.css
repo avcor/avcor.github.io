@@ -127,9 +127,9 @@
   font-size: 7px;
 }
 
-/* Leaf node label, when highlighted — glows green like the rest of the neon treatment */
-.pillTextHighlight {
-  fill: var(--color-primary);
+/* Leaf node or domain chip label, when highlighted — glows green like the rest of the neon treatment */
+.textHighlight {
+  fill: var(--color-glow);
   transition: fill 0.15s ease;
 }
 
