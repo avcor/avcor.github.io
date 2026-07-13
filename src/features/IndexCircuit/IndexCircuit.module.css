@@ -82,6 +82,51 @@
   filter: drop-shadow(0 0 2px var(--color-primary));
 }
 
+
+/* Wire segment touching a hovered leaf node or chip — lit up like a neon
+   tube: a wide, soft, additively-blended colored bloom with a thin
+   white-hot filament running down the center, instead of a flat highlight
+   color. mix-blend-mode: screen makes the bloom read as light rather than
+   flat paint over the board. */
+.wireNeon {
+  mix-blend-mode: screen;
+}
+
+.wireGlowCore,
+.wireGlowMid,
+.wireGlowFar {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-linecap: round;
+}
+
+.wireGlowFar {
+  stroke-width: 4;
+  opacity: 0.3;
+  filter: blur(3px);
+}
+
+.wireGlowMid {
+  stroke-width: 2;
+  opacity: 0.6;
+  filter: blur(1.2px);
+}
+
+.wireGlowCore {
+  stroke-width: 1;
+  opacity: 1;
+  filter: blur(0.4px);
+}
+
+/* Thin white-hot filament at the very center — the classic neon-tube look */
+.wireGlowHot {
+  fill: none;
+  stroke: var(--color-white);
+  stroke-linecap: round;
+  stroke-width: 0.6;
+  opacity: 0.9;
+}
+
 /* Hover targets — pill path and chip rect, hit-tested over their full area
    (not just the visible outline) so hovering anywhere in the box counts */
 .hoverTarget {
@@ -90,56 +135,14 @@
 }
 
 /* ── Traveling electrical pulse ──────────────────────────────────────────
-   A moving head orb + a long fading tail, composited with additive (screen)
-   blending and Gaussian-blurred glow so it reads like current flowing
-   through a PCB trace rather than a moving dot. The wire itself never
-   changes color — only this layer lights up on hover. The tail is a
-   polyline redrawn every frame from the head's own recent sampled
-   positions (see CircuitWirePulse.tsx), so it is always physically
-   attached to the ball rather than a separately-timed animation. */
+   A moving head orb, composited with additive (screen) blending and
+   Gaussian-blurred glow so it reads like current flowing through a PCB
+   trace. The wire itself never changes color — only this layer lights up
+   on hover. See CircuitWirePulse.tsx for the position math and blur filter. */
 
 .pulseGroup {
   mix-blend-mode: screen;
   pointer-events: none;
-}
-
-.pulseTrail {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Soft glowing body, directly behind the head — same neon green as the head */
-.pulseTrailBody {
-  stroke: var(--color-primary);
-  stroke-width: 2;
-  opacity: 0.85;
-}
-
-/* Long fading tail (200–400 viewBox units) — same hue throughout, only
-   opacity decreases so it reads as one continuous fade, not color bands */
-.pulseTrailTail1 {
-  stroke: var(--color-primary);
-  stroke-width: 1.7;
-  opacity: 0.5;
-}
-
-.pulseTrailTail2 {
-  stroke: var(--color-primary);
-  stroke-width: 1.4;
-  opacity: 0.28;
-}
-
-.pulseTrailTail3 {
-  stroke: var(--color-primary);
-  stroke-width: 1.1;
-  opacity: 0.14;
-}
-
-.pulseTrailTail4 {
-  stroke: var(--color-primary);
-  stroke-width: 0.8;
-  opacity: 0.05;
 }
 
 /* Head — the brightest point, neon green with an 8–12px bloom halo (filter set inline, per-instance id) */

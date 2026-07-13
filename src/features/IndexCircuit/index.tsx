@@ -7,6 +7,7 @@ import {
   CIRCUIT_DOMAINS,
   CIRCUIT_VIEWBOX,
   CIRCUIT_WIRES,
+  type CircuitWire,
 } from './circuitData'
 import pcb from '../../assets/pcb.png'
 import styles from './IndexCircuit.module.css'
@@ -17,52 +18,29 @@ interface IndexCircuitProps {
 
 type HoveredNode = { id: string; type: 'leaf' | 'domain' } | null
 
-/** Wire ids to highlight for the given hover target — a leaf highlights its own
- *  wire plus its domain's trunk line to the center chip; a domain highlights
- *  every wire touching it (its leaves' wires and its own trunk line). */
-function getHighlightedWireIds(hovered: HoveredNode): Set<string> {
-  if (!hovered) return new Set()
+/** The full set of wire segments belonging to the hover target's route — a
+ *  leaf's own wire plus its domain's trunk line to the center chip, or for a
+ *  domain, every wire touching it (trunk first, then each leaf branch). Both
+ *  the static glow and the traveling pulse render from this exact same list,
+ *  so they always cover the identical whole path — never just a fragment. */
+function getRouteWires(hovered: HoveredNode): CircuitWire[] {
+  if (!hovered) return []
 
   if (hovered.type === 'domain') {
-    return new Set(
-      CIRCUIT_WIRES.filter((wire) => wire.nodeIds.includes(hovered.id)).map((wire) => wire.id),
-    )
-  }
-
-  const leafWire = CIRCUIT_WIRES.find((wire) => wire.nodeIds.includes(hovered.id))
-  if (!leafWire) return new Set()
-
-  const domainId = leafWire.nodeIds.find((id) => id !== hovered.id)
-  const trunkWire = CIRCUIT_WIRES.find(
-    (wire) => wire.nodeIds.length === 1 && wire.nodeIds[0] === domainId,
-  )
-
-  return new Set(trunkWire ? [leafWire.id, trunkWire.id] : [leafWire.id])
-}
-
-/** Combined path data for the traveling pulse: leaf → domain → center for a
- *  leaf hover, or every wire touching the domain (trunk first) for a domain
- *  hover. Only one pulse ever renders at a time since `hovered` is singular. */
-function getPulsePath(hovered: HoveredNode): string | null {
-  if (!hovered) return null
-
-  if (hovered.type === 'domain') {
-    const wires = CIRCUIT_WIRES.filter((wire) => wire.nodeIds.includes(hovered.id)).sort(
+    return CIRCUIT_WIRES.filter((wire) => wire.nodeIds.includes(hovered.id)).sort(
       (a, b) => a.nodeIds.length - b.nodeIds.length,
     )
-    if (wires.length === 0) return null
-    return wires.map((wire) => wire.d).join(' ')
   }
 
   const leafWire = CIRCUIT_WIRES.find((wire) => wire.nodeIds.includes(hovered.id))
-  if (!leafWire) return null
+  if (!leafWire) return []
 
   const domainId = leafWire.nodeIds.find((id) => id !== hovered.id)
   const trunkWire = CIRCUIT_WIRES.find(
     (wire) => wire.nodeIds.length === 1 && wire.nodeIds[0] === domainId,
   )
 
-  return trunkWire ? `${leafWire.d} ${trunkWire.d}` : leafWire.d
+  return trunkWire ? [leafWire, trunkWire] : [leafWire]
 }
 
 const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function IndexCircuit(
@@ -70,8 +48,15 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
   ref,
 ) {
   const [hovered, setHovered] = useState<HoveredNode>(null)
-  const highlightedWireIds = useMemo(() => getHighlightedWireIds(hovered), [hovered])
-  const pulsePath = useMemo(() => getPulsePath(hovered), [hovered])
+  const routeWires = useMemo(() => getRouteWires(hovered), [hovered])
+  const highlightedWireIds = useMemo(
+    () => new Set(routeWires.map((wire) => wire.id)),
+    [routeWires],
+  )
+  const pulsePath = useMemo(
+    () => (routeWires.length > 0 ? routeWires.map((wire) => wire.d).join(' ') : null),
+    [routeWires],
+  )
 
   const highlightedLeafIds = useMemo(() => {
     const ids = new Set<string>()
@@ -81,6 +66,20 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
     }
     return ids
   }, [highlightedWireIds])
+
+  /** Every domain chip the current route passes through — not just a
+   *  directly-hovered domain, but also the domain a hovered leaf's wire
+   *  routes into, so the chip glows wherever the pulse actually travels. */
+  const highlightedDomainIds = useMemo(() => {
+    const domainIds = new Set(CIRCUIT_DOMAINS.map((domain) => domain.id))
+    const ids = new Set<string>()
+    for (const wire of routeWires) {
+      for (const nodeId of wire.nodeIds) {
+        if (domainIds.has(nodeId)) ids.add(nodeId)
+      }
+    }
+    return ids
+  }, [routeWires])
 
   return (
     <div className={styles.board} style={style} ref={ref}>
@@ -94,7 +93,17 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
         aria-label="Engineering domains circuit map"
       >
         {CIRCUIT_WIRES.map((wire) => (
-          <path key={wire.id} d={wire.d} className={styles.stroke} />
+          <g key={wire.id}>
+            <path d={wire.d} className={styles.stroke} />
+            {highlightedWireIds.has(wire.id) && (
+              <g className={styles.wireNeon}>
+                <path d={wire.d} className={styles.wireGlowFar} />
+                <path d={wire.d} className={styles.wireGlowMid} />
+                <path d={wire.d} className={styles.wireGlowCore} />
+                <path d={wire.d} className={styles.wireGlowHot} />
+              </g>
+            )}
+          </g>
         ))}
 
         {hovered && pulsePath && (
@@ -105,7 +114,7 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
           <CircuitDomainChip
             key={domain.id}
             domain={domain}
-            isHighlighted={hovered?.type === 'domain' && hovered.id === domain.id}
+            isHighlighted={highlightedDomainIds.has(domain.id)}
             onHoverChange={(isHovered) =>
               setHovered(isHovered ? { id: domain.id, type: 'domain' } : null)
             }

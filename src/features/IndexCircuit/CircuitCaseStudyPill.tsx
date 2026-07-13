@@ -20,6 +20,15 @@ export default function CircuitCaseStudyPill({
         onMouseEnter={() => onHoverChange?.(true)}
         onMouseLeave={() => onHoverChange?.(false)}
       />
+      {isHighlighted && (
+        <g className={styles.wireNeon}>
+          {([styles.wireGlowFar, styles.wireGlowMid, styles.wireGlowCore, styles.wireGlowHot] as const).map(
+            (glowClass) => (
+              <path key={glowClass} d={study.pillPath} className={glowClass} pointerEvents="none" />
+            ),
+          )}
+        </g>
+      )}
       <circle
         cx={study.dot.cx}
         cy={study.dot.cy}

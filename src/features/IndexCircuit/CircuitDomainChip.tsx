@@ -31,6 +31,24 @@ export default function CircuitDomainChip({
         onMouseEnter={() => onHoverChange?.(true)}
         onMouseLeave={() => onHoverChange?.(false)}
       />
+      {isHighlighted && (
+        <g className={styles.wireNeon}>
+          {([styles.wireGlowFar, styles.wireGlowMid, styles.wireGlowCore, styles.wireGlowHot] as const).map(
+            (glowClass) => (
+              <rect
+                key={glowClass}
+                x={rect.x}
+                y={rect.y}
+                width={rect.width}
+                height={rect.height}
+                rx={rect.rx}
+                className={glowClass}
+                pointerEvents="none"
+              />
+            ),
+          )}
+        </g>
+      )}
       <Icon
         x={rect.x + (rect.width - ICON_SIZE) / 2}
         y={rect.y + (rect.height - ICON_SIZE) / 2}
