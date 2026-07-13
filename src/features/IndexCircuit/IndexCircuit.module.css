@@ -127,6 +127,12 @@
   font-size: 7px;
 }
 
+/* Leaf node label, when highlighted — glows green like the rest of the neon treatment */
+.pillTextHighlight {
+  fill: var(--color-primary);
+  transition: fill 0.15s ease;
+}
+
 /* Connector dot at each pill's wire edge — solid fill, glowing */
 .dot {
   fill: var(--color-connector-dot);
@@ -140,6 +146,27 @@
   fill: var(--color-primary);
   filter: drop-shadow(0 0 2px var(--color-primary)) drop-shadow(0 0 4px var(--color-primary));
   transition: fill 0.15s ease;
+}
+
+/* Leaf node border, when highlighted — minimal glow, transparent at the
+   left and right edges and brightest at the horizontal center (linear
+   gradient stroke set inline per-instance in CircuitCaseStudyPill.tsx),
+   not a uniformly-lit outline. Additively blended like the rest of the
+   neon treatment. */
+.pillGlowGroup {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.pillGlowHalo {
+  fill: none;
+  stroke-width: 3;
+  filter: blur(1.5px);
+}
+
+.pillGlowCore {
+  fill: none;
+  stroke-width: 1;
 }
 
 /* Domain chip icon — matches label text color, bolder than the blueprint line work */
