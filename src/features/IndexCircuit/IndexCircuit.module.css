@@ -237,6 +237,28 @@
   pointer-events: all;
 }
 
+/* Chip's framing box glow, shown only on hover — a soft blurred green
+   bloom around where the (now invisible) framing box would sit, bleeding
+   outward toward the nearest wire. See CircuitDomainChip.tsx. */
+.framingBoxGlow,
+.framingBoxGlowFar {
+  fill: none;
+  stroke: var(--color-primary);
+  mix-blend-mode: screen;
+}
+
+.framingBoxGlow {
+  stroke-width: 4;
+  opacity: 0.15;
+  filter: blur(2.5px);
+}
+
+.framingBoxGlowFar {
+  stroke-width: 8;
+  opacity: 0.08;
+  filter: blur(5px);
+}
+
 /* ── Traveling electrical pulse ──────────────────────────────────────────
    A moving head orb, composited with additive (screen) blending and
    Gaussian-blurred glow so it reads like current flowing through a PCB
