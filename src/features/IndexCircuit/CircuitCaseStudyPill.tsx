@@ -24,7 +24,7 @@ export default function CircuitCaseStudyPill({
         onMouseLeave={() => onHoverChange?.(false)}
       />
       {isHighlighted && (
-        <g className={styles.pillGlowGroup} aria-hidden="true">
+        <g className={styles.centerGlowGroup} aria-hidden="true">
           <defs>
             {/* objectBoundingBox spans the pill horizontally — transparent
                 at the left edge, glowing brightest at the center, fading
@@ -35,8 +35,8 @@ export default function CircuitCaseStudyPill({
               <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
             </linearGradient>
           </defs>
-          <path d={study.pillPath} className={styles.pillGlowHalo} stroke={`url(#${gradientId})`} />
-          <path d={study.pillPath} className={styles.pillGlowCore} stroke={`url(#${gradientId})`} />
+          <path d={study.pillPath} className={styles.centerGlowHalo} stroke={`url(#${gradientId})`} />
+          <path d={study.pillPath} className={styles.centerGlowCore} stroke={`url(#${gradientId})`} />
         </g>
       )}
       <circle

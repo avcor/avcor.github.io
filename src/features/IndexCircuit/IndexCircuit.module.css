@@ -148,23 +148,23 @@
   transition: fill 0.15s ease;
 }
 
-/* Leaf node border, when highlighted — minimal glow, transparent at the
-   left and right edges and brightest at the horizontal center (linear
-   gradient stroke set inline per-instance in CircuitCaseStudyPill.tsx),
-   not a uniformly-lit outline. Additively blended like the rest of the
-   neon treatment. */
-.pillGlowGroup {
+/* Leaf node or domain chip box border, when highlighted — minimal glow,
+   transparent at the left and right edges and brightest at the horizontal
+   center (linear gradient stroke set inline per-instance in
+   CircuitCaseStudyPill.tsx / CircuitDomainChip.tsx), not a uniformly-lit
+   outline. Additively blended like the rest of the neon treatment. */
+.centerGlowGroup {
   mix-blend-mode: screen;
   pointer-events: none;
 }
 
-.pillGlowHalo {
+.centerGlowHalo {
   fill: none;
   stroke-width: 3;
   filter: blur(1.5px);
 }
 
-.pillGlowCore {
+.centerGlowCore {
   fill: none;
   stroke-width: 1;
 }
@@ -182,52 +182,6 @@
 .chipIconHighlight {
   stroke: var(--color-primary);
   filter: drop-shadow(0 0 2px var(--color-primary));
-}
-
-
-
-/* Wire segment touching a hovered leaf node or chip — lit up like a neon
-   tube: a wide, soft, additively-blended colored bloom with a thin
-   white-hot filament running down the center, instead of a flat highlight
-   color. mix-blend-mode: screen makes the bloom read as light rather than
-   flat paint over the board. */
-.wireNeon {
-  mix-blend-mode: screen;
-}
-
-.wireGlowCore,
-.wireGlowMid,
-.wireGlowFar {
-  fill: none;
-  stroke: var(--color-primary);
-  stroke-linecap: round;
-}
-
-.wireGlowFar {
-  stroke-width: 4;
-  opacity: 0.3;
-  filter: blur(3px);
-}
-
-.wireGlowMid {
-  stroke-width: 2;
-  opacity: 0.6;
-  filter: blur(1.2px);
-}
-
-.wireGlowCore {
-  stroke-width: 1;
-  opacity: 1;
-  filter: blur(0.4px);
-}
-
-/* Thin white-hot filament at the very center — the classic neon-tube look */
-.wireGlowHot {
-  fill: none;
-  stroke: var(--color-white);
-  stroke-linecap: round;
-  stroke-width: 0.6;
-  opacity: 0.9;
 }
 
 /* Hover targets — pill path and chip rect, hit-tested over their full area

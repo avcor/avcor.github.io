@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import CircuitChipNoise from './CircuitChipNoise'
 import type { CircuitDomain } from './circuitData'
 import { CIRCUIT_WIRES, LABEL_CHIP_GAP, LABEL_LINE_HEIGHT } from './circuitData'
@@ -89,6 +90,7 @@ export default function CircuitDomainChip({
   const lastLineY = rect.y - LABEL_CHIP_GAP
   const firstLineY = lastLineY - (lines.length - 1) * LABEL_LINE_HEIGHT
   const framingBox = getFramingBox(rect)
+  const gradientId = useId()
 
   return (
     <g data-domain={domain.id}>
@@ -121,21 +123,35 @@ export default function CircuitDomainChip({
         onMouseLeave={() => onHoverChange?.(false)}
       />
       {isHighlighted && (
-        <g className={styles.wireNeon}>
-          {([styles.wireGlowFar, styles.wireGlowMid, styles.wireGlowCore, styles.wireGlowHot] as const).map(
-            (glowClass) => (
-              <rect
-                key={glowClass}
-                x={rect.x}
-                y={rect.y}
-                width={rect.width}
-                height={rect.height}
-                rx={rect.rx}
-                className={glowClass}
-                pointerEvents="none"
-              />
-            ),
-          )}
+        <g className={styles.centerGlowGroup} aria-hidden="true">
+          <defs>
+            {/* objectBoundingBox spans the chip box horizontally —
+                transparent at the left edge, glowing brightest at the
+                center, fading back to transparent at the right edge */}
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
+              <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <rect
+            x={rect.x}
+            y={rect.y}
+            width={rect.width}
+            height={rect.height}
+            rx={rect.rx}
+            className={styles.centerGlowHalo}
+            stroke={`url(#${gradientId})`}
+          />
+          <rect
+            x={rect.x}
+            y={rect.y}
+            width={rect.width}
+            height={rect.height}
+            rx={rect.rx}
+            className={styles.centerGlowCore}
+            stroke={`url(#${gradientId})`}
+          />
         </g>
       )}
       <Icon
