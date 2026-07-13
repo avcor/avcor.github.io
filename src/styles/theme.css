@@ -34,6 +34,7 @@
 
   /* Glow */
   --color-glow:           #7DFF8A;   /* Hover/glow accent */
+  --color-idle-glow:      #F8FEE8;   /* Warm white w/ subtle green tint — dormant wire glow */
 
   /* Typography — change this one line to test a different font family */
   --font-primary: 'Google Sans Flex', 'Inter', sans-serif;
