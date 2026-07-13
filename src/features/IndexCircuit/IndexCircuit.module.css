@@ -83,6 +83,7 @@
 }
 
 
+
 /* Wire segment touching a hovered leaf node or chip — lit up like a neon
    tube: a wide, soft, additively-blended colored bloom with a thin
    white-hot filament running down the center, instead of a flat highlight
@@ -152,4 +153,18 @@
 
 .pulseHeadCore {
   fill: var(--color-primary);
+}
+
+/* ── Chip hover noise (experimental) ────────────────────────────────────
+   A static green noise texture over a hovered domain chip's own box, built
+   from a feTurbulence field in CircuitChipNoise.tsx. Additively blended
+   like the rest of the neon treatment. */
+
+.chipNoise {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.chipNoiseLayer {
+  opacity: 0.18;
 }

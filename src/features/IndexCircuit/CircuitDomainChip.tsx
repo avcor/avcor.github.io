@@ -1,3 +1,4 @@
+import CircuitChipNoise from './CircuitChipNoise'
 import type { CircuitDomain } from './circuitData'
 import { LABEL_CHIP_GAP, LABEL_LINE_HEIGHT } from './circuitData'
 import styles from './IndexCircuit.module.css'
@@ -21,6 +22,7 @@ export default function CircuitDomainChip({
 
   return (
     <g data-domain={domain.id}>
+      {isHighlighted && <CircuitChipNoise rect={rect} />}
       <rect
         x={rect.x}
         y={rect.y}
