@@ -1,7 +1,7 @@
 import { forwardRef, useMemo, useState, type CSSProperties } from 'react'
 import CircuitCaseStudyPill from './CircuitCaseStudyPill'
 import CircuitDomainChip from './CircuitDomainChip'
-import CircuitWireIdleGlow from './CircuitWireIdleGlow'
+import CircuitWireGlow from './CircuitWireGlow'
 import CircuitWirePulse from './CircuitWirePulse'
 import {
   CIRCUIT_CASE_STUDIES,
@@ -95,15 +95,8 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
       >
         {CIRCUIT_WIRES.map((wire) => (
           <g key={wire.id}>
-            <CircuitWireIdleGlow d={wire.d} />
-            {highlightedWireIds.has(wire.id) && (
-              <g className={styles.wireNeon}>
-                <path d={wire.d} className={styles.wireGlowFar} />
-                <path d={wire.d} className={styles.wireGlowMid} />
-                <path d={wire.d} className={styles.wireGlowCore} />
-                <path d={wire.d} className={styles.wireGlowHot} />
-              </g>
-            )}
+            <CircuitWireGlow d={wire.d} tone="idle" />
+            {highlightedWireIds.has(wire.id) && <CircuitWireGlow d={wire.d} tone="active" />}
           </g>
         ))}
 

@@ -28,20 +28,24 @@
   stroke-width: 1;
 }
 
-/* ── Idle wire glow (default, non-hover) ────────────────────────────────
-   A dormant "sensor line" look for every circuit wire at rest: a 1px sharp
-   warm-white core with a soft blurred bloom, brightest at the path's own
-   midpoint and gradually dimming toward both ends. Additively blended so
-   it reads as light rather than flat paint. See CircuitWireIdleGlow.tsx. */
+/* ── Wire glow (idle + active tones) ─────────────────────────────────────
+   A sensor-line look for every circuit wire: a 1px sharp core with a soft
+   blurred bloom, brightest at the path's own midpoint and gradually
+   dimming toward both ends. `idle` (warm-white) plays at rest; `active`
+   (green) plays on top of it while the wire is on the hovered route —
+   same diameters/falloff for both, only the color and blend differ.
+   Additively blended so it reads as light rather than flat paint.
+   See CircuitWireGlow.tsx. */
 
-.idleWire {
+.idleWire,
+.activeWire {
   mix-blend-mode: screen;
 }
 
 /* Soft outer bloom — blooms above/below the line without reading as thick */
-.idleGlowHalo {
+.idleGlowHalo,
+.activeGlowHalo {
   fill: none;
-  stroke: var(--color-idle-glow);
   stroke-width: 6;
   stroke-linecap: round;
   opacity: 0.05;
@@ -49,38 +53,54 @@
 }
 
 /* 1px sharp core, dim along its full length outside the hotspot bands */
-.idleCore {
+.idleCore,
+.activeCore {
   fill: none;
-  stroke: var(--color-idle-glow);
   stroke-width: 1;
   opacity: 0.35;
 }
 
-.idleHotspotInner {
+.idleHotspotInner,
+.activeHotspotInner {
   fill: none;
-  stroke: var(--color-idle-glow);
   stroke-width: 1.2;
   stroke-linecap: round;
   opacity: 0.55;
   filter: blur(0.3px);
 }
 
-.idleHotspotMid {
+.idleHotspotMid,
+.activeHotspotMid {
   fill: none;
-  stroke: var(--color-idle-glow);
   stroke-width: 2.4;
   stroke-linecap: round;
   opacity: 0.2;
   filter: blur(1.5px);
 }
 
-.idleHotspotOuter {
+.idleHotspotOuter,
+.activeHotspotOuter {
   fill: none;
-  stroke: var(--color-idle-glow);
   stroke-width: 5;
   stroke-linecap: round;
   opacity: 0.08;
   filter: blur(2.5px);
+}
+
+.idleGlowHalo,
+.idleCore,
+.idleHotspotInner,
+.idleHotspotMid,
+.idleHotspotOuter {
+  stroke: var(--color-idle-glow);
+}
+
+.activeGlowHalo,
+.activeCore,
+.activeHotspotInner,
+.activeHotspotMid,
+.activeHotspotOuter {
+  stroke: var(--color-primary);
 }
 
 /* Blueprint text — sizes are in SVG viewBox units, scale with the board */
