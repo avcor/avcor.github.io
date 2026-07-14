@@ -127,12 +127,12 @@
   transition: fill 0.15s ease;
 }
 
-/* Connector dot at each pill's wire edge — solid fill, glowing */
+/* Connector dot at each pill's wire edge — solid flat fill, no glow at
+   rest; the glow only comes in via .dotHighlight on hover/highlight */
 .dot {
   fill: var(--color-connector-dot);
   stroke: none;
   pointer-events: none;
-  filter: drop-shadow(0 0 1.5px var(--color-connector-dot)) drop-shadow(0 0 3px var(--color-connector-dot));
 }
 
 /* Connector dot whose wire is currently highlighted — glows green */
