@@ -88,39 +88,43 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
     d: 'M311.5 399H324.5L331 392.5V384.5L351.5 364V318L349.5 317V307',
     nodeIds: ['performance-engineering'],
   },
+  /* Right-side wires: the blueprint drew these center → outward, but the
+     traveling pulse follows path direction, and current must flow inward
+     (leaf → chip → center) like the left side — so each `d` below is the
+     blueprint path with its point order reversed. Geometry is unchanged. */
   {
     id: 'security-engineering_center',
-    d: 'M378 189V170L379.5 168.5V135.5L397.5 117.5H422',
+    d: 'M422 117.5H397.5L379.5 135.5V168.5L378 170V189',
     nodeIds: ['security-engineering'],
   },
   {
     id: 'security-engineering_attendance-fraud-prevention',
-    d: 'M479 122.5H491L509 104.5H524.5',
+    d: 'M524.5 104.5H509L491 122.5H479',
     nodeIds: ['security-engineering', 'attendance-fraud-prevention'],
   },
   {
     id: 'product-engineering_center',
-    d: 'M421.5 248H456.5L474.5 266',
+    d: 'M474.5 266L456.5 248H421.5',
     nodeIds: ['product-engineering'],
   },
   {
     id: 'product-engineering_payment-experience',
-    d: 'M530 267L544 253V248.5L555.5 237H561',
+    d: 'M561 237H555.5L544 248.5V253L530 267',
     nodeIds: ['product-engineering', 'payment-experience'],
   },
   {
     id: 'product-engineering_multi-account-architecture',
-    d: 'M530 282H541L551 272H561.5',
+    d: 'M561.5 272H551L541 282H530',
     nodeIds: ['product-engineering', 'multi-account-architecture'],
   },
   {
     id: 'offline-first-architecture_center',
-    d: 'M378 307V369L425.5 416.5H438.5',
+    d: 'M438.5 416.5H425.5L378 369V307',
     nodeIds: ['offline-first-architecture'],
   },
   {
     id: 'offline-first-architecture_ecg-background-sync',
-    d: 'M494.5 408.5H503L513 398.5H533',
+    d: 'M533 398.5H513L503 408.5H494.5',
     nodeIds: ['offline-first-architecture', 'ecg-background-sync'],
   },
 ]

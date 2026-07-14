@@ -9,7 +9,7 @@ interface CircuitWirePulseProps {
 }
 
 /** Duration of one full traversal of the path, in ms */
-const TRAVEL_DURATION = 3200
+const TRAVEL_DURATION = 1300
 
 /** Eases the head's motion so it surges and settles like current through a
  *  PCB trace instead of crawling at constant speed. */
