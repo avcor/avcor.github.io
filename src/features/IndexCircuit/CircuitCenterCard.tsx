@@ -8,6 +8,9 @@ interface CircuitCenterCardProps {
    *  Also switches the grid/label color: the same idle warm-white used by
    *  the wires at rest, neon green while highlighted. */
   isHighlighted?: boolean
+  /** Notifies the board when the card itself is hovered, so it can light
+   *  every route and pulse current out to all nodes */
+  onHoverChange?: (hovered: boolean) => void
 }
 
 interface AccentCSSProperties extends CSSProperties {
@@ -113,7 +116,10 @@ const BLOOM_MASK_MARGIN = 150
  * "AV" label's bloom halo) fires while the card is hovered or something on
  * the board is hovered/highlighted.
  */
-export default function CircuitCenterCard({ isHighlighted = false }: CircuitCenterCardProps) {
+export default function CircuitCenterCard({
+  isHighlighted = false,
+  onHoverChange,
+}: CircuitCenterCardProps) {
   const { rect, outerRect, label } = CIRCUIT_CENTER_CARD
   const [isCardHovered, setIsCardHovered] = useState(false)
   /** The neon treatment (border strip + green dot matrix) fires both when
@@ -339,8 +345,14 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
         rx={rect.rx}
         fill="transparent"
         className={styles.centerCardHoverTarget}
-        onMouseEnter={() => setIsCardHovered(true)}
-        onMouseLeave={() => setIsCardHovered(false)}
+        onMouseEnter={() => {
+          setIsCardHovered(true)
+          onHoverChange?.(true)
+        }}
+        onMouseLeave={() => {
+          setIsCardHovered(false)
+          onHoverChange?.(false)
+        }}
       />
 
       {/* Center label — crisp text always visible, bloom halo only while

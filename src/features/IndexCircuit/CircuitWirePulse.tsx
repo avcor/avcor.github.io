@@ -6,6 +6,9 @@ interface CircuitWirePulseProps {
   d: string
   /** Unique key identifying the currently hovered target — changing it restarts the pulse cleanly */
   pulseKey: string
+  /** Travel the path end → start instead — used when current should flow
+   *  outward from the center chip rather than inward toward it */
+  reverse?: boolean
 }
 
 /** Duration of one full traversal of the path, in ms */
@@ -41,7 +44,7 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
  * and settles like current through a PCB trace, not a dot crawling at
  * constant speed.
  */
-export default function CircuitWirePulse({ d, pulseKey }: CircuitWirePulseProps) {
+export default function CircuitWirePulse({ d, pulseKey, reverse = false }: CircuitWirePulseProps) {
   const filterId = useId()
   const measureRef = useRef<SVGPathElement>(null)
   const headGroupRef = useRef<SVGGElement>(null)
@@ -64,7 +67,7 @@ export default function CircuitWirePulse({ d, pulseKey }: CircuitWirePulseProps)
     const tick = (now: number) => {
       const elapsed = (now - start) % TRAVEL_DURATION
       const linear = elapsed / TRAVEL_DURATION
-      const progress = EASE(linear)
+      const progress = reverse ? 1 - EASE(linear) : EASE(linear)
       const point = path.getPointAtLength(progress * pathLength)
       headGroup.setAttribute('transform', `translate(${point.x} ${point.y})`)
       rafRef.current = requestAnimationFrame(tick)
@@ -72,7 +75,7 @@ export default function CircuitWirePulse({ d, pulseKey }: CircuitWirePulseProps)
 
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [pathLength, pulseKey])
+  }, [pathLength, pulseKey, reverse])
 
   const blurHead = `${filterId}-head`
 
