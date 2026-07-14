@@ -48,14 +48,14 @@ export default function CircuitCaseStudyPill({
       <circle
         cx={study.dot.cx}
         cy={study.dot.cy}
-        r={2.2}
+        r={0.0}
         className={isDotHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
       />
       {/* Wire-side connector dot — explicit placement from the blueprint */}
       <circle
         cx={study.innerDot.cx}
         cy={study.innerDot.cy}
-        r={2.2}
+        r={1.5}
         className={isDotHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
       />
       <text
