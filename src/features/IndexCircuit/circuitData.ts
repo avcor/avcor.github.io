@@ -13,8 +13,10 @@ export interface CircuitCaseStudy {
   pillPath: string
   /** Text anchor: pill center (rendered with text-anchor middle / central baseline) */
   text: { x: number; y: number }
-  /** Connector endpoint dot on the pill edge */
+  /** Connector endpoint dot on the pill's outer edge */
   dot: { cx: number; cy: number }
+  /** Connector dot on the pill's wire-side edge, verbatim from the blueprint */
+  innerDot: { cx: number; cy: number }
   /** Optional vertical accent line rendered to the left of the pill, with a gap before it */
   accentLine?: { x: number; y1: number; y2: number }
 }
@@ -128,6 +130,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M116 62.5H190C193.59 62.5 196.5 65.4101 196.5 69V80C196.5 83.5899 193.59 86.5 190 86.5H116C112.41 86.5 109.5 83.5898 109.5 80V69C109.5 65.4101 112.41 62.5 116 62.5Z',
     text: { x: 153, y: 74.5 },
     dot: { cx: 109, cy: 75 },
+    innerDot: { cx: 198.5, cy: 74.5 },
   },
   {
     id: 'logging-system',
@@ -136,6 +139,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M116 92.5H190C193.59 92.5 196.5 95.4101 196.5 99V110C196.5 113.59 193.59 116.5 190 116.5H116C112.41 116.5 109.5 113.59 109.5 110V99C109.5 95.4101 112.41 92.5 116 92.5Z',
     text: { x: 153, y: 104.5 },
     dot: { cx: 109, cy: 105 },
+    innerDot: { cx: 198.5, cy: 104.5 },
   },
   {
     id: 'android-14-migration',
@@ -144,6 +148,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M97 242.5H175C178.59 242.5 181.5 245.41 181.5 249V259C181.5 262.59 178.59 265.5 175 265.5H97C93.4101 265.5 90.5 262.59 90.5 259V249C90.5 245.41 93.4101 242.5 97 242.5Z',
     text: { x: 136, y: 254 },
     dot: { cx: 90, cy: 254 },
+    innerDot: { cx: 183.5, cy: 253.5 },
     accentLine: { x: 82.5, y1: 242.5, y2: 265.5 },
   },
   {
@@ -153,6 +158,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M113 386.5H217C220.59 386.5 223.5 389.41 223.5 393V404C223.5 407.59 220.59 410.5 217 410.5H113C109.41 410.5 106.5 407.59 106.5 404V393C106.5 389.41 109.41 386.5 113 386.5Z',
     text: { x: 165, y: 398.5 },
     dot: { cx: 105, cy: 398 },
+    innerDot: { cx: 225.5, cy: 398.5 },
   },
   {
     id: 'attendance-fraud-prevention',
@@ -161,6 +167,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M536 93.5H645C648.59 93.5 651.5 96.4101 651.5 100V110C651.5 113.59 648.59 116.5 645 116.5H536C532.41 116.5 529.5 113.59 529.5 110V100C529.5 96.5225 532.231 93.6831 535.665 93.5088L536 93.5Z',
     text: { x: 590.5, y: 105 },
     dot: { cx: 652, cy: 104 },
+    innerDot: { cx: 527.5, cy: 104.5 },
   },
   {
     id: 'payment-experience',
@@ -169,6 +176,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M572 225.5H648C651.59 225.5 654.5 228.41 654.5 232V242C654.5 245.59 651.59 248.5 648 248.5H572C568.41 248.5 565.5 245.59 565.5 242V232C565.5 228.41 568.41 225.5 572 225.5Z',
     text: { x: 610, y: 237 },
     dot: { cx: 655, cy: 237 },
+    innerDot: { cx: 563.5, cy: 236.5 },
   },
   {
     id: 'multi-account-architecture',
@@ -176,7 +184,8 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
     pillPath:
       'M573 259.5H677C680.59 259.5 683.5 262.41 683.5 266V276C683.5 279.59 680.59 282.5 677 282.5H573C569.41 282.5 566.5 279.59 566.5 276V266C566.5 262.41 569.41 259.5 573 259.5Z',
     text: { x: 625, y: 271 },
-    dot: { cx: 684, cy: 272 },
+    dot: { cx: 684, cy: 271 },
+    innerDot: { cx: 563.5, cy: 271.5 },
     accentLine: { x: 691.5, y1: 259.5, y2: 282.5 },
   },
   {
@@ -186,6 +195,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
       'M544 386.5H633C636.59 386.5 639.5 389.41 639.5 393V404C639.5 407.59 636.59 410.5 633 410.5H544C540.41 410.5 537.5 407.59 537.5 404V393C537.5 389.41 540.41 386.5 544 386.5Z',
     text: { x: 588.5, y: 398.5 },
     dot: { cx: 640, cy: 398 },
+    innerDot: { cx: 535.5, cy: 398.5 },
   },
 ]
 

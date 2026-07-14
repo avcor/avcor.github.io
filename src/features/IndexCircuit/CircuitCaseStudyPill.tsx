@@ -45,11 +45,11 @@ export default function CircuitCaseStudyPill({
         r={2.2}
         className={isHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
       />
-      {/* Mirrored dot on the opposite side — reflected across the pill's own center */}
+      {/* Wire-side connector dot — explicit placement from the blueprint */}
       <circle
-        cx={study.text.x * 2 - study.dot.cx}
-        cy={study.dot.cy}
-        r={2.8}
+        cx={study.innerDot.cx}
+        cy={study.innerDot.cy}
+        r={2.2}
         className={isHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
       />
       <text

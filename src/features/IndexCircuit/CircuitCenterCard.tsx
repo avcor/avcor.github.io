@@ -63,6 +63,15 @@ function hoverDotOpacity(distFromEdge: number): number {
   return Math.max(0.06, 0.25 * (1 - distFromEdge * 0.85))
 }
 
+/** Outward border-glow layers — brightest close to the border, softer and
+ *  wider further out; each is rendered on a copy inflated by half its own
+ *  stroke width so the bloom escapes the box without lighting its inside. */
+const OUTER_GLOW_LAYERS = [
+  { strokeWidth: 8, className: 'centerCardOuterGlowFar' },
+  { strokeWidth: 4, className: 'centerCardOuterGlowNear' },
+  { strokeWidth: 1.5, className: 'centerCardOuterGlowEdge' },
+] as const
+
 /**
  * The premium microchip-style hub card every trunk wire converges into:
  * transparent background, a faint dotted matrix grid, and a thin border,
@@ -79,7 +88,6 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
    *  i.e. anything on the board is hovered/highlighted. */
   const isGlowing = isCardHovered || isHighlighted
   const cardClipId = useId()
-  const borderGradientId = useId()
   const centerX = rect.x + rect.width / 2
   const centerY = rect.y + rect.height / 2
   const accentStyle: AccentCSSProperties = {
@@ -133,37 +141,28 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
       />
 
       {/* Border glow, shown while the card is hovered or a wire path is
-       *  glowing — the exact same treatment as the sub chips' highlighted
-       *  box border: a gradient stroke transparent at the left and right
-       *  edges and brightest at the horizontal center (halo + core),
-       *  additively blended. Mirrors CircuitDomainChip.tsx. */}
+       *  glowing — light escaping outward from the card's outer box. Each
+       *  layer is a copy inflated by half its own stroke width, so its
+       *  inner edge sits exactly on the border and the whole blurred
+       *  stroke bleeds outward only — nothing spills inside the card.
+       *  Same outward-bleed technique as the sub chips' framing box glow
+       *  in CircuitDomainChip.tsx. */}
       {isGlowing && (
         <g className={styles.centerGlowGroup} aria-hidden="true">
-          <defs>
-            <linearGradient id={borderGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
-              <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="0.55" />
-              <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <rect
-            x={rect.x}
-            y={rect.y}
-            width={rect.width}
-            height={rect.height}
-            rx={rect.rx}
-            className={styles.centerGlowHalo}
-            stroke={`url(#${borderGradientId})`}
-          />
-          <rect
-            x={rect.x}
-            y={rect.y}
-            width={rect.width}
-            height={rect.height}
-            rx={rect.rx}
-            className={styles.centerGlowCore}
-            stroke={`url(#${borderGradientId})`}
-          />
+          {OUTER_GLOW_LAYERS.map(({ strokeWidth, className }) => {
+            const inset = strokeWidth / 2
+            return (
+              <rect
+                key={className}
+                x={rect.x - inset}
+                y={rect.y - inset}
+                width={rect.width + strokeWidth}
+                height={rect.height + strokeWidth}
+                rx={rect.rx + inset}
+                className={styles[className]}
+              />
+            )
+          })}
         </g>
       )}
 

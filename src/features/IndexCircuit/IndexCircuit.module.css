@@ -274,6 +274,36 @@
   opacity: 0.5;
 }
 
+/* Outward border glow while the card is hovered or a path is glowing —
+   light escaping the card's outer box. Rendered on rects inflated by half
+   their own stroke width (see CircuitCenterCard.tsx), so every layer's
+   bloom bleeds outward only; additively blended like the rest of the neon
+   treatment. */
+.centerCardOuterGlowEdge,
+.centerCardOuterGlowNear,
+.centerCardOuterGlowFar {
+  fill: none;
+  stroke: var(--color-primary);
+}
+
+.centerCardOuterGlowEdge {
+  stroke-width: 1.5;
+  opacity: 0.5;
+  filter: blur(1px);
+}
+
+.centerCardOuterGlowNear {
+  stroke-width: 4;
+  opacity: 0.15;
+  filter: blur(2.5px);
+}
+
+.centerCardOuterGlowFar {
+  stroke-width: 8;
+  opacity: 0.08;
+  filter: blur(5px);
+}
+
 /* Invisible hit area covering the whole card, driving the hover glow above */
 .centerCardHoverTarget {
   cursor: pointer;
