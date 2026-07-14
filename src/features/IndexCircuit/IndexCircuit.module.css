@@ -185,6 +185,14 @@
   pointer-events: all;
 }
 
+/* Leaf node pill box at rest — a very faint outline, much lighter than
+   the blueprint stroke that comes back on highlight */
+.pillOutlineFaint {
+  fill: none;
+  stroke: var(--color-white-a12);
+  stroke-width: 1;
+}
+
 /* Chip's framing box glow, shown only on hover — a soft blurred green
    bloom around where the (now invisible) framing box would sit, bleeding
    outward toward the nearest wire. See CircuitDomainChip.tsx. */

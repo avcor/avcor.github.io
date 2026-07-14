@@ -17,9 +17,11 @@ export default function CircuitCaseStudyPill({
 
   return (
     <g data-case-study={study.id}>
+      {/* Very faint outline at rest; the full blueprint stroke shows while
+       *  the pill's wire is highlighted */}
       <path
         d={study.pillPath}
-        className={`${styles.stroke} ${styles.hoverTarget}`}
+        className={`${isHighlighted ? styles.stroke : styles.pillOutlineFaint} ${styles.hoverTarget}`}
         onMouseEnter={() => onHoverChange?.(true)}
         onMouseLeave={() => onHoverChange?.(false)}
       />
