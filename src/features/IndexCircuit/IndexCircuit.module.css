@@ -274,29 +274,6 @@
   opacity: 0.5;
 }
 
-/* Neon strip glow on the card's own border, shown only while the card
-   itself is hovered — bright green, additively blended, with the core kept
-   thin so the border still reads as a fine line rather than a thick band */
-.centerCardHoverGlowGroup {
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.centerCardHoverGlowHalo {
-  fill: none;
-  stroke: var(--color-primary);
-  stroke-width: 10;
-  opacity: 0.5;
-  filter: blur(4px);
-}
-
-.centerCardHoverGlowCore {
-  fill: none;
-  stroke: var(--color-primary);
-  stroke-width: 2;
-  opacity: 1;
-}
-
 /* Invisible hit area covering the whole card, driving the hover glow above */
 .centerCardHoverTarget {
   cursor: pointer;

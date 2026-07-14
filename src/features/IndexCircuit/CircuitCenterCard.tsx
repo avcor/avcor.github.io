@@ -79,10 +79,11 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
    *  i.e. anything on the board is hovered/highlighted. */
   const isGlowing = isCardHovered || isHighlighted
   const cardClipId = useId()
+  const borderGradientId = useId()
   const centerX = rect.x + rect.width / 2
   const centerY = rect.y + rect.height / 2
   const accentStyle: AccentCSSProperties = {
-    '--center-card-accent': isHighlighted ? 'var(--color-primary)' : 'var(--color-idle-glow)',
+    '--center-card-accent': isGlowing ? 'var(--color-primary)' : 'var(--color-idle-glow)',
   }
 
   return (
@@ -131,22 +132,28 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
         className={styles.centerCardBorder}
       />
 
-      {/* Neon strip glow on the card's own border — bright green, thin
-       *  core plus a soft blurred halo, shown while the card is hovered or
-       *  a wire path is glowing */}
+      {/* Border glow, shown while the card is hovered or a wire path is
+       *  glowing — the exact same treatment as the sub chips' highlighted
+       *  box border: a gradient stroke transparent at the left and right
+       *  edges and brightest at the horizontal center (halo + core),
+       *  additively blended. Mirrors CircuitDomainChip.tsx. */}
       {isGlowing && (
-        <g
-          className={styles.centerCardHoverGlowGroup}
-          clipPath={`url(#${cardClipId})`}
-          aria-hidden="true"
-        >
+        <g className={styles.centerGlowGroup} aria-hidden="true">
+          <defs>
+            <linearGradient id={borderGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
+              <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
           <rect
             x={rect.x}
             y={rect.y}
             width={rect.width}
             height={rect.height}
             rx={rect.rx}
-            className={styles.centerCardHoverGlowHalo}
+            className={styles.centerGlowHalo}
+            stroke={`url(#${borderGradientId})`}
           />
           <rect
             x={rect.x}
@@ -154,7 +161,8 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
             width={rect.width}
             height={rect.height}
             rx={rect.rx}
-            className={styles.centerCardHoverGlowCore}
+            className={styles.centerGlowCore}
+            stroke={`url(#${borderGradientId})`}
           />
         </g>
       )}
@@ -173,8 +181,9 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
         onMouseLeave={() => setIsCardHovered(false)}
       />
 
-      {/* Center label — crisp text always visible, bloom halo only on highlight */}
-      {isHighlighted && (
+      {/* Center label — crisp text always visible, bloom halo only while
+       *  the card is hovered or a wire path is glowing */}
+      {isGlowing && (
         <text x={centerX} y={centerY} dominantBaseline="central" className={styles.centerCardLabelGlow}>
           {label}
         </text>
