@@ -82,7 +82,10 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
   },
   {
     id: 'performance-engineering_center',
-    d: 'M311.5 399H324.5L331 392.5V384.5L351.5 364V318L349.768 317V307',
+    /* Final x snapped from the blueprint's 349.768 (Figma export artifact)
+       to the half-unit grid every other wire sits on, so the vertical tail
+       antialiases as crisply as the rest */
+    d: 'M311.5 399H324.5L331 392.5V384.5L351.5 364V318L349.5 317V307',
     nodeIds: ['performance-engineering'],
   },
   {

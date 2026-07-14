@@ -46,7 +46,7 @@
   fill: none;
   stroke: var(--color-idle-glow);
   stroke-width: 0.6;
-  opacity: 0.3;
+  opacity: 0.1;
 }
 
 /* Soft outer bloom — blooms above/below the line without reading as thick */
@@ -185,9 +185,10 @@
   pointer-events: all;
 }
 
-/* Leaf node pill box at rest — a very faint outline, much lighter than
-   the blueprint stroke that comes back on highlight */
-.pillOutlineFaint {
+/* Node box (leaf pill or domain chip) at rest — the same very faint
+   outline on every node, much lighter than the blueprint stroke that
+   comes back on highlight */
+.nodeOutlineFaint {
   fill: none;
   stroke: var(--color-white-a12);
   stroke-width: 1;

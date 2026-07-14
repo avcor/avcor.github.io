@@ -112,13 +112,15 @@ export default function CircuitDomainChip({
           )
         })}
       {isHighlighted && <CircuitChipNoise rect={rect} />}
+      {/* Same faint at-rest outline as the leaf pills; the full blueprint
+       *  stroke shows while the chip's wire is highlighted */}
       <rect
         x={rect.x}
         y={rect.y}
         width={rect.width}
         height={rect.height}
         rx={rect.rx}
-        className={`${styles.stroke} ${styles.hoverTarget}`}
+        className={`${isHighlighted ? styles.stroke : styles.nodeOutlineFaint} ${styles.hoverTarget}`}
         onMouseEnter={() => onHoverChange?.(true)}
         onMouseLeave={() => onHoverChange?.(false)}
       />

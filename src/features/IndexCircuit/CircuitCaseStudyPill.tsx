@@ -21,7 +21,7 @@ export default function CircuitCaseStudyPill({
        *  the pill's wire is highlighted */}
       <path
         d={study.pillPath}
-        className={`${isHighlighted ? styles.stroke : styles.pillOutlineFaint} ${styles.hoverTarget}`}
+        className={`${isHighlighted ? styles.stroke : styles.nodeOutlineFaint} ${styles.hoverTarget}`}
         onMouseEnter={() => onHoverChange?.(true)}
         onMouseLeave={() => onHoverChange?.(false)}
       />
