@@ -274,34 +274,36 @@
   opacity: 0.5;
 }
 
-/* Outward border glow while the card is hovered or a path is glowing —
-   light escaping the card's outer box. Rendered on rects inflated by half
-   their own stroke width (see CircuitCenterCard.tsx), so every layer's
-   bloom bleeds outward only; additively blended like the rest of the neon
-   treatment. */
-.centerCardOuterGlowEdge,
-.centerCardOuterGlowNear,
-.centerCardOuterGlowFar {
+/* Soft bloom radiating outward from the card's outer framing box while
+   it's lit — solid fills of the box's own shape at increasing Gaussian
+   blur radii, additively blended so they read as diffused light. The
+   box's interior is masked out in CircuitCenterCard.tsx, so this exists
+   only outside the box: strongest at the edges, fading smoothly into the
+   background, with no border stroke and no inner glow. */
+.centerCardBloomGroup {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.centerCardBloomNear,
+.centerCardBloomMid,
+.centerCardBloomFar {
   fill: none;
-  stroke: var(--color-primary);
 }
 
-.centerCardOuterGlowEdge {
-  stroke-width: 1.5;
-  opacity: 0.5;
-  filter: blur(1px);
+/* Blur radii live in per-layer SVG feGaussianBlur filters with enlarged
+   filter regions (see CircuitCenterCard.tsx) — CSS blur() on SVG elements
+   clips at the default filter region, cutting the glow off flat */
+.centerCardBloomNear {
+  opacity: 0.4;
 }
 
-.centerCardOuterGlowNear {
-  stroke-width: 4;
-  opacity: 0.15;
-  filter: blur(2.5px);
+.centerCardBloomMid {
+  opacity: 0.22;
 }
 
-.centerCardOuterGlowFar {
-  stroke-width: 8;
-  opacity: 0.08;
-  filter: blur(5px);
+.centerCardBloomFar {
+  opacity: 0.12;
 }
 
 /* Invisible hit area covering the whole card, driving the hover glow above */

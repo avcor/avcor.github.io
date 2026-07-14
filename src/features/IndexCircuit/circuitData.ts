@@ -265,5 +265,8 @@ export const CIRCUIT_DOMAINS: CircuitDomain[] = [
  *  card, verbatim placement from the blueprint. */
 export const CIRCUIT_CENTER_CARD = {
   rect: { x: 328.5, y: 205.5, width: 77, height: 86, rx: 4.5 },
+  /** Outer framing box around the card, verbatim from the blueprint —
+   *  carries the outward light-escape glow while the board is lit. */
+  outerRect: { x: 321.5, y: 198.5, width: 90, height: 99, rx: 5.5 },
   label: 'AV',
 }

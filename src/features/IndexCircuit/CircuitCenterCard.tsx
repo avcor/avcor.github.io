@@ -63,14 +63,47 @@ function hoverDotOpacity(distFromEdge: number): number {
   return Math.max(0.06, 0.25 * (1 - distFromEdge * 0.85))
 }
 
-/** Outward border-glow layers — brightest close to the border, softer and
- *  wider further out; each is rendered on a copy inflated by half its own
- *  stroke width so the bloom escapes the box without lighting its inside. */
-const OUTER_GLOW_LAYERS = [
-  { strokeWidth: 8, className: 'centerCardOuterGlowFar' },
-  { strokeWidth: 4, className: 'centerCardOuterGlowNear' },
-  { strokeWidth: 1.5, className: 'centerCardOuterGlowEdge' },
+/** Soft bloom layers for the card's outer framing box — one blurred strip
+ *  per edge, at increasing blur radii, so the light is strongest right at
+ *  the edges and fades smoothly into the background. Each strip's stroke
+ *  gradient fades to transparent before it reaches the corners, so the
+ *  glow radiates from the four sides only — the corners stay dark. The
+ *  box's interior is masked out entirely: no border, no inner glow, just
+ *  energy radiating into the surrounding space. */
+const OUTER_BOX_BLOOM_LAYERS = [
+  { className: 'centerCardBloomNear', strokeWidth: 6, blur: 5 },
+  { className: 'centerCardBloomMid', strokeWidth: 14, blur: 14 },
+  { className: 'centerCardBloomFar', strokeWidth: 28, blur: 30 },
 ] as const
+
+/** Where each edge strip's gradient reaches full strength — fading in from
+ *  transparent at the corners over the first/last fraction of the edge. */
+const BLOOM_CORNER_FADE = 0.22
+
+/** Gradient stops for an edge strip: a smoothstep-eased fade in from the
+ *  corner, flat through the middle, eased back out — a plain linear ramp
+ *  produces Mach bands (a visible straight seam where the slope changes)
+ *  once blurred, so the ease-in/out curve is sampled at several points. */
+const BLOOM_GRADIENT_STOPS: { offset: number; opacity: number }[] = (() => {
+  const SAMPLES = 6
+  const stops: { offset: number; opacity: number }[] = []
+  for (let i = 0; i <= SAMPLES; i++) {
+    const t = i / SAMPLES
+    const eased = t * t * (3 - 2 * t)
+    stops.push({ offset: t * BLOOM_CORNER_FADE, opacity: eased })
+  }
+  const fadeIn = [...stops]
+  const fadeOut = fadeIn
+    .map(({ offset, opacity }) => ({ offset: 1 - offset, opacity }))
+    .reverse()
+  return [...fadeIn, ...fadeOut]
+})()
+
+/** How far past the outer box the bloom mask reaches — must comfortably
+ *  exceed the largest bloom layer's full visible spread (~3× its blur
+ *  radius plus half its stroke width), or the haze gets cut off in a
+ *  hard straight line at the mask's edge. */
+const BLOOM_MASK_MARGIN = 150
 
 /**
  * The premium microchip-style hub card every trunk wire converges into:
@@ -81,13 +114,15 @@ const OUTER_GLOW_LAYERS = [
  * the board is hovered/highlighted.
  */
 export default function CircuitCenterCard({ isHighlighted = false }: CircuitCenterCardProps) {
-  const { rect, label } = CIRCUIT_CENTER_CARD
+  const { rect, outerRect, label } = CIRCUIT_CENTER_CARD
   const [isCardHovered, setIsCardHovered] = useState(false)
   /** The neon treatment (border strip + green dot matrix) fires both when
    *  the card itself is hovered and whenever a wire path is glowing —
    *  i.e. anything on the board is hovered/highlighted. */
   const isGlowing = isCardHovered || isHighlighted
   const cardClipId = useId()
+  const borderGradientId = useId()
+  const bloomMaskId = useId()
   const centerX = rect.x + rect.width / 2
   const centerY = rect.y + rect.height / 2
   const accentStyle: AccentCSSProperties = {
@@ -141,28 +176,156 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
       />
 
       {/* Border glow, shown while the card is hovered or a wire path is
-       *  glowing — light escaping outward from the card's outer box. Each
-       *  layer is a copy inflated by half its own stroke width, so its
-       *  inner edge sits exactly on the border and the whole blurred
-       *  stroke bleeds outward only — nothing spills inside the card.
-       *  Same outward-bleed technique as the sub chips' framing box glow
-       *  in CircuitDomainChip.tsx. */}
+       *  glowing — the exact same treatment as the sub chips' highlighted
+       *  box border: a gradient stroke transparent at the left and right
+       *  edges and brightest at the horizontal center (halo + core),
+       *  additively blended. Mirrors CircuitDomainChip.tsx. */}
       {isGlowing && (
         <g className={styles.centerGlowGroup} aria-hidden="true">
-          {OUTER_GLOW_LAYERS.map(({ strokeWidth, className }) => {
-            const inset = strokeWidth / 2
-            return (
+          <defs>
+            <linearGradient id={borderGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0" />
+              <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <rect
+            x={rect.x}
+            y={rect.y}
+            width={rect.width}
+            height={rect.height}
+            rx={rect.rx}
+            className={styles.centerGlowHalo}
+            stroke={`url(#${borderGradientId})`}
+          />
+          <rect
+            x={rect.x}
+            y={rect.y}
+            width={rect.width}
+            height={rect.height}
+            rx={rect.rx}
+            className={styles.centerGlowCore}
+            stroke={`url(#${borderGradientId})`}
+          />
+        </g>
+      )}
+
+      {/* Outer framing box bloom — a soft, diffused glow radiating outward
+       *  from all four edges while the card is lit. The mask below paints
+       *  the box's interior black, so every blurred layer is visible only
+       *  outside the box: the inside stays perfectly matte, with no border
+       *  and no inner glow. */}
+      {isGlowing && (
+        <g className={styles.centerCardBloomGroup} aria-hidden="true">
+          <defs>
+            {/* Explicit userSpaceOnUse region — the default mask region
+             *  stops just 10% past the masked group's bounding box, which
+             *  slices the widest bloom flat in a straight line */}
+            <mask
+              id={bloomMaskId}
+              maskUnits="userSpaceOnUse"
+              x={outerRect.x - BLOOM_MASK_MARGIN}
+              y={outerRect.y - BLOOM_MASK_MARGIN}
+              width={outerRect.width + BLOOM_MASK_MARGIN * 2}
+              height={outerRect.height + BLOOM_MASK_MARGIN * 2}
+            >
               <rect
-                key={className}
-                x={rect.x - inset}
-                y={rect.y - inset}
-                width={rect.width + strokeWidth}
-                height={rect.height + strokeWidth}
-                rx={rect.rx + inset}
-                className={styles[className]}
+                x={outerRect.x - BLOOM_MASK_MARGIN}
+                y={outerRect.y - BLOOM_MASK_MARGIN}
+                width={outerRect.width + BLOOM_MASK_MARGIN * 2}
+                height={outerRect.height + BLOOM_MASK_MARGIN * 2}
+                fill="#fff"
               />
-            )
-          })}
+              <rect
+                x={outerRect.x}
+                y={outerRect.y}
+                width={outerRect.width}
+                height={outerRect.height}
+                rx={outerRect.rx}
+                fill="#000"
+              />
+            </mask>
+            {/* Per-layer Gaussian blurs with enlarged filter regions — CSS
+             *  filter: blur() on SVG elements clips at the default region
+             *  (10% past the bounding box), cutting the glow off in a
+             *  straight line well before it has faded out */}
+            {OUTER_BOX_BLOOM_LAYERS.map(({ blur }, i) => (
+              <filter
+                key={i}
+                id={`${bloomMaskId}-blur${i}`}
+                x="-150%"
+                y="-150%"
+                width="400%"
+                height="400%"
+              >
+                <feGaussianBlur stdDeviation={blur} />
+              </filter>
+            ))}
+            {/* Edge-strip gradients, transparent at both ends so the bloom
+             *  dies out before reaching the corners */}
+            <linearGradient
+              id={`${bloomMaskId}-h`}
+              gradientUnits="userSpaceOnUse"
+              x1={outerRect.x}
+              y1="0"
+              x2={outerRect.x + outerRect.width}
+              y2="0"
+            >
+              {BLOOM_GRADIENT_STOPS.map(({ offset, opacity }, i) => (
+                <stop key={i} offset={offset} stopColor="var(--color-primary)" stopOpacity={opacity} />
+              ))}
+            </linearGradient>
+            <linearGradient
+              id={`${bloomMaskId}-v`}
+              gradientUnits="userSpaceOnUse"
+              x1="0"
+              y1={outerRect.y}
+              x2="0"
+              y2={outerRect.y + outerRect.height}
+            >
+              {BLOOM_GRADIENT_STOPS.map(({ offset, opacity }, i) => (
+                <stop key={i} offset={offset} stopColor="var(--color-primary)" stopOpacity={opacity} />
+              ))}
+            </linearGradient>
+          </defs>
+          <g mask={`url(#${bloomMaskId})`}>
+            {OUTER_BOX_BLOOM_LAYERS.map(({ className, strokeWidth }, i) => (
+              <g key={className} className={styles[className]} filter={`url(#${bloomMaskId}-blur${i})`}>
+                <line
+                  x1={outerRect.x}
+                  y1={outerRect.y}
+                  x2={outerRect.x + outerRect.width}
+                  y2={outerRect.y}
+                  stroke={`url(#${bloomMaskId}-h)`}
+                  strokeWidth={strokeWidth}
+                />
+                <line
+                  x1={outerRect.x}
+                  y1={outerRect.y + outerRect.height}
+                  x2={outerRect.x + outerRect.width}
+                  y2={outerRect.y + outerRect.height}
+                  stroke={`url(#${bloomMaskId}-h)`}
+                  strokeWidth={strokeWidth}
+                />
+                <line
+                  x1={outerRect.x}
+                  y1={outerRect.y}
+                  x2={outerRect.x}
+                  y2={outerRect.y + outerRect.height}
+                  stroke={`url(#${bloomMaskId}-v)`}
+                  strokeWidth={strokeWidth}
+                />
+                <line
+                  x1={outerRect.x + outerRect.width}
+                  y1={outerRect.y}
+                  x2={outerRect.x + outerRect.width}
+                  y2={outerRect.y + outerRect.height}
+                  stroke={`url(#${bloomMaskId}-v)`}
+                  strokeWidth={strokeWidth}
+                />
+              </g>
+            ))}
+          </g>
         </g>
       )}
 
