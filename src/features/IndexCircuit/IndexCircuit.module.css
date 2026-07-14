@@ -1,8 +1,12 @@
-/* Board = background image + blueprint SVG overlay, 1:1 aligned */
+/* Board = background image + blueprint SVG overlay, 1:1 aligned.
+   The border sits on the board wrapper (not the img) so the image's
+   top/bottom fade mask can't fade the border away with it. */
 .board {
   position: relative;
   width: 100%;
   flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
 }
 
 .background {
