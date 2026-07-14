@@ -259,25 +259,22 @@
   opacity: 0.5;
 }
 
-.centerCardEdgeGlow {
+/* Border smoke — always visible (not hover-gated), a fixed noise texture
+   masked to a thin band at the card's edge, additively blended so it reads
+   as a faint haze rather than flat paint */
+.centerCardSmoke {
   mix-blend-mode: screen;
   pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
 }
 
-/* Wide, heavily blurred stroke clipped inside the card — reads as a soft
-   glow hugging the border that fades naturally toward the center */
-.centerCardEdgeGlowStroke {
-  fill: none;
-  stroke: var(--center-card-accent);
-  stroke-width: 14;
-  opacity: 0.16;
-  filter: blur(6px);
-}
-
-.centerCardCornerGlow {
-  fill: var(--center-card-accent);
-  opacity: 0.22;
-  filter: blur(7px);
+/* Same smoke layer while something on the board is hovered/highlighted —
+   brighter and more opaque so the noise+bloom filter reads as a neon glow
+   hugging the border instead of a faint idle haze */
+.centerCardSmokeHighlighted {
+  composes: centerCardSmoke;
+  opacity: 0.95;
 }
 
 .centerCardLabel {

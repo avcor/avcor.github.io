@@ -31,6 +31,17 @@ const DENSITY_BANDS = [
 
 /** Every matrix-grid dot's position, computed once — densest along the
  *  card's border, thinning out in concentric bands toward the center. */
+/** Smoke texture tint, as an `feColorMatrix` RGBA row set — SVG filter
+ *  primitives can't read CSS custom properties, so the idle (warm-white)
+ *  and highlighted (neon green, matching `--color-primary`) tints are
+ *  hardcoded here, mirroring the fixed-color approach in
+ *  CircuitChipNoise.tsx. Highlighted uses a much higher alpha so the haze
+ *  reads as a bright neon glow instead of a faint idle haze. */
+const SMOKE_TINT = {
+  idle: '0 0 0 0 0.97  0 0 0 0 0.99  0 0 0 0 0.91  0 0 0 0.5 0',
+  highlighted: '0 0 0 0 0.357  0 0 0 0 1  0 0 0 0 0.416  0 0 0 0.95 0',
+} as const
+
 const GRID_DOTS = (() => {
   const { rect } = CIRCUIT_CENTER_CARD
   const cols = Math.floor(rect.width / GRID_SPACING)
@@ -58,15 +69,18 @@ const GRID_DOTS = (() => {
 
 /**
  * The premium microchip-style hub card every trunk wire converges into:
- * transparent background, a faint dotted matrix grid and a thin border
+ * transparent background, a faint dotted matrix grid, a thin border, and a
+ * static smoke haze hugging the border (fading out toward the center) all
  * always visible (idle warm-white, matching the wires at rest — no fill);
- * the edge glow (brighter at the corners) and the center "AV" label's bloom
- * halo only show — in neon green — while something on the board is
- * hovered/highlighted.
+ * the center "AV" label's bloom halo only shows — in neon green — while
+ * something on the board is hovered/highlighted.
  */
 export default function CircuitCenterCard({ isHighlighted = false }: CircuitCenterCardProps) {
   const { rect, label } = CIRCUIT_CENTER_CARD
   const cardClipId = useId()
+  const smokeFilterId = useId()
+  const smokeMaskId = useId()
+  const smokeGradientId = useId()
   const centerX = rect.x + rect.width / 2
   const centerY = rect.y + rect.height / 2
   const accentStyle: AccentCSSProperties = {
@@ -79,6 +93,27 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
         <clipPath id={cardClipId}>
           <rect x={rect.x} y={rect.y} width={rect.width} height={rect.height} rx={rect.rx} />
         </clipPath>
+
+        {/* Smoke texture — a fixed (non-animated) noise field, masked so
+         *  it's only visible right at the border and fades to nothing
+         *  toward the center. The alpha contrast boost keeps it reading as
+         *  mottled wisps rather than a flat blob; tinted warm-white idle /
+         *  brighter neon green on highlight. */}
+        <filter id={smokeFilterId}>
+          <feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves="4" seed="7" result="noise" />
+          <feComponentTransfer in="noise" result="noise">
+            <feFuncA type="gamma" amplitude="1" exponent={isHighlighted ? 1.6 : 2.2} offset="0" />
+          </feComponentTransfer>
+          <feColorMatrix in="noise" type="matrix" values={isHighlighted ? SMOKE_TINT.highlighted : SMOKE_TINT.idle} />
+        </filter>
+        <radialGradient id={smokeGradientId} cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0" />
+          <stop offset="55%" stopColor="#fff" stopOpacity="0" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="1" />
+        </radialGradient>
+        <mask id={smokeMaskId}>
+          <rect x={rect.x} y={rect.y} width={rect.width} height={rect.height} fill={`url(#${smokeGradientId})`} />
+        </mask>
       </defs>
 
       {/* Fine dotted matrix grid, densest at the border — transparent background otherwise */}
@@ -86,6 +121,18 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
         {GRID_DOTS.map(({ x, y }, i) => (
           <rect key={i} x={x - 0.7} y={y - 0.7} width="1.4" height="1.4" className={styles.centerCardGridDot} />
         ))}
+      </g>
+
+      {/* Border smoke — always visible, brightest right at the edge and
+       *  fading out well before the center; subtle warm-white haze at
+       *  rest, brighter neon-green glow while something on the board is
+       *  hovered/highlighted */}
+      <g
+        className={isHighlighted ? styles.centerCardSmokeHighlighted : styles.centerCardSmoke}
+        clipPath={`url(#${cardClipId})`}
+        mask={`url(#${smokeMaskId})`}
+      >
+        <rect x={rect.x} y={rect.y} width={rect.width} height={rect.height} filter={`url(#${smokeFilterId})`} />
       </g>
 
       {/* Card border — same idle warm-white as the default (non-hover) wire
@@ -98,30 +145,6 @@ export default function CircuitCenterCard({ isHighlighted = false }: CircuitCent
         rx={rect.rx}
         className={styles.centerCardBorder}
       />
-
-      {isHighlighted && (
-        // Soft edge glow — clipped inside the card so it hugs the (now
-        // invisible) border edge and fades naturally toward the center
-        <g className={styles.centerCardEdgeGlow} clipPath={`url(#${cardClipId})`}>
-          <rect
-            x={rect.x}
-            y={rect.y}
-            width={rect.width}
-            height={rect.height}
-            rx={rect.rx}
-            className={styles.centerCardEdgeGlowStroke}
-          />
-          {/* Brighter plasma-like glow at each corner */}
-          {[
-            { cx: rect.x, cy: rect.y },
-            { cx: rect.x + rect.width, cy: rect.y },
-            { cx: rect.x, cy: rect.y + rect.height },
-            { cx: rect.x + rect.width, cy: rect.y + rect.height },
-          ].map(({ cx, cy }, i) => (
-            <circle key={i} cx={cx} cy={cy} r={16} className={styles.centerCardCornerGlow} />
-          ))}
-        </g>
-      )}
 
       {/* Center label — crisp text always visible, bloom halo only on highlight */}
       {isHighlighted && (
