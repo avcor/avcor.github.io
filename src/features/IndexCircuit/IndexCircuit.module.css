@@ -29,12 +29,11 @@
 }
 
 /* ── Wire glow (idle + active tones) ─────────────────────────────────────
-   A sensor-line look for every circuit wire: a 1px sharp core with a soft
-   blurred bloom, brightest at the path's own midpoint and gradually
-   dimming toward both ends. `idle` (warm-white) plays at rest; `active`
-   (green) plays on top of it while the wire is on the hovered route —
-   same diameters/falloff for both, only the color and blend differ.
-   Additively blended so it reads as light rather than flat paint.
+   `idle` (default, non-hover) is just a thin flat warm-white core — no
+   bloom. `active` (green) plays on top of it while the wire is on the
+   hovered route: a soft blurred halo plus a hotspot brightest at the
+   path's own midpoint, gradually dimming toward both ends. Additively
+   blended so it reads as light rather than flat paint.
    See CircuitWireGlow.tsx. */
 
 .idleWire,
@@ -42,8 +41,15 @@
   mix-blend-mode: screen;
 }
 
+/* Idle (default, non-hover) core — thin and flat, no bloom */
+.idleCore {
+  fill: none;
+  stroke: var(--color-idle-glow);
+  stroke-width: 0.6;
+  opacity: 0.3;
+}
+
 /* Soft outer bloom — blooms above/below the line without reading as thick */
-.idleGlowHalo,
 .activeGlowHalo {
   fill: none;
   stroke-width: 6;
@@ -53,14 +59,12 @@
 }
 
 /* 1px sharp core, dim along its full length outside the hotspot bands */
-.idleCore,
 .activeCore {
   fill: none;
   stroke-width: 1;
   opacity: 0.35;
 }
 
-.idleHotspotInner,
 .activeHotspotInner {
   fill: none;
   stroke-width: 1.2;
@@ -69,7 +73,6 @@
   filter: blur(0.3px);
 }
 
-.idleHotspotMid,
 .activeHotspotMid {
   fill: none;
   stroke-width: 2.4;
@@ -78,21 +81,12 @@
   filter: blur(1.5px);
 }
 
-.idleHotspotOuter,
 .activeHotspotOuter {
   fill: none;
   stroke-width: 5;
   stroke-linecap: round;
   opacity: 0.08;
   filter: blur(2.5px);
-}
-
-.idleGlowHalo,
-.idleCore,
-.idleHotspotInner,
-.idleHotspotMid,
-.idleHotspotOuter {
-  stroke: var(--color-idle-glow);
 }
 
 .activeGlowHalo,
@@ -245,4 +239,64 @@
 
 .chipNoiseLayer {
   opacity: 0.18;
+}
+
+/* ── Center chip card ─────────────────────────────────────────────────────
+   The premium microchip-style hub every trunk wire converges into. See
+   CircuitCenterCard.tsx for the layer structure. */
+
+.centerCardGridDot {
+  fill: var(--center-card-accent);
+  opacity: 0.13;
+}
+
+/* Card outline, always visible — same thin flat style as the idle (default,
+   non-hover) wire core, so the border reads as the same "path color" */
+.centerCardBorder {
+  fill: none;
+  stroke: var(--center-card-accent);
+  stroke-width: 0.7;
+  opacity: 0.5;
+}
+
+.centerCardEdgeGlow {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Wide, heavily blurred stroke clipped inside the card — reads as a soft
+   glow hugging the border that fades naturally toward the center */
+.centerCardEdgeGlowStroke {
+  fill: none;
+  stroke: var(--center-card-accent);
+  stroke-width: 14;
+  opacity: 0.16;
+  filter: blur(6px);
+}
+
+.centerCardCornerGlow {
+  fill: var(--center-card-accent);
+  opacity: 0.22;
+  filter: blur(7px);
+}
+
+.centerCardLabel {
+  fill: var(--center-card-accent);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.centerCardLabelGlow {
+  fill: var(--center-card-accent);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+  text-anchor: middle;
+  pointer-events: none;
+  opacity: 0.7;
+  filter: blur(3px);
+  mix-blend-mode: screen;
 }

@@ -250,3 +250,10 @@ export const CIRCUIT_DOMAINS: CircuitDomain[] = [
     icon: CloudOff,
   },
 ]
+
+/** The hub every trunk wire converges into — a premium microchip-style
+ *  card, verbatim placement from the blueprint. */
+export const CIRCUIT_CENTER_CARD = {
+  rect: { x: 328.5, y: 205.5, width: 77, height: 86, rx: 4.5 },
+  label: 'AV',
+}

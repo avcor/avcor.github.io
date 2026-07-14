@@ -1,5 +1,6 @@
 import { forwardRef, useMemo, useState, type CSSProperties } from 'react'
 import CircuitCaseStudyPill from './CircuitCaseStudyPill'
+import CircuitCenterCard from './CircuitCenterCard'
 import CircuitDomainChip from './CircuitDomainChip'
 import CircuitWireGlow from './CircuitWireGlow'
 import CircuitWirePulse from './CircuitWirePulse'
@@ -99,6 +100,8 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
             {highlightedWireIds.has(wire.id) && <CircuitWireGlow d={wire.d} tone="active" />}
           </g>
         ))}
+
+        <CircuitCenterCard isHighlighted={hovered !== null} />
 
         {hovered && pulsePath && (
           <CircuitWirePulse d={pulsePath} pulseKey={`${hovered.type}-${hovered.id}`} />

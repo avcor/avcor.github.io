@@ -4,8 +4,8 @@ import styles from './IndexCircuit.module.css'
 interface CircuitWireGlowProps {
   /** Wire path data, verbatim from the blueprint */
   d: string
-  /** 'idle' (warm-white, always on) or 'active' (green, only while on the
-   *  hovered route) — same diameters/falloff, different color and blend. */
+  /** 'idle' (thin flat line, always on) or 'active' (green, full glow —
+   *  only while on the hovered route). */
   tone: 'idle' | 'active'
 }
 
@@ -13,21 +13,7 @@ interface CircuitWireGlowProps {
  *  viewBox units (narrowest/brightest first) — layering them creates a
  *  hotspot that smoothly fades toward both ends instead of a hard edge. */
 const HOTSPOT_HALF_WIDTHS = [14, 38, 76] as const
-
-const TONE_CLASSES = {
-  idle: {
-    group: 'idleWire',
-    halo: 'idleGlowHalo',
-    core: 'idleCore',
-    bands: ['idleHotspotInner', 'idleHotspotMid', 'idleHotspotOuter'],
-  },
-  active: {
-    group: 'activeWire',
-    halo: 'activeGlowHalo',
-    core: 'activeCore',
-    bands: ['activeHotspotInner', 'activeHotspotMid', 'activeHotspotOuter'],
-  },
-} as const
+const ACTIVE_BANDS = ['activeHotspotInner', 'activeHotspotMid', 'activeHotspotOuter'] as const
 
 function centeredBandDash(pathLength: number, halfWidth: number) {
   const visible = Math.min(halfWidth * 2, pathLength)
@@ -39,28 +25,39 @@ function centeredBandDash(pathLength: number, halfWidth: number) {
 }
 
 /**
- * A circuit wire's glow, in either its dormant (`idle`, warm-white) or
- * hovered (`active`, green) tone: a 1px sharp core with a soft blurred
- * bloom, brightest at the path's own midpoint and gradually dimming
- * toward both ends — a sensor line rather than a flat blueprint outline
- * or a uniformly-lit highlight. No shapes, no motion.
+ * A circuit wire's glow. In its dormant `idle` tone it's just a thin flat
+ * core line — no bloom, no hotspot — kept minimal until hovered. In its
+ * `active` (green) tone, hover adds the full treatment: a soft blurred
+ * halo plus a hotspot brightest at the path's own midpoint, gradually
+ * dimming toward both ends. No shapes, no motion.
  */
 export default function CircuitWireGlow({ d, tone }: CircuitWireGlowProps) {
+  if (tone === 'idle') {
+    return (
+      <g className={styles.idleWire}>
+        <path d={d} className={styles.idleCore} />
+      </g>
+    )
+  }
+
+  return <ActiveWireGlow d={d} />
+}
+
+function ActiveWireGlow({ d }: { d: string }) {
   const measureRef = useRef<SVGPathElement>(null)
   const [pathLength, setPathLength] = useState(0)
-  const classes = TONE_CLASSES[tone]
 
   useEffect(() => {
     setPathLength(measureRef.current?.getTotalLength() ?? 0)
   }, [d])
 
   return (
-    <g className={styles[classes.group]}>
+    <g className={styles.activeWire}>
       <path ref={measureRef} d={d} fill="none" stroke="none" />
-      <path d={d} className={styles[classes.halo]} />
-      <path d={d} className={styles[classes.core]} />
+      <path d={d} className={styles.activeGlowHalo} />
+      <path d={d} className={styles.activeCore} />
       {pathLength > 0 &&
-        classes.bands.map((className, i) => (
+        ACTIVE_BANDS.map((className, i) => (
           <path
             key={className}
             d={d}
