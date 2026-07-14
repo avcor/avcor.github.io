@@ -250,6 +250,21 @@
   opacity: 0.13;
 }
 
+/* Dot matrix while the card itself is hovered — dim green pinpricks
+   filling the whole card evenly, matching the reference asset where the
+   dots read as a subtle texture (green channel ~25–65/255) rather than a
+   bright neon field; a faint group-level glow keeps them reading as lit
+   without blooming */
+.centerCardGridGroupHovered {
+  filter: drop-shadow(0 0 1px var(--color-primary));
+  mix-blend-mode: screen;
+}
+
+.centerCardGridDotHovered {
+  fill: var(--color-primary);
+  opacity: 0.25;
+}
+
 /* Card outline, always visible — same thin flat style as the idle (default,
    non-hover) wire core, so the border reads as the same "path color" */
 .centerCardBorder {
@@ -259,22 +274,33 @@
   opacity: 0.5;
 }
 
-/* Border smoke — always visible (not hover-gated), a fixed noise texture
-   masked to a thin band at the card's edge, additively blended so it reads
-   as a faint haze rather than flat paint */
-.centerCardSmoke {
+/* Neon strip glow on the card's own border, shown only while the card
+   itself is hovered — bright green, additively blended, with the core kept
+   thin so the border still reads as a fine line rather than a thick band */
+.centerCardHoverGlowGroup {
   mix-blend-mode: screen;
   pointer-events: none;
-  opacity: 0.5;
-  transition: opacity 0.15s ease;
 }
 
-/* Same smoke layer while something on the board is hovered/highlighted —
-   brighter and more opaque so the noise+bloom filter reads as a neon glow
-   hugging the border instead of a faint idle haze */
-.centerCardSmokeHighlighted {
-  composes: centerCardSmoke;
-  opacity: 0.95;
+.centerCardHoverGlowHalo {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 10;
+  opacity: 0.5;
+  filter: blur(4px);
+}
+
+.centerCardHoverGlowCore {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  opacity: 1;
+}
+
+/* Invisible hit area covering the whole card, driving the hover glow above */
+.centerCardHoverTarget {
+  cursor: pointer;
+  pointer-events: all;
 }
 
 .centerCardLabel {
