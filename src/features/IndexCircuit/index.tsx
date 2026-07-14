@@ -80,15 +80,18 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
    *  pills and domain chips themselves stay in their resting state. */
   const isCenterHover = hovered?.type === 'center'
 
-  const highlightedLeafIds = useMemo(() => {
+  /** Leaves whose wire is lit — used for the connector dots, which glow on
+   *  every kind of hover, including the center chip's. */
+  const litWireLeafIds = useMemo(() => {
     const ids = new Set<string>()
-    if (isCenterHover) return ids
     for (const study of CIRCUIT_CASE_STUDIES) {
       const leafWire = CIRCUIT_WIRES.find((wire) => wire.nodeIds.includes(study.id))
       if (leafWire && highlightedWireIds.has(leafWire.id)) ids.add(study.id)
     }
     return ids
-  }, [highlightedWireIds, isCenterHover])
+  }, [highlightedWireIds])
+
+  const highlightedLeafIds = isCenterHover ? new Set<string>() : litWireLeafIds
 
   /** Every domain chip the current route passes through — not just a
    *  directly-hovered domain, but also the domain a hovered leaf's wire
@@ -157,6 +160,7 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
             key={study.id}
             study={study}
             isHighlighted={highlightedLeafIds.has(study.id)}
+            isDotHighlighted={litWireLeafIds.has(study.id)}
             onHoverChange={(isHovered) =>
               setHovered(isHovered ? { id: study.id, type: 'leaf' } : null)
             }

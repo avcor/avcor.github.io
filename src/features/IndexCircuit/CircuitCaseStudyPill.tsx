@@ -5,12 +5,16 @@ import styles from './IndexCircuit.module.css'
 interface CircuitCaseStudyPillProps {
   study: CircuitCaseStudy
   isHighlighted?: boolean
+  /** Lights just the connector dots — set whenever the pill's wire is lit,
+   *  including a center-chip hover where the rest of the pill stays at rest */
+  isDotHighlighted?: boolean
   onHoverChange?: (hovered: boolean) => void
 }
 
 export default function CircuitCaseStudyPill({
   study,
   isHighlighted = false,
+  isDotHighlighted = false,
   onHoverChange,
 }: CircuitCaseStudyPillProps) {
   const gradientId = useId()
@@ -45,14 +49,14 @@ export default function CircuitCaseStudyPill({
         cx={study.dot.cx}
         cy={study.dot.cy}
         r={2.2}
-        className={isHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
+        className={isDotHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
       />
       {/* Wire-side connector dot — explicit placement from the blueprint */}
       <circle
         cx={study.innerDot.cx}
         cy={study.innerDot.cy}
         r={2.2}
-        className={isHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
+        className={isDotHighlighted ? `${styles.dot} ${styles.dotHighlight}` : styles.dot}
       />
       <text
         x={study.text.x}
