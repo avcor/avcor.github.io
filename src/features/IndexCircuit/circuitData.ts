@@ -1,0 +1,279 @@
+import { CloudOff, Gauge, Layers, Package, Rocket, Shield } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+
+/**
+ * Geometry extracted 1:1 from the blueprint SVG (Frame 2.svg, viewBox 0 0 758 462).
+ * Coordinates are the single source of truth — do not reposition or resize.
+ */
+
+export interface CircuitCaseStudy {
+  id: string
+  label: string
+  /** Rounded-rect outline path, verbatim from the blueprint */
+  pillPath: string
+  /** Text anchor: pill center (rendered with text-anchor middle / central baseline) */
+  text: { x: number; y: number }
+  /** Connector endpoint dot on the pill's outer edge */
+  dot: { cx: number; cy: number }
+  /** Connector dot on the pill's wire-side edge, verbatim from the blueprint */
+  innerDot: { cx: number; cy: number }
+  /** Optional vertical accent line rendered to the left of the pill, with a gap before it */
+  accentLine?: { x: number; y1: number; y2: number }
+}
+
+export interface CircuitDomain {
+  id: string
+  /** Label lines, e.g. ['01', 'Platform', 'Engineering'] */
+  lines: string[]
+  /** Chip region rect, verbatim from the blueprint — label anchors flush-left to rect.x */
+  rect: { x: number; y: number; width: number; height: number; rx: number }
+  /** Icon representing the domain, rendered centered inside the chip's rect */
+  icon: LucideIcon
+}
+
+export const CIRCUIT_VIEWBOX = '0 0 758 462'
+export const LABEL_LINE_HEIGHT = 10
+/** Vertical gap between the last label line's baseline and the chip's top edge */
+export const LABEL_CHIP_GAP = 20
+
+export interface CircuitWire {
+  id: string
+  /** Path segment, verbatim from the blueprint */
+  d: string
+  /** Case-study / domain ids this wire touches — used to highlight it on hover */
+  nodeIds: string[]
+}
+
+/**
+ * Connector wires, verbatim from the blueprint, split into individually
+ * addressable segments (rather than one combined path) so hovering a leaf
+ * node or a domain chip can highlight just the wires touching it.
+ */
+export const CIRCUIT_WIRES: CircuitWire[] = [
+  {
+    id: 'flutter-integration_platform-engineering',
+    d: 'M200.5 74.5H215L232.5 92V108.5L241.5 117.5H259.5',
+    nodeIds: ['flutter-integration', 'platform-engineering'],
+  },
+  {
+    id: 'logging-system_platform-engineering',
+    d: 'M200.5 104.5H219L237 122.5H259.5',
+    nodeIds: ['logging-system', 'platform-engineering'],
+  },
+  {
+    id: 'android-14-migration_platform-modernization',
+    d: 'M186 254.5L194 262.5',
+    nodeIds: ['android-14-migration', 'platform-modernization'],
+  },
+  {
+    id: 'medical-chart-optimization_performance-engineering',
+    d: 'M227.5 398H241.5L247.5 404H254',
+    nodeIds: ['medical-chart-optimization', 'performance-engineering'],
+  },
+  {
+    id: 'platform-engineering_center',
+    d: 'M317.5 132.5H323.5L342 151V189',
+    nodeIds: ['platform-engineering'],
+  },
+  {
+    id: 'platform-modernization_center',
+    d: 'M250.5 266H265.5L290 241.5H313',
+    nodeIds: ['platform-modernization'],
+  },
+  {
+    id: 'performance-engineering_center',
+    /* Final x snapped from the blueprint's 349.768 (Figma export artifact)
+       to the half-unit grid every other wire sits on, so the vertical tail
+       antialiases as crisply as the rest */
+    d: 'M311.5 399H324.5L331 392.5V384.5L351.5 364V318L349.5 317V307',
+    nodeIds: ['performance-engineering'],
+  },
+  /* Right-side wires: the blueprint drew these center → outward, but the
+     traveling pulse follows path direction, and current must flow inward
+     (leaf → chip → center) like the left side — so each `d` below is the
+     blueprint path with its point order reversed. Geometry is unchanged. */
+  {
+    id: 'security-engineering_center',
+    d: 'M422 117.5H397.5L379.5 135.5V168.5L378 170V189',
+    nodeIds: ['security-engineering'],
+  },
+  {
+    id: 'security-engineering_attendance-fraud-prevention',
+    d: 'M524.5 104.5H509L491 122.5H479',
+    nodeIds: ['security-engineering', 'attendance-fraud-prevention'],
+  },
+  {
+    id: 'product-engineering_center',
+    d: 'M474.5 266L456.5 248H421.5',
+    nodeIds: ['product-engineering'],
+  },
+  {
+    id: 'product-engineering_payment-experience',
+    d: 'M561 237H555.5L544 248.5V253L530 267',
+    nodeIds: ['product-engineering', 'payment-experience'],
+  },
+  {
+    id: 'product-engineering_multi-account-architecture',
+    d: 'M561.5 272H551L541 282H530',
+    nodeIds: ['product-engineering', 'multi-account-architecture'],
+  },
+  {
+    id: 'offline-first-architecture_center',
+    d: 'M438.5 416.5H425.5L378 369V307',
+    nodeIds: ['offline-first-architecture'],
+  },
+  {
+    id: 'offline-first-architecture_ecg-background-sync',
+    d: 'M533 398.5H513L503 408.5H494.5',
+    nodeIds: ['offline-first-architecture', 'ecg-background-sync'],
+  },
+]
+
+export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
+  {
+    id: 'flutter-integration',
+    label: 'Flutter Integration',
+    pillPath:
+      'M116 62.5H190C193.59 62.5 196.5 65.4101 196.5 69V80C196.5 83.5899 193.59 86.5 190 86.5H116C112.41 86.5 109.5 83.5898 109.5 80V69C109.5 65.4101 112.41 62.5 116 62.5Z',
+    text: { x: 153, y: 74.5 },
+    dot: { cx: 109, cy: 75 },
+    innerDot: { cx: 198.5, cy: 74.5 },
+  },
+  {
+    id: 'logging-system',
+    label: 'Logging System',
+    pillPath:
+      'M116 92.5H190C193.59 92.5 196.5 95.4101 196.5 99V110C196.5 113.59 193.59 116.5 190 116.5H116C112.41 116.5 109.5 113.59 109.5 110V99C109.5 95.4101 112.41 92.5 116 92.5Z',
+    text: { x: 153, y: 104.5 },
+    dot: { cx: 109, cy: 105 },
+    innerDot: { cx: 198.5, cy: 104.5 },
+  },
+  {
+    id: 'android-14-migration',
+    label: 'Android 14 Migration',
+    pillPath:
+      'M97 242.5H175C178.59 242.5 181.5 245.41 181.5 249V259C181.5 262.59 178.59 265.5 175 265.5H97C93.4101 265.5 90.5 262.59 90.5 259V249C90.5 245.41 93.4101 242.5 97 242.5Z',
+    text: { x: 136, y: 254 },
+    dot: { cx: 90, cy: 254 },
+    innerDot: { cx: 183.5, cy: 253.5 },
+    accentLine: { x: 82.5, y1: 242.5, y2: 265.5 },
+  },
+  {
+    id: 'medical-chart-optimization',
+    label: 'Medical Chart Optimization',
+    pillPath:
+      'M113 386.5H217C220.59 386.5 223.5 389.41 223.5 393V404C223.5 407.59 220.59 410.5 217 410.5H113C109.41 410.5 106.5 407.59 106.5 404V393C106.5 389.41 109.41 386.5 113 386.5Z',
+    text: { x: 165, y: 398.5 },
+    dot: { cx: 105, cy: 398 },
+    innerDot: { cx: 225.5, cy: 398.5 },
+  },
+  {
+    id: 'attendance-fraud-prevention',
+    label: 'Attendance Fraud Prevention',
+    pillPath:
+      'M536 93.5H645C648.59 93.5 651.5 96.4101 651.5 100V110C651.5 113.59 648.59 116.5 645 116.5H536C532.41 116.5 529.5 113.59 529.5 110V100C529.5 96.5225 532.231 93.6831 535.665 93.5088L536 93.5Z',
+    text: { x: 590.5, y: 105 },
+    dot: { cx: 652, cy: 104 },
+    innerDot: { cx: 527.5, cy: 104.5 },
+  },
+  {
+    id: 'payment-experience',
+    label: 'Payment Experience',
+    pillPath:
+      'M572 225.5H648C651.59 225.5 654.5 228.41 654.5 232V242C654.5 245.59 651.59 248.5 648 248.5H572C568.41 248.5 565.5 245.59 565.5 242V232C565.5 228.41 568.41 225.5 572 225.5Z',
+    text: { x: 610, y: 237 },
+    dot: { cx: 655, cy: 237 },
+    innerDot: { cx: 563.5, cy: 236.5 },
+  },
+  {
+    id: 'multi-account-architecture',
+    label: 'Multi-Account Architecture',
+    pillPath:
+      'M573 259.5H677C680.59 259.5 683.5 262.41 683.5 266V276C683.5 279.59 680.59 282.5 677 282.5H573C569.41 282.5 566.5 279.59 566.5 276V266C566.5 262.41 569.41 259.5 573 259.5Z',
+    text: { x: 625, y: 271 },
+    dot: { cx: 684, cy: 271 },
+    innerDot: { cx: 563.5, cy: 271.5 },
+    accentLine: { x: 691.5, y1: 259.5, y2: 282.5 },
+  },
+  {
+    id: 'ecg-background-sync',
+    label: 'Ecg background Sync',
+    pillPath:
+      'M544 386.5H633C636.59 386.5 639.5 389.41 639.5 393V404C639.5 407.59 636.59 410.5 633 410.5H544C540.41 410.5 537.5 407.59 537.5 404V393C537.5 389.41 540.41 386.5 544 386.5Z',
+    text: { x: 588.5, y: 398.5 },
+    dot: { cx: 640, cy: 398 },
+    innerDot: { cx: 535.5, cy: 398.5 },
+  },
+]
+
+/**
+ * Horizontal position of the "Android 14 Migration" accent line, as a fraction
+ * of the circuit's viewBox width. Used to align the left-bleed pcb image so it
+ * never renders that pill's label underneath the left panel's text.
+ */
+export const LEFT_BLEED_MARKER_FRACTION = (() => {
+  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'android-14-migration')?.accentLine
+  const viewBoxWidth = Number(CIRCUIT_VIEWBOX.split(' ')[2])
+  return marker ? marker.x / viewBoxWidth : 0
+})()
+
+/**
+ * Horizontal position of the "Multi-Account Architecture" accent line, as a
+ * fraction of the circuit's viewBox width. Used to cap how far the board's
+ * right-bleed growth can shift content before that label crosses the
+ * viewport's right edge.
+ */
+export const RIGHT_BLEED_MARKER_FRACTION = (() => {
+  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'multi-account-architecture')?.accentLine
+  const viewBoxWidth = Number(CIRCUIT_VIEWBOX.split(' ')[2])
+  return marker ? marker.x / viewBoxWidth : 1
+})()
+
+export const CIRCUIT_DOMAINS: CircuitDomain[] = [
+  {
+    id: 'platform-engineering',
+    lines: ['01', 'Platform', 'Engineering'],
+    rect: { x: 268.5, y: 100.5, width: 40, height: 41, rx: 4.5 },
+    icon: Layers,
+  },
+  {
+    id: 'security-engineering',
+    lines: ['02', 'Security', 'Engineering'],
+    rect: { x: 431.5, y: 104.5, width: 38, height: 40, rx: 4.5 },
+    icon: Shield,
+  },
+  {
+    id: 'platform-modernization',
+    lines: ['03', 'Platform', 'Modernization'],
+    rect: { x: 203.5, y: 257.5, width: 37, height: 40, rx: 4.5 },
+    icon: Rocket,
+  },
+  {
+    id: 'product-engineering',
+    lines: ['04', 'Product', 'Engineering'],
+    rect: { x: 483.5, y: 264.5, width: 38, height: 41, rx: 4.5 },
+    icon: Package,
+  },
+  {
+    id: 'performance-engineering',
+    lines: ['05', 'Performance', 'Engineering'],
+    rect: { x: 263.5, y: 382.5, width: 41, height: 42, rx: 4.5 },
+    icon: Gauge,
+  },
+  {
+    id: 'offline-first-architecture',
+    lines: ['06', 'Offline-first', 'Architecture'],
+    rect: { x: 446.5, y: 382.5, width: 40, height: 42, rx: 4.5 },
+    icon: CloudOff,
+  },
+]
+
+/** The hub every trunk wire converges into — a premium microchip-style
+ *  card, verbatim placement from the blueprint. */
+export const CIRCUIT_CENTER_CARD = {
+  rect: { x: 328.5, y: 205.5, width: 77, height: 86, rx: 4.5 },
+  /** Outer framing box around the card, verbatim from the blueprint —
+   *  carries the outward light-escape glow while the board is lit. */
+  outerRect: { x: 321.5, y: 198.5, width: 90, height: 99, rx: 5.5 },
+  label: 'AV',
+}

@@ -1,6 +1,7 @@
 import CursorGlow from './components/CursorGlow'
 import Home from './pages/Home'
 import ImpactPage from './pages/ImpactPage'
+import IndexPage from './pages/IndexPage'
 
 export default function App() {
   return (
@@ -8,6 +9,7 @@ export default function App() {
       <CursorGlow />
       <Home />
       <ImpactPage />
+      <IndexPage />
     </>
   )
 }

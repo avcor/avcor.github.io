@@ -6,7 +6,7 @@
 
 :root {
   /* Backgrounds */
-  --color-bg-base:        #050608;   /* Page background */
+  --color-bg-base:        #000104;   /* Page background */
   --color-bg-surface:     #0B0E11;   /* Cards, panels */
   --color-bg-elevated:    #0f1318;   /* Modals, dropdowns */
   --color-bg-subtle:      #141920;   /* Hover states, dividers */
@@ -34,6 +34,7 @@
 
   /* Glow */
   --color-glow:           #7DFF8A;   /* Hover/glow accent */
+  --color-idle-glow:      #F8FEE8;   /* Warm white w/ subtle green tint — dormant wire glow */
 
   /* Typography — change this one line to test a different font family */
   --font-primary: 'Google Sans Flex', 'Inter', sans-serif;
@@ -49,6 +50,7 @@
   --color-bg-glass:           #050d07;      /* SVG glass badge dark fill */
   --color-bg-stats:           rgba(10, 13, 16, 0.95);  /* Frosted stats panel */
   --color-text-muted:         #82888B;      /* Muted description text */
+  --color-connector-dot:      #a0a0a1;      /* Solid fill for circuit connector dots */
 
   /* text-primary at opacity */
   --color-text-primary-a38:   rgba(230, 237, 243, 0.38);

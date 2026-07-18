@@ -1,0 +1,86 @@
+.column {
+  width: fit-content;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  background: var(--color-bg-base);
+  padding-bottom: 4px;
+}
+
+/* ── Top content group ── */
+.topGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 1. Section label ── */
+.label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.labelDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.labelText {
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: var(--color-white-a40);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ── 2. Hero heading ── */
+.heading {
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 0 0 20px;
+}
+
+.headingLine {
+  display: block;
+  font-size: clamp(2.6rem, 4vw, 4.4rem);
+  color: var(--color-white);
+}
+
+.headingLineAccent {
+  display: block;
+  font-size: clamp(2.6rem, 4vw, 4.4rem);
+  color: var(--color-primary);
+}
+
+/* ── 3. Description ── */
+.description {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--color-white-a45);
+  line-height: 1.7;
+  max-width: 30ch;
+  margin-bottom: 28px;
+}
+
+/* ── 4 & 5. Cards group ── */
+.cardsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .column {
+    width: 100%;
+    padding-bottom: 0;
+  }
+}

@@ -1,0 +1,343 @@
+/* Board = background image + blueprint SVG overlay, 1:1 aligned */
+.board {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.background {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 92%, transparent 100%);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Blueprint line work — thin lines only (iteration 1) */
+.stroke {
+  fill: none;
+  stroke: var(--color-white-a40);
+  stroke-width: 1;
+}
+
+/* ── Wire glow (idle + active tones) ─────────────────────────────────────
+   `idle` (default, non-hover) is just a thin flat warm-white core — no
+   bloom. `active` (green) plays on top of it while the wire is on the
+   hovered route: a soft blurred halo plus a hotspot brightest at the
+   path's own midpoint, gradually dimming toward both ends. Additively
+   blended so it reads as light rather than flat paint.
+   See CircuitWireGlow.tsx. */
+
+.idleWire,
+.activeWire {
+  mix-blend-mode: screen;
+}
+
+/* Idle (default, non-hover) core — thin and flat, no bloom */
+.idleCore {
+  fill: none;
+  stroke: var(--color-idle-glow);
+  stroke-width: 0.6;
+  opacity: 0.1;
+}
+
+/* Soft outer bloom — blooms above/below the line without reading as thick */
+.activeGlowHalo {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: 0.1;
+  filter: blur(2.5px);
+}
+
+/* 1px sharp core, bright neon along its full length outside the hotspot bands */
+.activeCore {
+  fill: none;
+  stroke-width: 1;
+  opacity: 0.4;
+}
+
+.activeHotspotInner {
+  fill: none;
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.7;
+  filter: blur(0.3px);
+}
+
+.activeHotspotMid {
+  fill: none;
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.3;
+  filter: blur(1.5px);
+}
+
+.activeHotspotOuter {
+  fill: none;
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.15;
+  filter: blur(2.5px);
+}
+
+.activeGlowHalo,
+.activeCore,
+.activeHotspotInner,
+.activeHotspotMid,
+.activeHotspotOuter {
+  stroke: var(--color-primary);
+}
+
+/* Blueprint text — sizes are in SVG viewBox units, scale with the board */
+.text {
+  fill: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: 9px;
+  font-weight: var(--font-weight-regular);
+  text-anchor: middle;
+}
+
+.textLeft {
+  text-anchor: start;
+}
+
+/* Never steals hover from the pill/chip box beneath it */
+.textLeft,
+.text {
+  pointer-events: none;
+}
+
+/* Case study pill labels (leaf nodes) — smaller than domain chip labels */
+.pillText {
+  font-size: 7px;
+}
+
+/* Leaf node or domain chip label, when highlighted — glows green like the rest of the neon treatment */
+.textHighlight {
+  fill: var(--color-glow);
+  transition: fill 0.15s ease;
+}
+
+/* Connector dot at each pill's wire edge — solid flat fill, no glow at
+   rest; the glow only comes in via .dotHighlight on hover/highlight */
+.dot {
+  fill: var(--color-connector-dot);
+  stroke: none;
+  pointer-events: none;
+}
+
+/* Connector dot whose wire is currently highlighted — glows green */
+.dotHighlight {
+  fill: var(--color-primary);
+  filter: drop-shadow(0 0 2px var(--color-primary)) drop-shadow(0 0 4px var(--color-primary));
+  transition: fill 0.15s ease;
+}
+
+/* Leaf node or domain chip box border, when highlighted — minimal glow,
+   transparent at the left and right edges and brightest at the horizontal
+   center (linear gradient stroke set inline per-instance in
+   CircuitCaseStudyPill.tsx / CircuitDomainChip.tsx), not a uniformly-lit
+   outline. Additively blended like the rest of the neon treatment. */
+.centerGlowGroup {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.centerGlowHalo {
+  fill: none;
+  stroke-width: 3;
+  filter: blur(1.5px);
+}
+
+.centerGlowCore {
+  fill: none;
+  stroke-width: 1;
+}
+
+/* Domain chip icon — matches label text color, bolder than the blueprint line work */
+.chipIcon {
+  fill: none;
+  stroke: var(--color-text-primary);
+  stroke-width: 1.2;
+  pointer-events: none;
+  transition: stroke 0.15s ease;
+}
+
+/* Domain chip icon whose wire is currently highlighted — glows green like the connector dots */
+.chipIconHighlight {
+  stroke: var(--color-primary);
+  filter: drop-shadow(0 0 2px var(--color-primary));
+}
+
+/* Hover targets — pill path and chip rect, hit-tested over their full area
+   (not just the visible outline) so hovering anywhere in the box counts */
+.hoverTarget {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+/* Node box (leaf pill or domain chip) at rest — the same very faint
+   outline on every node, much lighter than the blueprint stroke that
+   comes back on highlight */
+.nodeOutlineFaint {
+  fill: none;
+  stroke: var(--color-white-a12);
+  stroke-width: 1;
+}
+
+/* Chip's framing box glow, shown only on hover — a soft blurred green
+   bloom around where the (now invisible) framing box would sit, bleeding
+   outward toward the nearest wire. See CircuitDomainChip.tsx. */
+.framingBoxGlow,
+.framingBoxGlowFar {
+  fill: none;
+  stroke: var(--color-primary);
+  mix-blend-mode: screen;
+}
+
+.framingBoxGlow {
+  stroke-width: 4;
+  opacity: 0.15;
+  filter: blur(2.5px);
+}
+
+.framingBoxGlowFar {
+  stroke-width: 8;
+  opacity: 0.08;
+  filter: blur(5px);
+}
+
+/* ── Traveling electrical pulse ──────────────────────────────────────────
+   A moving head orb, composited with additive (screen) blending and
+   Gaussian-blurred glow so it reads like current flowing through a PCB
+   trace. The wire itself never changes color — only this layer lights up
+   on hover. See CircuitWirePulse.tsx for the position math and blur filter. */
+
+.pulseGroup {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Head — the brightest point, neon green with an 8–12px bloom halo (filter set inline, per-instance id) */
+.pulseHead {
+  fill: var(--color-primary);
+}
+
+.pulseHeadCore {
+  fill: var(--color-primary);
+}
+
+/* ── Chip hover noise (experimental) ────────────────────────────────────
+   A static green noise texture over a hovered domain chip's own box, built
+   from a feTurbulence field in CircuitChipNoise.tsx. Additively blended
+   like the rest of the neon treatment. */
+
+.chipNoise {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.chipNoiseLayer {
+  opacity: 0.18;
+}
+
+/* ── Center chip card ─────────────────────────────────────────────────────
+   The premium microchip-style hub every trunk wire converges into. See
+   CircuitCenterCard.tsx for the layer structure. */
+
+.centerCardGridDot {
+  fill: var(--center-card-accent);
+  opacity: 0.13;
+}
+
+/* Dot matrix while the card itself is hovered — dim green pinpricks
+   filling the whole card evenly, matching the reference asset where the
+   dots read as a subtle texture (green channel ~25–65/255) rather than a
+   bright neon field; a faint group-level glow keeps them reading as lit
+   without blooming */
+.centerCardGridGroupHovered {
+  filter: drop-shadow(0 0 1px var(--color-primary));
+  mix-blend-mode: screen;
+}
+
+.centerCardGridDotHovered {
+  fill: var(--color-primary);
+  opacity: 0.25;
+}
+
+/* Card outline, always visible — same thin flat style as the idle (default,
+   non-hover) wire core, so the border reads as the same "path color" */
+.centerCardBorder {
+  fill: none;
+  stroke: var(--center-card-accent);
+  stroke-width: 0.7;
+  opacity: 0.5;
+}
+
+/* Soft bloom radiating outward from the card's outer framing box while
+   it's lit — solid fills of the box's own shape at increasing Gaussian
+   blur radii, additively blended so they read as diffused light. The
+   box's interior is masked out in CircuitCenterCard.tsx, so this exists
+   only outside the box: strongest at the edges, fading smoothly into the
+   background, with no border stroke and no inner glow. */
+.centerCardBloomGroup {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.centerCardBloomNear,
+.centerCardBloomMid,
+.centerCardBloomFar {
+  fill: none;
+}
+
+/* Blur radii live in per-layer SVG feGaussianBlur filters with enlarged
+   filter regions (see CircuitCenterCard.tsx) — CSS blur() on SVG elements
+   clips at the default filter region, cutting the glow off flat */
+.centerCardBloomNear {
+  opacity: 0.4;
+}
+
+.centerCardBloomMid {
+  opacity: 0.22;
+}
+
+.centerCardBloomFar {
+  opacity: 0.12;
+}
+
+/* Invisible hit area covering the whole card, driving the hover glow above */
+.centerCardHoverTarget {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.centerCardLabel {
+  fill: var(--center-card-accent);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.centerCardLabelGlow {
+  fill: var(--center-card-accent);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+  text-anchor: middle;
+  pointer-events: none;
+  opacity: 0.7;
+  filter: blur(3px);
+  mix-blend-mode: screen;
+}
