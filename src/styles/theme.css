@@ -49,6 +49,7 @@
   --color-bg-card:            #000000;      /* Ultra-dark card inner fill */
   --color-bg-glass:           #050d07;      /* SVG glass badge dark fill */
   --color-bg-stats:           rgba(10, 13, 16, 0.95);  /* Frosted stats panel */
+  --color-overlay-backdrop:   rgba(0, 0, 0, 0.75);     /* Full-screen modal backdrop */
   --color-text-muted:         #82888B;      /* Muted description text */
   --color-connector-dot:      #a0a0a1;      /* Solid fill for circuit connector dots */
 
@@ -83,6 +84,10 @@
   --color-primary-a60:        rgba(91, 255, 106, 0.60);
   --color-primary-a80:        rgba(91, 255, 106, 0.80);
 
+  /* Info color at opacity (CI/CD diagram — Flutter CI accent) */
+  --color-info-a15:           rgba(88, 166, 255, 0.15);
+  --color-info-a32:           rgba(88, 166, 255, 0.32);
+
   /* Primary-dim at opacity */
   --color-primary-dim-a06:    rgba(46, 204, 113, 0.06);
   --color-primary-dim-a16:    rgba(46, 204, 113, 0.16);
@@ -96,4 +101,8 @@
   --color-card-glow-outer:    rgba(110, 255, 170, 0.10);
   --color-card-glow-top:      rgba(160, 255, 210, 0.08);
   --color-card-glow-bottom:   rgba(80,  255, 150, 0.025);
+
+  /* Extended accents — app-icon / dashboard tile tints (phone mockup) */
+  --color-accent-purple:      #a78bfa;
+  --color-accent-teal:        #2dd4bf;
 }

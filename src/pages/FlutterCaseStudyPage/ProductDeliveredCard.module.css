@@ -1,0 +1,122 @@
+.wrapper {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--color-card-grad-bright) 0%,
+    var(--color-card-grad-mid) 55%,
+    var(--color-card-grad-subtle) 100%
+  );
+  border-radius: 22px;
+  padding: 1px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wrapper:hover {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dim) 55%, var(--color-primary-a55) 100%);
+  box-shadow: 0 0 0 1px var(--color-primary-a32), 0 0 14px var(--color-primary-a32), 0 0 28px var(--color-primary-a15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper {
+    transition: none;
+  }
+}
+
+.inner {
+  height: 100%;
+  background: var(--color-bg-card);
+  border-radius: 21px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow:
+    inset 0 0 0 1px var(--color-card-glow-outer),
+    inset 0 1px 0 var(--color-white-a03),
+    inset 0 -10px 24px var(--color-card-glow-bottom);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 4px;
+}
+
+.description {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.phoneStage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 0;
+}
+
+/* Sits outside the clipped crop box below, so its bleed isn't cut off. */
+.phoneGlow {
+  position: absolute;
+  inset: -8% -24% -24% -24%;
+  background: radial-gradient(circle at 50% 40%, var(--color-primary-a80) 0%, var(--color-primary-a32) 45%, transparent 74%);
+  filter: blur(38px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.phoneStage:hover .phoneGlow {
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phoneGlow {
+    transition: none;
+  }
+}
+
+/* Deterministic crop: always exactly three-quarters of the phone's own
+   height, regardless of how much vertical space this card happens to get. */
+.phoneCrop {
+  position: relative;
+  width: 100%;
+  max-width: clamp(13rem, 19vw, 17.5rem);
+  aspect-ratio: 9 / 14.625;
+  overflow: hidden;
+  border-radius: 1.9rem 1.9rem 0 0;
+}
+
+.phoneFade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 22%;
+  background: linear-gradient(to bottom, transparent 0%, var(--color-bg-card) 88%);
+  pointer-events: none;
+}
+
+.link {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.link:hover {
+  color: var(--color-primary-dim);
+}
