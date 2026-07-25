@@ -1,0 +1,192 @@
+.wrapper {
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--color-card-grad-bright) 0%,
+    var(--color-card-grad-mid) 55%,
+    var(--color-card-grad-subtle) 100%
+  );
+  border-radius: 22px;
+  padding: 1px;
+}
+
+.inner {
+  height: 100%;
+  background: var(--color-bg-card);
+  border-radius: 21px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow:
+    inset 0 0 0 1px var(--color-card-glow-outer),
+    inset 0 1px 0 var(--color-white-a03),
+    inset 0 -10px 24px var(--color-card-glow-bottom);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--color-white);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ── Diagram grid ── */
+.diagram {
+  display: grid;
+  grid-template-columns: 1fr 44px 1fr;
+  align-items: center;
+  column-gap: 4px;
+  row-gap: 6px;
+}
+
+.columnLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.labelFlutter {
+  color: var(--color-info);
+}
+
+.labelAndroid {
+  color: var(--color-primary);
+  text-align: right;
+}
+
+/* ── Nodes ── */
+.node {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: var(--color-bg-subtle);
+}
+
+.nodeFlutter {
+  grid-column: 1;
+  border: 1px solid var(--color-info-a32);
+}
+
+.nodeAndroid {
+  grid-column: 3;
+  border: 1px solid var(--color-primary-a32);
+}
+
+.nodeIcon {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--color-white-a03);
+}
+
+.nodeFlutter .nodeIcon {
+  color: var(--color-info);
+}
+
+.nodeAndroid .nodeIcon {
+  color: var(--color-primary);
+}
+
+.nodeText {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-white);
+  line-height: 1.35;
+}
+
+.nodeText span:nth-child(2) {
+  font-weight: 400;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+}
+
+/* ── Arrows ── */
+.arrow {
+  display: flex;
+  justify-content: center;
+}
+
+.arrowFlutter {
+  grid-column: 1;
+  color: var(--color-info);
+}
+
+.arrowAndroid {
+  grid-column: 3;
+  color: var(--color-primary);
+}
+
+/* ── Dashed connector between the two CI columns ── */
+.connector {
+  grid-column: 2;
+  grid-row: 4;
+  position: relative;
+  height: 1px;
+  border-top: 1.5px dashed var(--color-white-a22);
+}
+
+.connectorDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px var(--color-primary-a15), 0 0 10px var(--color-primary-a60);
+}
+
+/* ── Responsive ──
+   Grid-row placement (set inline per node) only makes sense for the
+   two-column desktop layout — switch to flex so DOM order drives a
+   single readable column instead of fighting the row numbers. */
+@media (max-width: 768px) {
+  .diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .connector {
+    display: none;
+  }
+
+  .labelAndroid {
+    text-align: left;
+    margin-top: 8px;
+  }
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .inner {
+    padding: 8px 14px;
+    gap: 6px;
+  }
+
+  .diagram {
+    row-gap: 3px;
+  }
+
+  .node {
+    padding: 3px 8px;
+  }
+}

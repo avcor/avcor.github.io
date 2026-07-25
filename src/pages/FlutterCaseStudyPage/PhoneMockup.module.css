@@ -1,0 +1,283 @@
+/* ── Outer wrapper: hosts the "glow from behind" + side buttons ── */
+.phoneWrap {
+  position: relative;
+  width: 100%;
+  max-width: clamp(5.5rem, 18vh, 11rem);
+  aspect-ratio: 9 / 19.5;
+}
+
+.phoneWrapLarge {
+  max-width: clamp(16rem, 32vw, 22rem);
+}
+
+/* ── Side buttons (purely decorative, sit on the frame edge) ── */
+.buttonMute,
+.buttonVolumeUp,
+.buttonVolumeDown,
+.buttonPower {
+  position: absolute;
+  z-index: 2;
+  width: 2px;
+  border-radius: 2px 0 0 2px;
+  background: var(--color-white-a22);
+}
+
+.buttonMute {
+  left: -2px;
+  top: 14%;
+  height: 3%;
+}
+
+.buttonVolumeUp {
+  left: -2px;
+  top: 20%;
+  height: 7%;
+}
+
+.buttonVolumeDown {
+  left: -2px;
+  top: 29%;
+  height: 7%;
+}
+
+.buttonPower {
+  right: -2px;
+  left: auto;
+  top: 22%;
+  height: 9%;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Titanium frame: thin gradient rim + lift shadow ── */
+.frame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.9rem;
+  padding: 3px;
+  background: linear-gradient(
+    165deg,
+    var(--color-white-a40) 0%,
+    var(--color-white-a12) 20%,
+    var(--color-white-a03) 45%,
+    var(--color-white-a12) 80%,
+    var(--color-white-a28) 100%
+  );
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Bezel + screen ── */
+.phone {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+  border-radius: calc(1.9rem - 3px);
+  padding: 0.5rem 0.45rem 0.55rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* ── Dynamic-island-style camera cutout ── */
+.dynamicIsland {
+  position: absolute;
+  top: 0.32rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34%;
+  height: 0.85rem;
+  border-radius: 999px;
+  background: var(--color-bg-base);
+  box-shadow: inset 0 0 0 1px var(--color-white-a07);
+  z-index: 3;
+}
+
+/* ── Diagonal glass gloss ── */
+.gloss {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    var(--color-white-a08) 0%,
+    transparent 28%,
+    transparent 72%,
+    var(--color-white-a03) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.statusBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.55rem;
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+}
+
+.time {
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.statusIcons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-primary-a85);
+}
+
+.screen {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  overflow: hidden;
+}
+
+.greetingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.greeting {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.searchIcon {
+  color: var(--color-text-muted);
+}
+
+.appGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+}
+
+.appTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.appIconBox {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--tint) 22%, var(--color-bg-subtle)) 0%, color-mix(
+        in srgb,
+        var(--tint) 8%,
+        var(--color-bg-subtle)
+      ) 100%);
+  border: 1px solid color-mix(in srgb, var(--tint) 35%, transparent);
+  box-shadow: inset 0 1px 0 var(--color-white-a08), inset 0 -6px 10px color-mix(in srgb, var(--tint) 15%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tint);
+}
+
+.appLabel {
+  font-size: 0.5rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.sectionLabel {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--color-white-a40);
+  letter-spacing: 0.04em;
+  margin-top: 0.15rem;
+}
+
+.scheduleCard {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem;
+  border-radius: 0.55rem;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-white-a07);
+  min-width: 0;
+}
+
+.scheduleBar {
+  width: 3px;
+  align-self: stretch;
+  border-radius: 2px;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.scheduleText {
+  min-width: 0;
+  flex: 1;
+}
+
+.scheduleSubject {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scheduleMeta {
+  font-size: 0.5rem;
+  color: var(--color-text-muted);
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progressCard {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.55rem;
+  border-radius: 0.55rem;
+  background: var(--color-primary-faint);
+  border: 1px solid var(--color-primary-a15);
+}
+
+.progressValue {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.progressLabel {
+  font-size: 0.5rem;
+  color: var(--color-text-muted);
+  margin-top: 0.15rem;
+}
+
+.sparkline {
+  width: 3.2rem;
+  height: 0.9rem;
+  flex-shrink: 0;
+}
+
+.sparklineStroke {
+  stroke: var(--color-primary);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
