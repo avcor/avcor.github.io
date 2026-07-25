@@ -9,19 +9,42 @@
 
 .header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: 16px;
   padding: 14px 48px;
   flex-shrink: 0;
 }
 
+.headerCenter {
+  order: 1;
+}
+
 .headerRight {
+  order: 2;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px 28px;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .headerCenter {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .headerRight {
+    grid-column: 3;
+    justify-self: end;
+  }
 }
 
 .body {
@@ -34,16 +57,18 @@
 
 .rail {
   margin-left: 48px;
+  width: 100px;
+  flex-shrink: 0;
   padding-top: 4px;
 }
 
-/* Sits centered on the boundary between the rail and the slide viewport
-   (48px outer margin + 220px rail width), mirroring the forward arrow's
-   position inside EngineerDeepDivePanel on the boundary further in. */
+/* Sits centered on the boundary between the rail's reserved zone (dots +
+   room for the active vertical label) and the slide viewport
+   (48px outer margin + 100px reserved rail width). */
 .backButton {
   position: absolute;
   top: 50%;
-  left: 268px;
+  left: 148px;
   transform: translate(-50%, -50%);
   width: 40px;
   height: 40px;

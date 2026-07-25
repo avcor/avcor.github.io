@@ -63,6 +63,7 @@
 
   /* White overlays */
   --color-white-a03:          rgba(255, 255, 255, 0.03);
+  --color-white-a04:          rgba(255, 255, 255, 0.04);
   --color-white-a07:          rgba(255, 255, 255, 0.07);
   --color-white-a08:          rgba(255, 255, 255, 0.08);
   --color-white-a12:          rgba(255, 255, 255, 0.12);
@@ -79,6 +80,7 @@
   --color-primary-a12:        rgba(91, 255, 106, 0.12);
   --color-primary-a15:        rgba(91, 255, 106, 0.15);
   --color-primary-a18:        rgba(91, 255, 106, 0.18);
+  --color-primary-a20:        rgba(91, 255, 106, 0.20);
   --color-primary-a32:        rgba(91, 255, 106, 0.32);
   --color-primary-a55:        rgba(91, 255, 106, 0.55);
   --color-primary-a60:        rgba(91, 255, 106, 0.60);

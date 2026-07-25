@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft } from 'lucide-react'
 import Nav from '../../components/Nav'
 import ViewToggle from '../../components/ViewToggle'
-import RecruiterPill from '../../components/RecruiterPill'
 import EngineeringAchievementsRail from '../../components/EngineeringAchievementsRail'
 import FlutterCaseStudySlide from '../FlutterCaseStudyPage'
 import PlatformEngineeringSlide from '../PlatformEngineeringPage'
@@ -34,10 +33,11 @@ export default function CaseStudyGallery() {
   return (
     <section id="flutter-platform" className={styles.page}>
       <header className={styles.header}>
-        <ViewToggle />
+        <div className={styles.headerCenter}>
+          <ViewToggle activeIndex={activeSlide} onChange={setActiveSlide} />
+        </div>
         <div className={styles.headerRight}>
           <Nav activeLink="Work" />
-          <RecruiterPill />
         </div>
       </header>
 
@@ -64,7 +64,7 @@ export default function CaseStudyGallery() {
         </AnimatePresence>
 
         <SlidesViewport activeIndex={activeSlide} onChange={setActiveSlide}>
-          <FlutterCaseStudySlide onAdvance={() => setActiveSlide(1)} />
+          <FlutterCaseStudySlide />
           <PlatformEngineeringSlide />
         </SlidesViewport>
       </div>
