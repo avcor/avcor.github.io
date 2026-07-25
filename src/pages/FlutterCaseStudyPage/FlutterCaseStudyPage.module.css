@@ -3,8 +3,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 0.85fr);
   grid-template-rows: auto auto auto;
-  gap: 20px;
-  padding: 4px 48px 32px;
+  gap: 8px;
+  padding: 4px 48px 6px;
   align-items: stretch;
 }
 
@@ -71,5 +71,14 @@
   .impact {
     grid-column: 1;
     grid-row: auto;
+  }
+}
+
+/* Compact desktop laptops (~768-820px tall): tighten the vertical
+   rhythm further so all three rows still fit one locked screen. */
+@media (min-width: 1025px) and (max-height: 820px) {
+  .content {
+    gap: 6px;
+    padding: 2px 48px 4px;
   }
 }

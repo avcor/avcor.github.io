@@ -65,7 +65,7 @@ export default function PhoneMockup({ large = false }: PhoneMockupProps) {
             <div className={styles.sectionLabel}>Today&apos;s Schedule</div>
             <div className={styles.scheduleCard}>
               <div className={styles.scheduleBar} />
-              <div>
+              <div className={styles.scheduleText}>
                 <div className={styles.scheduleSubject}>Mathematics</div>
                 <div className={styles.scheduleMeta}>10:00 AM – 11:00 AM · Room 204</div>
               </div>

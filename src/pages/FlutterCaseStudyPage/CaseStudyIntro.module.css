@@ -82,3 +82,30 @@
     padding: 0;
   }
 }
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .eyebrow {
+    margin-bottom: 8px;
+  }
+
+  .heading {
+    margin-bottom: 8px;
+  }
+
+  .headingLine,
+  .headingLineAccent {
+    font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+  }
+
+  .description {
+    margin-bottom: 10px;
+  }
+
+  .tags {
+    gap: 6px;
+  }
+
+  .tag {
+    padding: 5px 10px;
+  }
+}
