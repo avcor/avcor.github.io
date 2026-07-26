@@ -25,9 +25,14 @@ export default function ImpactBar() {
       transition={{ duration: 0.55, delay: 0.1 }}
       className={styles.panel}
     >
-      <div className={styles.label}>
-        <TrendingUp size={20} strokeWidth={2} className={styles.labelIcon} />
-        <span>Impact</span>
+      <div className={styles.left}>
+        <TrendingUp size={20} color="var(--color-primary)" style={{ flexShrink: 0 }} />
+        <div>
+          <div className={styles.title}>Impact</div>
+          <div className={styles.description}>
+            Results delivered by the Flutter platform investment.
+          </div>
+        </div>
       </div>
 
       <div className={styles.divider} />
@@ -36,12 +41,12 @@ export default function ImpactBar() {
         {items.map(({ icon: Icon, primary, secondary }, i) => (
           <div key={primary} className={styles.item}>
             {i > 0 && <div className={styles.itemDivider} />}
-            <div className={styles.iconTile}>
-              <Icon size={17} strokeWidth={1.75} />
-            </div>
-            <div>
-              <div className={styles.primary}>{primary}</div>
-              <div className={styles.secondary}>{secondary}</div>
+            <div className={styles.itemInner}>
+              <Icon size={20} color="var(--color-text-muted)" strokeWidth={1.5} />
+              <div>
+                <div className={styles.primary}>{primary}</div>
+                <div className={styles.secondary}>{secondary}</div>
+              </div>
             </div>
           </div>
         ))}

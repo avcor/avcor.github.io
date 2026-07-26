@@ -31,18 +31,18 @@ export default function InfoCard({
       <div className={styles.inner}>
         <div className={styles.header}>
           {iconVariant === 'glass' ? (
-            <GlassBadge icon={Icon} size={40} color={tone === 'warning' ? 'var(--color-warning)' : undefined} />
+            <GlassBadge icon={Icon} size={52} color={tone === 'warning' ? 'var(--color-warning)' : undefined} />
           ) : (
             <div className={`${styles.iconCircle} ${tone === 'warning' ? styles.iconCircleWarning : ''}`}>
               <Icon size={18} strokeWidth={1.75} className={tone === 'warning' ? styles.iconWarning : styles.icon} />
             </div>
           )}
-          <span className={styles.title}>{title}</span>
+          <span className={iconVariant === 'glass' ? styles.titleLarge : styles.title}>{title}</span>
         </div>
 
         <div className={styles.divider} />
 
-        <div className={styles.body}>{children}</div>
+        <div className={iconVariant === 'glass' ? styles.bodyLarge : styles.body}>{children}</div>
       </div>
     </motion.div>
   )

@@ -12,7 +12,7 @@ const ownershipPoints = [
 
 export default function OwnershipCard() {
   return (
-    <InfoCard icon={User} title="My Ownership" delay={0.22}>
+    <InfoCard icon={User} iconVariant="glass" title="My Ownership" delay={0.22}>
       <ul className={styles.list}>
         {ownershipPoints.map((point) => (
           <li key={point} className={styles.item}>
