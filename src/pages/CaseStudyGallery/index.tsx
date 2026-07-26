@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft } from 'lucide-react'
 import Nav from '../../components/Nav'
 import ViewToggle from '../../components/ViewToggle'
-import EngineeringAchievementsRail from '../../components/EngineeringAchievementsRail'
 import FlutterCaseStudySlide from '../FlutterCaseStudyPage'
 import PlatformEngineeringSlide from '../PlatformEngineeringPage'
 import SlidesViewport from './SlidesViewport'
@@ -42,10 +41,6 @@ export default function CaseStudyGallery() {
       </header>
 
       <div className={styles.body}>
-        <div className={styles.rail}>
-          <EngineeringAchievementsRail />
-        </div>
-
         <AnimatePresence>
           {activeSlide > 0 && (
             <motion.button

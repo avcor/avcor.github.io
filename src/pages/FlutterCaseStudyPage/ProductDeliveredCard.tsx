@@ -1,15 +1,9 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Package } from 'lucide-react'
 import GlassBadge from '../../components/GlassBadge'
-import PeekingCarousel from '../../components/PeekingCarousel'
-import ScreenshotLightbox from './ScreenshotLightbox'
-import { PRODUCT_SCREENSHOTS } from './screenshotsData'
 import styles from './ProductDeliveredCard.module.css'
 
 export default function ProductDeliveredCard() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,12 +22,8 @@ export default function ProductDeliveredCard() {
           </div>
         </div>
 
-        <div className={styles.galleryStage}>
-          <PeekingCarousel items={PRODUCT_SCREENSHOTS} onActiveSelect={setOpenIndex} />
-        </div>
+        <div className={styles.galleryStage} />
       </div>
-
-      <ScreenshotLightbox screenshots={PRODUCT_SCREENSHOTS} openIndex={openIndex} onClose={() => setOpenIndex(null)} />
     </motion.div>
   )
 }

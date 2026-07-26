@@ -1,17 +1,26 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import type { LucideIcon } from 'lucide-react'
+import GlassBadge from '../../components/GlassBadge'
 import styles from './InfoCard.module.css'
 
 interface InfoCardProps {
   icon: LucideIcon
   tone?: 'warning' | 'primary'
+  iconVariant?: 'circle' | 'glass'
   title: string
   delay?: number
   children: ReactNode
 }
 
-export default function InfoCard({ icon: Icon, tone = 'primary', title, delay = 0, children }: InfoCardProps) {
+export default function InfoCard({
+  icon: Icon,
+  tone = 'primary',
+  iconVariant = 'circle',
+  title,
+  delay = 0,
+  children,
+}: InfoCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -21,9 +30,13 @@ export default function InfoCard({ icon: Icon, tone = 'primary', title, delay = 
     >
       <div className={styles.inner}>
         <div className={styles.header}>
-          <div className={`${styles.iconCircle} ${tone === 'warning' ? styles.iconCircleWarning : ''}`}>
-            <Icon size={18} strokeWidth={1.75} className={tone === 'warning' ? styles.iconWarning : styles.icon} />
-          </div>
+          {iconVariant === 'glass' ? (
+            <GlassBadge icon={Icon} size={40} color={tone === 'warning' ? 'var(--color-warning)' : undefined} />
+          ) : (
+            <div className={`${styles.iconCircle} ${tone === 'warning' ? styles.iconCircleWarning : ''}`}>
+              <Icon size={18} strokeWidth={1.75} className={tone === 'warning' ? styles.iconWarning : styles.icon} />
+            </div>
+          )}
           <span className={styles.title}>{title}</span>
         </div>
 
