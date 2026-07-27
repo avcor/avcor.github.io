@@ -4,7 +4,7 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr);
   grid-template-rows: auto auto auto;
   gap: 8px;
-  padding: 4px 48px 6px;
+  padding: 4px 268px 6px 48px;
   align-items: stretch;
 }
 
@@ -56,6 +56,6 @@
 @media (min-width: 1025px) and (max-height: 820px) {
   .content {
     gap: 6px;
-    padding: 2px 48px 4px;
+    padding: 2px 268px 4px 48px;
   }
 }

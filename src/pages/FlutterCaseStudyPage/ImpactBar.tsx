@@ -1,19 +1,21 @@
 import { motion } from 'framer-motion'
-import { TrendingUp, Timer, Boxes, Layers, Zap } from 'lucide-react'
+import { Timer, Boxes, Layers, Zap } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import GlassBadge from '../../components/GlassBadge'
 import styles from './ImpactBar.module.css'
 
 interface ImpactItem {
   icon: LucideIcon
-  primary: string
-  secondary: string
+  value?: string
+  title: string
+  description: string
 }
 
 const items: ImpactItem[] = [
-  { icon: Timer, primary: '90 → 18 min', secondary: 'Android CI build time' },
-  { icon: Boxes, primary: 'Independent Releases', secondary: 'Android and Flutter shipped separately' },
-  { icon: Layers, primary: 'Reusable Platform', secondary: 'Foundation for future Flutter modules' },
-  { icon: Zap, primary: 'Reduced Engineering Effort', secondary: 'Eliminated duplicate feature development' },
+  { icon: Timer, value: '90 → 18 min', title: 'CI Build Time', description: 'Android build pipeline duration, start to finish' },
+  { icon: Boxes, title: 'Independent Releases', description: 'Android and Flutter shipped separately' },
+  { icon: Layers, title: 'Reusable Platform', description: 'Foundation for future Flutter modules' },
+  { icon: Zap, title: 'Reduced Engineering Effort', description: 'Eliminated duplicate feature development' },
 ]
 
 export default function ImpactBar() {
@@ -25,32 +27,19 @@ export default function ImpactBar() {
       transition={{ duration: 0.55, delay: 0.1 }}
       className={styles.panel}
     >
-      <div className={styles.left}>
-        <TrendingUp size={20} color="var(--color-primary)" style={{ flexShrink: 0 }} />
-        <div>
-          <div className={styles.title}>Impact</div>
-          <div className={styles.description}>
-            Results delivered by the Flutter platform investment.
+      {items.map(({ icon: Icon, value, title, description }, i) => (
+        <div key={title} className={styles.item}>
+          {i > 0 && <div className={styles.itemDivider} />}
+          <GlassBadge icon={Icon} size={40} />
+          <div className={styles.text}>
+            <div className={styles.titleRow}>
+              {value && <span className={styles.value}>{value}</span>}
+              <span className={styles.title}>{title}</span>
+            </div>
+            <div className={styles.description}>{description}</div>
           </div>
         </div>
-      </div>
-
-      <div className={styles.divider} />
-
-      <div className={styles.itemsGroup}>
-        {items.map(({ icon: Icon, primary, secondary }, i) => (
-          <div key={primary} className={styles.item}>
-            {i > 0 && <div className={styles.itemDivider} />}
-            <div className={styles.itemInner}>
-              <Icon size={20} color="var(--color-text-muted)" strokeWidth={1.5} />
-              <div>
-                <div className={styles.primary}>{primary}</div>
-                <div className={styles.secondary}>{secondary}</div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      ))}
     </motion.div>
   )
 }

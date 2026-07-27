@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Feather, Bot, Layers, Blocks, Infinity as InfinityIcon } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import { Component, Puzzle, Infinity as InfinityIcon } from 'lucide-react'
+import { SiFlutter, SiAndroid } from 'react-icons/si'
 import styles from './CaseStudyIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -14,16 +15,16 @@ function fadeUp(delay: number) {
 }
 
 interface Tag {
-  icon: LucideIcon
+  icon: ReactNode
   label: string
 }
 
 const tags: Tag[] = [
-  { icon: Feather, label: 'Flutter' },
-  { icon: Bot, label: 'Android' },
-  { icon: Layers, label: 'Architecture' },
-  { icon: Blocks, label: 'Modular' },
-  { icon: InfinityIcon, label: 'CI/CD' },
+  { icon: <SiFlutter size={13} color="var(--color-info)" />, label: 'Flutter' },
+  { icon: <SiAndroid size={13} color="var(--color-primary)" />, label: 'Android' },
+  { icon: <Component size={14} strokeWidth={1.75} />, label: 'Architecture' },
+  { icon: <Puzzle size={14} strokeWidth={1.75} />, label: 'Modular' },
+  { icon: <InfinityIcon size={14} strokeWidth={1.75} />, label: 'CI/CD' },
 ]
 
 export default function CaseStudyIntro() {
@@ -47,9 +48,9 @@ export default function CaseStudyIntro() {
       </motion.p>
 
       <motion.div {...fadeUp(0.42)} className={styles.tags}>
-        {tags.map(({ icon: Icon, label }) => (
+        {tags.map(({ icon, label }) => (
           <span key={label} className={styles.tag}>
-            <Icon size={14} strokeWidth={1.75} />
+            {icon}
             {label}
           </span>
         ))}
