@@ -27,7 +27,7 @@
   height: 100%;
   background: var(--color-bg-card);
   border-radius: 21px;
-  padding: 14px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -99,7 +99,7 @@
 
 @media (min-width: 1025px) and (max-height: 820px) {
   .inner {
-    padding: 10px 14px;
+    padding: 14px 18px;
     gap: 6px;
   }
 
