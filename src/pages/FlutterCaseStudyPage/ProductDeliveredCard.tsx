@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Box } from 'lucide-react'
+import screenshot from '../../assets/screenshots/access-management-dashboard.jpg'
 import styles from './ProductDeliveredCard.module.css'
 
 export default function ProductDeliveredCard() {
@@ -22,6 +23,14 @@ export default function ProductDeliveredCard() {
           <p className={styles.description}>
             Production screens built on top of the Flutter platform.
           </p>
+        </div>
+
+        <div className={styles.right}>
+          <img
+            src={screenshot}
+            alt="Access Management Dashboard screen built with Flutter"
+            className={styles.screenshot}
+          />
         </div>
       </div>
     </motion.div>
