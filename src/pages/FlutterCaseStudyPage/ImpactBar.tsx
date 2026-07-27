@@ -7,12 +7,12 @@ import styles from './ImpactBar.module.css'
 interface ImpactItem {
   icon: LucideIcon
   value?: string
-  title: string
+  title?: string
   description: string
 }
 
 const items: ImpactItem[] = [
-  { icon: Timer, value: '90 → 18 min', title: 'CI Build Time', description: 'Android build pipeline duration, start to finish' },
+  { icon: Timer, value: '90 → 18 min', description: 'Android build pipeline duration, start to finish' },
   { icon: Boxes, title: 'Independent Releases', description: 'Android and Flutter shipped separately' },
   { icon: Layers, title: 'Reusable Platform', description: 'Foundation for future Flutter modules' },
   { icon: Zap, title: 'Reduced Engineering Effort', description: 'Eliminated duplicate feature development' },
@@ -28,13 +28,13 @@ export default function ImpactBar() {
       className={styles.panel}
     >
       {items.map(({ icon: Icon, value, title, description }, i) => (
-        <div key={title} className={styles.item}>
+        <div key={description} className={styles.item}>
           {i > 0 && <div className={styles.itemDivider} />}
           <GlassBadge icon={Icon} size={40} />
           <div className={styles.text}>
             <div className={styles.titleRow}>
               {value && <span className={styles.value}>{value}</span>}
-              <span className={styles.title}>{title}</span>
+              {title && <span className={styles.title}>{title}</span>}
             </div>
             <div className={styles.description}>{description}</div>
           </div>

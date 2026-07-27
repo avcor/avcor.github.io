@@ -393,3 +393,11 @@ export default function Button({ label, onClick, variant = 'primary', disabled =
 | No copy-pasted JSX or logic | Duplication creates drift and bugs |
 | No fixed pixel widths on layout containers | Layouts must flex to screen size |
 | No magic numbers for colors, spacing, or breakpoints | All tokens live in `theme.css` / `breakpoints.css` |
+
+---
+
+## Claude Code Permissions
+
+See [`PERMISSIONS.md`](./PERMISSIONS.md) for the list of read-only commands
+pre-approved in `.claude/settings.json` so Claude doesn't re-prompt for them
+every session.

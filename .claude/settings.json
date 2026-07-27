@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(npm run dev *)",
+      "Bash(google-chrome --headless *)",
+      "Bash(./node_modules/.bin/tsc *)",
+      "Bash(curl -s http://localhost:*)",
+      "Bash(curl -sf http://localhost:*)",
+      "Bash(rm -rf *)",
+      "Bash(mkdir -p *)",
+      "Bash(npm install *)",
+      "Bash(npm init *)",
+      "Bash(pkill *)",
+      "Bash(git stash)",
+      "Bash(git stash pop)",
+      "Skill(run)"
+    ]
+  }
+}
