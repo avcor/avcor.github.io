@@ -2,11 +2,10 @@
   height: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-rows: 40% auto auto;
+  grid-template-rows: 40% auto 1fr;
   gap: 8px;
   padding: 4px 268px 6px 48px;
   align-items: stretch;
-  align-content: center;
 }
 
 .intro {
@@ -32,6 +31,7 @@
 .impact {
   grid-column: 1 / 3;
   grid-row: 3;
+  align-self: end;
   margin-bottom: 16px;
 }
 
