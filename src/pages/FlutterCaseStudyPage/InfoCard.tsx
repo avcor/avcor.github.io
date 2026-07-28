@@ -1,26 +1,14 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import type { LucideIcon } from 'lucide-react'
-import GlassBadge from '../../components/GlassBadge'
 import styles from './InfoCard.module.css'
 
 interface InfoCardProps {
-  icon: LucideIcon
-  tone?: 'warning' | 'primary'
-  iconVariant?: 'circle' | 'glass'
   title: string
   delay?: number
   children: ReactNode
 }
 
-export default function InfoCard({
-  icon: Icon,
-  tone = 'primary',
-  iconVariant = 'circle',
-  title,
-  delay = 0,
-  children,
-}: InfoCardProps) {
+export default function InfoCard({ title, delay = 0, children }: InfoCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -29,20 +17,12 @@ export default function InfoCard({
       className={styles.wrapper}
     >
       <div className={styles.inner}>
-        <div className={styles.header}>
-          {iconVariant === 'glass' ? (
-            <GlassBadge icon={Icon} size={52} color={tone === 'warning' ? 'var(--color-warning)' : undefined} />
-          ) : (
-            <div className={`${styles.iconCircle} ${tone === 'warning' ? styles.iconCircleWarning : ''}`}>
-              <Icon size={18} strokeWidth={1.75} className={tone === 'warning' ? styles.iconWarning : styles.icon} />
-            </div>
-          )}
-          <span className={iconVariant === 'glass' ? styles.titleLarge : styles.title}>{title}</span>
+        <div className={styles.eyebrow}>
+          <span>{title}</span>
+          <span className={styles.eyebrowDash} />
         </div>
 
-        <div className={styles.divider} />
-
-        <div className={iconVariant === 'glass' ? styles.bodyLarge : styles.body}>{children}</div>
+        <div className={styles.bodyLarge}>{children}</div>
       </div>
     </motion.div>
   )
