@@ -8,20 +8,24 @@ import styles from './FlutterCaseStudyPage.module.css'
 export default function FlutterCaseStudyPage() {
   return (
     <div className={styles.content}>
-      <div className={styles.intro}>
-        <CaseStudyIntro />
+      <div className={styles.topRow}>
+        <div className={styles.intro}>
+          <CaseStudyIntro />
+        </div>
+
+        <div className={styles.product}>
+          <ProductDeliveredCard />
+        </div>
       </div>
 
-      <div className={styles.product}>
-        <ProductDeliveredCard />
-      </div>
+      <div className={styles.middleRow}>
+        <div className={styles.problem}>
+          <BusinessProblemCard />
+        </div>
 
-      <div className={styles.problem}>
-        <BusinessProblemCard />
-      </div>
-
-      <div className={styles.ownership}>
-        <OwnershipCard />
+        <div className={styles.ownership}>
+          <OwnershipCard />
+        </div>
       </div>
 
       <div className={styles.impact}>
