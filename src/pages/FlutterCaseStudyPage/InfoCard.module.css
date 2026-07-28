@@ -15,12 +15,12 @@
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.95rem;
+  gap: 12px;
+  font-size: 1.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-white-a85);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-white);
 }
 
 .eyebrowDash {
@@ -31,6 +31,9 @@
 }
 
 .bodyLarge {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   font-size: 1.05rem;
   font-weight: 400;
   color: var(--color-text-muted);

@@ -23,6 +23,8 @@ export default function FlutterCaseStudyPage() {
           <BusinessProblemCard />
         </div>
 
+        <div className={styles.middleDivider} />
+
         <div className={styles.ownership}>
           <OwnershipCard />
         </div>

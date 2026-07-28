@@ -44,7 +44,7 @@ export default function ImpactBar() {
                   {value}
                   {unit && <span className={styles.heroUnit}>{unit}</span>}
                 </div>
-                <div className={styles.description}>{description}</div>
+                <div className={styles.heroDescription}>{description}</div>
               </div>
             ) : (
               <div className={styles.item}>
