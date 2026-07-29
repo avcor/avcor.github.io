@@ -26,7 +26,8 @@
 
 .middleDivider {
   width: 1px;
-  align-self: stretch;
+  align-self: center;
+  height: 60%;
   background: var(--color-white-a08);
   flex-shrink: 0;
 }

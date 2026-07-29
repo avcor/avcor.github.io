@@ -28,9 +28,9 @@ export default function ImpactBar() {
       transition={{ duration: 0.55, delay: 0.1 }}
       className={styles.panel}
     >
-      <div className={styles.eyebrow}>
-        <span>Impact</span>
-        <span className={styles.eyebrowDash} />
+      <div className={styles.heading}>
+        <span className={styles.headingText}>Impact</span>
+        <span className={styles.headingDash} />
       </div>
 
       <div className={styles.itemsRow}>
