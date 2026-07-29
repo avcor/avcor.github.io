@@ -53,9 +53,11 @@
   position: absolute;
   top: 50%;
   display: block;
-  max-width: 70%;
+  width: 70%;
   max-height: 94%;
-  object-fit: contain;
+  aspect-ratio: 1080 / 1535;
+  object-fit: cover;
+  object-position: top center;
   border-radius: 16px;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
