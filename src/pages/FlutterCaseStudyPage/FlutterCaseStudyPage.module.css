@@ -6,9 +6,17 @@
   padding: 4px 268px 6px 48px;
 }
 
-.intro {
+.topRow {
+  display: flex;
+  gap: 8px;
   flex: 0 0 46%;
   min-height: 0;
+}
+
+.intro,
+.product {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .middleRow {
@@ -43,14 +51,14 @@
     gap: 16px;
   }
 
-  .intro {
-    flex: none;
-  }
-
+  .topRow,
   .middleRow {
     flex-direction: column;
     flex: none;
     gap: 16px;
+  }
+
+  .middleRow {
     margin-top: 0;
   }
 
@@ -65,6 +73,10 @@
   .content {
     gap: 6px;
     padding: 2px 268px 4px 48px;
+  }
+
+  .topRow {
+    gap: 6px;
   }
 
   .middleRow {
