@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import type { KeyboardEvent } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react'
 import screenshot1 from '../../assets/screenshots/access-management-dashboard.png'
 import screenshot2 from '../../assets/screenshots/access-management-dashboard-detail.png'
 import screenshot3 from '../../assets/screenshots/pass-console.png'
@@ -14,17 +14,52 @@ const screenshots = [
   { src: screenshot3, alt: 'Pass Console — pass request history' },
 ]
 
+const count = screenshots.length
+
+function slotOf(index: number, active: number) {
+  let diff = (index - active + count) % count
+  if (diff > count / 2) diff -= count
+  return diff
+}
+
+function styleForSlot(slot: number): CSSProperties {
+  if (slot === 0) {
+    return {
+      transform: 'translateX(-50%) scale(1)',
+      zIndex: 3,
+      opacity: 1,
+      filter: 'none',
+    }
+  }
+
+  const dir = slot > 0 ? 1 : -1
+  return {
+    transform: `translateX(calc(-50% + ${dir * 62}%)) scale(0.8)`,
+    zIndex: 2,
+    opacity: 0.65,
+    filter: 'brightness(0.62) saturate(0.9)',
+  }
+}
+
 export default function ProductDeliveredCard() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [isZoomOpen, setIsZoomOpen] = useState(false)
 
-  const goToPrev = () => {
-    setActiveIndex((i) => (i - 1 + screenshots.length) % screenshots.length)
-  }
+  const go = useCallback((dir: number) => {
+    setActiveIndex((i) => (i + dir + count) % count)
+  }, [])
 
-  const goToNext = () => {
-    setActiveIndex((i) => (i + 1) % screenshots.length)
-  }
+  useEffect(() => {
+    if (!isZoomOpen) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') go(-1)
+      else if (e.key === 'ArrowRight') go(1)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [isZoomOpen, go])
 
   return (
     <motion.div
@@ -33,78 +68,76 @@ export default function ProductDeliveredCard() {
       transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
       className={styles.wrapper}
     >
-      <div className={styles.galleryRow}>
+      <div className={styles.stage}>
         <button
           type="button"
-          className={styles.navButton}
-          onClick={goToPrev}
+          className={`${styles.arrow} ${styles.arrowLeft}`}
+          onClick={() => go(-1)}
           aria-label="Show previous screenshot"
         >
-          <ChevronLeft size={16} strokeWidth={2} />
+          <ChevronLeft size={18} strokeWidth={2} />
         </button>
 
-        <div className={styles.stack}>
-          <div className={styles.activeGlow} />
-
+        <div className={styles.phones}>
           {screenshots.map((shot, index) => {
-            const offset = (index - activeIndex + screenshots.length) % screenshots.length
-            const isActive = offset === 0
-            const positionClass = isActive
-              ? styles.stackCenter
-              : offset === 1
-                ? styles.stackRight
-                : styles.stackLeft
+            const slot = slotOf(index, activeIndex)
+            const isActive = slot === 0
 
             return (
-              <img
+              <button
                 key={shot.src}
-                src={shot.src}
-                alt={shot.alt}
-                className={`${styles.screenshot} ${positionClass}`}
-                {...(isActive
-                  ? {
-                      role: 'button',
-                      tabIndex: 0,
-                      onClick: () => setIsLightboxOpen(true),
-                      onKeyDown: (e: KeyboardEvent<HTMLImageElement>) => {
-                        if (e.key === 'Enter' || e.key === ' ') setIsLightboxOpen(true)
-                      },
-                      'aria-label': `Enlarge screenshot: ${shot.alt}`,
-                    }
-                  : {})}
-              />
+                type="button"
+                className={styles.phone}
+                style={styleForSlot(slot)}
+                onClick={() => (isActive ? setIsZoomOpen(true) : setActiveIndex(index))}
+                aria-label={isActive ? `Enlarge screenshot: ${shot.alt}` : `Show screenshot: ${shot.alt}`}
+                tabIndex={isActive ? 0 : -1}
+              >
+                <img src={shot.src} alt={shot.alt} draggable={false} />
+              </button>
             )
           })}
         </div>
 
         <button
           type="button"
-          className={styles.navButton}
-          onClick={goToNext}
+          className={`${styles.arrow} ${styles.arrowRight}`}
+          onClick={() => go(1)}
           aria-label="Show next screenshot"
         >
-          <ChevronRight size={16} strokeWidth={2} />
+          <ChevronRight size={18} strokeWidth={2} />
+        </button>
+
+        <button
+          type="button"
+          className={styles.enlarge}
+          onClick={() => setIsZoomOpen(true)}
+          aria-label="Enlarge current screenshot"
+        >
+          <Maximize2 size={15} strokeWidth={2} />
         </button>
       </div>
 
-      <div className={styles.dots}>
+      <div className={styles.foot}>
         {screenshots.map((shot, index) => (
           <button
             key={shot.src}
             type="button"
             className={`${styles.dot} ${index === activeIndex ? styles.dotActive : ''}`}
             onClick={() => setActiveIndex(index)}
-            aria-label={`Show screenshot ${index + 1} of ${screenshots.length}`}
+            aria-label={`Go to screenshot ${index + 1} of ${count}`}
             aria-current={index === activeIndex}
           />
         ))}
       </div>
 
-      {isLightboxOpen && (
+      {isZoomOpen && (
         <ScreenshotLightbox
           src={screenshots[activeIndex].src}
           alt={screenshots[activeIndex].alt}
-          onClose={() => setIsLightboxOpen(false)}
+          onClose={() => setIsZoomOpen(false)}
+          onPrev={() => go(-1)}
+          onNext={() => go(1)}
         />
       )}
     </motion.div>

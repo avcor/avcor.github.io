@@ -1,19 +1,23 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import styles from './ScreenshotLightbox.module.css'
 
 interface ScreenshotLightboxProps {
   src: string
   alt: string
   onClose: () => void
+  onPrev?: () => void
+  onNext?: () => void
 }
 
-export default function ScreenshotLightbox({ src, alt, onClose }: ScreenshotLightboxProps) {
+export default function ScreenshotLightbox({ src, alt, onClose, onPrev, onNext }: ScreenshotLightboxProps) {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
+      else if (e.key === 'ArrowLeft') onPrev?.()
+      else if (e.key === 'ArrowRight') onNext?.()
     }
 
     document.addEventListener('keydown', onKeyDown)
@@ -24,7 +28,7 @@ export default function ScreenshotLightbox({ src, alt, onClose }: ScreenshotLigh
       document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = previousOverflow
     }
-  }, [onClose])
+  }, [onClose, onPrev, onNext])
 
   return createPortal(
     <AnimatePresence>
@@ -42,6 +46,34 @@ export default function ScreenshotLightbox({ src, alt, onClose }: ScreenshotLigh
         <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Close enlarged view">
           <X size={20} strokeWidth={2} />
         </button>
+
+        {onPrev && (
+          <button
+            type="button"
+            className={`${styles.navButton} ${styles.navButtonLeft}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              onPrev()
+            }}
+            aria-label="Show previous screenshot"
+          >
+            <ChevronLeft size={20} strokeWidth={2} />
+          </button>
+        )}
+
+        {onNext && (
+          <button
+            type="button"
+            className={`${styles.navButton} ${styles.navButtonRight}`}
+            onClick={(e) => {
+              e.stopPropagation()
+              onNext()
+            }}
+            aria-label="Show next screenshot"
+          >
+            <ChevronRight size={20} strokeWidth={2} />
+          </button>
+        )}
 
         <motion.img
           initial={{ opacity: 0, scale: 0.96 }}
