@@ -90,6 +90,10 @@
   --color-info-a15:           rgba(88, 166, 255, 0.15);
   --color-info-a32:           rgba(88, 166, 255, 0.32);
 
+  /* Error color at opacity */
+  --color-error-a20:          rgba(248, 81, 73, 0.20);
+  --color-error-a32:          rgba(248, 81, 73, 0.32);
+
   /* Primary-dim at opacity */
   --color-primary-dim-a06:    rgba(46, 204, 113, 0.06);
   --color-primary-dim-a16:    rgba(46, 204, 113, 0.16);

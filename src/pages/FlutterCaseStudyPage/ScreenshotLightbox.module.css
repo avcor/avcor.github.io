@@ -12,8 +12,8 @@
 }
 
 .image {
-  max-width: min(90vw, 380px);
-  max-height: 90vh;
+  max-width: 94vw;
+  max-height: 94vh;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -32,18 +32,19 @@
   justify-content: center;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
+  color: var(--color-error);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .closeButton:hover {
-  color: var(--color-primary);
-  border-color: var(--color-primary-a32);
+  color: var(--color-error);
+  border-color: var(--color-error-a32);
+  background: var(--color-error-a20);
 }
 
 .closeButton:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-error);
   outline-offset: 2px;
 }
 
