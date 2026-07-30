@@ -15,6 +15,33 @@
   justify-content: center;
 }
 
+.glowContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.stage:hover .glowContainer {
+  opacity: 1;
+}
+
+.glowBlob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  height: 520px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-primary-a60) 0%, var(--color-primary-a32) 45%, transparent 72%);
+  filter: blur(20px);
+}
+
 .frame {
   position: absolute;
   top: 0;
@@ -26,6 +53,7 @@
   background: transparent;
   padding: 0;
   cursor: pointer;
+  z-index: 1;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 

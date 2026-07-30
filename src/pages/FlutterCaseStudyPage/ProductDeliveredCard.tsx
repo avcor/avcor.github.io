@@ -51,6 +51,10 @@ export default function ProductDeliveredCard() {
       className={styles.wrapper}
     >
       <div className={styles.stage}>
+        <div className={styles.glowContainer} aria-hidden="true">
+          <div className={styles.glowBlob} />
+        </div>
+
         <button
           type="button"
           className={styles.frame}
