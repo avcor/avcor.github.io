@@ -9,11 +9,15 @@
 .topRow {
   display: flex;
   gap: 8px;
-  flex: 0 0 46%;
+  flex: 1 1 auto;
   min-height: 0;
 }
 
-.intro,
+.intro {
+  flex: 0.7 1 0;
+  min-width: 0;
+}
+
 .product {
   flex: 1 1 0;
   min-width: 0;
@@ -22,8 +26,9 @@
 .middleRow {
   display: flex;
   gap: 16px;
-  margin-top: auto;
+  flex: 0 0 auto;
   margin-bottom: 14px;
+  margin-top: 35px;
 }
 
 .problem,
@@ -56,10 +61,6 @@
     flex-direction: column;
     flex: none;
     gap: 16px;
-  }
-
-  .middleRow {
-    margin-top: 0;
   }
 
   .middleDivider {
