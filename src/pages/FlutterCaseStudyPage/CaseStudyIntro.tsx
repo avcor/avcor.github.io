@@ -30,31 +30,38 @@ const tags: Tag[] = [
 export default function CaseStudyIntro() {
   return (
     <div className={styles.column}>
-      <motion.div {...fadeUp(0.05)} className={styles.eyebrow}>
-        <span className={styles.eyebrowDash} />
-        <span>Platform Engineering</span>
-      </motion.div>
+      <div className={styles.ghost} aria-hidden="true">
+        <span className={styles.ghostTop}>PLATFORM</span>
+        <span className={styles.ghostBot}>FLUTTER</span>
+      </div>
 
-      <motion.h1 {...fadeUp(0.15)} className={styles.heading}>
-        <span className={styles.headingLine}>Building a Modular</span>
-        <span className={styles.headingLineAccent}>Flutter Platform</span>
-        <span className={styles.headingLine}>for Android</span>
-      </motion.h1>
+      <div className={styles.textLayer}>
+        <motion.div {...fadeUp(0.05)} className={styles.eyebrow}>
+          <span className={styles.eyebrowDash} />
+          <span>Platform Engineering</span>
+        </motion.div>
 
-      <motion.p {...fadeUp(0.3)} className={styles.description}>
-        Built the platform that enabled Flutter features to run inside an existing
-        Android application while allowing Android and Flutter to evolve and release
-        independently.
-      </motion.p>
+        <motion.h1 {...fadeUp(0.15)} className={styles.heading}>
+          <span className={styles.headingLine}>Building a Modular</span>
+          <span className={styles.headingLineAccent}>Flutter Platform</span>
+          <span className={styles.headingLine}>for Android</span>
+        </motion.h1>
 
-      <motion.div {...fadeUp(0.42)} className={styles.tags}>
-        {tags.map(({ icon, label }) => (
-          <span key={label} className={styles.tag}>
-            {icon}
-            {label}
-          </span>
-        ))}
-      </motion.div>
+        <motion.p {...fadeUp(0.3)} className={styles.description}>
+          Built the platform that enabled Flutter features to run inside an existing
+          Android application while allowing Android and Flutter to evolve and release
+          independently.
+        </motion.p>
+
+        <motion.div {...fadeUp(0.42)} className={styles.tags}>
+          {tags.map(({ icon, label }) => (
+            <span key={label} className={styles.tag}>
+              {icon}
+              {label}
+            </span>
+          ))}
+        </motion.div>
+      </div>
     </div>
   )
 }
