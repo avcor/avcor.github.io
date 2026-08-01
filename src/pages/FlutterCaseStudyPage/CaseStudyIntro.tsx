@@ -30,10 +30,14 @@ const tags: Tag[] = [
 export default function CaseStudyIntro() {
   return (
     <div className={styles.column}>
-      <div className={styles.ghost} aria-hidden="true">
-        <span className={styles.ghostTop}>PLATFORM</span>
-        <span className={styles.ghostBot}>FLUTTER</span>
-      </div>
+      <svg className={styles.ghost} aria-hidden="true">
+        <text className={styles.ghostText} x="70%" y="20%">
+          PLATFORM
+        </text>
+        <text className={styles.ghostText} x="40%" y="93%">
+          FLUTTER
+        </text>
+      </svg>
 
       <div className={styles.textLayer}>
         <motion.div {...fadeUp(0.05)} className={styles.eyebrow}>
