@@ -1,0 +1,14 @@
+.viewport {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas {
+  width: 100%;
+  flex-shrink: 0;
+  transform-origin: center center;
+}

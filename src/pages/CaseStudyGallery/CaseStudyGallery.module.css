@@ -58,15 +58,17 @@
 .rail {
   margin-left: 48px;
   padding-top: 4px;
+  flex-shrink: 0;
 }
 
-/* Sits centered on the boundary between the rail (48px outer margin +
-   220px rail width) and the slide viewport. */
+/* In-flow between the rail and the slide viewport, with negative side
+   margins so its layout footprint is zero — the 40px button straddles
+   the rail↔viewport seam wherever it lands, so it tracks the rail's
+   (now content-driven) width automatically. */
 .backButton {
-  position: absolute;
-  top: 50%;
-  left: 268px;
-  transform: translate(-50%, -50%);
+  align-self: center;
+  flex-shrink: 0;
+  margin: 0 -20px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -93,8 +95,14 @@
     overflow: auto;
   }
 
+  /* Rail is hidden below 1024px, so there's no seam to straddle —
+     fall back to an absolutely positioned button inset from the edge. */
   .backButton {
+    position: absolute;
+    top: 50%;
     left: 24px;
+    transform: translateY(-50%);
+    margin: 0;
   }
 }
 

@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 12px 0;
+  container-type: size;
 }
 
 .textLayer {
@@ -28,12 +29,8 @@
   font-family: var(--font-primary);
   font-weight: 700;
   letter-spacing: 0.02em;
-  fill: none;
-  stroke: var(--color-text-ghost);
-  stroke-width: 1.5px;
-  stroke-linejoin: round;
-  paint-order: stroke;
-  font-size: clamp(100px, 10vw, 200px);
+  fill: var(--color-text-ghost);
+  font-size: clamp(64px, 50cqmin, 260px);
 }
 
 .eyebrow {
