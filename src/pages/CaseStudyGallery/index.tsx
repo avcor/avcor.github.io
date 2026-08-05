@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft } from 'lucide-react'
 import Nav from '../../components/Nav'
@@ -6,6 +6,7 @@ import ViewToggle from '../../components/ViewToggle'
 import EngineeringAchievementsRail from '../../components/EngineeringAchievementsRail'
 import FlutterCaseStudySlide from '../FlutterCaseStudyPage'
 import PlatformEngineeringSlide from '../PlatformEngineeringPage'
+import { useRailBand } from '../../hooks/useRailBand'
 import SlidesViewport from './SlidesViewport'
 import styles from './CaseStudyGallery.module.css'
 
@@ -13,6 +14,7 @@ const SLIDE_COUNT = 2
 
 export default function CaseStudyGallery() {
   const [activeSlide, setActiveSlide] = useState(0)
+  const { containerRef, railRef, band } = useRailBand()
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -41,8 +43,12 @@ export default function CaseStudyGallery() {
         </div>
       </header>
 
-      <div className={styles.body}>
-        <div className={styles.rail}>
+      <div
+        className={styles.body}
+        ref={containerRef}
+        style={{ '--rail-band': band } as CSSProperties}
+      >
+        <div className={styles.rail} ref={railRef}>
           <EngineeringAchievementsRail />
         </div>
 

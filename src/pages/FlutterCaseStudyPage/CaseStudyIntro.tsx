@@ -31,10 +31,24 @@ export default function CaseStudyIntro() {
   return (
     <div className={styles.column}>
       <svg className={styles.ghost} aria-hidden="true">
-        <text className={styles.ghostText} x="70%" y="2%" dominantBaseline="hanging">
+        <text
+          className={styles.ghostText}
+          x="70%"
+          y="2%"
+          dominantBaseline="hanging"
+          textLength="60%"
+          lengthAdjust="spacingAndGlyphs"
+        >
           PLATFORM
         </text>
-        <text className={styles.ghostText} x="40%" y="98%" dominantBaseline="auto">
+        <text
+          className={styles.ghostText}
+          x="40%"
+          y="98%"
+          dominantBaseline="auto"
+          textLength="60%"
+          lengthAdjust="spacingAndGlyphs"
+        >
           FLUTTER
         </text>
       </svg>

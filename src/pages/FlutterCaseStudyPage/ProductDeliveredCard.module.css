@@ -3,8 +3,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  border-top: 1px solid var(--color-white-a08);
 }
 
 .stage {
@@ -13,6 +11,9 @@
   min-height: 0;
   display: flex;
   justify-content: center;
+  /* Crop the oversized phone screenshot here (not on .wrapper) so the hover
+     glow, which lives outside .stage, can spill past the card's top edge. */
+  overflow: hidden;
 }
 
 .glowContainer {
@@ -26,8 +27,8 @@
   transition: opacity 0.6s ease;
 }
 
-.stage:has(.frame:hover) .glowContainer,
-.stage:has(.frame:focus-visible) .glowContainer {
+.wrapper:has(.frame:hover) .glowContainer,
+.wrapper:has(.frame:focus-visible) .glowContainer {
   opacity: 1;
 }
 

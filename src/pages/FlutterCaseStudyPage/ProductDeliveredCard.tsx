@@ -50,11 +50,11 @@ export default function ProductDeliveredCard() {
       transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
       className={styles.wrapper}
     >
-      <div className={styles.stage}>
-        <div className={styles.glowContainer} aria-hidden="true">
-          <div className={styles.glowBlob} />
-        </div>
+      <div className={styles.glowContainer} aria-hidden="true">
+        <div className={styles.glowBlob} />
+      </div>
 
+      <div className={styles.stage}>
         <button
           type="button"
           className={styles.frame}
