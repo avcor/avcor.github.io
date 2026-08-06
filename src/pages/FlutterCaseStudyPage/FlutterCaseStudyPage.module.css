@@ -7,6 +7,7 @@
 }
 
 .topRow {
+  position: relative;
   display: flex;
   gap: 8px;
   flex: 1 1 auto;
@@ -14,11 +15,15 @@
 }
 
 .intro {
+  position: relative;
+  z-index: 1;
   flex: 0.7 1 0;
   min-width: 0;
 }
 
 .product {
+  position: relative;
+  z-index: 1;
   flex: 1 1 0;
   min-width: 0;
 }

@@ -1,3 +1,4 @@
+import GhostBackdrop from './GhostBackdrop'
 import CaseStudyIntro from './CaseStudyIntro'
 import ProductDeliveredCard from './ProductDeliveredCard'
 import BusinessProblemCard from './BusinessProblemCard'
@@ -9,6 +10,8 @@ export default function FlutterCaseStudyPage() {
   return (
     <div className={styles.content}>
       <div className={styles.topRow}>
+        <GhostBackdrop />
+
         <div className={styles.intro}>
           <CaseStudyIntro />
         </div>

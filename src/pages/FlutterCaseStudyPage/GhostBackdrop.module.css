@@ -1,0 +1,19 @@
+/* Decorative "Platform / Flutter" watermark that spans the whole first row
+   (heading column + phone/gallery column). Sits behind the row content at
+   z-index 0; the columns are lifted to z-index 1. */
+.ghost {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ghostText {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  letter-spacing: 2px;
+  fill: var(--color-text-ghost);
+}
