@@ -37,5 +37,6 @@
 
 .flutter {
   bottom: var(--ghost-pad);
-  left: var(--ghost-pad);
+  /* Extra left inset for Flutter specifically (scales with row width). */
+  left: clamp(3rem, 8cqw, 7rem);
 }

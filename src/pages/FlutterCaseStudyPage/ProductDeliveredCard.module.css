@@ -16,34 +16,6 @@
   overflow: hidden;
 }
 
-.glowContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-.wrapper:has(.frame:hover) .glowContainer,
-.wrapper:has(.frame:focus-visible) .glowContainer {
-  opacity: 1;
-}
-
-.glowBlob {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 520px;
-  height: 520px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--color-primary-a60) 0%, var(--color-primary-a32) 45%, transparent 72%);
-  filter: blur(20px);
-}
-
 .frame {
   position: absolute;
   top: 0;
@@ -73,6 +45,37 @@
   display: block;
   height: 100%;
   width: auto;
+  /* Fade the lower part of the screenshot into transparency so it blends into
+     the dark background rather than ending in a hard crop. The visible image
+     ends at ~75% of its height (frame is 133.33% tall), so the fade completes
+     just before that line. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 74%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 74%);
+}
+
+/* The two remaining screenshots, tucked behind the main one — shorter, dimmed,
+   and offset outward so they just peek past its sides. Decorative only. */
+.frameSide {
+  --side-peek: 60%; /* how far each side image pokes out from behind the main */
+  position: absolute;
+  bottom: 0; /* base aligned with the main image's base */
+  height: 80%; /* smaller in height than the main frame */
+  width: auto;
+  z-index: 0;
+  pointer-events: none;
+  filter: brightness(0.5);
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 82%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 82%);
+}
+
+.frameLeft {
+  left: 50%;
+  transform: translateX(calc(-50% - var(--side-peek)));
+}
+
+.frameRight {
+  left: 50%;
+  transform: translateX(calc(-50% + var(--side-peek)));
 }
 
 .hint {
