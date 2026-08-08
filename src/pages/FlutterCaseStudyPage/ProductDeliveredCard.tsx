@@ -51,20 +51,12 @@ export default function ProductDeliveredCard() {
       className={styles.wrapper}
     >
       <div className={styles.stage}>
-        <img
-          className={`${styles.frameSide} ${styles.frameLeft}`}
-          src={screenshots[1].src}
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-        />
-        <img
-          className={`${styles.frameSide} ${styles.frameRight}`}
-          src={screenshots[2].src}
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-        />
+        <div className={`${styles.frameSide} ${styles.frameLeft}`} aria-hidden="true">
+          <img src={screenshots[1].src} alt="" draggable={false} />
+        </div>
+        <div className={`${styles.frameSide} ${styles.frameRight}`} aria-hidden="true">
+          <img src={screenshots[2].src} alt="" draggable={false} />
+        </div>
 
         <button
           type="button"

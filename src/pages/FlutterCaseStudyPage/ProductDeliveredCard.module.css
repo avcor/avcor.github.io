@@ -28,12 +28,7 @@
   padding: 0;
   cursor: pointer;
   z-index: 1;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.frame:hover,
-.frame:focus-visible {
-  filter: brightness(1.05);
+  transition: transform 0.3s ease;
 }
 
 .frame:focus-visible {
@@ -45,12 +40,6 @@
   display: block;
   height: 100%;
   width: auto;
-  /* Fade the lower part of the screenshot into transparency so it blends into
-     the dark background rather than ending in a hard crop. The visible image
-     ends at ~75% of its height (frame is 133.33% tall), so the fade completes
-     just before that line. */
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 74%);
-  mask-image: linear-gradient(to bottom, #000 55%, transparent 74%);
 }
 
 /* The two remaining screenshots, tucked behind the main one — shorter, dimmed,
@@ -64,8 +53,13 @@
   z-index: 0;
   pointer-events: none;
   filter: brightness(0.5);
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 82%);
-  mask-image: linear-gradient(to bottom, #000 55%, transparent 82%);
+  overflow: hidden; /* clip the zoomed image's overflowing bottom */
+}
+
+.frameSide img {
+  display: block;
+  height: 120%; /* zoomed in a little; the extra height is clipped at the bottom */
+  width: auto;
 }
 
 .frameLeft {
