@@ -51,21 +51,23 @@ export default function ProductDeliveredCard() {
       className={styles.wrapper}
     >
       <div className={styles.stage}>
-        <div className={`${styles.frameSide} ${styles.frameLeft}`} aria-hidden="true">
-          <img src={screenshots[1].src} alt="" draggable={false} />
-        </div>
-        <div className={`${styles.frameSide} ${styles.frameRight}`} aria-hidden="true">
-          <img src={screenshots[2].src} alt="" draggable={false} />
-        </div>
+        <div className={styles.imageGroup}>
+          <div className={`${styles.frameSide} ${styles.frameLeft}`} aria-hidden="true">
+            <img src={screenshots[1].src} alt="" draggable={false} />
+          </div>
+          <div className={`${styles.frameSide} ${styles.frameRight}`} aria-hidden="true">
+            <img src={screenshots[2].src} alt="" draggable={false} />
+          </div>
 
-        <button
-          type="button"
-          className={styles.frame}
-          onClick={openLightbox}
-          aria-label={`View all screenshots, starting with: ${cover.alt}`}
-        >
-          <img src={cover.src} alt={cover.alt} draggable={false} />
-        </button>
+          <button
+            type="button"
+            className={styles.frame}
+            onClick={openLightbox}
+            aria-label={`View all screenshots, starting with: ${cover.alt}`}
+          >
+            <img src={cover.src} alt={cover.alt} draggable={false} />
+          </button>
+        </div>
 
         <button type="button" className={styles.hint} onClick={openLightbox} aria-label="View all screenshots">
           <Maximize2 size={12} strokeWidth={2} />

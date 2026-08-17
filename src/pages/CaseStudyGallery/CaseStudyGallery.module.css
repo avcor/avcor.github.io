@@ -61,48 +61,11 @@
   flex-shrink: 0;
 }
 
-/* In-flow between the rail and the slide viewport, with negative side
-   margins so its layout footprint is zero — the 40px button straddles
-   the rail↔viewport seam wherever it lands, so it tracks the rail's
-   (now content-driven) width automatically. */
-.backButton {
-  align-self: center;
-  flex-shrink: 0;
-  margin: 0 -20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  box-shadow: 0 0 0 4px var(--color-bg-base), 0 0 16px var(--color-primary-a60);
-}
-
-.backButton:hover {
-  background: var(--color-primary-dim);
-}
-
-/* ── Responsive ──
-   The achievements rail hides at <=1024px, so the back button falls back
-   to the viewport's own left edge instead of the (now absent) boundary. */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
   .page {
     height: auto;
     overflow: auto;
-  }
-
-  /* Rail is hidden below 1024px, so there's no seam to straddle —
-     fall back to an absolutely positioned button inset from the edge. */
-  .backButton {
-    position: absolute;
-    top: 50%;
-    left: 24px;
-    transform: translateY(-50%);
-    margin: 0;
   }
 }
 
@@ -119,11 +82,5 @@
 @media (max-width: 768px) {
   .header {
     padding: 20px 20px;
-  }
-
-  .backButton {
-    left: 12px;
-    width: 34px;
-    height: 34px;
   }
 }

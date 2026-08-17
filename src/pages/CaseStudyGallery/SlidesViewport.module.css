@@ -19,4 +19,8 @@
   flex: 0 0 100%;
   min-width: 0;
   height: 100%;
+  /* Clip each slide to its own box so an inactive slide's decorative
+     overflow (e.g. the Overview watermark) can't bleed into the
+     neighbouring slide's visible area. */
+  overflow: hidden;
 }

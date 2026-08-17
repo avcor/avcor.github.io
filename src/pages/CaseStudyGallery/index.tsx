@@ -1,6 +1,4 @@
 import { useEffect, useState, type CSSProperties } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronLeft } from 'lucide-react'
 import Nav from '../../components/Nav'
 import ViewToggle from '../../components/ViewToggle'
 import EngineeringAchievementsRail from '../../components/EngineeringAchievementsRail'
@@ -51,23 +49,6 @@ export default function CaseStudyGallery() {
         <div className={styles.rail} ref={railRef}>
           <EngineeringAchievementsRail />
         </div>
-
-        <AnimatePresence>
-          {activeSlide > 0 && (
-            <motion.button
-              type="button"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-              className={styles.backButton}
-              onClick={() => setActiveSlide((i) => Math.max(0, i - 1))}
-              aria-label="Previous section"
-            >
-              <ChevronLeft size={18} strokeWidth={2} />
-            </motion.button>
-          )}
-        </AnimatePresence>
 
         <SlidesViewport activeIndex={activeSlide} onChange={setActiveSlide}>
           <FlutterCaseStudySlide />

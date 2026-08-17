@@ -3,6 +3,10 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* Bottom-edge blend: fade region for the mask on .imageGroup.
+     Percentages are of the stage height (0% = top, 100% = visible bottom). */
+  --fade-solid: 78%; /* fully opaque up to here */
+  --fade-end: 100%; /* fully transparent by the visible bottom edge */
 }
 
 .stage {
@@ -14,6 +18,17 @@
   /* Crop the oversized phone screenshot here (not on .wrapper) so the hover
      glow, which lives outside .stage, can spill past the card's top edge. */
   overflow: hidden;
+}
+
+/* Holds all three screenshots so they composite as one layer before the mask
+   fades them. Masking the images individually would let the side images (which
+   sit behind the main one) show through the main image's faded bottom instead
+   of the page background. */
+.imageGroup {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
 }
 
 .frame {
@@ -77,14 +92,14 @@
   right: 12px;
   bottom: 10px;
   z-index: 4;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 999px;
-  background: var(--color-bg-elevated);
+  background: var(--color-white-a03);
   border: 1px solid var(--color-white-a08);
-  color: var(--color-text-muted);
+  color: var(--color-text-primary-a85);
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
