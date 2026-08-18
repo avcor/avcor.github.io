@@ -1,0 +1,77 @@
+.stepper {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--color-white-a08);
+  border-radius: 999px;
+  background: var(--color-white-a03);
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+  /* 44px min touch target on mobile */
+  min-height: 40px;
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-white-a40);
+  transition: color 0.3s ease;
+}
+
+.label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-white-a45);
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.step:hover {
+  border-color: var(--color-white-a15);
+}
+
+.step[data-active] {
+  border-color: var(--color-primary-a55);
+  background: var(--color-primary-a06);
+}
+
+.step[data-active] .index {
+  color: var(--color-primary);
+}
+
+.step[data-active] .label {
+  color: var(--color-white);
+}
+
+.step:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .step {
+    padding: 6px 12px;
+    min-height: 34px;
+  }
+}
+
+@media (max-width: 640px) {
+  .step {
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  .label {
+    font-size: 0.75rem;
+  }
+}

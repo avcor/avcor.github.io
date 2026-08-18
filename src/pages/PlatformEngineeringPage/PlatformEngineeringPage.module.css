@@ -1,3 +1,57 @@
 .content {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 4px 0 6px;
+}
+
+.content:focus {
+  outline: none;
+}
+
+.stepperRow {
+  flex: 0 0 auto;
+}
+
+.stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* The animated panel fills the stage; each swap crossfades in place. */
+.panelHolder {
+  height: 100%;
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .content {
+    gap: 12px;
+    padding: 2px 0 4px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .content {
+    height: auto;
+    padding: 0 20px 24px;
+    gap: 20px;
+  }
+
+  .stepperRow {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 12px 0;
+    background: var(--color-bg-base);
+  }
+
+  .stage {
+    flex: none;
+  }
+
+  .panelHolder {
+    height: auto;
+  }
 }

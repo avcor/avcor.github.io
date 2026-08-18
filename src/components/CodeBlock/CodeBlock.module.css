@@ -1,0 +1,59 @@
+.block {
+  border: 1px solid var(--color-white-a08);
+  border-radius: 12px;
+  background: var(--color-bg-card);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-white-a08);
+  background: var(--color-white-a03);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.filename {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+}
+
+.pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--color-text-primary-a85);
+  tab-size: 2;
+}
+
+.line {
+  display: block;
+  white-space: pre;
+}
+
+.comment {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .pre {
+    padding: 10px 14px;
+    font-size: 0.72rem;
+    line-height: 1.55;
+  }
+}
