@@ -14,8 +14,10 @@
   flex: 1 1 auto;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(260px, 38%) 1fr;
-  gap: 40px;
+  /* Cap the map column so the SVG fits by width (fills left→right) instead of
+     by height (which leaves it floating in a too-wide pane). Detail takes the rest. */
+  grid-template-columns: minmax(300px, 400px) 1fr;
+  gap: 44px;
   align-items: stretch;
 }
 

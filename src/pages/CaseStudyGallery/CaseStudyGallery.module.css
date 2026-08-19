@@ -53,12 +53,7 @@
   display: flex;
   align-items: stretch;
   min-height: 0;
-}
-
-.rail {
-  margin-left: 48px;
-  padding-top: 4px;
-  flex-shrink: 0;
+  padding: 0 48px;
 }
 
 /* ── Responsive ── */
@@ -73,14 +68,14 @@
   .header {
     padding: 8px 48px;
   }
-
-  .rail {
-    padding-top: 0;
-  }
 }
 
 @media (max-width: 768px) {
   .header {
     padding: 20px 20px;
+  }
+
+  .body {
+    padding: 0;
   }
 }

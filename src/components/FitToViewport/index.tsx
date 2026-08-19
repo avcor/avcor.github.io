@@ -51,7 +51,13 @@ export default function FitToViewport({ designHeight, children }: FitToViewportP
 
   return (
     <div ref={viewportRef} className={styles.viewport}>
-      <div className={styles.canvas} style={{ height: designHeight, transform: `scale(${scale})` }}>
+      {/* Widen the canvas by 1/scale so that after scale-to-fit-height it lands
+          exactly on the viewport width — content fills both gutters, not just the
+          left. Fixed-px elements render identically; fluid ones fill the extra. */}
+      <div
+        className={styles.canvas}
+        style={{ height: designHeight, width: `${100 / scale}%`, transform: `scale(${scale})` }}
+      >
         {children}
       </div>
     </div>

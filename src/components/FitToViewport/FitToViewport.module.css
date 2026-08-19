@@ -4,11 +4,14 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .canvas {
   width: 100%;
   flex-shrink: 0;
-  transform-origin: center center;
+  /* Anchor the scale-to-fit at the left edge so a scaled slide's content still
+     starts at the page's 48px gutter — matching the (unscaled) sections above,
+     instead of being inset symmetrically by the scale factor. */
+  transform-origin: left center;
 }

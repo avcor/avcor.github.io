@@ -48,7 +48,7 @@ export default function PlatformEngineeringPage() {
               exit={{ opacity: 0, x: -8 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             >
-              <DeepDivePanel panel={activePanel} variant="stacked" />
+              <DeepDivePanel panel={activePanel} variant="split" />
             </motion.div>
           </AnimatePresence>
         </div>

@@ -22,7 +22,13 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
 
   return (
     <div className={styles.map}>
-      <svg viewBox={MAP_VIEWBOX} className={styles.svg} role="group" aria-label="Engine lifecycle map">
+      <svg
+        viewBox={MAP_VIEWBOX}
+        preserveAspectRatio="xMinYMid meet"
+        className={styles.svg}
+        role="group"
+        aria-label="Engine lifecycle map"
+      >
         {/* ── Wires (idle by default; active concern lights up + pulses) ── */}
         {MAP_WIRES.map((wire) => {
           const isLit = wire.panelIds.includes(lit)
