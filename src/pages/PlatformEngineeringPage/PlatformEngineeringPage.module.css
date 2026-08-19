@@ -2,7 +2,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   padding: 4px 0 6px;
 }
 
@@ -10,19 +9,48 @@
   outline: none;
 }
 
-.stepperRow {
-  flex: 0 0 auto;
-}
-
+/* ── Two-pane stage: lifecycle map + detail ── */
 .stage {
-  position: relative;
   flex: 1 1 auto;
   min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(260px, 38%) 1fr;
+  gap: 40px;
+  align-items: stretch;
 }
 
-/* The animated panel fills the stage; each swap crossfades in place. */
+.mapPane {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding-right: 40px;
+  border-right: 1px solid var(--color-white-a08);
+}
+
+.detailPane {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* fade the top/bottom edges so scrolled content dissolves rather than
+     hard-cutting against the stepper and page base */
+  mask-image: linear-gradient(to bottom, transparent 0, var(--color-white) 12px, var(--color-white) calc(100% - 12px), transparent 100%);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-white-a15) transparent;
+}
+
+.detailPane::-webkit-scrollbar {
+  width: 6px;
+}
+
+.detailPane::-webkit-scrollbar-thumb {
+  background: var(--color-white-a15);
+  border-radius: 999px;
+}
+
 .panelHolder {
-  height: 100%;
+  min-height: 100%;
 }
 
 @media (min-width: 1025px) and (max-height: 820px) {
@@ -30,25 +58,34 @@
     gap: 12px;
     padding: 2px 0 4px;
   }
+
+  .stage {
+    gap: 28px;
+  }
+
+  .mapPane {
+    padding-right: 28px;
+  }
 }
 
+/* ── Tablet / mobile: stack map above detail, allow scroll ── */
 @media (max-width: 1024px) {
   .content {
     height: auto;
     padding: 0 20px 24px;
-    gap: 20px;
-  }
-
-  .stepperRow {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    padding: 12px 0;
-    background: var(--color-bg-base);
   }
 
   .stage {
-    flex: none;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .mapPane {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--color-white-a08);
+    padding-bottom: 24px;
+    height: 420px;
   }
 
   .panelHolder {

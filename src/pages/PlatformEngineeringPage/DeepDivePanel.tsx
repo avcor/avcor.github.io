@@ -16,11 +16,12 @@ function fadeUp(delay: number) {
 
 interface DeepDivePanelProps {
   panel: PanelData
+  variant?: 'split' | 'stacked'
 }
 
-export default function DeepDivePanel({ panel }: DeepDivePanelProps) {
+export default function DeepDivePanel({ panel, variant = 'split' }: DeepDivePanelProps) {
   return (
-    <div className={styles.panel}>
+    <div className={`${styles.panel} ${variant === 'stacked' ? styles.stacked : ''}`}>
       <span className={styles.watermark} aria-hidden="true">
         {panel.watermark}
       </span>
@@ -66,10 +67,19 @@ export default function DeepDivePanel({ panel }: DeepDivePanelProps) {
         </motion.div>
       </div>
 
-      {/* ── Right: proof artifact ── */}
+      {/* ── Right: proof artifact, or map-orientation guide for the overview ── */}
       <motion.div {...fadeUp(0.12)} className={styles.right} key={panel.id}>
-        <span className={styles.proofLabel}>Proof</span>
-        <PanelProof proof={panel.proof} />
+        {panel.proof ? (
+          <>
+            <span className={styles.proofLabel}>Proof</span>
+            <PanelProof proof={panel.proof} />
+          </>
+        ) : panel.guide ? (
+          <>
+            <span className={styles.proofLabel}>Read the map</span>
+            <p className={styles.guide}>{panel.guide}</p>
+          </>
+        ) : null}
       </motion.div>
     </div>
   )

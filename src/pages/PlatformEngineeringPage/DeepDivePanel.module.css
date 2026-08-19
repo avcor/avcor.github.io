@@ -154,6 +154,18 @@
   color: var(--color-text-secondary);
 }
 
+.guide {
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid var(--color-white-a08);
+  border-left: 2px solid var(--color-primary);
+  border-radius: 12px;
+  background: var(--color-primary-a06);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-primary-a85);
+}
+
 /* ── Compact desktop (short viewports) ── */
 @media (min-width: 1025px) and (max-height: 820px) {
   .panel {
@@ -189,6 +201,56 @@
 
   .insight {
     padding-top: 10px;
+  }
+}
+
+/* ── Stacked variant: single column for the side detail pane ── */
+.stacked {
+  grid-template-columns: 1fr;
+  gap: 18px;
+  height: auto;
+  min-height: 100%;
+  align-content: start;
+  overflow: visible;
+}
+
+.stacked .watermark {
+  display: none;
+}
+
+.stacked .headingLine,
+.stacked .headingAccent {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+.stacked .eyebrow {
+  margin-bottom: 12px;
+}
+
+.stacked .heading {
+  margin-bottom: 12px;
+}
+
+.stacked .impact {
+  margin-bottom: 16px;
+}
+
+.stacked .rows {
+  margin-bottom: 16px;
+}
+
+.stacked .rowText {
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .stacked {
+    gap: 12px;
+  }
+
+  .stacked .rows {
+    gap: 8px;
   }
 }
 

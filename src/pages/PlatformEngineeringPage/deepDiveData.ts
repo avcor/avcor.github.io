@@ -29,7 +29,10 @@ export interface DeepDivePanel {
   decision: string
   insight: string
   watermark: string
-  proof: Proof
+  /** The proof artifact. Omitted for the overview panel, which uses `guide`. */
+  proof?: Proof
+  /** Shown in place of a proof — orients the reader to the map itself. */
+  guide?: string
 }
 
 export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
@@ -48,20 +51,8 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     insight:
       'Add-to-app is easy to demo and hard to run in production. The difference is entirely in the lifecycle seam — and the complexity lives there, not in the line count.',
     watermark: 'Seam',
-    proof: {
-      kind: 'flow',
-      steps: [
-        { type: 'node', label: 'Native host', detail: '~60 modules · MVVM + Repository · Java/Kotlin' },
-        { type: 'node', label: 'DigiiFlutterActivity', detail: 'one host activity' },
-        { type: 'node', label: 'FlutterEngineManager', detail: 'one cached engine' },
-        { type: 'node', label: 'MethodChannel · com.CollPoll', detail: 'one bridge' },
-        {
-          type: 'node',
-          label: '6 handler groups',
-          detail: 'User · Feature · College · System · Navigation · Nomenclature',
-        },
-      ],
-    },
+    guide:
+      'The map beside this is the seam. Every state is a place the shared engine can fail — cold start, routing, process death, teardown, the bridge. Select any node to see the code that keeps a host that knows nothing about Flutter alive.',
   },
   {
     id: 'engine',
