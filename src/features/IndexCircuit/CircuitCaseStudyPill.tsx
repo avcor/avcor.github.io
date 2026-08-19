@@ -9,6 +9,8 @@ interface CircuitCaseStudyPillProps {
    *  including a center-chip hover where the rest of the pill stays at rest */
   isDotHighlighted?: boolean
   onHoverChange?: (hovered: boolean) => void
+  /** When set, the pill becomes an interactive button that opens its details. */
+  onSelect?: () => void
 }
 
 export default function CircuitCaseStudyPill({
@@ -16,11 +18,30 @@ export default function CircuitCaseStudyPill({
   isHighlighted = false,
   isDotHighlighted = false,
   onHoverChange,
+  onSelect,
 }: CircuitCaseStudyPillProps) {
   const gradientId = useId()
+  const clickable = onSelect != null
 
   return (
-    <g data-case-study={study.id}>
+    <g
+      data-case-study={study.id}
+      className={clickable ? styles.clickable : undefined}
+      role={clickable ? 'button' : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      aria-label={clickable ? `Open ${study.label} case study` : undefined}
+      onClick={onSelect}
+      onKeyDown={
+        clickable
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                onSelect?.()
+              }
+            }
+          : undefined
+      }
+    >
       {/* Very faint outline at rest; the full blueprint stroke shows while
        *  the pill's wire is highlighted */}
       <path
