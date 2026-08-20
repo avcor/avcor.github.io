@@ -15,8 +15,8 @@
   will-change: transform;
 }
 
-/* Sits in the gallery header's empty left slot (ViewToggle is centred, Nav is
-   right), so it never collides with either. */
+/* Floats over the top-left of the scrolling sheet; the sticky spy rail is
+   vertically centred, so the chevron never collides with it. */
 .close {
   position: absolute;
   top: 14px;

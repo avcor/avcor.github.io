@@ -1,12 +1,9 @@
 import { useState } from 'react'
-import CircuitWireGlow from '../../features/IndexCircuit/CircuitWireGlow'
-import CircuitWirePulse from '../../features/IndexCircuit/CircuitWirePulse'
 import {
-  MAP_LEGEND,
+  MAP_CONNECTORS,
   MAP_NODES,
   MAP_TITLE,
   MAP_VIEWBOX,
-  MAP_WIRES,
   type MapNode,
 } from './lifecycleMapData'
 import styles from './LifecycleMap.module.css'
@@ -22,23 +19,24 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
 
   return (
     <div className={styles.map}>
-      <svg
-        viewBox={MAP_VIEWBOX}
-        preserveAspectRatio="xMinYMid meet"
-        className={styles.svg}
-        role="group"
-        aria-label="Engine lifecycle map"
-      >
-        {/* ── Wires (idle by default; active concern lights up + pulses) ── */}
-        {MAP_WIRES.map((wire) => {
-          const isLit = wire.panelIds.includes(lit)
-          return (
-            <g key={wire.id}>
-              <CircuitWireGlow d={wire.d} tone={isLit ? 'active' : 'idle'} />
-              {isLit && <CircuitWirePulse d={wire.d} pulseKey={`${wire.id}-${lit}`} />}
-            </g>
-          )
-        })}
+      <svg viewBox={MAP_VIEWBOX} preserveAspectRatio="xMidYMid meet" className={styles.svg}>
+        <defs>
+          {/* Roughen: displace edges with fractal noise for a hand-drawn wobble. */}
+          <filter id="rough" x="-15%" y="-15%" width="130%" height="130%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+
+          {/* Sketchy open arrowhead, rotated along each connector. */}
+          <marker id="arrow" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M1.5 1.5 L8 5 L1.5 8.5" className={styles.arrow} />
+          </marker>
+        </defs>
+
+        {/* ── Connectors ── */}
+        {MAP_CONNECTORS.map((c) => (
+          <path key={c.id} d={c.d} className={styles.connector} markerEnd="url(#arrow)" filter="url(#rough)" />
+        ))}
 
         {/* ── Nodes ── */}
         {MAP_NODES.map((node) => (
@@ -52,7 +50,7 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
           />
         ))}
 
-        {/* ── Title = whole-system target (Seam) ── */}
+        {/* ── Title = the seam framing ── */}
         <text
           x={MAP_TITLE.x}
           y={MAP_TITLE.y}
@@ -67,21 +65,10 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
               onSelect(MAP_TITLE.panelId)
             }
           }}
-          onMouseEnter={() => setHovered(MAP_TITLE.panelId)}
-          onMouseLeave={() => setHovered(null)}
         >
-          {MAP_TITLE.label.toUpperCase()}
+          {MAP_TITLE.label}
         </text>
       </svg>
-
-      <ul className={styles.legend}>
-        {MAP_LEGEND.map(({ tone, label }) => (
-          <li key={tone} className={styles.legendItem}>
-            <span className={styles.legendDot} data-tone={tone} />
-            {label}
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }
@@ -95,14 +82,13 @@ interface MapNodeShapeProps {
 }
 
 function MapNodeShape({ node, isActive, isLit, onSelect, onHover }: MapNodeShapeProps) {
-  const { rect, tone, label, sub, panelId, shape } = node
+  const { rect, label, sub, panelId } = node
   const interactive = panelId != null
   const cx = rect.x + rect.w / 2
 
   return (
     <g
-      className={`${styles.node} ${interactive ? styles.interactive : ''} ${isLit ? styles.nodeLit : ''}`}
-      data-tone={tone}
+      className={`${styles.node} ${interactive ? styles.interactive : ''} ${isLit ? styles.nodeLit : ''} ${!interactive ? styles.decorative : ''}`}
       data-active={isActive || undefined}
       role={interactive ? 'button' : undefined}
       tabIndex={interactive ? 0 : undefined}
@@ -111,7 +97,6 @@ function MapNodeShape({ node, isActive, isLit, onSelect, onHover }: MapNodeShape
       onKeyDown={
         interactive
           ? (e) => {
-              // Enter/Space select; arrows and digits bubble to the container's handler.
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault()
                 onSelect(panelId)
@@ -122,29 +107,22 @@ function MapNodeShape({ node, isActive, isLit, onSelect, onHover }: MapNodeShape
       onMouseEnter={interactive ? () => onHover(panelId) : undefined}
       onMouseLeave={interactive ? () => onHover(null) : undefined}
     >
-      <rect x={rect.x} y={rect.y} width={rect.w} height={rect.h} rx={shape === 'bus' ? 8 : 9} className={styles.nodeBox} />
-
-      {shape === 'bus' ? (
-        <text
-          x={cx}
-          y={rect.y + rect.h / 2}
-          transform={`rotate(-90 ${cx} ${rect.y + rect.h / 2})`}
-          className={styles.busLabel}
-        >
-          {label}
+      <rect
+        x={rect.x}
+        y={rect.y}
+        width={rect.w}
+        height={rect.h}
+        rx={13}
+        className={styles.nodeBox}
+        filter="url(#rough)"
+      />
+      <text x={cx} y={sub ? rect.y + rect.h / 2 - 5 : rect.y + rect.h / 2} className={styles.nodeLabel}>
+        {label}
+      </text>
+      {sub && (
+        <text x={cx} y={rect.y + rect.h / 2 + 12} className={styles.nodeSub}>
+          {sub}
         </text>
-      ) : (
-        <>
-          <rect x={rect.x} y={rect.y} width={3.5} height={rect.h} rx={2} className={styles.nodeAccent} />
-          <text x={rect.x + 14} y={sub ? rect.y + rect.h / 2 - 4 : rect.y + rect.h / 2 + 4} className={styles.nodeLabel}>
-            {label}
-          </text>
-          {sub && (
-            <text x={rect.x + 14} y={rect.y + rect.h / 2 + 12} className={styles.nodeSub}>
-              {sub}
-            </text>
-          )}
-        </>
       )}
     </g>
   )

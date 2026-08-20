@@ -1,48 +1,72 @@
-import { useEffect, useState } from 'react'
-import Nav from '../../components/Nav'
-import ViewToggle from '../../components/ViewToggle'
-import FlutterCaseStudySlide from '../FlutterCaseStudyPage'
-import PlatformEngineeringSlide from '../PlatformEngineeringPage'
-import SlidesViewport from './SlidesViewport'
+import { useMemo, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import FlutterCaseStudyPage from '../FlutterCaseStudyPage'
+import DeepDivePanel from '../PlatformEngineeringPage/DeepDivePanel'
+import LifecycleMap from '../PlatformEngineeringPage/LifecycleMap'
+import { DEEP_DIVE_PANELS } from '../PlatformEngineeringPage/deepDiveData'
+import { useScrollSpy } from '../../hooks/useScrollSpy'
+import SpyBar, { type SpySection } from './SpyBar'
 import styles from './CaseStudyGallery.module.css'
 
-const SLIDE_COUNT = 2
+/** The spy bar is purely the two scroll stops; concerns are explored via the map. */
+const SPY_ITEMS: SpySection[] = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'architecture', label: 'System architecture' },
+]
+
+const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function CaseStudyGallery() {
-  const [activeSlide, setActiveSlide] = useState(0)
+  const scrollRef = useRef<HTMLElement>(null)
+  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
+  const [selected, setSelected] = useState('seam')
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement).tagName
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return
+  const onJump = (id: string) => {
+    const container = scrollRef.current
+    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
+    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
+  }
 
-      if (e.key === 'ArrowRight' && activeSlide < SLIDE_COUNT - 1) {
-        setActiveSlide((i) => i + 1)
-      } else if (e.key === 'ArrowLeft' && activeSlide > 0) {
-        setActiveSlide((i) => i - 1)
-      }
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [activeSlide])
+  const selectedPanel = useMemo(
+    () => DEEP_DIVE_PANELS.find((p) => p.id === selected) ?? DEEP_DIVE_PANELS[0],
+    [selected],
+  )
 
   return (
-    <section id="flutter-platform" className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headerCenter}>
-          <ViewToggle activeIndex={activeSlide} onChange={setActiveSlide} />
-        </div>
-        <div className={styles.headerRight}>
-          <Nav activeLink="Work" />
-        </div>
-      </header>
+    <section id="flutter-platform" className={styles.page} ref={scrollRef}>
+      <div className={styles.layout}>
+        <aside className={styles.spyCol}>
+          <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} />
+        </aside>
 
-      <div className={styles.body}>
-        <SlidesViewport activeIndex={activeSlide} onChange={setActiveSlide}>
-          <FlutterCaseStudySlide />
-          <PlatformEngineeringSlide />
-        </SlidesViewport>
+        <div className={styles.sections}>
+          <section id="overview" className={styles.section}>
+            <FlutterCaseStudyPage />
+          </section>
+
+          <section id="architecture" className={styles.sectionLocked}>
+            <div className={styles.arch}>
+              <div className={styles.archMap}>
+                <LifecycleMap activePanelId={selected} onSelect={setSelected} />
+              </div>
+
+              <div className={styles.archDetail}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selected}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                    className={styles.archDetailInner}
+                  >
+                    <DeepDivePanel panel={selectedPanel} variant="stacked" />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </section>
   )

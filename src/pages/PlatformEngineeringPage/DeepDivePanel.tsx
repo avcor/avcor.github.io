@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import GlassBadge from '../../components/GlassBadge'
 import PanelProof from './PanelProof'
@@ -6,20 +7,30 @@ import styles from './DeepDivePanel.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
+/** Reveal on scroll into view — each section animates as the reader reaches it. */
 function fadeUp(delay: number) {
   return {
-    initial: { opacity: 0, y: 10 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.38, delay, ease },
+    initial: { opacity: 0, y: 14 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-10%' },
+    transition: { duration: 0.5, delay, ease },
   }
 }
 
 interface DeepDivePanelProps {
   panel: PanelData
   variant?: 'split' | 'stacked'
+  /** Overrides the proof column — used to drop the lifecycle map into the Seam. */
+  proofSlot?: ReactNode
+  proofLabel?: string
 }
 
-export default function DeepDivePanel({ panel, variant = 'split' }: DeepDivePanelProps) {
+export default function DeepDivePanel({
+  panel,
+  variant = 'split',
+  proofSlot,
+  proofLabel,
+}: DeepDivePanelProps) {
   return (
     <div className={`${styles.panel} ${variant === 'stacked' ? styles.stacked : ''}`}>
       <span className={styles.watermark} aria-hidden="true">
@@ -67,9 +78,14 @@ export default function DeepDivePanel({ panel, variant = 'split' }: DeepDivePane
         </motion.div>
       </div>
 
-      {/* ── Right: proof artifact, or map-orientation guide for the overview ── */}
-      <motion.div {...fadeUp(0.12)} className={styles.right} key={panel.id}>
-        {panel.proof ? (
+      {/* ── Right: proof artifact, an override slot (the map), or a guide ── */}
+      <motion.div {...fadeUp(0.12)} className={styles.right}>
+        {proofSlot ? (
+          <>
+            <span className={styles.proofLabel}>{proofLabel ?? 'Proof'}</span>
+            {proofSlot}
+          </>
+        ) : panel.proof ? (
           <>
             <span className={styles.proofLabel}>Proof</span>
             <PanelProof proof={panel.proof} />
