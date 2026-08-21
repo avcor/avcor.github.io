@@ -28,7 +28,7 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
            *  perfectly vertical/horizontal connectors have a zero-width or
            *  zero-height bbox, which would otherwise clip the filter to
            *  nothing and make the line disappear entirely. */}
-          <filter id="rough-cicd" filterUnits="userSpaceOnUse" x="-20" y="-20" width="540" height="680">
+          <filter id="rough-cicd" filterUnits="userSpaceOnUse" x="-20" y="-20" width="540" height="550">
             <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n" />
             <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
           </filter>
