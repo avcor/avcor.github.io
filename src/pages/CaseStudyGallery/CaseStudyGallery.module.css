@@ -58,6 +58,11 @@
   align-items: center;
   padding: 64px 0;
   box-sizing: border-box;
+  /* Excalidraw-style dotted grid canvas, now spanning the whole screen
+     rather than just the architecture map box. */
+  background-image: radial-gradient(var(--color-white-a12) 1.3px, transparent 1.3px);
+  background-size: 22px 22px;
+  background-position: 11px 11px;
 }
 
 .arch {

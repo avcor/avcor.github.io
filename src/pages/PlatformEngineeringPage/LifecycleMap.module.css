@@ -5,12 +5,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 16px;
-  /* Excalidraw-style dotted grid canvas. */
-  background-color: var(--color-bg-card);
-  background-image: radial-gradient(var(--color-white-a12) 1.3px, transparent 1.3px);
-  background-size: 22px 22px;
-  background-position: 11px 11px;
-  border: 1px solid var(--color-white-a08);
   padding: 12px;
 }
 
