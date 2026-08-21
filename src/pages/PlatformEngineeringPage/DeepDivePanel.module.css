@@ -110,7 +110,7 @@
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.55;
-  color: var(--color-white-a45);
+  color: var(--color-text-primary);
 }
 
 /* ── Insight callout ── */
@@ -156,11 +156,8 @@
 
 .guide {
   margin: 0;
-  padding: 18px 20px;
-  border: 1px solid var(--color-white-a08);
+  padding-left: 16px;
   border-left: 2px solid var(--color-primary);
-  border-radius: 12px;
-  background: var(--color-primary-a06);
   font-size: 0.95rem;
   line-height: 1.6;
   color: var(--color-text-primary-a85);

@@ -1,5 +1,5 @@
 .block {
-  border: 1px solid var(--color-white-a08);
+  border: 1px solid var(--color-white-a22);
   border-radius: 12px;
   background: var(--color-bg-card);
   overflow: hidden;
@@ -10,7 +10,7 @@
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  border-bottom: 1px solid var(--color-white-a08);
+  border-bottom: 1px solid var(--color-white-a22);
   background: var(--color-white-a03);
 }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { MousePointerClick } from 'lucide-react'
 import {
   MAP_CONNECTORS,
   MAP_NODES,
@@ -92,6 +93,11 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
           {MAP_TITLE.label}
         </text>
       </svg>
+
+      <div className={styles.hint}>
+        <MousePointerClick size={12} strokeWidth={2} />
+        Click a node to explore
+      </div>
     </div>
   )
 }
