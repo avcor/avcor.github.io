@@ -6,7 +6,7 @@ Eyebrow: Platform Engineering
 
 Heading: Building a Modular Flutter Platform for Android
 
-Description: Built the platform that enabled Flutter features to run inside an existing Android application while allowing Android and Flutter to evolve and release independently.
+Description: Built the platform that runs Flutter features inside the existing Android app. Android and Flutter ship and evolve independently.
 
 Tags: Flutter, Android, Architecture, Modular, CI/CD
 

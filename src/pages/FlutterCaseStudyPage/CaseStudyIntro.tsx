@@ -43,9 +43,8 @@ export default function CaseStudyIntro() {
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className={styles.description}>
-          Built the platform that enabled Flutter features to run inside an existing
-          Android application while allowing Android and Flutter to evolve and release
-          independently.
+          Built the platform that runs Flutter features inside the existing Android
+          app. Android and Flutter ship and evolve independently.
         </motion.p>
 
         <motion.div {...fadeUp(0.42)} className={styles.tags}>
