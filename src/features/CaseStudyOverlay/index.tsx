@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { Check, ChevronDown, Share2 } from 'lucide-react'
 import CaseStudyGallery from '../../pages/CaseStudyGallery'
 import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
 import styles from './CaseStudyOverlay.module.css'
@@ -15,6 +15,7 @@ const ease = [0.16, 1, 0.3, 1] as const
 export default function CaseStudyOverlay() {
   const { openId, close } = useCaseStudyOverlay()
   const isOpen = openId !== null
+  const [copied, setCopied] = useState(false)
 
   // Escape to close + lock the page behind the sheet while it's open.
   useEffect(() => {
@@ -30,6 +31,23 @@ export default function CaseStudyOverlay() {
       document.body.style.overflow = prevOverflow
     }
   }, [isOpen, close])
+
+  // Reset the "copied" affordance whenever a fresh sheet opens.
+  useEffect(() => {
+    setCopied(false)
+  }, [openId])
+
+  const onShare = async () => {
+    if (!openId) return
+    const url = `${window.location.origin}${window.location.pathname}#case-study/${openId}`
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1800)
+    } catch {
+      window.prompt('Copy this link:', url)
+    }
+  }
 
   return (
     <AnimatePresence>
@@ -55,6 +73,16 @@ export default function CaseStudyOverlay() {
           >
             <button type="button" className={styles.close} onClick={close} aria-label="Close details">
               <ChevronDown size={18} strokeWidth={2} />
+            </button>
+
+            <button
+              type="button"
+              className={styles.share}
+              onClick={onShare}
+              aria-label="Copy link to this case study"
+            >
+              {copied ? <Check size={16} strokeWidth={2} /> : <Share2 size={16} strokeWidth={2} />}
+              <span>{copied ? 'Link copied' : 'Share'}</span>
             </button>
 
             <CaseStudyGallery />
