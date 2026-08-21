@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 4px 0 6px 0px;
+  padding: 4px 0 6px;
 }
 
 .topRow {
@@ -17,7 +17,7 @@
 .intro {
   position: relative;
   z-index: 1;
-  flex: 0.7 1 0;
+  flex: 1 1 0;
   min-width: 0;
 }
 
@@ -78,7 +78,7 @@
 @media (min-width: 1025px) and (max-height: 820px) {
   .content {
     gap: 6px;
-    padding: 2px 0 4px 0px;
+    padding: 2px 0 4px;
   }
 
   .topRow {

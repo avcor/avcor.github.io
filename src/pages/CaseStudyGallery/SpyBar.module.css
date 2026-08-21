@@ -56,6 +56,31 @@
   transition: color 0.25s ease;
 }
 
+/* Above the mobile top-bar breakpoint, the rail sits on the side of the
+   viewport, so labels rotate to run alongside the spine instead of
+   pushing the rail wide. */
+@media (min-width: 901px) {
+  .list::before {
+    left: 50%;
+    margin-left: -0.5px;
+    top: 75px;
+    bottom: 75px;
+  }
+
+  .item {
+    flex-direction: column;
+    justify-content: center;
+    height: 150px;
+    padding: 0;
+    gap: 10px;
+  }
+
+  .label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+}
+
 .item:hover .label {
   color: var(--color-text-primary-a85);
 }
