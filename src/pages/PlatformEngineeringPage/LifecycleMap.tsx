@@ -21,8 +21,13 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
     <div className={styles.map}>
       <svg viewBox={MAP_VIEWBOX} preserveAspectRatio="xMidYMid meet" className={styles.svg}>
         <defs>
-          {/* Roughen: displace edges with fractal noise for a hand-drawn wobble. */}
-          <filter id="rough" x="-15%" y="-15%" width="130%" height="130%">
+          {/* Roughen: displace edges with fractal noise for a hand-drawn wobble.
+           *  Uses an absolute (userSpaceOnUse) region covering the canvas
+           *  rather than a percentage of each path's own bounding box —
+           *  perfectly vertical/horizontal connectors have a zero-width or
+           *  zero-height bbox, which would otherwise clip the filter to
+           *  nothing and make the line disappear entirely. */}
+          <filter id="rough" filterUnits="userSpaceOnUse" x="-20" y="-20" width="540" height="640">
             <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n" />
             <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
           </filter>
@@ -31,11 +36,29 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
           <marker id="arrow" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M1.5 1.5 L8 5 L1.5 8.5" className={styles.arrow} />
           </marker>
+
+          {/* Plain dot terminator — pipeline continuation / always-on links
+           *  that aren't a state transition, so no directional arrowhead. */}
+          <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4.5" markerHeight="4.5">
+            <circle cx="5" cy="5" r="3.4" className={styles.dot} />
+          </marker>
         </defs>
 
         {/* ── Connectors ── */}
         {MAP_CONNECTORS.map((c) => (
-          <path key={c.id} d={c.d} className={styles.connector} markerEnd="url(#arrow)" filter="url(#rough)" />
+          <g key={c.id}>
+            <path
+              d={c.d}
+              className={styles.connector}
+              markerEnd={c.endMarker === 'dot' ? 'url(#dot)' : 'url(#arrow)'}
+              filter="url(#rough)"
+            />
+            {c.label && c.labelX != null && c.labelY != null && (
+              <text x={c.labelX} y={c.labelY} className={styles.connectorLabel}>
+                {c.label}
+              </text>
+            )}
+          </g>
         ))}
 
         {/* ── Nodes ── */}
