@@ -5,7 +5,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 16px;
-  padding: 12px;
+  background: var(--color-bg-card);
+  padding: 24px;
 }
 
 .svg {
