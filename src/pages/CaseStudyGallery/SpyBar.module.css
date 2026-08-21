@@ -8,7 +8,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
   position: relative;
 }
 
@@ -60,17 +60,21 @@
    viewport, so labels rotate to run alongside the spine instead of
    pushing the rail wide. */
 @media (min-width: 901px) {
+  .list {
+    gap: 32px;
+  }
+
   .list::before {
     left: 50%;
     margin-left: -0.5px;
-    top: 75px;
-    bottom: 75px;
+    top: 95px;
+    bottom: 95px;
   }
 
   .item {
     flex-direction: column;
     justify-content: center;
-    height: 150px;
+    height: 190px;
     padding: 0;
     gap: 10px;
   }
