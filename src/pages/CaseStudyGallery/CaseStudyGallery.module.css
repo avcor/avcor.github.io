@@ -48,11 +48,16 @@
   min-width: 0;
 }
 
+/* Top-anchored rather than vertically centred: centring within a section
+   that's taller than one viewport (content + padding > 100vh) meant the
+   content only became visible after scrolling partway down. The extra
+   top padding (vs. the 64px bottom) just clears the overlay's close
+   chevron, which floats at top:14px/left:24px. */
 .section {
   min-height: 100vh;
   display: grid;
   align-items: center;
-  padding: 64px 0;
+  padding: 0 0 0 0;
   box-sizing: border-box;
   scroll-margin-top: 0;
 }
