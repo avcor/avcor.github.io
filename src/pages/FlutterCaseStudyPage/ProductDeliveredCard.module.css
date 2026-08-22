@@ -87,42 +87,6 @@
   transform: translateX(calc(-50% + var(--side-peek)));
 }
 
-.hint {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--color-white-a04);
-  border: 1px solid var(--color-white-a08);
-  backdrop-filter: blur(20px);
-  color: var(--color-text-primary-a85);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.hint:hover,
-.hint:focus-visible {
-  color: var(--color-primary);
-  border-color: var(--color-primary-a32);
-  box-shadow: 0 0 12px var(--color-primary-a20);
-}
-
-.hint:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-.hint svg {
-  color: var(--color-primary);
-}
-
 @media (max-width: 720px) {
   .wrapper {
     height: 320px;

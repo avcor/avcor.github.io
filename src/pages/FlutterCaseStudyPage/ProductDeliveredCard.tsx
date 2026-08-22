@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Maximize2 } from 'lucide-react'
 import screenshot1 from '../../assets/screenshots/access-management-dashboard.png'
 import screenshot2 from '../../assets/screenshots/access-management-dashboard-detail.png'
 import screenshot3 from '../../assets/screenshots/pass-console.png'
@@ -68,11 +67,6 @@ export default function ProductDeliveredCard() {
             <img src={cover.src} alt={cover.alt} draggable={false} />
           </button>
         </div>
-
-        <button type="button" className={styles.hint} onClick={openLightbox} aria-label="View all screenshots">
-          <Maximize2 size={12} strokeWidth={2} />
-          Click to enlarge
-        </button>
       </div>
 
       {isZoomOpen && (
