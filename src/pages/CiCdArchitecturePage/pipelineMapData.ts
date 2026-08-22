@@ -66,9 +66,14 @@ export const MAP_CONNECTORS: MapConnector[] = [
   { id: 'boundary-ci', d: 'M195 164 L110 204' },
   { id: 'boundary-local', d: 'M245 164 L365 204' },
 
-  // ── Reconverge onto ndk's top edge from two more diagonals ──
-  { id: 'ci-ndk', d: 'M116 246 L195 282', label: 'no Flutter checkout', labelX: 108, labelY: 264 },
-  { id: 'local-ndk', d: 'M358 246 L245 282', label: 'hot reload', labelX: 372, labelY: 264 },
+  // ── Reconverge onto ndk's top edge from two more diagonals. Labels sit
+  //    under each node's own centre (CI's / Local's), pushed out to that
+  //    side rather than crowding the shared funnel between the diagonals —
+  //    same idea as the loop-back's "next release" sitting in its own lane,
+  //    but pulled in just enough to stay inside the canvas (unlike a true
+  //    edge position, which clips against the sheet at this label length) ──
+  { id: 'ci-ndk', d: 'M116 246 L195 282', label: 'no Flutter checkout', labelX: 150, labelY: 264 },
+  { id: 'local-ndk', d: 'M358 246 L245 282', label: 'hot reload', labelX: 300, labelY: 264 },
 
   // ── Loop-back — routed outside the cluster in its own channel, closing
   //    the release cycle back at scaffold regen ──
