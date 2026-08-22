@@ -61,20 +61,22 @@
    pushing the rail wide. */
 @media (min-width: 901px) {
   .list {
-    gap: 32px;
+    gap: 22px;
   }
 
   .list::before {
     left: 50%;
     margin-left: -0.5px;
-    top: 95px;
-    bottom: 95px;
+    top: 6px;
+    bottom: 6px;
   }
 
+  /* Natural height — sized to each item's own marker + label, not a
+     shared fixed box, so a short label (e.g. "Overview") doesn't leave
+     dead space behind it before the next node. */
   .item {
     flex-direction: column;
-    justify-content: center;
-    height: 190px;
+    align-items: center;
     padding: 0;
     gap: 10px;
   }
