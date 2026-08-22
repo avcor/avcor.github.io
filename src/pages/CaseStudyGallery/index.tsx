@@ -100,6 +100,10 @@ export default function CaseStudyGallery() {
             </div>
           </section>
         </div>
+
+        <aside className={styles.labelCol}>
+          <span className={styles.verticalLabel}>Flutter Integration</span>
+        </aside>
       </div>
     </section>
   )

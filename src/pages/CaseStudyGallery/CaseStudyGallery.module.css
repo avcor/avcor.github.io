@@ -48,6 +48,31 @@
   min-width: 0;
 }
 
+/* Mirrors .spyCol on the opposite edge — sticky, vertically centred, purely
+   a decorative tag rather than nav, so it carries no interaction state. */
+.labelCol {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: -48px;
+  padding-right: 16px;
+}
+
+.verticalLabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-white-a25);
+  white-space: nowrap;
+}
+
 /* Top-anchored rather than vertically centred: centring within a section
    that's taller than one viewport (content + padding > 100vh) meant the
    content only became visible after scrolling partway down. The extra
@@ -136,5 +161,9 @@
   .section {
     min-height: auto;
     padding: 40px 0;
+  }
+
+  .labelCol {
+    display: none;
   }
 }
