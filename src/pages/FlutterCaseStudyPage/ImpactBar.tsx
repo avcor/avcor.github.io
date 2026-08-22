@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Timer, Boxes, Layers, Zap } from 'lucide-react'
+import { Timer, Shield, Zap, Package } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import GlassBadge from '../../components/GlassBadge'
 import styles from './ImpactBar.module.css'
@@ -13,10 +13,10 @@ interface ImpactItem {
 }
 
 const items: ImpactItem[] = [
-  { icon: Timer, value: '90 → 18', unit: 'min', description: 'Android build pipeline duration, start to finish' },
-  { icon: Boxes, title: 'Independent Releases', description: 'Android and Flutter shipped separately' },
-  { icon: Layers, title: 'Reusable Platform', description: 'Foundation for future Flutter modules' },
-  { icon: Zap, title: 'Reduced Engineering Effort', description: 'Eliminated duplicate feature development' },
+  { icon: Timer, value: '90 → 18', unit: 'min', description: 'CI/CD pipeline duration, start to finish' },
+  { icon: Shield, title: 'Zero Blast Radius', description: 'No regressions on the existing native Android app' },
+  { icon: Zap, title: '4s → Instant', description: 'Engine warm-up on repeat navigation' },
+  { icon: Package, title: '~140MB → ~9MB', description: 'Stripped release APK size, per ABI' },
 ]
 
 export default function ImpactBar() {
