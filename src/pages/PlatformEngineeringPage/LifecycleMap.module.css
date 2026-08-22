@@ -46,6 +46,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  height: 40px;
   padding: 4px;
   border-radius: 999px;
   background: var(--color-white-a04);
@@ -57,8 +58,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   border: none;
   background: none;
@@ -70,6 +71,11 @@
 .zoomButton:hover:not(:disabled) {
   background: var(--color-white-a07);
   color: var(--color-white);
+}
+
+.zoomButton:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
 }
 
 .zoomButton:disabled {
@@ -96,14 +102,15 @@
   z-index: 4;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
   border-radius: 999px;
   background: var(--color-white-a04);
   border: 1px solid var(--color-white-a08);
   backdrop-filter: blur(20px);
   color: var(--color-text-primary-a85);
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   font-weight: 500;
 }
 

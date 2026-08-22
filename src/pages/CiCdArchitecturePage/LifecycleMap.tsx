@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { MousePointerClick, Minus, Plus, RotateCcw } from 'lucide-react'
 import {
   MAP_CONNECTORS,
@@ -108,7 +109,13 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
         </div>
       </div>
 
-      <div className={styles.zoomControls}>
+      <motion.div
+        className={styles.zoomControls}
+        initial={{ opacity: 0, scale: 0.92 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      >
         <button
           type="button"
           className={styles.zoomButton}
@@ -116,11 +123,11 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
           disabled={!canZoomOut}
           aria-label="Zoom out"
         >
-          <Minus size={14} strokeWidth={2} />
+          <Minus size={16} strokeWidth={2} />
         </button>
         {isZoomed && (
           <button type="button" className={styles.zoomButton} onClick={reset} aria-label="Reset view">
-            <RotateCcw size={13} strokeWidth={2} />
+            <RotateCcw size={15} strokeWidth={2} />
           </button>
         )}
         <button
@@ -130,14 +137,20 @@ export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapPr
           disabled={!canZoomIn}
           aria-label="Zoom in"
         >
-          <Plus size={14} strokeWidth={2} />
+          <Plus size={16} strokeWidth={2} />
         </button>
-      </div>
+      </motion.div>
 
-      <div className={styles.hint}>
-        <MousePointerClick size={12} strokeWidth={2} />
+      <motion.div
+        className={styles.hint}
+        initial={{ opacity: 0, scale: 0.92 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <MousePointerClick size={16} strokeWidth={2} />
         Drag to pan
-      </div>
+      </motion.div>
     </div>
   )
 }
