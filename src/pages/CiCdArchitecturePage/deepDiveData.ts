@@ -45,9 +45,9 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     accentIndex: 1,
     impact: '0 forgotten permissions across every scaffold wipe',
     problem:
-      'digii-mobile is a Flutter module, not an app: flutter pub get regenerates .android/ and .ios/ from scratch on every run, silently wiping host AndroidManifest permissions and the AppAuth redirect scheme.',
+      'digii-mobile is a Flutter module, not an app: `flutter pub get` regenerates `.android/` and `.ios/` from scratch on every run, silently wiping host AndroidManifest permissions and the AppAuth redirect scheme.',
     decision:
-      'tool/setup.sh --permissions re-patches AndroidManifest.xml, build.gradle manifestPlaceholders, and Info.plist idempotently after every pub get. --doctor is a read-only check that warns when the scaffold has drifted.',
+      '`tool/setup.sh --permissions` re-patches `AndroidManifest.xml`, `build.gradle` manifestPlaceholders, and `Info.plist` idempotently after every `pub get`. `--doctor` is a read-only check that warns when the scaffold has drifted.',
     insight:
       'The fix is not "don\'t regenerate," it\'s making the regeneration harmless: the patch step is scripted and runs automatically in CI, not remembered by a developer.',
     watermark: 'Regen',
@@ -72,9 +72,9 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     problem:
       'The Flutter module and the Android host are separate repos. CI needs the host to build without ever checking out or compiling Flutter source, but local development needs to iterate against it directly.',
     decision:
-      'flutter build aar publishes a versioned AAR into a local Maven repo. build.gradle branches on an isCI flag: CI resolves the prebuilt AAR from that repo (transitively pulling the per-ABI engine AARs via its POM), local builds depend on project(":flutter") directly.',
+      '`flutter build aar` publishes a versioned AAR into a local Maven repo. `build.gradle` branches on an `isCI` flag: CI resolves the prebuilt AAR from that repo (transitively pulling the per-ABI engine AARs via its POM), local builds depend on `project(":flutter")` directly.',
     insight:
-      'evaluationDependsOn(":flutter") only runs when the Flutter source module is actually present, so CI never has to check it out just to read one Gradle extension property.',
+      '`evaluationDependsOn(":flutter")` only runs when the Flutter source module is actually present, so CI never has to check it out just to read one Gradle extension property.',
     watermark: 'Boundary',
     proof: {
       kind: 'table',
@@ -95,9 +95,9 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     accentIndex: 1,
     impact: '~150MB/ABI recovered per stripped release',
     problem:
-      'AGP needs the exact NDK that matches the Flutter engine to find llvm-strip. If it can\'t, it silently skips stripping and libflutter.so ships unstripped: ~156MB instead of ~11MB, per ABI.',
+      'AGP needs the exact NDK that matches the Flutter engine to find `llvm-strip`. If it can\'t, it silently skips stripping and `libflutter.so` ships unstripped: ~156MB instead of ~11MB, per ABI.',
     decision:
-      'ndkVersion reads project(":flutter").extensions.getByName("flutter").ndkVersion locally, so it can never drift from whatever Flutter SDK digii-mobile points to. CI has no :flutter module to query, so the resolved value is a comment-documented hardcoded fallback.',
+      '`ndkVersion` reads `project(":flutter").extensions.getByName("flutter").ndkVersion` locally, so it can never drift from whatever Flutter SDK digii-mobile points to. CI has no `:flutter` module to query, so the resolved value is a comment-documented hardcoded fallback.',
     insight:
       'The CI fallback is a real coupling, not a convenience: bump the Flutter SDK and forget to update the CI constant, and the failure is a silent size regression, not a build error.',
     watermark: 'NDK',
@@ -119,11 +119,11 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     accentIndex: 1,
     impact: 'Google-services config can\'t ship to the wrong build type',
     problem:
-      'debug/qa and release builds need different google-services.json files. Relying on a developer to manually swap the file before building is exactly the kind of step that gets skipped under deadline pressure.',
+      'debug/qa and release builds need different `google-services.json` files. Relying on a developer to manually swap the file before building is exactly the kind of step that gets skipped under deadline pressure.',
     decision:
-      'switchToNonRelease and switchToRelease Copy tasks stage the correct file, and an afterEvaluate block force-wires them as a dependsOn for every relevant per-variant task, so the swap runs whether or not anyone remembers it.',
+      '`switchToNonRelease` and `switchToRelease` Copy tasks stage the correct file, and an `afterEvaluate` block force-wires them as a `dependsOn` for every relevant per-variant task, so the swap runs whether or not anyone remembers it.',
     insight:
-      'registerDependencies() looks up each task by name and only wires it if present, which is what makes the same block safe across build-type task graphs that don\'t all exist for every variant.',
+      '`registerDependencies()` looks up each task by name and only wires it if present, which is what makes the same block safe across build-type task graphs that don\'t all exist for every variant.',
     watermark: 'Variant',
     proof: {
       kind: 'code',
@@ -147,9 +147,9 @@ registerDependencies(nonReleaseTasksQa, "switchToNonRelease")`,
     problem:
       'A release build needs to be small, obfuscated, and stripped, but crash reports for an obfuscated, stripped binary are unreadable without the exact symbol files from that build.',
     decision:
-      'flutter build apk --release --obfuscate --split-debug-info=build/symbols/android writes de-obfuscation maps alongside the APK; a post-build llvm-strip pass removes Flutter 3.41\'s unstripped libflutter.so. build/symbols/android is archived with every release.',
+      '`flutter build apk --release --obfuscate --split-debug-info=build/symbols/android` writes de-obfuscation maps alongside the APK; a post-build `llvm-strip` pass removes Flutter 3.41\'s unstripped `libflutter.so`. `build/symbols/android` is archived with every release.',
     insight:
-      'tool/release.sh currently signs with the debug keystore; it\'s flagged in the script\'s own README, not hidden, precisely because the production keystore wiring is still an open item, not an oversight.',
+      '`tool/release.sh` currently signs with the debug keystore; it\'s flagged in the script\'s own README, not hidden, precisely because the production keystore wiring is still an open item, not an oversight.',
     watermark: 'Sign',
     proof: {
       kind: 'table',

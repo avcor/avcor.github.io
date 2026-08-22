@@ -7,6 +7,21 @@ import styles from './DeepDivePanel.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
+/** Renders `` `code` `` spans inline as styled <code> — calls out
+ *  identifiers/commands within prose paragraphs. */
+function renderInlineCode(text: string): ReactNode {
+  const parts = text.split(/(`[^`]+`)/g)
+  return parts.map((part, i) =>
+    part.startsWith('`') && part.endsWith('`') ? (
+      <code key={i} className={styles.inlineCode}>
+        {part.slice(1, -1)}
+      </code>
+    ) : (
+      part
+    ),
+  )
+}
+
 /** Reveal on scroll into view — each section animates as the reader reaches it. */
 function fadeUp(delay: number) {
   return {
@@ -64,17 +79,17 @@ export default function DeepDivePanel({
         <motion.div {...fadeUp(0.14)} className={styles.rows}>
           <div className={styles.row}>
             <span className={styles.rowLabel}>Problem</span>
-            <p className={styles.rowText}>{panel.problem}</p>
+            <p className={styles.rowText}>{renderInlineCode(panel.problem)}</p>
           </div>
           <div className={styles.row}>
             <span className={styles.rowLabel}>Decision</span>
-            <p className={styles.rowText}>{panel.decision}</p>
+            <p className={styles.rowText}>{renderInlineCode(panel.decision)}</p>
           </div>
         </motion.div>
 
         <motion.div {...fadeUp(0.18)} className={styles.insight}>
           <span className={styles.insightDash} />
-          <p>{panel.insight}</p>
+          <p>{renderInlineCode(panel.insight)}</p>
         </motion.div>
       </div>
 
