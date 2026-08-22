@@ -16,15 +16,26 @@ node on the index circuit is clicked. It is not a routed page — this is a sing
 app with no router (`App.tsx` mounts `Home`, `ImpactPage`, `IndexPage`, and
 `CaseStudyOverlay` all at once; visibility is controlled by React state, not a URL).
 
-Inside the sheet there are exactly **two horizontally-scrollable sections**, tracked by
-a scroll-spy sidebar:
+Inside the sheet there are **three vertically-scrolled sections** (the `.page`
+container scrolls on the y-axis; the spy bar jumps by `scrollTop = el.offsetTop`),
+tracked by a scroll-spy sidebar:
 
 1. **Overview** — the "what/why" story: hero intro, product screenshots, business
-   problem, ownership, headline impact stats.
-2. **Architecture** (locked to one viewport, not scrolling) — an interactive lifecycle
-   diagram on the left, paired with a detail panel on the right that swaps content
-   based on which diagram node is selected. Each node maps to a "deep dive" — a
-   problem/decision/insight writeup backed by a code/table/flow proof artifact.
+   problem, ownership, headline impact stats. This is the only section that grows and
+   scrolls internally.
+2. **System architecture** (locked to one viewport, not scrolling) — an interactive,
+   pan/zoomable lifecycle diagram on the left, paired with a detail panel on the right
+   that swaps content based on which diagram node is selected. Each node maps to a
+   "deep dive": a problem/decision/insight writeup backed by a code/table/flow proof
+   artifact.
+3. **CI/CD architecture** (same locked, node-driven pattern as section 2) — a second
+   diagram + deep-dive pair covering the release pipeline. It is a near-verbatim
+   duplicate of section 2's machinery under a different folder (see §3/§5).
+
+The Flutter case study grew from two sections to three: the deep-dive/diagram pattern
+proved reusable enough that CI/CD got its own copy rather than being folded into the
+first diagram. Both locked sections share the same components and CSS; only their data
+files differ.
 
 ---
 
@@ -52,10 +63,10 @@ Today there is only one openable case study (`'flutter-integration'`, gated by
 ## 3. File layout of the current (Flutter) case study
 
 ```
-src/pages/CaseStudyGallery/           → the shell: spy bar + the two scroll sections
+src/pages/CaseStudyGallery/           → the shell: spy bar + the three sections
   index.tsx
   CaseStudyGallery.module.css
-  SpyBar.tsx                         → scroll-spy sidebar nav (2 items: Overview, System architecture)
+  SpyBar.tsx                         → scroll-spy sidebar nav (3 items: Overview, System architecture, CI/CD Architecture)
   SpyBar.module.css
 
 src/pages/FlutterCaseStudyPage/       → Section A: Overview
@@ -70,16 +81,34 @@ src/pages/FlutterCaseStudyPage/       → Section A: Overview
   GhostBackdrop.tsx                  → (removed) decorative watermark — was deleted from this page
   page-content.md, page-4-content.md → plain-text copy dumps, kept in sync with the .tsx copy by hand
 
-src/pages/PlatformEngineeringPage/    → Section B: Architecture deep-dive
-  LifecycleMap.tsx                   → hand-drawn SVG diagram, clickable nodes → selects a panel
+src/pages/PlatformEngineeringPage/    → Section B: System architecture deep-dive
+  LifecycleMap.tsx                   → hand-drawn SVG diagram, pan/zoom, clickable nodes → selects a panel
   LifecycleMap.module.css
-  lifecycleMapData.ts                → MAP_NODES / MAP_CONNECTORS geometry + panelId links
+  lifecycleMapData.ts                → MAP_NODES / MAP_CONNECTORS geometry + panelId links (7 panel nodes)
   DeepDivePanel.tsx                  → renders one panel: eyebrow/heading/impact/problem/decision/insight + proof
   DeepDivePanel.module.css
-  deepDiveData.ts                    → DEEP_DIVE_PANELS array — the content for every node
+  deepDiveData.ts                    → DEEP_DIVE_PANELS array — the content for every node (6 panels)
   PanelProof.tsx                     → renders proof.kind: 'code' | 'table' | 'flow'
   PanelProof.module.css
+
+src/pages/CiCdArchitecturePage/       → Section C: CI/CD architecture deep-dive
+  LifecycleMap.tsx                   → same diagram component, different filter/marker ids (rough-cicd, arrow-cicd, dot-cicd)
+  LifecycleMap.module.css            → IDENTICAL to PlatformEngineeringPage's copy
+  pipelineMapData.ts                 → this section's MAP_NODES / MAP_CONNECTORS (8 panel nodes)
+  DeepDivePanel.tsx                  → same renderer (only a JSDoc comment differs from Platform's)
+  DeepDivePanel.module.css
+  deepDiveData.ts                    → this section's DEEP_DIVE_PANELS (5 panels)
+  PanelProof.tsx                     → IDENTICAL to PlatformEngineeringPage's copy
+  PanelProof.module.css
 ```
+
+Section C is a **copy-paste duplication** of Section B's folder (the duplicate-vs-generalize
+choice discussed at the end of this section). `PanelProof.tsx` + `LifecycleMap.module.css`
+are byte-identical across the two; `DeepDivePanel.tsx` differs only in a comment. Only the
+`*MapData.ts` and `deepDiveData.ts` content files carry real per-section difference. Two
+copies is tolerable; if a **third** diagram section is ever added, that is the point to
+stop duplicating and extract the `LifecycleMap` + `DeepDivePanel` + `PanelProof` trio into
+one shared, data-driven module that takes `{ nodes, connectors, panels }` as props.
 
 `FlutterCaseStudyPage` and `PlatformEngineeringPage` are named after this specific case
 study's content, not generically — there's no abstraction yet for "any case study's
@@ -106,8 +135,11 @@ Mobile (`≤768px`): both rows collapse to `flex-direction: column`.
   description paragraph, row of icon+label tag pills (tech stack).
 - **ProductDeliveredCard**: 3 screenshots — one focal (`.frame`, clickable) with the
   other two peeking out behind it (`.frameSide`, decorative, dimmed). Bottom-fade mask.
-  A pill hint (icon + "Click to enlarge") opens `ScreenshotLightbox`, a portal-rendered
-  carousel with keyboard arrow/Escape support.
+  A glass "Click to Enlarge" pill (icon + label) opens `ScreenshotLightbox`, a
+  portal-rendered carousel with keyboard arrow/Escape support. The pill is mounted only
+  **after the card's entry animation completes** (`onAnimationComplete` → `isEntered`)
+  and then reveals with an opacity-led fade + scale — this is the backdrop-filter
+  compositing workaround documented in §7 (Animation conventions), not just polish.
 - **BusinessProblemCard** / **OwnershipCard**: both wrap `InfoCard` (eyebrow title +
   body). Business Problem is prose paragraphs; Ownership is a bulleted list of past-tense
   action statements.
@@ -116,17 +148,21 @@ Mobile (`≤768px`): both rows collapse to `flex-direction: column`.
 
 ---
 
-## 5. Section B — Architecture deep-dive anatomy
+## 5. Sections B & C — Architecture deep-dive anatomy
 
-`CaseStudyGallery` renders this as a **locked, non-scrolling** section
-(`.sectionLocked`, `height: 100vh`) with a two-column grid:
+Both the System-architecture and CI/CD sections use this identical shape. `CaseStudyGallery`
+renders each as a **locked, non-scrolling** section (`.sectionLocked`, `height: 100vh`)
+with a two-column grid:
 
 ```
 archMap    → <LifecycleMap activePanelId={selected} onSelect={setSelected} />
 archDetail → <DeepDivePanel panel={selectedPanel} variant="stacked" />  (AnimatePresence crossfade on change)
 ```
 
-`selected` is local state in `CaseStudyGallery`, defaulting to the first panel's id.
+Each section holds its own local selection state in `CaseStudyGallery` (`selected` /
+`selectedCiCd`), each defaulting to its first panel's id, and pulls from its own
+`DEEP_DIVE_PANELS` import. The CI/CD copy imports the `CiCdArchitecturePage` versions of
+`LifecycleMap` / `DeepDivePanel` / `deepDiveData`.
 
 ### LifecycleMap (the diagram)
 
@@ -138,9 +174,15 @@ archDetail → <DeepDivePanel panel={selectedPanel} variant="stacked" />  (Anima
   on click or Enter/Space); a node without `panelId` is purely decorative (dashed
   outline, muted).
 - One node can double as the title/overview trigger (`MAP_TITLE`).
-- A static hint pill ("Click a node to explore", `MousePointerClick` icon) is centered
-  at the bottom of the map — added because the diagram has no other affordance telling
-  first-time visitors the nodes are clickable.
+- **Pan/zoom** via the `usePanZoom` hook (`src/hooks/usePanZoom.ts`): drag-to-pan,
+  button-driven `−`/`+` zoom, and a reset button that only appears once zoomed. Zoom is
+  deliberately **not** wheel-driven (a wheel gesture over a canvas inside a scrolling
+  page is ambiguous) and always anchors on the container centre. Pan is clamped so the
+  content can never be dragged fully out of view.
+- Bottom-of-map controls are two glass pills: a centred **"Drag to pan"** hint
+  (`MousePointerClick` icon) and a bottom-right zoom cluster. Both reveal on scroll-into-view
+  (`whileInView`, opacity-led — see §7 Animation conventions) and follow the shared
+  glass-pill button spec (§6).
 
 ### DeepDivePanel (the content, `deepDiveData.ts`)
 
@@ -201,11 +243,32 @@ before/after or option comparisons; `flow` for branching runtime logic.
 | `ScreenshotLightbox` | `pages/FlutterCaseStudyPage/ScreenshotLightbox.tsx` | portal-rendered zoom/carousel, keyboard nav |
 | `SpyBar` | `pages/CaseStudyGallery/SpyBar.tsx` | scroll-spy sidebar; generic over `{ id, label }[]`, reusable as-is |
 | `useScrollSpy` | `hooks/useScrollSpy.ts` | IntersectionObserver-based active-section tracker, generic, reusable as-is |
+| `usePanZoom` | `hooks/usePanZoom.ts` | drag-to-pan + button-zoom for a fixed-size canvas, clamped; returns `{ containerRef, transform, isDragging, isZoomed, reset, zoomIn, zoomOut, canZoomIn, canZoomOut, handlers }`. Generic, reusable as-is |
 | `MetricCard` | `components/MetricCard` | icon+metric+title+description card — **not currently used inside the case study**, but available if a future case study wants a grid of stat cards instead of the custom `ImpactBar` layout |
 
-`SpyBar` and `useScrollSpy` are the only pieces here that are already fully generic —
-everything else is Flutter-content-specific and would need either duplication or
-generalization for a second case study.
+`SpyBar`, `useScrollSpy`, and `usePanZoom` are the pieces here that are already fully
+generic — everything else is Flutter-content-specific and would need either duplication
+or generalization for a second case study.
+
+### The glass-pill button system
+
+Every clickable "chrome" control across the case study shares one visual spec — reuse
+it for any new button so the page stays in sync (this was explicitly enforced this
+session):
+
+- **Shape/size**: `height: 40px`, `border-radius: 999px`, text at `0.82rem`, icons at
+  `16px`, `gap: 8px`, `padding: 0 16px` (icon-only variants are `40×40`).
+- **Surface**: `background: var(--color-white-a04)`, `border: 1px solid var(--color-white-a08)`,
+  `backdrop-filter: blur(20px)`.
+- **States**: hover → `background: var(--color-white-a07)`, `border-color: var(--color-white-a15)`;
+  focus-visible → `outline: 1px solid var(--color-primary-a60)`, `outline-offset: 2px`.
+- **Icon colour**: `var(--color-primary)` (green) on the leading icon.
+
+Instances following this spec: the overlay **Share** / **Close** pills
+(`CaseStudyOverlay`), the **Click to Enlarge** pill (`ProductDeliveredCard`), and both
+maps' **zoom cluster** + **Drag to pan** hint (`LifecycleMap`). There is no shared
+`Button` component yet — the spec is duplicated in each `.module.css`. If a fourth
+consumer appears, extract a `GlassButton` primitive rather than copying it again.
 
 ---
 
@@ -236,6 +299,31 @@ generalization for a second case study.
   brightness (e.g. Ownership list items, DeepDivePanel row text, chart node labels),
   `var(--color-text-primary)` for standard body copy, `var(--color-text-muted)` for
   secondary/annotation text (chart sub-labels, connector labels).
+- **Carry debt loud and dated, don't hide it.** The deep-dive copy deliberately names
+  its own open gaps and version couplings inline: `signingConfigs.debug` is "flagged
+  before Play Store publish", the CI NDK fallback is called "a real coupling, not a
+  convenience", the process-death ordering is "validated against Flutter 3.41.9, with an
+  instruction to re-verify on upgrade". This honesty is a feature of the voice, not a
+  TODO to clean up — it reads as senior judgement to an engineering recruiter. Keep it
+  in new panels' `insight` fields.
+
+### Animation & UI conventions (learned this session)
+
+- **`backdrop-filter` + an animating ancestor transform = a flat/transparent flash.**
+  Chrome cannot composite a glass (`backdrop-filter`) element correctly while any
+  ancestor is mid-`transform` (the sheet slide-up, a card's `y` entry animation). The
+  element paints flat until the transform settles, then the blur "pops" in. Computed
+  style still reports `blur(20px)` the whole time — it's a compositing artifact, not a
+  CSS value change, so it can't be debugged by reading styles.
+- **Two fixes, used together:** (1) mount glass controls only **after** the entry
+  transform completes — gate on framer's `onAnimationComplete` (`ProductDeliveredCard`)
+  or `whileInView` (`LifecycleMap` controls); (2) make reveal animations **opacity-led**
+  — fade `opacity 0→1` alongside a small `scale`, so while the scale is far from `1`
+  (where the backdrop mis-composites) the element is still near-invisible and the fade
+  masks the transient. Never reveal a glass element with a transform alone.
+- Standard entry easing across the case study is `[0.16, 1, 0.3, 1]`; section content
+  reveals with `whileInView` + `viewport={{ once: true }}` (see `DeepDivePanel.fadeUp`,
+  `ImpactBar`), one-shot mount reveals use `initial`/`animate`.
 
 ---
 
@@ -253,10 +341,54 @@ generalization for a second case study.
 4. Write the Overview content: intro (eyebrow/heading/description/tags), 2–3
    screenshots, business problem (1–2 paragraphs), ownership (bulleted past-tense
    actions), impact bar (one hero metric + up to 3 supporting stats).
-5. Design the lifecycle/architecture diagram: identify the distinct engineering
-   decisions worth a deep dive (aim for 4–6, matching the Flutter case study's Seam /
-   Engine / Routing / Process Death / Teardown / Bridge breakdown), lay out
-   `MAP_NODES`/`MAP_CONNECTORS`, and write one `DeepDivePanel` entry per node
-   (problem/decision/insight/proof).
+5. Design the lifecycle/architecture diagram(s): identify the distinct engineering
+   decisions worth a deep dive (aim for 4–6 per diagram, matching the Flutter case
+   study's Seam / Engine / Routing / Process Death / Teardown / Bridge breakdown), lay
+   out `MAP_NODES`/`MAP_CONNECTORS`, and write one `DeepDivePanel` entry per node
+   (problem/decision/insight/proof). A second diagram section (like CI/CD) is optional —
+   add it only if there's a genuinely separate system worth its own map; if you do,
+   duplicate the folder (as CI/CD did) unless this is the third such section, in which
+   case generalize first (see §3).
 6. Apply the copy conventions in §7 before treating any text as final — check for em
-   dashes and ambiguous stat pairings specifically.
+   dashes and ambiguous stat pairings specifically, and make sure known gaps are flagged
+   in-copy rather than hidden.
+7. Sanity-check the recruiter lens (§9): each deep dive should name a concrete failure
+   it prevents, not just describe a feature.
+
+---
+
+## 9. What to showcase to a recruiter (the content lens)
+
+This repo has no product source — the "code" in each panel is an illustrative excerpt.
+So the recruiter-facing value lives entirely in *which decisions* the case study chooses
+to surface and *how* it frames them. A detail earns a spot on the page when it does at
+least one of:
+
+- **Names a concrete failure it prevents** ("crash-on-resume", "double-navigation",
+  "secrets in logcat", "host crash on logout") rather than describing a feature.
+- **Carries a measurable delta** (`4s → instant`, `~140MB → ~9MB`, `90 → 18 min`,
+  `~150MB/ABI recovered`) — a before/after a non-engineer can still register.
+- **Shows a non-obvious systems call** the average mid-level engineer would miss: the
+  cache (not a local field) as source of truth, the Intent as the single navigation
+  authority, dispose-only-when-detached sequencing, config swap as a task `dependsOn`.
+- **Flags its own remaining risk** honestly (§7, "carry debt loud").
+
+The current Flutter case study is the worked example — its showcase spine:
+
+| Layer | The headline | Why it lands with a recruiter |
+|---|---|---|
+| Impact bar | `90 → 18 min` CI/CD · Zero blast radius · `4s → instant` · `~140MB → ~9MB` | Four numbers that frame scope before any prose |
+| Seam | one activity / one engine / one channel / six handlers | Shows restraint: the hard part is the seam, not the line count |
+| Engine | one cached `FlutterEngine`, identity-checked against the cache | Cache as source of truth; `4s → instant` |
+| Routing | route rides in the `Intent`, replayed by the Android lifecycle | Correct across config-change, process death, `singleTask` re-entry |
+| Process death | re-warm before `super.onCreate`, drop stale saved state | Turns a resume-crash into a clean re-warm; version-pinned honestly |
+| Teardown | destroy only once provably detached | Two out-of-order events sequenced safely; `0 host crashes on logout` |
+| Bridge | one channel, chain-of-responsibility handlers, log shape-not-value | Fault isolation + no PII in logs from one design |
+| CI/CD: scaffold | idempotent `tool/setup.sh --permissions` after every `pub get` | "Make regeneration harmless" instead of "don't regenerate" |
+| CI/CD: artifact boundary | prebuilt AAR in CI vs `project(":flutter")` locally, via `isCI` | No Dart toolchain on the build agent, hot reload kept locally |
+| CI/CD: NDK lock | pin the NDK or ship `libflutter.so` unstripped | `~150MB/ABI`; a *silent* size regression, not a build error |
+| CI/CD: variant wiring | config swap force-wired as a task `dependsOn` | Removes a deadline-fragile manual step from the build |
+| CI/CD: symbols & signing | obfuscate + `--split-debug-info` + `llvm-strip`; debug-keystore gap flagged | Small, symbolicated releases; open item named, not hidden |
+
+When writing a new case study, aim for this density: a handful of decisions that each
+prevent a named failure and carry a number, plus one honestly-stated open risk.
