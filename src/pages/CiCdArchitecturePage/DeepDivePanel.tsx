@@ -97,12 +97,12 @@ export default function DeepDivePanel({
       <motion.div {...fadeUp(0.12)} className={styles.right}>
         {proofSlot ? (
           <>
-            <span className={styles.proofLabel}>{proofLabel ?? 'Proof'}</span>
+            <span className={styles.proofLabel}>{proofLabel ?? 'Walkthrough'}</span>
             {proofSlot}
           </>
         ) : panel.proof ? (
           <>
-            <span className={styles.proofLabel}>Proof</span>
+            <span className={styles.proofLabel}>Walkthrough</span>
             <PanelProof proof={panel.proof} />
           </>
         ) : panel.guide ? (

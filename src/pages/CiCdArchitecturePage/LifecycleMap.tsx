@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { MousePointerClick } from 'lucide-react'
+import { MousePointerClick, Minus, Plus, RotateCcw } from 'lucide-react'
 import {
   MAP_CONNECTORS,
   MAP_NODES,
@@ -7,6 +7,7 @@ import {
   MAP_VIEWBOX,
   type MapNode,
 } from './pipelineMapData'
+import { usePanZoom } from '../../hooks/usePanZoom'
 import styles from './LifecycleMap.module.css'
 
 interface LifecycleMapProps {
@@ -17,86 +18,125 @@ interface LifecycleMapProps {
 export default function LifecycleMap({ activePanelId, onSelect }: LifecycleMapProps) {
   const [hovered, setHovered] = useState<string | null>(null)
   const lit = hovered ?? activePanelId
+  const { containerRef, transform, isDragging, isZoomed, reset, zoomIn, zoomOut, canZoomIn, canZoomOut, handlers } =
+    usePanZoom()
 
   return (
     <div className={styles.map}>
-      <svg viewBox={MAP_VIEWBOX} preserveAspectRatio="xMidYMid meet" className={styles.svg}>
-        <defs>
-          {/* Roughen: displace edges with fractal noise for a hand-drawn wobble.
-           *  Uses an absolute (userSpaceOnUse) region covering the canvas
-           *  rather than a percentage of each path's own bounding box —
-           *  perfectly vertical/horizontal connectors have a zero-width or
-           *  zero-height bbox, which would otherwise clip the filter to
-           *  nothing and make the line disappear entirely. */}
-          <filter id="rough-cicd" filterUnits="userSpaceOnUse" x="-20" y="-20" width="540" height="550">
-            <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n" />
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-
-          {/* Sketchy open arrowhead, rotated along each connector. */}
-          <marker id="arrow-cicd" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M1.5 1.5 L8 5 L1.5 8.5" className={styles.arrow} />
-          </marker>
-
-          {/* Plain dot terminator — pipeline continuation, not a state
-           *  transition, so no directional arrowhead. */}
-          <marker id="dot-cicd" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4.5" markerHeight="4.5">
-            <circle cx="5" cy="5" r="3.4" className={styles.dot} />
-          </marker>
-        </defs>
-
-        {/* ── Connectors ── */}
-        {MAP_CONNECTORS.map((c) => (
-          <g key={c.id}>
-            <path
-              d={c.d}
-              className={styles.connector}
-              markerEnd={c.endMarker === 'dot' ? 'url(#dot-cicd)' : 'url(#arrow-cicd)'}
-              filter="url(#rough-cicd)"
-            />
-            {c.label && c.labelX != null && c.labelY != null && (
-              <text x={c.labelX} y={c.labelY} className={styles.connectorLabel}>
-                {c.label}
-              </text>
-            )}
-          </g>
-        ))}
-
-        {/* ── Nodes ── */}
-        {MAP_NODES.map((node) => (
-          <MapNodeShape
-            key={node.id}
-            node={node}
-            isActive={node.panelId === activePanelId}
-            isLit={node.panelId != null && node.panelId === lit}
-            onSelect={onSelect}
-            onHover={setHovered}
-          />
-        ))}
-
-        {/* ── Title = the pipeline framing ── */}
-        <text
-          x={MAP_TITLE.x}
-          y={MAP_TITLE.y}
-          className={`${styles.title} ${activePanelId === MAP_TITLE.panelId ? styles.titleActive : ''}`}
-          role="button"
-          tabIndex={0}
-          aria-label={`${MAP_TITLE.label} — open overview`}
-          onClick={() => onSelect(MAP_TITLE.panelId)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault()
-              onSelect(MAP_TITLE.panelId)
-            }
-          }}
+      <div
+        ref={containerRef}
+        className={`${styles.viewport} ${isDragging ? styles.dragging : ''}`}
+        {...handlers}
+      >
+        <div
+          className={styles.canvas}
+          style={{ transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})` }}
         >
-          {MAP_TITLE.label}
-        </text>
-      </svg>
+          <svg viewBox={MAP_VIEWBOX} preserveAspectRatio="xMidYMid meet" className={styles.svg}>
+            <defs>
+              {/* Roughen: displace edges with fractal noise for a hand-drawn wobble.
+               *  Uses an absolute (userSpaceOnUse) region covering the canvas
+               *  rather than a percentage of each path's own bounding box —
+               *  perfectly vertical/horizontal connectors have a zero-width or
+               *  zero-height bbox, which would otherwise clip the filter to
+               *  nothing and make the line disappear entirely. */}
+              <filter id="rough-cicd" filterUnits="userSpaceOnUse" x="-20" y="-20" width="540" height="550">
+                <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n" />
+                <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+
+              {/* Sketchy open arrowhead, rotated along each connector. */}
+              <marker id="arrow-cicd" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M1.5 1.5 L8 5 L1.5 8.5" className={styles.arrow} />
+              </marker>
+
+              {/* Plain dot terminator — pipeline continuation, not a state
+               *  transition, so no directional arrowhead. */}
+              <marker id="dot-cicd" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4.5" markerHeight="4.5">
+                <circle cx="5" cy="5" r="3.4" className={styles.dot} />
+              </marker>
+            </defs>
+
+            {/* ── Connectors ── */}
+            {MAP_CONNECTORS.map((c) => (
+              <g key={c.id}>
+                <path
+                  d={c.d}
+                  className={styles.connector}
+                  markerEnd={c.endMarker === 'dot' ? 'url(#dot-cicd)' : 'url(#arrow-cicd)'}
+                  filter="url(#rough-cicd)"
+                />
+                {c.label && c.labelX != null && c.labelY != null && (
+                  <text x={c.labelX} y={c.labelY} className={styles.connectorLabel}>
+                    {c.label}
+                  </text>
+                )}
+              </g>
+            ))}
+
+            {/* ── Nodes ── */}
+            {MAP_NODES.map((node) => (
+              <MapNodeShape
+                key={node.id}
+                node={node}
+                isActive={node.panelId === activePanelId}
+                isLit={node.panelId != null && node.panelId === lit}
+                onSelect={onSelect}
+                onHover={setHovered}
+              />
+            ))}
+
+            {/* ── Title = the pipeline framing ── */}
+            <text
+              x={MAP_TITLE.x}
+              y={MAP_TITLE.y}
+              className={`${styles.title} ${activePanelId === MAP_TITLE.panelId ? styles.titleActive : ''}`}
+              role="button"
+              tabIndex={0}
+              aria-label={`${MAP_TITLE.label} — open overview`}
+              onClick={() => onSelect(MAP_TITLE.panelId)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  onSelect(MAP_TITLE.panelId)
+                }
+              }}
+            >
+              {MAP_TITLE.label}
+            </text>
+          </svg>
+        </div>
+      </div>
+
+      <div className={styles.zoomControls}>
+        <button
+          type="button"
+          className={styles.zoomButton}
+          onClick={zoomOut}
+          disabled={!canZoomOut}
+          aria-label="Zoom out"
+        >
+          <Minus size={14} strokeWidth={2} />
+        </button>
+        {isZoomed && (
+          <button type="button" className={styles.zoomButton} onClick={reset} aria-label="Reset view">
+            <RotateCcw size={13} strokeWidth={2} />
+          </button>
+        )}
+        <button
+          type="button"
+          className={styles.zoomButton}
+          onClick={zoomIn}
+          disabled={!canZoomIn}
+          aria-label="Zoom in"
+        >
+          <Plus size={14} strokeWidth={2} />
+        </button>
+      </div>
 
       <div className={styles.hint}>
         <MousePointerClick size={12} strokeWidth={2} />
-        Click a node to explore
+        Drag to pan
       </div>
     </div>
   )
