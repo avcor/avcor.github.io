@@ -11,12 +11,12 @@ interface ImpactItem {
 }
 
 const heroLine = 'Debug with evidence, not anecdotes'
-const heroDescription = 'Production issues are diagnosed from structured logs, not reproduced from user reports.'
+const heroDescription = 'Diagnosed from structured logs, not reproduced from user reports.'
 
 const items: ImpactItem[] = [
-  { icon: ShieldCheck, title: 'Fail-Closed Masking', description: 'Credentials, PII, and payment data are stripped before a log is persisted or sent; a masking error drops the log instead of leaking it.' },
-  { icon: Gauge, title: 'Zero UI-Thread Blocking', description: 'Non-blocking channel writes and 50-log batched transactions replace per-log inserts, roughly 50x fewer writes.' },
-  { icon: CloudOff, title: 'Delivery Survives Offline', description: 'Room persistence plus WorkManager guarantee eventual delivery after days without network.' },
+  { icon: ShieldCheck, title: 'Fail-Closed Masking', description: 'Credentials and PII stripped before a log is stored or sent.' },
+  { icon: Gauge, title: 'Zero UI-Thread Blocking', description: '50-log batched writes, roughly 50x fewer transactions.' },
+  { icon: CloudOff, title: 'Delivery Survives Offline', description: 'Room + WorkManager guarantee eventual delivery.' },
 ]
 
 export default function LoggingImpactBar() {

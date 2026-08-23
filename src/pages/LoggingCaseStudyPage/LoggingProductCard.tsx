@@ -49,8 +49,6 @@ export default function LoggingProductCard() {
         )}
       </div>
 
-      <p className={styles.caption}>48 structured fields, searchable per log</p>
-
       {isZoomOpen && (
         <ScreenshotLightbox src={screenshot} alt={alt} onClose={() => setIsZoomOpen(false)} />
       )}

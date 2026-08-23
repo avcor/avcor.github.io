@@ -21,12 +21,12 @@ interface Tag {
 
 const tags: Tag[] = [
   { icon: <SiKotlin size={12} color="var(--color-primary)" />, label: 'Kotlin' },
-  { icon: <Workflow size={14} strokeWidth={1.75} />, label: 'Coroutines + Channels' },
+  { icon: <Workflow size={14} strokeWidth={1.75} />, label: 'Channels' },
   { icon: <Database size={14} strokeWidth={1.75} />, label: 'Room' },
   { icon: <Boxes size={14} strokeWidth={1.75} />, label: 'WorkManager' },
-  { icon: <Network size={14} strokeWidth={1.75} />, label: 'OkHttp / Retrofit' },
+  { icon: <Network size={14} strokeWidth={1.75} />, label: 'OkHttp' },
   { icon: <LineChart size={14} strokeWidth={1.75} />, label: 'Grafana Loki' },
-  { icon: <Settings2 size={14} strokeWidth={1.75} />, label: 'Firebase Remote Config' },
+  { icon: <Settings2 size={14} strokeWidth={1.75} />, label: 'Remote Config' },
 ]
 
 export default function LoggingIntro() {
@@ -45,10 +45,8 @@ export default function LoggingIntro() {
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className={styles.description}>
-          A centralized observability platform that streams structured logs from
-          production Android devices to Grafana Loki. Masks every credential and PII
-          field before a log leaves the device, keeps delivering after days offline, and
-          never blocks the UI thread.
+          Structured logs streamed from production Android devices to Grafana Loki.
+          Privacy-first, offline-durable, never blocks the UI thread.
         </motion.p>
 
         <motion.div {...fadeUp(0.42)} className={styles.tags}>
