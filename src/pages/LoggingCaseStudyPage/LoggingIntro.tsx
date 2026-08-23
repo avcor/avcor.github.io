@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Boxes, Database, LineChart, Network, Settings2, Workflow } from 'lucide-react'
-import { SiKotlin } from 'react-icons/si'
+import { Network, Workflow } from 'lucide-react'
+import { SiAndroid, SiFirebase, SiGrafana, SiKotlin, SiSqlite } from 'react-icons/si'
 import styles from './LoggingIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -20,13 +20,13 @@ interface Tag {
 }
 
 const tags: Tag[] = [
-  { icon: <SiKotlin size={12} color="var(--color-primary)" />, label: 'Kotlin' },
+  { icon: <SiKotlin size={13} color="var(--color-brand-kotlin)" />, label: 'Kotlin' },
   { icon: <Workflow size={14} strokeWidth={1.75} />, label: 'Channels' },
-  { icon: <Database size={14} strokeWidth={1.75} />, label: 'Room' },
-  { icon: <Boxes size={14} strokeWidth={1.75} />, label: 'WorkManager' },
+  { icon: <SiSqlite size={13} color="var(--color-brand-sqlite)" />, label: 'Room' },
+  { icon: <SiAndroid size={13} color="var(--color-brand-android)" />, label: 'WorkManager' },
   { icon: <Network size={14} strokeWidth={1.75} />, label: 'OkHttp' },
-  { icon: <LineChart size={14} strokeWidth={1.75} />, label: 'Grafana Loki' },
-  { icon: <Settings2 size={14} strokeWidth={1.75} />, label: 'Remote Config' },
+  { icon: <SiGrafana size={13} color="var(--color-brand-grafana)" />, label: 'Grafana Loki' },
+  { icon: <SiFirebase size={13} color="var(--color-brand-firebase)" />, label: 'Remote Config' },
 ]
 
 export default function LoggingIntro() {
