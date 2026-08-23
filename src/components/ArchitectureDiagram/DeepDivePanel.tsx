@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import GlassBadge from '../../components/GlassBadge'
+import GlassBadge from '../GlassBadge'
 import PanelProof from './PanelProof'
-import type { DeepDivePanel as PanelData } from './deepDiveData'
+import type { DeepDivePanel as PanelData } from './types'
 import styles from './DeepDivePanel.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const

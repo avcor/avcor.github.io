@@ -1,0 +1,99 @@
+.card {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 26px;
+  border-radius: 16px;
+  background: var(--color-bg-card);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  mask-image: linear-gradient(to bottom, transparent 0, var(--color-white) 14px, var(--color-white) calc(100% - 14px), transparent 100%);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-white-a15) transparent;
+}
+
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background: var(--color-white-a15);
+  border-radius: 999px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.rowLabel {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.rowText {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--color-text-primary);
+}
+
+.impact {
+  display: flex;
+  gap: 12px;
+  padding-top: 14px;
+  margin-top: auto;
+  border-top: 1px solid var(--color-white-a08);
+}
+
+.impactDash {
+  flex-shrink: 0;
+  width: 18px;
+  height: 2px;
+  margin-top: 9px;
+  background: var(--color-primary);
+}
+
+.impact p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .card {
+    gap: 10px;
+    padding: 18px 20px;
+  }
+
+  .rows {
+    gap: 8px;
+  }
+
+  .impact {
+    padding-top: 8px;
+  }
+}

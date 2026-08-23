@@ -1,40 +1,30 @@
 import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import FlutterCaseStudyPage from '../FlutterCaseStudyPage'
+import LoggingCaseStudyPage from '../LoggingCaseStudyPage'
+import LoggingEngineeringInAction from '../LoggingEngineeringInAction'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
-import { DEEP_DIVE_PANELS } from '../PlatformEngineeringPage/deepDiveData'
-import {
-  MAP_CONNECTORS,
-  MAP_NODES,
-  MAP_TITLE,
-  MAP_VIEWBOX,
-} from '../PlatformEngineeringPage/lifecycleMapData'
-import { DEEP_DIVE_PANELS as CICD_DEEP_DIVE_PANELS } from '../CiCdArchitecturePage/deepDiveData'
-import {
-  MAP_CONNECTORS as CICD_MAP_CONNECTORS,
-  MAP_NODES as CICD_MAP_NODES,
-  MAP_TITLE as CICD_MAP_TITLE,
-  MAP_VIEWBOX as CICD_MAP_VIEWBOX,
-} from '../CiCdArchitecturePage/pipelineMapData'
+import { DEEP_DIVE_PANELS } from '../LoggingArchitecturePage/deepDiveData'
+import { MAP_CONNECTORS, MAP_NODES, MAP_TITLE, MAP_VIEWBOX } from '../LoggingArchitecturePage/lifecycleMapData'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
-import SpyBar, { type SpySection } from './SpyBar'
-import styles from './CaseStudyGallery.module.css'
+import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
+import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
-/** The spy bar is purely the scroll stops; concerns are explored via each map. */
+/** The spy bar is purely the scroll stops; the recruiter-facing "Engineering
+ *  in Action" stop sits between Overview and Architecture, not hidden under
+ *  an engineer-only label. */
 const SPY_ITEMS: SpySection[] = [
   { id: 'overview', label: 'Overview' },
+  { id: 'engineering', label: 'Engineering in Action' },
   { id: 'architecture', label: 'System architecture' },
-  { id: 'cicd', label: 'CI/CD Architecture' },
 ]
 
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
-export default function CaseStudyGallery() {
+export default function LoggingCaseStudyGallery() {
   const scrollRef = useRef<HTMLElement>(null)
   const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
-  const [selected, setSelected] = useState('seam')
-  const [selectedCiCd, setSelectedCiCd] = useState('scaffold-regen')
+  const [selected, setSelected] = useState('log-capture')
 
   const onJump = (id: string) => {
     const container = scrollRef.current
@@ -47,13 +37,8 @@ export default function CaseStudyGallery() {
     [selected],
   )
 
-  const selectedCiCdPanel = useMemo(
-    () => CICD_DEEP_DIVE_PANELS.find((p) => p.id === selectedCiCd) ?? CICD_DEEP_DIVE_PANELS[0],
-    [selectedCiCd],
-  )
-
   return (
-    <section id="flutter-platform" className={styles.page} ref={scrollRef}>
+    <section id="logging-system" className={styles.page} ref={scrollRef}>
       <div className={styles.layout}>
         <aside className={styles.spyCol}>
           <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} />
@@ -61,7 +46,11 @@ export default function CaseStudyGallery() {
 
         <div className={styles.sections}>
           <section id="overview" className={styles.section}>
-            <FlutterCaseStudyPage />
+            <LoggingCaseStudyPage />
+          </section>
+
+          <section id="engineering" className={styles.sectionLocked}>
+            <LoggingEngineeringInAction />
           </section>
 
           <section id="architecture" className={styles.sectionLocked}>
@@ -74,7 +63,7 @@ export default function CaseStudyGallery() {
                   viewBox={MAP_VIEWBOX}
                   activePanelId={selected}
                   onSelect={setSelected}
-                  idSuffix="platform"
+                  idSuffix="logging"
                 />
               </div>
 
@@ -94,41 +83,10 @@ export default function CaseStudyGallery() {
               </div>
             </div>
           </section>
-
-          <section id="cicd" className={styles.sectionLocked}>
-            <div className={styles.arch}>
-              <div className={styles.archMap}>
-                <LifecycleMap
-                  nodes={CICD_MAP_NODES}
-                  connectors={CICD_MAP_CONNECTORS}
-                  title={CICD_MAP_TITLE}
-                  viewBox={CICD_MAP_VIEWBOX}
-                  activePanelId={selectedCiCd}
-                  onSelect={setSelectedCiCd}
-                  idSuffix="cicd"
-                />
-              </div>
-
-              <div className={styles.archDetail}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={selectedCiCd}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -8 }}
-                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                    className={styles.archDetailInner}
-                  >
-                    <DeepDivePanel panel={selectedCiCdPanel} variant="stacked" />
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </section>
         </div>
 
         <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>Flutter Integration</span>
+          <span className={styles.verticalLabel}>Logging System</span>
         </aside>
       </div>
     </section>

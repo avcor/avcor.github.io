@@ -21,28 +21,7 @@
  * landing on a different point of cold start's left edge.
  */
 
-export interface MapNode {
-  id: string
-  /** Which deep-dive concern this node selects; omitted = decorative only. */
-  panelId?: string
-  label: string
-  sub?: string
-  rect: { x: number; y: number; w: number; h: number }
-}
-
-export interface MapConnector {
-  id: string
-  /** Curved (bezier) path from one node edge to the next. */
-  d: string
-  /** Optional hand-drawn label on the arrow. */
-  label?: string
-  labelX?: number
-  labelY?: number
-  /** End marker: an arrowhead for state transitions, a dot for the plain
-   *  pipeline continuation (cold→engine→route) and the always-on link to
-   *  the bridge. Defaults to 'arrow'. */
-  endMarker?: 'arrow' | 'dot'
-}
+import type { MapConnector, MapNode } from '../../components/ArchitectureDiagram/types'
 
 export const MAP_VIEWBOX = '0 0 500 600'
 

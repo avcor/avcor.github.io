@@ -1,6 +1,6 @@
 import { CornerDownRight } from 'lucide-react'
-import CodeBlock from '../../components/CodeBlock'
-import type { Proof } from './deepDiveData'
+import CodeBlock from '../CodeBlock'
+import type { Proof } from './types'
 import styles from './PanelProof.module.css'
 
 interface PanelProofProps {
