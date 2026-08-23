@@ -42,6 +42,9 @@
   align-items: center;
   gap: 40px;
   min-width: 0;
+  /* Each stat card takes an equal share of the space left after the hero,
+     so the three read as evenly spaced columns. */
+  flex: 1 1 0;
 }
 
 .itemDivider {
@@ -56,7 +59,9 @@
    flex-shrink:0 child, letting the child visually overflow into the next
    item (the bug: wrapper shrank to 126px while hero stayed 300px wide). */
 .heroWrap {
-  flex-shrink: 0;
+  /* Hero keeps its own width (not an equal column) so the three stat cards
+     split the remaining space equally between themselves. */
+  flex: 0 0 auto;
 }
 
 /* Hero is a claim, not a number — sized to read as a headline, not a stat tile. */

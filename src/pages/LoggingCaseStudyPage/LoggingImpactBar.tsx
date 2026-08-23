@@ -16,7 +16,7 @@ const heroDescription = 'Diagnosed from logs, not user reports.'
 const items: ImpactItem[] = [
   { icon: ShieldCheck, title: 'Fail-Closed Masking', description: 'Credentials & PII stripped before any write.' },
   { icon: Gauge, title: 'Zero UI-Thread Blocking', description: 'Batched writes, ~50x fewer.' },
-  { icon: CloudOff, title: 'Delivery Survives Offline', description: 'Guaranteed by Room + WorkManager.' },
+  { icon: CloudOff, title: 'Delivery Survives Offline', description: 'By Room + WorkManager.' },
 ]
 
 export default function LoggingImpactBar() {
