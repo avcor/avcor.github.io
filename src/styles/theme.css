@@ -21,6 +21,7 @@
   --color-text-secondary: #63D471;   /* Muted green labels */
   --color-text-disabled:  #2a3530;
   --color-text-inverse:   #050608;
+  --color-text-ghost:     rgba(142, 142, 147, 0.10);   /* Decorative background watermark text (subtle) */
 
   /* Borders */
   --color-border:         #1A1F24;
@@ -38,6 +39,8 @@
 
   /* Typography — change this one line to test a different font family */
   --font-primary: 'Google Sans Flex', 'Inter', sans-serif;
+  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  --font-hand: 'Caveat', 'Comic Sans MS', cursive;
 
   /* Shadows */
   --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.5);
@@ -63,6 +66,7 @@
 
   /* White overlays */
   --color-white-a03:          rgba(255, 255, 255, 0.03);
+  --color-white-a04:          rgba(255, 255, 255, 0.04);
   --color-white-a07:          rgba(255, 255, 255, 0.07);
   --color-white-a08:          rgba(255, 255, 255, 0.08);
   --color-white-a12:          rgba(255, 255, 255, 0.12);
@@ -79,6 +83,7 @@
   --color-primary-a12:        rgba(91, 255, 106, 0.12);
   --color-primary-a15:        rgba(91, 255, 106, 0.15);
   --color-primary-a18:        rgba(91, 255, 106, 0.18);
+  --color-primary-a20:        rgba(91, 255, 106, 0.20);
   --color-primary-a32:        rgba(91, 255, 106, 0.32);
   --color-primary-a55:        rgba(91, 255, 106, 0.55);
   --color-primary-a60:        rgba(91, 255, 106, 0.60);
@@ -87,6 +92,10 @@
   /* Info color at opacity (CI/CD diagram — Flutter CI accent) */
   --color-info-a15:           rgba(88, 166, 255, 0.15);
   --color-info-a32:           rgba(88, 166, 255, 0.32);
+
+  /* Error color at opacity */
+  --color-error-a20:          rgba(248, 81, 73, 0.20);
+  --color-error-a32:          rgba(248, 81, 73, 0.32);
 
   /* Primary-dim at opacity */
   --color-primary-dim-a06:    rgba(46, 204, 113, 0.06);

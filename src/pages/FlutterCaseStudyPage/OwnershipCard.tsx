@@ -1,4 +1,3 @@
-import { User } from 'lucide-react'
 import InfoCard from './InfoCard'
 import styles from './OwnershipCard.module.css'
 
@@ -12,7 +11,7 @@ const ownershipPoints = [
 
 export default function OwnershipCard() {
   return (
-    <InfoCard icon={User} title="My Ownership" delay={0.22}>
+    <InfoCard title="My Ownership" delay={0.22}>
       <ul className={styles.list}>
         {ownershipPoints.map((point) => (
           <li key={point} className={styles.item}>

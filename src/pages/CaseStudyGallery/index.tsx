@@ -1,72 +1,109 @@
-import { useEffect, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronLeft } from 'lucide-react'
-import Nav from '../../components/Nav'
-import ViewToggle from '../../components/ViewToggle'
-import RecruiterPill from '../../components/RecruiterPill'
-import EngineeringAchievementsRail from '../../components/EngineeringAchievementsRail'
-import FlutterCaseStudySlide from '../FlutterCaseStudyPage'
-import PlatformEngineeringSlide from '../PlatformEngineeringPage'
-import SlidesViewport from './SlidesViewport'
+import FlutterCaseStudyPage from '../FlutterCaseStudyPage'
+import DeepDivePanel from '../PlatformEngineeringPage/DeepDivePanel'
+import LifecycleMap from '../PlatformEngineeringPage/LifecycleMap'
+import { DEEP_DIVE_PANELS } from '../PlatformEngineeringPage/deepDiveData'
+import CiCdDeepDivePanel from '../CiCdArchitecturePage/DeepDivePanel'
+import CiCdLifecycleMap from '../CiCdArchitecturePage/LifecycleMap'
+import { DEEP_DIVE_PANELS as CICD_DEEP_DIVE_PANELS } from '../CiCdArchitecturePage/deepDiveData'
+import { useScrollSpy } from '../../hooks/useScrollSpy'
+import SpyBar, { type SpySection } from './SpyBar'
 import styles from './CaseStudyGallery.module.css'
 
-const SLIDE_COUNT = 2
+/** The spy bar is purely the scroll stops; concerns are explored via each map. */
+const SPY_ITEMS: SpySection[] = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'architecture', label: 'System architecture' },
+  { id: 'cicd', label: 'CI/CD Architecture' },
+]
+
+const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function CaseStudyGallery() {
-  const [activeSlide, setActiveSlide] = useState(0)
+  const scrollRef = useRef<HTMLElement>(null)
+  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
+  const [selected, setSelected] = useState('seam')
+  const [selectedCiCd, setSelectedCiCd] = useState('scaffold-regen')
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement).tagName
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return
+  const onJump = (id: string) => {
+    const container = scrollRef.current
+    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
+    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
+  }
 
-      if (e.key === 'ArrowRight' && activeSlide < SLIDE_COUNT - 1) {
-        setActiveSlide((i) => i + 1)
-      } else if (e.key === 'ArrowLeft' && activeSlide > 0) {
-        setActiveSlide((i) => i - 1)
-      }
-    }
+  const selectedPanel = useMemo(
+    () => DEEP_DIVE_PANELS.find((p) => p.id === selected) ?? DEEP_DIVE_PANELS[0],
+    [selected],
+  )
 
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [activeSlide])
+  const selectedCiCdPanel = useMemo(
+    () => CICD_DEEP_DIVE_PANELS.find((p) => p.id === selectedCiCd) ?? CICD_DEEP_DIVE_PANELS[0],
+    [selectedCiCd],
+  )
 
   return (
-    <section id="flutter-platform" className={styles.page}>
-      <header className={styles.header}>
-        <ViewToggle />
-        <div className={styles.headerRight}>
-          <Nav activeLink="Work" />
-          <RecruiterPill />
+    <section id="flutter-platform" className={styles.page} ref={scrollRef}>
+      <div className={styles.layout}>
+        <aside className={styles.spyCol}>
+          <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} />
+        </aside>
+
+        <div className={styles.sections}>
+          <section id="overview" className={styles.section}>
+            <FlutterCaseStudyPage />
+          </section>
+
+          <section id="architecture" className={styles.sectionLocked}>
+            <div className={styles.arch}>
+              <div className={styles.archMap}>
+                <LifecycleMap activePanelId={selected} onSelect={setSelected} />
+              </div>
+
+              <div className={styles.archDetail}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selected}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                    className={styles.archDetailInner}
+                  >
+                    <DeepDivePanel panel={selectedPanel} variant="stacked" />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </section>
+
+          <section id="cicd" className={styles.sectionLocked}>
+            <div className={styles.arch}>
+              <div className={styles.archMap}>
+                <CiCdLifecycleMap activePanelId={selectedCiCd} onSelect={setSelectedCiCd} />
+              </div>
+
+              <div className={styles.archDetail}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selectedCiCd}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                    className={styles.archDetailInner}
+                  >
+                    <CiCdDeepDivePanel panel={selectedCiCdPanel} variant="stacked" />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </section>
         </div>
-      </header>
 
-      <div className={styles.body}>
-        <div className={styles.rail}>
-          <EngineeringAchievementsRail />
-        </div>
-
-        <AnimatePresence>
-          {activeSlide > 0 && (
-            <motion.button
-              type="button"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-              className={styles.backButton}
-              onClick={() => setActiveSlide((i) => Math.max(0, i - 1))}
-              aria-label="Previous section"
-            >
-              <ChevronLeft size={18} strokeWidth={2} />
-            </motion.button>
-          )}
-        </AnimatePresence>
-
-        <SlidesViewport activeIndex={activeSlide} onChange={setActiveSlide}>
-          <FlutterCaseStudySlide onAdvance={() => setActiveSlide(1)} />
-          <PlatformEngineeringSlide />
-        </SlidesViewport>
+        <aside className={styles.labelCol}>
+          <span className={styles.verticalLabel}>Flutter Integration</span>
+        </aside>
       </div>
     </section>
   )

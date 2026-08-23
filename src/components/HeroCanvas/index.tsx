@@ -23,10 +23,10 @@ export default function HeroCanvas() {
     let fontSize = 0, lineH = 0, textX = 0, textY = 0, font = ''
 
     function setup() {
-      W = canvas.clientWidth
-      H = canvas.clientHeight
-      canvas.width  = W * dpr
-      canvas.height = H * dpr
+      W = canvas!.clientWidth
+      H = canvas!.clientHeight
+      canvas!.width  = W * dpr
+      canvas!.height = H * dpr
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
       revealCanvas.width  = W

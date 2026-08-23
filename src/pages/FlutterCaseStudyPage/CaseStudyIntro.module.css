@@ -1,9 +1,17 @@
 .column {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 12px 0;
+}
+
+.textLayer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .eyebrow {
@@ -34,13 +42,13 @@
 
 .headingLine {
   display: block;
-  font-size: clamp(1.9rem, 2.8vw, 2.75rem);
+  font-size: clamp(2.2rem, 3.4vw, 3.25rem);
   color: var(--color-white);
 }
 
 .headingLineAccent {
   display: block;
-  font-size: clamp(1.9rem, 2.8vw, 2.75rem);
+  font-size: clamp(2.2rem, 3.4vw, 3.25rem);
   color: var(--color-primary);
 }
 

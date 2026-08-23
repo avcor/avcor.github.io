@@ -1,0 +1,240 @@
+.map {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: var(--color-bg-card);
+  padding: 24px;
+}
+
+/* Clips panning/zooming to the card — content can be dragged toward an
+   edge but never fully out of it (usePanZoom clamps the transform itself;
+   this just makes sure nothing renders outside the visible frame). */
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.viewport.dragging {
+  cursor: grabbing;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Bottom-right zoom cluster, Obsidian-canvas style — always available so
+   zooming never depends on a wheel gesture that would otherwise fight the
+   page's own scroll. */
+.zoomControls {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--color-white-a04);
+  border: 1px solid var(--color-white-a08);
+  backdrop-filter: blur(20px);
+}
+
+.zoomButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: none;
+  background: none;
+  color: var(--color-text-primary-a85);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.zoomButton:hover:not(:disabled) {
+  background: var(--color-white-a07);
+  color: var(--color-white);
+}
+
+.zoomButton:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
+}
+
+.zoomButton:disabled {
+  color: var(--color-white-a25);
+  cursor: default;
+}
+
+.zoomButton svg {
+  color: inherit;
+}
+
+/* Reset sits between the minus/plus pair only once zoomed — give it the
+   accent colour so it reads as the "escape hatch" rather than a third
+   zoom step. */
+.zoomButton[aria-label='Reset view'] {
+  color: var(--color-primary);
+}
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--color-white-a04);
+  border: 1px solid var(--color-white-a08);
+  backdrop-filter: blur(20px);
+  color: var(--color-text-primary-a85);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.hint svg {
+  color: var(--color-primary);
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ── Title (hand-drawn) ── */
+.title {
+  fill: var(--color-text-muted);
+  font-family: var(--font-hand);
+  font-size: 19px;
+  font-weight: 600;
+  text-anchor: middle;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.title:hover,
+.titleActive {
+  fill: var(--color-primary);
+}
+
+/* ── Connectors ── */
+.connector {
+  fill: none;
+  stroke: var(--color-white-a25);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.arrow {
+  fill: none;
+  stroke: var(--color-white-a40);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dot {
+  fill: var(--color-white-a40);
+  stroke: none;
+}
+
+.connectorLabel {
+  fill: var(--color-text-muted);
+  font-family: var(--font-hand);
+  font-size: 13px;
+  font-weight: 500;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  /* Halo in the canvas colour so the connector line is masked behind the
+   * text, letting the label sit centred directly on its line. */
+  paint-order: stroke fill;
+  stroke: var(--color-bg-card);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+/* ── Nodes ── */
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:focus {
+  outline: none;
+}
+
+.interactive:focus-visible .nodeBox {
+  stroke: var(--color-primary);
+}
+
+.nodeBox {
+  fill: var(--color-bg-surface);
+  stroke: var(--color-white-a25);
+  stroke-width: 1.7;
+  transition: stroke 0.2s ease, fill 0.2s ease;
+}
+
+.decorative .nodeBox {
+  fill: none;
+  stroke: var(--color-white-a15);
+  stroke-dasharray: 4 4;
+}
+
+.nodeLit .nodeBox {
+  stroke: var(--color-primary-a60);
+}
+
+.node[data-active] .nodeBox {
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  fill: var(--color-primary-a06);
+}
+
+.nodeLabel {
+  fill: var(--color-text-primary);
+  font-family: var(--font-hand);
+  font-size: 17px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  transition: fill 0.2s ease;
+}
+
+.decorative .nodeLabel {
+  fill: var(--color-text-muted);
+}
+
+.node[data-active] .nodeLabel {
+  fill: var(--color-primary);
+}
+
+.nodeSub {
+  fill: var(--color-text-muted);
+  font-family: var(--font-hand);
+  font-size: 13px;
+  font-weight: 500;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}

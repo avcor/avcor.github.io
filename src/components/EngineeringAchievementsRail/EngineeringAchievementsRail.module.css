@@ -1,5 +1,6 @@
 .rail {
-  width: 220px;
+  width: fit-content;
+  max-width: 220px;
   flex-shrink: 0;
   padding: 4px 0;
 }
