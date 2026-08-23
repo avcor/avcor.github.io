@@ -5,6 +5,22 @@
   flex-shrink: 0;
 }
 
+/* A leaf pill wired to open its details reads as interactive. */
+.clickable {
+  cursor: pointer;
+}
+
+/* Suppress the default outline on mouse focus; keep a clean ring for keyboard. */
+.clickable:focus {
+  outline: none;
+}
+
+.clickable:focus-visible {
+  outline: 2px solid var(--color-primary-a60);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
 .background {
   display: block;
   width: 100%;

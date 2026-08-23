@@ -1,99 +1,169 @@
 .page {
-  height: 100vh;
-  background: var(--color-bg-base);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  font-family: var(--font-primary);
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 14px 48px;
-  flex-shrink: 0;
-}
-
-.headerRight {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px 28px;
-}
-
-.body {
   position: relative;
-  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--color-bg-base);
+  font-family: var(--font-primary);
+  scroll-padding-top: 40px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-white-a15) transparent;
+}
+
+.page::-webkit-scrollbar {
+  width: 8px;
+}
+
+.page::-webkit-scrollbar-thumb {
+  background: var(--color-white-a15);
+  border-radius: 999px;
+}
+
+.layout {
+  display: grid;
+  /* Mirror the spy rail's width as an empty column on the right so the
+     centre content column sits symmetrically between equal gutters. */
+  grid-template-columns: 72px 1fr 72px;
+  gap: 56px;
+  padding: 0 48px;
+  align-items: start;
+}
+
+/* Sticky, vertically-centred rail; the close chevron sits above it.
+   Pulled out past the page's left padding so it sits flush against the
+   viewport edge instead of inset with the centre content. */
+.spyCol {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: -48px;
+  padding-left: 16px;
+}
+
+.sections {
+  min-width: 0;
+}
+
+/* Mirrors .spyCol on the opposite edge — sticky, vertically centred, purely
+   a decorative tag rather than nav, so it carries no interaction state. */
+.labelCol {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: -48px;
+  padding-right: 16px;
+}
+
+.verticalLabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-white-a25);
+  white-space: nowrap;
+}
+
+/* Top-anchored rather than vertically centred: centring within a section
+   that's taller than one viewport (content + padding > 100vh) meant the
+   content only became visible after scrolling partway down. The extra
+   top padding (vs. the 64px bottom) just clears the overlay's close
+   chevron, which floats at top:14px/left:24px. */
+.section {
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+  padding: 0 0 0 0;
+  box-sizing: border-box;
+  scroll-margin-top: 0;
+}
+
+/* Architecture: a locked, viewport-height interactive panel (map + detail that
+   swaps in place), rather than a growing scroll section. */
+.sectionLocked {
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  padding: 64px 0;
+  box-sizing: border-box;
+}
+
+.arch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   min-height: 0;
 }
 
-.rail {
-  margin-left: 48px;
-  padding-top: 4px;
+.archMap {
+  min-width: 0;
+  height: 100%;
 }
 
-/* Sits centered on the boundary between the rail and the slide viewport
-   (48px outer margin + 220px rail width), mirroring the forward arrow's
-   position inside EngineerDeepDivePanel on the boundary further in. */
-.backButton {
-  position: absolute;
-  top: 50%;
-  left: 268px;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
-  display: flex;
+.archDetail {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* soft edge-fade so scrolled detail dissolves rather than hard-cutting */
+  mask-image: linear-gradient(to bottom, transparent 0, var(--color-white) 14px, var(--color-white) calc(100% - 14px), transparent 100%);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-white-a15) transparent;
+}
+
+.archDetail::-webkit-scrollbar {
+  width: 6px;
+}
+
+.archDetail::-webkit-scrollbar-thumb {
+  background: var(--color-white-a15);
+  border-radius: 999px;
+}
+
+.archDetailInner {
+  min-height: 100%;
+  display: grid;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  box-shadow: 0 0 0 4px var(--color-bg-base), 0 0 16px var(--color-primary-a60);
 }
 
-.backButton:hover {
-  background: var(--color-primary-dim);
-}
+/* ── Tablet / mobile: spy bar on top, natural-height sections ── */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 20px;
+  }
 
-/* ── Responsive ──
-   The achievements rail hides at <=1024px, so the back button falls back
-   to the viewport's own left edge instead of the (now absent) boundary. */
-@media (max-width: 1024px) {
-  .page {
+  .spyCol {
+    position: sticky;
+    top: 0;
+    z-index: 3;
     height: auto;
-    overflow: auto;
+    margin-left: 0;
+    padding: 12px 0;
+    background: var(--color-bg-base);
+    align-items: stretch;
   }
 
-  .backButton {
-    left: 24px;
-  }
-}
-
-@media (min-width: 1025px) and (max-height: 820px) {
-  .header {
-    padding: 8px 48px;
+  .section {
+    min-height: auto;
+    padding: 40px 0;
   }
 
-  .rail {
-    padding-top: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .header {
-    padding: 20px 20px;
-  }
-
-  .backButton {
-    left: 12px;
-    width: 34px;
-    height: 34px;
+  .labelCol {
+    display: none;
   }
 }

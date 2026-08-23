@@ -11,8 +11,12 @@ import {
   CIRCUIT_WIRES,
   type CircuitWire,
 } from './circuitData'
+import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
 import pcb from '../../assets/pcb.png'
 import styles from './IndexCircuit.module.css'
+
+/** Leaf nodes wired to open a details sheet. For now only Flutter Integration. */
+const OPENABLE_CASE_STUDY_IDS = new Set(['flutter-integration'])
 
 interface IndexCircuitProps {
   style?: CSSProperties
@@ -62,6 +66,7 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
   { style },
   ref,
 ) {
+  const { open } = useCaseStudyOverlay()
   const [hovered, setHovered] = useState<HoveredNode>(null)
   const routeWires = useMemo(() => getRouteWires(hovered), [hovered])
   const highlightedWireIds = useMemo(
@@ -164,6 +169,7 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
             onHoverChange={(isHovered) =>
               setHovered(isHovered ? { id: study.id, type: 'leaf' } : null)
             }
+            onSelect={OPENABLE_CASE_STUDY_IDS.has(study.id) ? () => open(study.id) : undefined}
           />
         ))}
       </svg>

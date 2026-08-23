@@ -54,13 +54,13 @@
 .headlineSecondary {
   display: block;
   font-size: clamp(1.4rem, 2.8vw, 2.8rem);
-  color: var(--color-text-primary-a40);
+  color: var(--color-white-a45);
 }
 
 .subtext {
   font-size: 0.9rem;
   line-height: 1.7;
-  color: var(--color-text-secondary-a60);
+  color: var(--color-text-muted);
   font-weight: 300;
   letter-spacing: 0.01em;
   max-width: 360px;

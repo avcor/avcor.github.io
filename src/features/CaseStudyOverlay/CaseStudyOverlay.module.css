@@ -1,0 +1,101 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--color-overlay-backdrop);
+}
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 101;
+  background: var(--color-bg-base);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  will-change: transform;
+}
+
+/* Floats over the top-left of the scrolling sheet; the sticky spy rail is
+   vertically centred, so the chevron never collides with it. */
+.close {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--color-white-a08);
+  background: var(--color-white-a04);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.close:hover {
+  background: var(--color-white-a07);
+  border-color: var(--color-white-a15);
+}
+
+.close:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
+}
+
+/* Mirrors .close on the opposite corner: same floating pill treatment. */
+.share {
+  position: absolute;
+  top: 14px;
+  right: 24px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-white-a08);
+  background: var(--color-white-a04);
+  color: var(--color-text-primary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.share:hover {
+  background: var(--color-white-a07);
+  border-color: var(--color-white-a15);
+}
+
+.share:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
+}
+
+.share svg {
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .close {
+    left: 16px;
+  }
+
+  .share {
+    right: 16px;
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .share span {
+    display: none;
+  }
+}

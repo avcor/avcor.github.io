@@ -1,137 +1,137 @@
 .wrapper {
   position: relative;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    var(--color-card-grad-bright) 0%,
-    var(--color-card-grad-mid) 55%,
-    var(--color-card-grad-subtle) 100%
-  );
-  border-radius: 22px;
-  padding: 1px;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.wrapper:hover {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dim) 55%, var(--color-primary-a55) 100%);
-  box-shadow: 0 0 0 1px var(--color-primary-a32), 0 0 14px var(--color-primary-a32), 0 0 28px var(--color-primary-a15);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wrapper {
-    transition: none;
-  }
-}
-
-.inner {
-  height: 100%;
-  background: var(--color-bg-card);
-  border-radius: 21px;
-  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  box-shadow:
-    inset 0 0 0 1px var(--color-card-glow-outer),
-    inset 0 1px 0 var(--color-white-a03),
-    inset 0 -10px 24px var(--color-card-glow-bottom);
+  /* Bottom-edge blend: fade region for the mask on .imageGroup.
+     Percentages are of the stage height (0% = top, 100% = visible bottom). */
+  --fade-solid: 78%; /* fully opaque up to here */
+  --fade-end: 100%; /* fully transparent by the visible bottom edge */
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--color-white);
-  margin-bottom: 4px;
-}
-
-.description {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  line-height: 1.5;
-}
-
-.phoneStage {
+.stage {
   position: relative;
   flex: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   min-height: 0;
-}
-
-/* Sits outside the clipped crop box below, so its bleed isn't cut off. */
-.phoneGlow {
-  position: absolute;
-  inset: -8% -24% -24% -24%;
-  background: radial-gradient(circle at 50% 40%, var(--color-primary-a80) 0%, var(--color-primary-a32) 45%, transparent 74%);
-  filter: blur(38px);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-.phoneStage:hover .phoneGlow {
-  opacity: 0.6;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .phoneGlow {
-    transition: none;
-  }
-}
-
-/* Deterministic crop: always exactly three-quarters of the phone's own
-   height, regardless of how much vertical space this card happens to get. */
-.phoneCrop {
-  position: relative;
-  width: 100%;
-  max-width: clamp(5.5rem, 18vh, 11rem);
-  aspect-ratio: 9 / 14.625;
+  display: flex;
+  justify-content: center;
+  /* Crop the oversized phone screenshot here (not on .wrapper) so the hover
+     glow, which lives outside .stage, can spill past the card's top edge. */
   overflow: hidden;
-  border-radius: 1.9rem 1.9rem 0 0;
 }
 
-.phoneFade {
+/* Holds all three screenshots so they composite as one layer before the mask
+   fades them. Masking the images individually would let the side images (which
+   sit behind the main one) show through the main image's faded bottom instead
+   of the page background. */
+.imageGroup {
   position: absolute;
-  inset: auto 0 0 0;
-  height: 22%;
-  background: linear-gradient(to bottom, transparent 0%, var(--color-bg-card) 88%);
-  pointer-events: none;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
 }
 
-.link {
-  align-self: flex-start;
-  display: inline-flex;
+.frame {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 133.33%;
+  width: auto;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.frame:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 6px;
+}
+
+.frame img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+/* The two remaining screenshots, tucked behind the main one — shorter, dimmed,
+   and offset outward so they just peek past its sides. Decorative only. */
+.frameSide {
+  --side-peek: 60%; /* how far each side image pokes out from behind the main */
+  position: absolute;
+  bottom: 0; /* base aligned with the main image's base */
+  height: 80%; /* smaller in height than the main frame */
+  width: auto;
+  z-index: 0;
+  pointer-events: none;
+  filter: brightness(0.5);
+  overflow: hidden; /* clip the zoomed image's overflowing bottom */
+}
+
+.frameSide img {
+  display: block;
+  height: 120%; /* zoomed in a little; the extra height is clipped at the bottom */
+  width: auto;
+}
+
+.frameLeft {
+  left: 50%;
+  transform: translateX(calc(-50% - var(--side-peek)));
+}
+
+.frameRight {
+  left: 50%;
+  transform: translateX(calc(-50% + var(--side-peek)));
+}
+
+.enlargeButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  color: var(--color-primary);
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--color-white-a04);
+  border: 1px solid var(--color-white-a08);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  color: var(--color-text-primary);
   font-size: 0.82rem;
   font-weight: 500;
+  white-space: nowrap;
   cursor: pointer;
-  min-height: 44px;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
-.link:hover {
-  color: var(--color-primary-dim);
+.enlargeButton svg {
+  flex-shrink: 0;
+  color: var(--color-primary);
 }
 
-@media (min-width: 1025px) and (max-height: 820px) {
-  .inner {
-    padding: 8px 12px;
-    gap: 4px;
+.enlargeButton:hover {
+  background: var(--color-white-a07);
+  border-color: var(--color-white-a15);
+}
+
+.enlargeButton:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .wrapper {
+    height: 320px;
   }
 
-  .title {
-    margin-bottom: 1px;
-  }
-
-  .description {
-    display: none;
+  .enlargeButton {
+    right: 12px;
+    bottom: 12px;
   }
 }
