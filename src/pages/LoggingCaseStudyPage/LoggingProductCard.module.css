@@ -1,24 +1,41 @@
 .wrapper {
   position: relative;
   height: 100%;
+  /* Bottom-edge blend: fade region for the mask on .imageGroup, matching
+     the Flutter case study's screenshot treatment. Percentages are of the
+     stage height (0% = top, 100% = visible bottom). */
+  --fade-solid: 48%;
+  --fade-end: 100%;
 }
 
 .stage {
   position: relative;
   height: 100%;
-  max-height: 230px;
   min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Crop here (not on .wrapper) so the fade mask sits on the image layer
+     and the top edge stays sharp while the bottom dissolves into the page. */
   overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid var(--color-white-a08);
-  background: var(--color-bg-card);
+}
+
+.imageGroup {
+  position: absolute;
+  /* Inner top padding: hold the image off the card's top edge so it doesn't
+     read as hanging flush; still fills to the sides and bottom (where it fades). */
+  top: 24px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Rounded corners on the image itself (top corners read; the bottom fades
+     out via the mask). overflow clips the oversized img to the radius. */
+  border-radius: 14px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
 }
 
 .frame {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: none;
@@ -30,7 +47,9 @@
 .frame img {
   display: block;
   width: 100%;
-  height: 100%;
+  /* Taller than the visible stage so the dashboard's lower rows bleed past
+     the fade instead of being hard-cropped by a box edge. */
+  height: 130%;
   object-fit: cover;
   object-position: top;
 }

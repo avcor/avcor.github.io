@@ -24,14 +24,16 @@ export default function LoggingProductCard() {
       className={styles.wrapper}
     >
       <div className={styles.stage}>
-        <button
-          type="button"
-          className={styles.frame}
-          onClick={() => setIsZoomOpen(true)}
-          aria-label={`View screenshot: ${alt}`}
-        >
-          <img src={screenshot} alt={alt} draggable={false} />
-        </button>
+        <div className={styles.imageGroup}>
+          <button
+            type="button"
+            className={styles.frame}
+            onClick={() => setIsZoomOpen(true)}
+            aria-label={`View screenshot: ${alt}`}
+          >
+            <img src={screenshot} alt={alt} draggable={false} />
+          </button>
+        </div>
 
         {isEntered && (
           <motion.button
