@@ -10,12 +10,12 @@ import { useScrollSpy } from '../../hooks/useScrollSpy'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
-/** The spy bar is purely the scroll stops; the recruiter-facing "Engineering
- *  in Action" stop sits between Overview and Architecture, not hidden under
+/** The spy bar is purely the scroll stops; the recruiter-facing "Production
+ *  Case Files" stop sits between Overview and Architecture, not hidden under
  *  an engineer-only label. */
 const SPY_ITEMS: SpySection[] = [
   { id: 'overview', label: 'Overview' },
-  { id: 'engineering', label: 'Engineering in Action' },
+  { id: 'engineering', label: 'Production Case Files' },
   { id: 'architecture', label: 'System architecture' },
 ]
 
