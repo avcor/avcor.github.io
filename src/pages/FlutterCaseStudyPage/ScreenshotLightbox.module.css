@@ -20,6 +20,63 @@
   cursor: default;
 }
 
+/* macOS-style window frame for the enlarged view — same chrome grammar as
+   LoggingProductCard's title bar, scaled up for the lightbox. Width is NOT
+   capped here: the frame shrink-wraps to whatever width .windowImage
+   actually renders at (capped on the image itself below), so the title bar
+   stretches to match the image exactly instead of leaving empty side space
+   from object-fit: contain letterboxing inside an independently-sized box. */
+.windowFrame {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-white-a08);
+  box-shadow: var(--shadow-lg);
+  cursor: default;
+}
+
+.windowTitleBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  flex-shrink: 0;
+  background: var(--color-white-a12);
+  border-bottom: 1px solid var(--color-white-a15);
+}
+
+.trafficDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.trafficRed {
+  background: var(--color-macos-red);
+}
+
+.trafficYellow {
+  background: var(--color-macos-yellow);
+}
+
+.trafficGreen {
+  background: var(--color-macos-green);
+}
+
+.windowImage {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 94vw;
+  /* Reserve room for the title bar (~45px) so frame + bar together still
+     fit within the viewport, instead of the frame overflowing past 94vh. */
+  max-height: calc(94vh - 45px);
+  object-fit: contain;
+}
+
 .closeButton {
   position: fixed;
   top: 24px;

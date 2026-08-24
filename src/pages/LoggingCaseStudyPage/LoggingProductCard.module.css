@@ -1,69 +1,124 @@
 .wrapper {
   position: relative;
   height: 100%;
-  /* Bottom-edge blend: fade region for the mask on .imageGroup, matching
-     the Flutter case study's screenshot treatment. Percentages are of the
-     stage height (0% = top, 100% = visible bottom). */
-  --fade-solid: 48%;
-  --fade-end: 100%;
 }
 
 .stage {
   position: relative;
   height: 100%;
   min-height: 0;
-  /* Crop here (not on .wrapper) so the fade mask sits on the image layer
-     and the top edge stays sharp while the bottom dissolves into the page. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-.imageGroup {
-  position: absolute;
-  /* Inner top padding: hold the image off the card's top edge so it doesn't
-     read as hanging flush; still fills to the sides and bottom (where it fades). */
-  top: 24px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* Rounded corners on the image itself (top corners read; the bottom fades
-     out via the mask). overflow clips the oversized img to the radius. */
-  border-radius: 14px;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
-  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
-}
-
-.frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
+/* Fan of three window cards — front one crisp and interactive, the other
+   two peeking from behind at reduced size, rotated, and dimmed. Mirrors the
+   Flutter case study's ProductDeliveredCard stack (one focal + two peeking),
+   adapted for landscape desktop windows instead of portrait phones. */
+.fan {
+  position: relative;
+  width: 92%;
   height: 100%;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+}
+
+.cardFront {
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
   border: none;
   background: transparent;
   padding: 0;
   cursor: pointer;
+  z-index: 2;
 }
 
-.frame img {
+.cardFront:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 6px;
+  border-radius: 14px;
+}
+
+.cardBackLeft,
+.cardBackRight {
+  top: 14%;
+  width: 76%;
+  pointer-events: none;
+  filter: brightness(0.5);
+  z-index: 0;
+}
+
+.cardBackLeft {
+  transform: translateX(-88%) rotate(-6deg);
+}
+
+.cardBackRight {
+  transform: translateX(-12%) rotate(6deg);
+}
+
+/* ── Mini window (title bar + image), reused for all three cards ── */
+.miniWindow {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-white-a08);
+  box-shadow: var(--shadow-lg);
+}
+
+.miniTitleBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  flex-shrink: 0;
+  background: var(--color-white-a12);
+  border-bottom: 1px solid var(--color-white-a15);
+}
+
+.trafficDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.trafficRed {
+  background: var(--color-macos-red);
+}
+
+.trafficYellow {
+  background: var(--color-macos-yellow);
+}
+
+.trafficGreen {
+  background: var(--color-macos-green);
+}
+
+.miniImage {
   display: block;
   width: 100%;
-  /* Taller than the visible stage so the dashboard's lower rows bleed past
-     the fade instead of being hard-cropped by a box edge. */
-  height: 130%;
+  height: auto;
+  /* Actual screenshots run ~1.94:1; crop tighter so the mostly-blank lower
+     portion of some captures doesn't dominate the card. */
+  aspect-ratio: 1.94 / 1;
   object-fit: cover;
   object-position: top;
-}
-
-.frame:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: -2px;
 }
 
 .enlargeButton {
   position: absolute;
   right: 16px;
   bottom: 16px;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -99,7 +154,11 @@
 
 @media (max-width: 720px) {
   .wrapper {
-    height: 260px;
+    height: 300px;
+  }
+
+  .fan {
+    width: 86%;
   }
 
   .enlargeButton {

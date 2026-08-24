@@ -10,9 +10,20 @@ interface ScreenshotLightboxProps {
   onClose: () => void
   onPrev?: () => void
   onNext?: () => void
+  /** Wraps the enlarged image in a macOS-style window frame (title bar +
+   *  traffic lights) — for screenshots of an actual desktop app window,
+   *  rather than a mobile app screen. */
+  windowChrome?: boolean
 }
 
-export default function ScreenshotLightbox({ src, alt, onClose, onPrev, onNext }: ScreenshotLightboxProps) {
+export default function ScreenshotLightbox({
+  src,
+  alt,
+  onClose,
+  onPrev,
+  onNext,
+  windowChrome = false,
+}: ScreenshotLightboxProps) {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -75,16 +86,34 @@ export default function ScreenshotLightbox({ src, alt, onClose, onPrev, onNext }
           </button>
         )}
 
-        <motion.img
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.96 }}
-          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          src={src}
-          alt={alt}
-          className={styles.image}
-          onClick={(e) => e.stopPropagation()}
-        />
+        {windowChrome ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className={styles.windowFrame}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.windowTitleBar} aria-hidden="true">
+              <span className={`${styles.trafficDot} ${styles.trafficRed}`} />
+              <span className={`${styles.trafficDot} ${styles.trafficYellow}`} />
+              <span className={`${styles.trafficDot} ${styles.trafficGreen}`} />
+            </div>
+            <img src={src} alt={alt} className={styles.windowImage} />
+          </motion.div>
+        ) : (
+          <motion.img
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            src={src}
+            alt={alt}
+            className={styles.image}
+            onClick={(e) => e.stopPropagation()}
+          />
+        )}
       </motion.div>
     </AnimatePresence>,
     document.body,

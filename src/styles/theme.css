@@ -126,4 +126,9 @@
   --color-brand-firebase:     #FFCA28;   /* Firebase amber flame */
   --color-brand-flutter:      #47C5FB;   /* Flutter light blue */
   --color-brand-githubactions: #2088FF;  /* GitHub Actions blue */
+
+  /* macOS window chrome — fixed traffic-light identity, not swappable palette */
+  --color-macos-red:          #FF5F57;
+  --color-macos-yellow:       #FEBC2E;
+  --color-macos-green:        #28C840;
 }
