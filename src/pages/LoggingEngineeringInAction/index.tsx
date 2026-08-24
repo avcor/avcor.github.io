@@ -18,7 +18,7 @@ export default function LoggingEngineeringInAction() {
         transition={{ duration: 0.55 }}
         className={styles.heading}
       >
-        <span className={styles.headingText}>Production Case Files</span>
+        <h2 className={styles.headingText}>Production Case Files</h2>
         <span className={styles.headingDash} />
         <p className={styles.headingSub}>
           Proof, not anecdotes: two production incidents traced through the logs.
@@ -34,6 +34,8 @@ export default function LoggingEngineeringInAction() {
           finding="The device clock had been manually changed, so the request carried a timestamp the server rejected as past the deadline. The app and network path were both working correctly."
           impact="Customer Success closed the case quickly with clear evidence, no prolonged investigation and no engineering escalation."
         />
+
+        <div className={styles.cardsDivider} />
 
         <StoryCard
           delay={0.15}

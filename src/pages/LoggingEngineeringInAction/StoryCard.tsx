@@ -19,7 +19,10 @@ export default function StoryCard({ title, issue, investigation, finding, impact
       transition={{ duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] }}
       className={styles.card}
     >
-      <h3 className={styles.title}>{title}</h3>
+      <h3 className={styles.title}>
+        {title}
+        <span className={styles.titleDash} />
+      </h3>
 
       <div className={styles.rows}>
         <div className={styles.row}>

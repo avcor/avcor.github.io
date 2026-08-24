@@ -2,10 +2,14 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: center;
+  gap: 40px;
   padding: 8px 0;
 }
 
+/* Same tier as the Overview page's own section headers (Business Problem —,
+   My Ownership —, Impact —): 1.75rem, dash trailing the text, not the
+   larger page-intro heading style. */
 .heading {
   flex-shrink: 0;
   display: flex;
@@ -15,6 +19,7 @@
 }
 
 .headingText {
+  margin: 0;
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -40,30 +45,37 @@
   color: var(--color-text-muted);
 }
 
-/* Side by side on desktop — fills the one viewport as a deliberate two-proof
-   strip. Stacked on mobile, where the cards scroll within the section. */
+/* Side by side on desktop, each card sized to its own content (not
+   stretched to fill the section) so uneven story lengths don't leave a
+   dead gap before the impact line. Stacked on mobile. */
 .cards {
-  flex: 1;
-  min-height: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
   gap: 24px;
+}
+
+.cardsDivider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--color-white-a08);
+  flex-shrink: 0;
 }
 
 @media (max-width: 900px) {
   .cards {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     height: auto;
     gap: 16px;
+  }
+
+  .cardsDivider {
+    display: none;
   }
 }
 
 @media (min-width: 1025px) and (max-height: 820px) {
   .content {
-    gap: 12px;
-  }
-
-  .headingText {
-    font-size: 1.4rem;
+    gap: 20px;
   }
 }
