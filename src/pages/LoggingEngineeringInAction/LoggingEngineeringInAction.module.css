@@ -7,42 +7,33 @@
   padding: 8px 0;
 }
 
-/* Same tier as the Overview page's own section headers (Business Problem —,
-   My Ownership —, Impact —): 1.75rem, dash trailing the text, not the
-   larger page-intro heading style. */
+/* Same 3-line tagline treatment as the Overview page's own intro heading
+   ("Diagnose production / from structured logs, / not user reports."),
+   same size, same accent-line-in-the-middle grammar — this section reads as
+   a peer headline, not a smaller sub-header with a separate subtitle line. */
 .heading {
   flex-shrink: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 14px;
 }
 
 .headingText {
   margin: 0;
-  font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
+}
+
+.headingLine,
+.headingLineAccent {
+  display: block;
+  font-size: clamp(1.6rem, 2.4vw, 2.3rem);
+}
+
+.headingLine {
   color: var(--color-white);
-  white-space: nowrap;
 }
 
-.headingDash {
-  width: 22px;
-  height: 2px;
-  background: var(--color-primary);
-  flex-shrink: 0;
-  align-self: center;
-}
-
-.headingSub {
-  margin: 0;
-  flex: 1 1 320px;
-  min-width: 0;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--color-text-muted);
+.headingLineAccent {
+  color: var(--color-primary);
 }
 
 /* Side by side on desktop, each card sized to its own content (not
@@ -77,5 +68,10 @@
 @media (min-width: 1025px) and (max-height: 820px) {
   .content {
     gap: 20px;
+  }
+
+  .headingLine,
+  .headingLineAccent {
+    font-size: clamp(1.5rem, 2.2vw, 2.1rem);
   }
 }

@@ -18,11 +18,11 @@ export default function LoggingEngineeringInAction() {
         transition={{ duration: 0.55 }}
         className={styles.heading}
       >
-        <h2 className={styles.headingText}>Production Case Files</h2>
-        <span className={styles.headingDash} />
-        <p className={styles.headingSub}>
-          Proof, not anecdotes: two production incidents traced through the logs.
-        </p>
+        <h2 className={styles.headingText}>
+          <span className={styles.headingLine}>Production Case Files</span>
+          <span className={styles.headingLineAccent}>proof, not anecdotes,</span>
+          <span className={styles.headingLine}>traced through the logs.</span>
+        </h2>
       </motion.div>
 
       <div className={styles.cards}>
