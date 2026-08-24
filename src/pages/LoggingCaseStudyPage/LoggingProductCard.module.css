@@ -42,10 +42,10 @@
    top-to-bottom and bleeds past the bottom edge — clipped by .stage's
    overflow:hidden — instead of stopping short and leaving a gap beneath it. */
 .cardFront {
-  top: 0;
+  top: 4%;
   transform: translateX(-50%);
   width: 84%;
-  height: 104%;
+  height: 100%;
   border: none;
   background: transparent;
   padding: 0;
@@ -89,7 +89,18 @@
   transform: translateX(calc(-50% + var(--side-peek)));
 }
 
-/* ── Mini window (title bar + image), reused for all three cards ── */
+/* Bare screenshot for the two peeking cards — no window chrome, matching
+   Flutter's plain .frameSide (only the front card wears the mac-window). */
+.backImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.94 / 1;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ── Mini window (title bar + image), used by the front card only ── */
 .miniWindow {
   display: flex;
   flex-direction: column;
