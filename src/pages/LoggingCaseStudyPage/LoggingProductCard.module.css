@@ -17,10 +17,15 @@
 }
 
 /* Fills the whole stage and carries the mask — every card inside fades
-   together against the same gradient, exactly like Flutter's imageGroup. */
+   together against the same gradient, exactly like Flutter's imageGroup.
+   Small top inset so the front card doesn't sit flush against the very top
+   edge of the component. */
 .imageGroup {
   position: absolute;
-  inset: 0;
+  top: 20px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
   mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
 }
@@ -40,7 +45,7 @@
   top: 0;
   transform: translateX(-50%);
   width: 84%;
-  height: 112%;
+  height: 104%;
   border: none;
   background: transparent;
   padding: 0;
