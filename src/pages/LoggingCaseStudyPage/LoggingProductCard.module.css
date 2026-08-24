@@ -1,65 +1,87 @@
 .wrapper {
   position: relative;
   height: 100%;
+  /* Bottom-edge blend: fade region for the mask on .imageGroup, matching the
+     Flutter case study's screenshot treatment exactly. Percentages are of
+     the whole stage's height (0% = top, 100% = visible bottom), not any one
+     card's — so the fade is one continuous gradient across the full group. */
+  --fade-solid: 78%;
+  --fade-end: 100%;
 }
 
 .stage {
   position: relative;
   height: 100%;
   min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
 
-/* Fan of three window cards — front one crisp and interactive, the other
-   two peeking from behind at reduced size, rotated, and dimmed. Mirrors the
-   Flutter case study's ProductDeliveredCard stack (one focal + two peeking),
-   adapted for landscape desktop windows instead of portrait phones. */
-.fan {
-  position: relative;
-  width: 92%;
-  height: 100%;
+/* Fills the whole stage and carries the mask — every card inside fades
+   together against the same gradient, exactly like Flutter's imageGroup. */
+.imageGroup {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
 }
 
 .card {
   position: absolute;
   left: 50%;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
+/* Front frame: top-anchored like Flutter's .frame, crisp and interactive.
+   Oversized (like Flutter's height:133%) so it genuinely fills the stage
+   top-to-bottom and bleeds past the bottom edge — clipped by .stage's
+   overflow:hidden — instead of stopping short and leaving a gap beneath it. */
 .cardFront {
   top: 0;
   transform: translateX(-50%);
-  width: 100%;
+  width: 84%;
+  height: 112%;
   border: none;
   background: transparent;
   padding: 0;
   cursor: pointer;
-  z-index: 2;
+  z-index: 1;
+}
+
+.cardFront .miniWindow {
+  height: 100%;
+}
+
+.cardFront .miniImage {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: auto;
 }
 
 .cardFront:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 6px;
-  border-radius: 14px;
 }
 
+/* Back frames: bottom-anchored like Flutter's .frameSide, dimmed, peeking
+   out from behind via a pure horizontal offset — no rotation. */
 .cardBackLeft,
 .cardBackRight {
-  top: 14%;
-  width: 76%;
+  --side-peek: 34%;
+  bottom: 0;
+  width: 68%;
   pointer-events: none;
   filter: brightness(0.5);
   z-index: 0;
 }
 
 .cardBackLeft {
-  transform: translateX(-88%) rotate(-6deg);
+  transform: translateX(calc(-50% - var(--side-peek)));
 }
 
 .cardBackRight {
-  transform: translateX(-12%) rotate(6deg);
+  transform: translateX(calc(-50% + var(--side-peek)));
 }
 
 /* ── Mini window (title bar + image), reused for all three cards ── */
@@ -157,8 +179,14 @@
     height: 300px;
   }
 
-  .fan {
-    width: 86%;
+  .cardFront {
+    width: 90%;
+  }
+
+  .cardBackLeft,
+  .cardBackRight {
+    width: 74%;
+    --side-peek: 30%;
   }
 
   .enlargeButton {

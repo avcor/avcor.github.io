@@ -31,9 +31,11 @@ function MiniWindow({ src, alt }: { src: string; alt: string }) {
 }
 
 /**
- * Three Grafana screenshots fanned like Flutter's ProductDeliveredCard
- * (one focal frame, two peeking behind), adapted for landscape windows
- * instead of portrait phones: the back two rotate and dim behind the front.
+ * Three Grafana screenshots stacked exactly like Flutter's
+ * ProductDeliveredCard: a full-stage mask fades the whole group's bottom
+ * edge into the page, the front frame is top-anchored, and the two back
+ * frames are bottom-anchored and dimmed, peeking out from either side via a
+ * pure horizontal offset (no rotation).
  */
 export default function LoggingProductCard() {
   const [activeIndex, setActiveIndex] = useState(defaultIndex)
@@ -76,7 +78,7 @@ export default function LoggingProductCard() {
       className={styles.wrapper}
     >
       <div className={styles.stage}>
-        <div className={styles.fan}>
+        <div className={styles.imageGroup}>
           <div className={`${styles.card} ${styles.cardBackLeft}`} aria-hidden="true">
             <MiniWindow src={screenshots[1].src} alt="" />
           </div>
