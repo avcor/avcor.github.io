@@ -36,6 +36,17 @@
   color: var(--color-primary);
 }
 
+/* Matches Overview's intro description exactly (same size, color, max
+   width) — the short factual line under the heading. */
+.description {
+  margin: 16px 0 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-white-a45);
+  line-height: 1.6;
+  max-width: 44ch;
+}
+
 /* Side by side on desktop, each card sized to its own content (not
    stretched to fill the section) so uneven story lengths don't leave a
    dead gap before the impact line. Stacked on mobile. */
@@ -73,5 +84,9 @@
   .headingLine,
   .headingLineAccent {
     font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+  }
+
+  .description {
+    margin-top: 10px;
   }
 }

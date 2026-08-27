@@ -23,16 +23,21 @@ export default function LoggingEngineeringInAction() {
           <span className={styles.headingLineAccent}>proof, not anecdotes,</span>
           <span className={styles.headingLine}>traced through the logs.</span>
         </h2>
+
+        <p className={styles.description}>
+          Two production incidents, closed using only what the logs showed. No reproduction,
+          no escalation, no guesswork.
+        </p>
       </motion.div>
 
       <div className={styles.cards}>
         <StoryCard
           delay={0.05}
           title="Assignment Submission"
-          issue="A student reported that their assignment upload failed after the submission deadline."
-          investigation="Traced the request timeline in production logs and inspected the server response alongside the device info attached to each log."
-          finding="The device clock had been manually changed, so the request carried a timestamp the server rejected as past the deadline. The app and network path were both working correctly."
-          impact="Customer Success closed the case quickly with clear evidence, no prolonged investigation and no engineering escalation."
+          issue="Customer Success reported a student unable to submit an assignment, with a screen recording showing a genuine failure: submitted before the deadline, but the upload still failed."
+          investigation="CS confirmed no other student was affected, so instead of touching the codebase we checked production logs for that student at that college."
+          finding="The logs showed the mismatch: the app's request carried a pre-deadline timestamp, but the server's response reflected the real time, and the two didn't line up. The student had manually changed their phone's clock before submitting."
+          impact="Closed with proof, not a guess, reported back to Customer Success within 1 hour and with no code changes needed."
         />
 
         <div className={styles.cardsDivider} />
