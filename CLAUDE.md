@@ -396,6 +396,12 @@ export default function Button({ label, onClick, variant = 'primary', disabled =
 
 ---
 
+## Writing Style
+
+Never use the em dash (`—`) in any written content: case study copy, prose in `deepDiveData.ts`/`lifecycleMapData.ts` panels, comments, commit messages, or any user-facing text. Use a period, comma, colon, or parentheses instead.
+
+---
+
 ## Claude Code Permissions
 
 See [`PERMISSIONS.md`](./PERMISSIONS.md) for the list of read-only commands

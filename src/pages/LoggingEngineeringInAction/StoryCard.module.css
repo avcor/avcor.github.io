@@ -1,0 +1,103 @@
+.card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px;
+  border-top: 1px solid var(--color-white-a08);
+}
+
+/* Matches Overview's InfoCard title size exactly (Business Problem /
+   My Ownership: 1.75rem, line-height 1.15). */
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-white);
+}
+
+.titleDash {
+  width: 18px;
+  height: 2px;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Matches Overview's Impact Bar item title size exactly (e.g. "Fail-Closed
+   Masking": 1.05rem, weight 600). */
+.rowLabel {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* Matches Overview's InfoCard body text (Business Problem / My Ownership) as
+   actually rendered: InfoCard's <p> tags carry no class of their own, so the
+   global `p { font-size: var(--font-size-base) }` rule in typography.css
+   overrides the *inherited* 1.05rem from .bodyLarge — the real rendered size
+   is 1rem (--font-size-base), not the 1.05rem the component CSS nominally
+   sets. Matching the pixel value that's actually on screen, not the source. */
+.rowText {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: 1.4;
+  color: var(--color-text-primary);
+}
+
+.impact {
+  display: flex;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-white-a08);
+}
+
+.impactDash {
+  flex-shrink: 0;
+  width: 18px;
+  height: 2px;
+  margin-top: 9px;
+  background: var(--color-primary);
+}
+
+.impact p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .card {
+    gap: 10px;
+    padding: 18px 20px;
+  }
+
+  .rows {
+    gap: 8px;
+  }
+
+  .impact {
+    padding-top: 8px;
+  }
+}

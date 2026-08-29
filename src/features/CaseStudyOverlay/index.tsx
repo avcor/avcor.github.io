@@ -1,20 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ComponentType } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Share2 } from 'lucide-react'
 import CaseStudyGallery from '../../pages/CaseStudyGallery'
+import LoggingCaseStudyGallery from '../../pages/LoggingCaseStudyGallery'
 import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
 import styles from './CaseStudyOverlay.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
+/** Maps an openable circuit-node id to the gallery it opens. */
+const GALLERIES: Record<string, ComponentType> = {
+  'flutter-integration': CaseStudyGallery,
+  'logging-system': LoggingCaseStudyGallery,
+}
+
 /**
  * The case-study details sheet. Slides up from the bottom over the page when a
  * leaf node is selected on the index circuit, and slides back down on close.
- * For now the only wired leaf is `flutter-integration` → CaseStudyGallery.
+ * Renders the gallery registered for `openId` in GALLERIES.
  */
 export default function CaseStudyOverlay() {
   const { openId, close } = useCaseStudyOverlay()
   const isOpen = openId !== null
+  const Gallery = openId ? GALLERIES[openId] : null
   const [copied, setCopied] = useState(false)
 
   // Escape to close + lock the page behind the sheet while it's open.
@@ -85,7 +93,7 @@ export default function CaseStudyOverlay() {
               <span>{copied ? 'Link copied' : 'Share'}</span>
             </button>
 
-            <CaseStudyGallery />
+            {Gallery && <Gallery />}
           </motion.div>
         </motion.div>
       )}

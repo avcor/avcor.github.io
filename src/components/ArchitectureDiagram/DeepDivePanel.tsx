@@ -1,28 +1,43 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import GlassBadge from '../../components/GlassBadge'
+import GlassBadge from '../GlassBadge'
 import PanelProof from './PanelProof'
-import type { DeepDivePanel as PanelData } from './deepDiveData'
+import type { DeepDivePanel as PanelData } from './types'
 import styles from './DeepDivePanel.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
-/** Renders `` `code` `` spans inline as styled <code> — calls out
- *  identifiers/commands within prose paragraphs. */
-function renderInlineCode(text: string): ReactNode {
-  const parts = text.split(/(`[^`]+`)/g)
-  return parts.map((part, i) =>
-    part.startsWith('`') && part.endsWith('`') ? (
-      <code key={i} className={styles.inlineCode}>
-        {part.slice(1, -1)}
-      </code>
-    ) : (
-      part
-    ),
-  )
+/** Renders `` `code` `` spans as styled <code>, and `[[panelId|Label]]`
+ *  wikilinks as clickable jumps to another panel: calls out identifiers
+ *  and cross-references within prose paragraphs. */
+function renderRichText(text: string, onNavigate?: (id: string) => void): ReactNode {
+  const parts = text.split(/(`[^`]+`|\[\[[^\]|]+\|[^\]]+\]\])/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('`') && part.endsWith('`')) {
+      return (
+        <code key={i} className={styles.inlineCode}>
+          {part.slice(1, -1)}
+        </code>
+      )
+    }
+    if (part.startsWith('[[') && part.endsWith(']]')) {
+      const [panelId, label] = part.slice(2, -2).split('|')
+      return (
+        <button
+          key={i}
+          type="button"
+          className={styles.panelLink}
+          onClick={() => onNavigate?.(panelId)}
+        >
+          {label}
+        </button>
+      )
+    }
+    return part
+  })
 }
 
-/** Reveal on scroll into view — each section animates as the reader reaches it. */
+/** Reveal on scroll into view: each section animates as the reader reaches it. */
 function fadeUp(delay: number) {
   return {
     initial: { opacity: 0, y: 14 },
@@ -35,9 +50,11 @@ function fadeUp(delay: number) {
 interface DeepDivePanelProps {
   panel: PanelData
   variant?: 'split' | 'stacked'
-  /** Overrides the proof column — used to drop the lifecycle map into the Seam. */
+  /** Overrides the proof column: used to drop the lifecycle map into the Seam. */
   proofSlot?: ReactNode
   proofLabel?: string
+  /** Called with a panel id when a `[[panelId|Label]]` wikilink is clicked. */
+  onNavigate?: (id: string) => void
 }
 
 export default function DeepDivePanel({
@@ -45,6 +62,7 @@ export default function DeepDivePanel({
   variant = 'split',
   proofSlot,
   proofLabel,
+  onNavigate,
 }: DeepDivePanelProps) {
   return (
     <div className={`${styles.panel} ${variant === 'stacked' ? styles.stacked : ''}`}>
@@ -79,17 +97,17 @@ export default function DeepDivePanel({
         <motion.div {...fadeUp(0.14)} className={styles.rows}>
           <div className={styles.row}>
             <span className={styles.rowLabel}>Problem</span>
-            <p className={styles.rowText}>{renderInlineCode(panel.problem)}</p>
+            <p className={styles.rowText}>{renderRichText(panel.problem, onNavigate)}</p>
           </div>
           <div className={styles.row}>
             <span className={styles.rowLabel}>Decision</span>
-            <p className={styles.rowText}>{renderInlineCode(panel.decision)}</p>
+            <p className={styles.rowText}>{renderRichText(panel.decision, onNavigate)}</p>
           </div>
         </motion.div>
 
         <motion.div {...fadeUp(0.18)} className={styles.insight}>
           <span className={styles.insightDash} />
-          <p>{renderInlineCode(panel.insight)}</p>
+          <p>{renderRichText(panel.insight, onNavigate)}</p>
         </motion.div>
       </div>
 

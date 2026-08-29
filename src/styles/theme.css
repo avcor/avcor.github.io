@@ -114,4 +114,21 @@
   /* Extended accents — app-icon / dashboard tile tints (phone mockup) */
   --color-accent-purple:      #a78bfa;
   --color-accent-teal:        #2dd4bf;
+
+  /* ── Tech-stack brand icon colors ────────────────────────────
+     Fixed brand identities (not part of the swappable palette).
+     Tuned to stay legible on the near-black background; the
+     no-brand tags (Channels, OkHttp) stay on --color-primary. */
+  --color-brand-kotlin:       #7F52FF;   /* Kotlin purple */
+  --color-brand-sqlite:       #4BA9D9;   /* SQLite blue (lightened for contrast) */
+  --color-brand-android:      #3DDC84;   /* Android green */
+  --color-brand-grafana:      #F46800;   /* Grafana orange */
+  --color-brand-firebase:     #FFCA28;   /* Firebase amber flame */
+  --color-brand-flutter:      #47C5FB;   /* Flutter light blue */
+  --color-brand-githubactions: #2088FF;  /* GitHub Actions blue */
+
+  /* macOS window chrome — fixed traffic-light identity, not swappable palette */
+  --color-macos-red:          #FF5F57;
+  --color-macos-yellow:       #FEBC2E;
+  --color-macos-green:        #28C840;
 }

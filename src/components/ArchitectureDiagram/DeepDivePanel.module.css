@@ -122,6 +122,24 @@
   color: var(--color-text-primary);
 }
 
+/* Obsidian-style wikilink: jumps to another panel on click. */
+.panelLink {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--color-primary);
+  text-underline-offset: 3px;
+  text-decoration: underline dashed;
+  cursor: pointer;
+}
+
+.panelLink:hover,
+.panelLink:focus-visible {
+  text-decoration-style: solid;
+}
+
 /* ── Insight callout ── */
 .insight {
   display: flex;

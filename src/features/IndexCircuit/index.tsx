@@ -15,8 +15,8 @@ import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
 import pcb from '../../assets/pcb.png'
 import styles from './IndexCircuit.module.css'
 
-/** Leaf nodes wired to open a details sheet. For now only Flutter Integration. */
-const OPENABLE_CASE_STUDY_IDS = new Set(['flutter-integration'])
+/** Leaf nodes wired to open a details sheet. */
+const OPENABLE_CASE_STUDY_IDS = new Set(['flutter-integration', 'logging-system'])
 
 interface IndexCircuitProps {
   style?: CSSProperties

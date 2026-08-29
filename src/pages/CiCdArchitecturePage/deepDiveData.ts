@@ -1,39 +1,5 @@
 import { RotateCcw, GitBranch, Lock, Settings2, ShieldCheck } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-
-/** A step in a flow-style proof: either a single node or a yes/no branch. */
-export type FlowStep =
-  | { type: 'node'; label: string; detail?: string }
-  | {
-      type: 'branch'
-      condition: string
-      yes: { label: string; detail?: string }
-      no: { label: string; detail?: string }
-    }
-
-export type Proof =
-  | { kind: 'code'; filename: string; code: string }
-  | { kind: 'table'; columns: string[]; rows: string[][]; emphasizeCol: number }
-  | { kind: 'flow'; steps: FlowStep[] }
-
-export interface DeepDivePanel {
-  id: string
-  index: string
-  eyebrow: string
-  icon: LucideIcon
-  /** Heading rendered as stacked lines; the line at accentIndex is green. */
-  headingLines: string[]
-  accentIndex: number
-  impact: string
-  problem: string
-  decision: string
-  insight: string
-  watermark: string
-  /** The proof artifact. Omitted for panels that instead set `guide`. */
-  proof?: Proof
-  /** Shown in place of a proof — orients the reader to the map itself. */
-  guide?: string
-}
+import type { DeepDivePanel } from '../../components/ArchitectureDiagram/types'
 
 export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
   {
