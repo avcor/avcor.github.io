@@ -88,7 +88,7 @@ export default function CaseStudyGallery() {
                     transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                     className={styles.archDetailInner}
                   >
-                    <DeepDivePanel panel={selectedPanel} variant="stacked" />
+                    <DeepDivePanel panel={selectedPanel} variant="stacked" onNavigate={setSelected} />
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -119,7 +119,7 @@ export default function CaseStudyGallery() {
                     transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                     className={styles.archDetailInner}
                   >
-                    <DeepDivePanel panel={selectedCiCdPanel} variant="stacked" />
+                    <DeepDivePanel panel={selectedCiCdPanel} variant="stacked" onNavigate={setSelectedCiCd} />
                   </motion.div>
                 </AnimatePresence>
               </div>

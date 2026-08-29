@@ -1,4 +1,4 @@
-import { Antenna, EyeOff, Gauge, Send, SlidersHorizontal, Workflow } from 'lucide-react'
+import { Antenna, EyeOff, Gauge, Send, SlidersHorizontal, Stethoscope, Workflow } from 'lucide-react'
 import type { DeepDivePanel } from '../../components/ArchitectureDiagram/types'
 
 export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
@@ -13,19 +13,23 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     problem:
       'Relying on engineers to hand-write a log at every failure site guarantees the important ones are missing exactly when an incident hits.',
     decision:
-      'An OkHttp application interceptor (`CustomResponseInterceptor`) times every request and emits a structured log: method, route, response code, duration, masked queries. Manual `RegisterLog` calls add domain events on top of that automatic network layer.',
+      'An OkHttp application interceptor (`CustomResponseInterceptor`) times every request and, when the response code is in the server-pushed `httpCodes` allowlist, emits a structured log: method, route, response code, duration, masked queries. HTTP 401 is exempt from that gate: it is logged unconditionally, immediately, through a separate forensic path. Manual `RegisterLog` calls add domain events on top of that automatic network layer.',
     insight:
-      'The interceptor derives a `commonURL` by replacing ids, emails, and phones in the path with placeholders, so `/user/4821/fee` and `/user/9033/fee` collapse to one searchable route instead of thousands of unique ones.',
+      'The URL is templated into a `commonURL` by replacing ids, emails, and phones with placeholders, so `/user/4821/fee` and `/user/9033/fee` collapse to one searchable route instead of thousands of unique ones. That templating lives in `RequestLog` (`LogReportGenericModels.kt`), built from the data the interceptor hands it, not inline in the interceptor itself.',
     watermark: 'Capture',
     proof: {
       kind: 'code',
       filename: 'CustomResponseInterceptor.java',
-      code: `long start = System.nanoTime();
+      code: `long startTime = System.currentTimeMillis();
 Response response = chain.proceed(request);
-double durationSec = round((System.nanoTime() - start) / 1e9, 2);
-RegisterLog.sendHTTPLokiLogs(
-    response.code(), peekedBody, method, url,
-    requestBody, durationSec, isTokenExpired);`,
+long durationMs = System.currentTimeMillis() - startTime;
+if (getHttpCodes().contains(response.code())) {
+    RegisterLog.sendHTTPLokiLogs(
+        response.code(), peekedBody, method, url,
+        requestBody, durationMs / 1000.0, isTokenExpired);
+}
+// 401 is skipped: register401Log() already logs it unconditionally,
+// with more detail - avoids a duplicate, lower-fidelity entry.`,
     },
   },
   {
@@ -41,7 +45,7 @@ RegisterLog.sendHTTPLokiLogs(
     decision:
       'Producers do a non-blocking `channel.trySend` and return immediately. A single consumer coroutine on `Dispatchers.IO` drains the channel, batching up to 50 logs or every 200ms, and writes each batch in one Room transaction.',
     insight:
-      'Batching turns a per-log `launch` plus single-row insert into one transaction per 50 logs, roughly 50x fewer writes. The channel uses `BufferOverflow.DROP_OLDEST`, so under a burst the newest logs win instead of back-pressuring the producer.',
+      'Batching turns a per-log `launch` plus single-row insert into one transaction per 50 logs, roughly 50x fewer writes. The channel uses `BufferOverflow.DROP_OLDEST`, so under a burst the newest logs win instead of back-pressuring the producer. `BATCH_SIZE` and `FLUSH_WINDOW_MS` are fixed constants in code, not remote-config knobs. See [[remote-config|Runtime Control]] for what actually is tunable.',
     watermark: 'Async',
     proof: {
       kind: 'code',
@@ -97,7 +101,7 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
     decision:
       'Batch mode persists masked logs to Room and uploads them later via a `CoroutineWorker` gated on `NetworkType.CONNECTED`. Immediate mode skips the DB and posts straight to Loki through an in-memory pipeline that caps outbound work at 4 concurrent POSTs.',
     insight:
-      'The tradeoff is explicit: batch survives process death because it is on disk; immediate does not, since in-flight logs live only in memory. Immediate is reserved for high-priority diagnostics where latency beats durability.',
+      'The tradeoff is explicit: batch survives process death because it is on disk; immediate does not, since in-flight logs live only in memory. Immediate is not per-log instant, though: it runs the same 50-log/200ms micro-batch window as the DB path, then fans out via the semaphore instead of writing to Room. It is reserved for high-priority diagnostics (401s, short-TTL token dumps) where skipping disk latency beats durability.',
     watermark: 'Deliver',
     proof: {
       kind: 'table',
@@ -120,9 +124,9 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
     problem:
       'Reacting to an incident by changing what gets logged should not require building, reviewing, and publishing a new app version, then waiting for users to update.',
     decision:
-      'Firebase Remote Config drives the entire pipeline: on/off, allowed levels, batch size and flush interval, retention days and max stored logs, which HTTP status codes are logged, and whether response bodies are captured. In production the default is error-only, dropped before the DB write.',
+      'Firebase Remote Config drives most of the pipeline: on/off, allowed levels, upload batch size and periodic upload interval, retention days and max stored logs, which HTTP status codes are logged, and whether response bodies are captured.',
     insight:
-      'Because the level filter runs before persistence, raising verbosity during an incident and lowering it afterward costs nothing when it is off: dropped logs never touch the disk.',
+      'In prod, for `safeLevels=["error"]` every INFO/WARN call is discarded on the spot, just a level check, no serialize, no DB row. During an incident, a Remote Config push widens it to include warn/info, and those calls start flowing for more signal. Revert after, and they stop again: no cleanup, no leftover cost. The remote `batch_size` knob controls a different number, how many rows the upload worker reads per Room query per upload cycle, and `duration_min` controls how often that worker runs, with a 15-minute floor enforced by WorkManager.',
     watermark: 'Config',
     proof: {
       kind: 'table',
@@ -130,7 +134,8 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
       emphasizeCol: 2,
       rows: [
         ['safeLevels', 'which levels are logged', 'error only'],
-        ['batch size / flush', 'batching cadence', '50 / 200ms'],
+        ['batch_size', 'rows read per upload cycle', '50'],
+        ['duration_min', 'periodic upload interval (WorkManager, 15min floor)', '30 min'],
         ['retention / max stored', 'local DB cap', '10 days / 10k rows'],
         ['httpCodes', 'which statuses log', 'server-pushed list'],
         ['allow_request_body', 'response-body capture', 'off'],
@@ -161,6 +166,33 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
         ['Message size', '10KB (3-step truncation)', 'SQLite 2MB CursorWindow crash'],
         ['DB cap', '10k rows / 10 days', 'unbounded disk growth'],
         ['Channel overflow', 'DROP_OLDEST', 'producer back-pressure / ANR'],
+      ],
+    },
+  },
+  {
+    id: 'forensic-dumps',
+    index: '07',
+    eyebrow: 'Forensic Dumps',
+    icon: Stethoscope,
+    headingLines: ['When masking hides', 'exactly what you need.'],
+    accentIndex: 1,
+    impact: 'Root-caused a short-lived-token bug from raw auth headers, no rollback needed',
+    problem:
+      'Debugging a short-TTL auth token issue needs the complete raw request/response, headers and JWT included. The standard pipeline masks PII and truncates at 10KB before persistence, which strips exactly the fields the investigation needs.',
+    decision:
+      'A `PASSTHROUGH_MARKER`-wrapped message bypasses the GDPR masker and the 10KB truncation for two paths only: short-TTL auth full-dumps and an unconditional per-401 diagnostic. Both are sent through immediate mode so they reach the server without waiting on the batch window, then the marker is stripped at the last hop in `LokiRepo`, right before the bytes hit the wire.',
+    insight:
+      'Volley and the OkHttp interceptor share the same client, so one auth call can trigger the dump twice a few ms apart; a 5-second, 64-entry LRU dedup cache keyed on (source, token) drops the duplicate. PII in the body is still masked: only the JWT `token` field and the raw headers ship unmasked, and that stream is access-restricted in Loki because a raw Auth-Token is a replayable bearer.',
+    watermark: 'Forensics',
+    proof: {
+      kind: 'table',
+      columns: ['Field', 'Treatment', 'Why'],
+      emphasizeCol: 1,
+      rows: [
+        ['Request/response headers', 'raw', 'confirms device-type headers were actually sent'],
+        ['JWT `token` field', 'raw', 'needed to read exp/iat/deviceType claims'],
+        ['Everything else in body', 'masked', 'password/email/otp/phone stay GDPR-safe'],
+        ['Delivery', 'immediate (LokiNow)', 'auth flow is short-lived; can’t wait for the batch window'],
       ],
     },
   },
