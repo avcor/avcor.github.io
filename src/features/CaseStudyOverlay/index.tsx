@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Share2 } from 'lucide-react'
 import CaseStudyGallery from '../../pages/CaseStudyGallery'
 import LoggingCaseStudyGallery from '../../pages/LoggingCaseStudyGallery'
+import AttendanceCaseStudyGallery from '../../pages/AttendanceCaseStudyGallery'
 import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
 import styles from './CaseStudyOverlay.module.css'
 
@@ -12,6 +13,7 @@ const ease = [0.16, 1, 0.3, 1] as const
 const GALLERIES: Record<string, ComponentType> = {
   'flutter-integration': CaseStudyGallery,
   'logging-system': LoggingCaseStudyGallery,
+  'attendance-fraud-prevention': AttendanceCaseStudyGallery,
 }
 
 /**

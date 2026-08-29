@@ -126,6 +126,9 @@
   --color-brand-firebase:     #FFCA28;   /* Firebase amber flame */
   --color-brand-flutter:      #47C5FB;   /* Flutter light blue */
   --color-brand-githubactions: #2088FF;  /* GitHub Actions blue */
+  --color-brand-google:       #4285F4;   /* Google blue (ML Kit) */
+  --color-brand-googlemaps:   #34A853;   /* Google Maps green (Geofencing) */
+  --color-brand-googleplay:   #EA4335;   /* Google Play red (FusedLocationProvider) */
 
   /* macOS window chrome — fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;

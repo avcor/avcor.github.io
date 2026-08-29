@@ -1,0 +1,101 @@
+import { useCallback, useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import { Maximize2 } from 'lucide-react'
+import gateShot from '../../assets/screenshots/attendance-gate-check.png'
+import livenessShot from '../../assets/screenshots/attendance-liveness-capture.png'
+import punchShot from '../../assets/screenshots/attendance-punch-complete.png'
+import ScreenshotLightbox from '../FlutterCaseStudyPage/ScreenshotLightbox'
+import styles from './AttendanceProductCard.module.css'
+
+const screenshots = [
+  { src: gateShot, alt: 'Attendance gate check: location verified, IP address not allowed, Try Again' },
+  { src: livenessShot, alt: 'Live liveness capture: circular camera guide, blink prompt (1 of 2)' },
+  { src: punchShot, alt: 'Punch in details: selfie, name, faculty ID, timestamp, and location' },
+]
+
+const count = screenshots.length
+const defaultIndex = 0
+
+export default function AttendanceProductCard() {
+  const [activeIndex, setActiveIndex] = useState(defaultIndex)
+  const [isZoomOpen, setIsZoomOpen] = useState(false)
+  const [isEntered, setIsEntered] = useState(false)
+
+  const go = useCallback((dir: number) => {
+    setActiveIndex((i) => (i + dir + count) % count)
+  }, [])
+
+  const openLightbox = useCallback(() => {
+    setActiveIndex(defaultIndex)
+    setIsZoomOpen(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isZoomOpen) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') go(-1)
+      else if (e.key === 'ArrowRight') go(1)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [isZoomOpen, go])
+
+  const cover = screenshots[defaultIndex]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+      onAnimationComplete={() => setIsEntered(true)}
+      className={styles.wrapper}
+    >
+      <div className={styles.stage}>
+        <div className={styles.imageGroup}>
+          <div className={`${styles.frameSide} ${styles.frameLeft}`} aria-hidden="true">
+            <img src={screenshots[1].src} alt="" draggable={false} />
+          </div>
+          <div className={`${styles.frameSide} ${styles.frameRight}`} aria-hidden="true">
+            <img src={screenshots[2].src} alt="" draggable={false} />
+          </div>
+
+          <button
+            type="button"
+            className={styles.frame}
+            onClick={openLightbox}
+            aria-label={`View all screenshots, starting with: ${cover.alt}`}
+          >
+            <img src={cover.src} alt={cover.alt} draggable={false} />
+          </button>
+        </div>
+
+        {isEntered && (
+          <motion.button
+            type="button"
+            className={styles.enlargeButton}
+            onClick={openLightbox}
+            aria-label="Enlarge screenshot"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Maximize2 size={16} strokeWidth={2} />
+            <span>Click to Enlarge</span>
+          </motion.button>
+        )}
+      </div>
+
+      {isZoomOpen && (
+        <ScreenshotLightbox
+          src={screenshots[activeIndex].src}
+          alt={screenshots[activeIndex].alt}
+          onClose={() => setIsZoomOpen(false)}
+          onPrev={() => go(-1)}
+          onNext={() => go(1)}
+        />
+      )}
+    </motion.div>
+  )
+}
