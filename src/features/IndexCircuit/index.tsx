@@ -19,7 +19,7 @@ import styles from './IndexCircuit.module.css'
 const OPENABLE_CASE_STUDY_IDS = new Set([
   'flutter-integration',
   'logging-system',
-  'attendance-fraud-prevention',
+  'ml-kit-liveness',
 ])
 
 interface IndexCircuitProps {

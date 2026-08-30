@@ -33,7 +33,7 @@ export default function AttendanceCaseStudyGallery() {
   )
 
   return (
-    <section id="attendance-fraud-prevention" className={styles.page} ref={scrollRef}>
+    <section id="ml-kit-liveness" className={styles.page} ref={scrollRef}>
       <div className={styles.layout}>
         <aside className={styles.spyCol}>
           <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} />
@@ -77,7 +77,7 @@ export default function AttendanceCaseStudyGallery() {
         </div>
 
         <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>Attendance Fraud Prevention</span>
+          <span className={styles.verticalLabel}>ML Kit Liveness</span>
         </aside>
       </div>
     </section>

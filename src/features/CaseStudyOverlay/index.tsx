@@ -13,7 +13,7 @@ const ease = [0.16, 1, 0.3, 1] as const
 const GALLERIES: Record<string, ComponentType> = {
   'flutter-integration': CaseStudyGallery,
   'logging-system': LoggingCaseStudyGallery,
-  'attendance-fraud-prevention': AttendanceCaseStudyGallery,
+  'ml-kit-liveness': AttendanceCaseStudyGallery,
 }
 
 /**

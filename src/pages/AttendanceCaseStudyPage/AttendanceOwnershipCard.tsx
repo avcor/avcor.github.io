@@ -2,7 +2,7 @@ import InfoCard from '../FlutterCaseStudyPage/InfoCard'
 import styles from '../FlutterCaseStudyPage/OwnershipCard.module.css'
 
 const ownershipPoints = [
-  'Built the punch-in flow end-to-end: permission gating, location/IP checks, live capture, upload, registration',
+    'Found a printed-photo bypass in verification and fixed it with an ML Kit liveness POC',
   'Implemented on-device ML Kit liveness detection: randomized head-turn and two-blink challenge, camera-only, no gallery path',
   'Added real-time rejection for multiple faces, identity swaps, obstructed landmarks, and low light from one ML Kit detector pass',
   'Wired server-side geofence and static-IP validation before the camera opens',

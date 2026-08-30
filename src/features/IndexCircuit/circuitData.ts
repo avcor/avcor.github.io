@@ -98,9 +98,9 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
     nodeIds: ['security-engineering'],
   },
   {
-    id: 'security-engineering_attendance-fraud-prevention',
+    id: 'security-engineering_ml-kit-liveness',
     d: 'M524.5 104.5H509L491 122.5H479',
-    nodeIds: ['security-engineering', 'attendance-fraud-prevention'],
+    nodeIds: ['security-engineering', 'ml-kit-liveness'],
   },
   {
     id: 'product-engineering_center',
@@ -168,8 +168,8 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
     innerDot: { cx: 225.5, cy: 398.5 },
   },
   {
-    id: 'attendance-fraud-prevention',
-    label: 'Attendance Fraud Prevention',
+    id: 'ml-kit-liveness',
+    label: 'ML Kit Liveness',
     pillPath:
       'M536 93.5H645C648.59 93.5 651.5 96.4101 651.5 100V110C651.5 113.59 648.59 116.5 645 116.5H536C532.41 116.5 529.5 113.59 529.5 110V100C529.5 96.5225 532.231 93.6831 535.665 93.5088L536 93.5Z',
     text: { x: 590.5, y: 105 },

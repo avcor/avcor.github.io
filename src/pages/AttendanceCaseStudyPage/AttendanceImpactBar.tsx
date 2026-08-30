@@ -15,7 +15,7 @@ const heroLine = 'Zero Fraud Incidents'
 const heroCaveat = 'Reported by the Customer Success team since launch, a qualitative signal, not a measured detection rate.'
 
 const items: ImpactItem[] = [
-  { icon: MapPin, title: 'Live Location Gate', description: 'Geofence and IP validated server-side before every punch.' },
+  { icon: MapPin, title: 'Live Location Gate', description: 'Geofence and IP validated server-side.' },
   { icon: ScanFace, title: 'Randomized Liveness', description: 'A different head-turn and blink challenge each session.' },
   { icon: ShieldCheck, title: 'Camera-Only Capture', description: 'No gallery or file-picker path to a punch photo.' },
 ]
