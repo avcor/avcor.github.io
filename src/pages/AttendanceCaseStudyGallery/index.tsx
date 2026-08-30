@@ -36,7 +36,7 @@ export default function AttendanceCaseStudyGallery() {
     <section id="ml-kit-liveness" className={styles.page} ref={scrollRef}>
       <div className={styles.layout}>
         <aside className={styles.spyCol}>
-          <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} />
+          <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} compact />
         </aside>
 
         <div className={styles.sections}>

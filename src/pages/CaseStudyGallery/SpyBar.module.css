@@ -70,6 +70,12 @@
     align-items: center;
   }
 
+  /* Shrinks the band for galleries with few sections, so items distributed
+     via space-between (below) don't end up stretched to opposite ends. */
+  .spy.compact {
+    height: 50vh;
+  }
+
   .list {
     height: 100%;
     justify-content: space-between;
