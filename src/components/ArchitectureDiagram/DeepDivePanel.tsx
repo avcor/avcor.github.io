@@ -109,6 +109,20 @@ export default function DeepDivePanel({
           <span className={styles.insightDash} />
           <p>{renderRichText(panel.insight, onNavigate)}</p>
         </motion.div>
+
+        {panel.tags && (
+          <motion.div {...fadeUp(0.22)} className={styles.detectedWith}>
+            <span className={styles.rowLabel}>Detected with</span>
+            <div className={styles.tags}>
+              {panel.tags.map(({ icon, label }) => (
+                <span key={label} className={styles.tag}>
+                  {icon}
+                  {label}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* ── Right: proof artifact, an override slot (the map), or a guide ── */}

@@ -20,6 +20,7 @@ const OPENABLE_CASE_STUDY_IDS = new Set([
   'flutter-integration',
   'logging-system',
   'ml-kit-liveness',
+  'android-optimization',
 ])
 
 interface IndexCircuitProps {
