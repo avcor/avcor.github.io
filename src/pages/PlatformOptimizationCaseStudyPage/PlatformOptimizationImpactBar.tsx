@@ -15,8 +15,8 @@ const heroDescription = '99.5% storage reduction for existing installs; new inst
 
 const items: ImpactItem[] = [
   { icon: Timer, title: 'Cold Start ANRs Fixed', description: 'Slow cold start down to 0.78%, from ~1.05% in April 2026.' },
-  { icon: Database, title: 'Flutter Size Regression Reverted', description: '~92MB back down to 54.8MB within weeks.' },
-  { icon: Layers, title: 'View Recycling Restored', description: 'RecyclerView nested in NestedScrollView fixed on classroom resources.' },
+  { icon: Database, title: 'Flutter Size Regression', description: '~92MB back down to 54.8MB.' },
+  { icon: Layers, title: 'View Recycling Restored', description: 'RecyclerView nested in NestedScrollView fixed.' },
 ]
 
 export default function PlatformOptimizationImpactBar() {

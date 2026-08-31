@@ -64,9 +64,9 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     icon: ViewIcon,
     headingLines: ['A RecyclerView nested in a', 'NestedScrollView disables', 'view recycling entirely.'],
     accentIndex: 1,
-    impact: 'Restored view recycling on the classroom resources screen that was ANRing',
+    impact: 'Restored view recycling on a screen that was ANRing',
     problem:
-      "Nesting a RecyclerView inside a NestedScrollView forces every row to inflate synchronously, since the scroll container can't participate in the recycling contract, and it was ANRing on classroom resources.",
+      "Nesting a RecyclerView inside a NestedScrollView forces every row to inflate synchronously, since the scroll container can't participate in the recycling contract.",
     decision:
       'Moved the RecyclerView to scroll directly under `SwipeRefreshLayout`, delegating the swipe-to-refresh child-scroll check to the RecyclerView itself. User-list adapters moved from wholesale `notifyDataSetChanged()` to `DiffUtil`, so only changed rows re-bind.',
     insight:
@@ -91,7 +91,7 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     icon: Database,
     headingLines: ["A silent stripping failure", "let Flutter's engine ship", 'unstripped, at 156MB.'],
     accentIndex: 1,
-    impact: 'Reverted a Flutter-driven size regression, ~92MB back down to 54.8MB within weeks, no runtime cost',
+    impact: 'Reverted a Flutter-driven size regression, ~92MB back down to 54.8MB, no runtime cost',
     problem:
       "Adding the Flutter engine for the add-to-app integration nearly doubled reference-device download size, from ~55MB to ~92MB. Root cause: Android Gradle Plugin strips native libraries via a specific NDK's `llvm-strip`, and without an explicit `ndkVersion` pin, AGP silently falls back to its default NDK. If that default isn't installed, it skips stripping entirely with no build error, so Flutter's `libflutter.so` shipped unstripped, ~156MB versus ~11MB stripped, per ABI.",
     decision:
@@ -120,7 +120,7 @@ ndkVersion project(":flutter").extensions.getByName("flutter").ndkVersion`,
     problem:
       'Root and hook-detection probes were fast enough on emulators to pass CI, but slow enough on real devices to blow past the security watchdog timeout and fail closed on cold start.',
     decision:
-      'Replaced the third-party `RootBeer` library with a custom, lighter detector. Swapped subprocess-based checks for reflection and per-package lookups (see Cold Start). Made the watchdog fail-open on timeout instead of indefinitely blocking the user.',
+      'Replaced the third-party `RootBeer` library with a custom, lighter detector. Swapped subprocess-based checks for reflection and per-package lookups (see [[cold-start-consolidation|Cold Start]]). Made the watchdog fail-open on timeout instead of indefinitely blocking the user.',
     insight:
       "Failing open on a security check that didn't finish in time is a deliberate tradeoff: blocking a legitimate user indefinitely because a probe is slow is worse than occasionally letting a session through unchecked, since the probe still runs, just without gating the UI on its result.",
     watermark: 'Security',
