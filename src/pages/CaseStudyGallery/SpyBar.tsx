@@ -9,11 +9,17 @@ interface SpyBarProps {
   sections: SpySection[]
   activeId: string
   onJump: (id: string) => void
+  /** Shrinks the vertical band items distribute across — for galleries with
+   *  few sections, where the default band spreads them too far apart. */
+  compact?: boolean
 }
 
-export default function SpyBar({ sections, activeId, onJump }: SpyBarProps) {
+export default function SpyBar({ sections, activeId, onJump, compact = false }: SpyBarProps) {
   return (
-    <nav className={styles.spy} aria-label="Case study sections">
+    <nav
+      className={`${styles.spy} ${compact ? styles.compact : ''}`}
+      aria-label="Case study sections"
+    >
       <ol className={styles.list}>
         {sections.map((section) => {
           const active = section.id === activeId

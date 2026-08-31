@@ -398,7 +398,57 @@ export default function Button({ label, onClick, variant = 'primary', disabled =
 
 ## Writing Style
 
-Never use the em dash (`—`) in any written content: case study copy, prose in `deepDiveData.ts`/`lifecycleMapData.ts` panels, comments, commit messages, or any user-facing text. Use a period, comma, colon, or parentheses instead.
+All case study copy (intro descriptions, business problem text, ownership bullets, deep dive panels) must sound like engineering notes written by the person who did the work, not marketing copy.
+
+### Core rules
+- Never use the em dash (`—`) in any written content: case study copy, prose in `deepDiveData.ts`/`lifecycleMapData.ts` panels, comments, commit messages, or any user-facing text. Use a period, comma, colon, or parentheses instead.
+- No adjectives that don't carry information ("robust", "powerful", "seamless", "cutting-edge"). If a word could be cut without losing meaning, cut it.
+- No hedging ("might", "could potentially", "in some cases"). State what happened.
+- Prefer concrete numbers and named things over vague claims: "90 → 18 min" beats "significantly faster", "`CustomResponseInterceptor`" beats "the interceptor layer".
+- Short sentences. One idea per sentence. Break compound sentences apart instead of stringing them together with "and"/"which".
+
+### Business Problem text
+Two sentences, no more:
+1. The situation/constraint, stated flatly.
+2. The consequence if left unaddressed, or the requirement it created.
+
+```
+As the app scaled across institutions, production issues were reconstructed
+from user reports, slow and often impossible to reproduce.
+
+Needed centralized, searchable logs from production devices, without
+compromising privacy, UI latency, or offline reliability.
+```
+
+### Ownership bullets
+Start every bullet with a past-tense action verb (Built, Designed, Established, Wired, Implemented, Evaluated, Selected). Name the specific mechanism, not the category.
+
+```
+Built the end-to-end logging module: capture, masking, persistence, delivery
+Implemented the producer/consumer pipeline on Kotlin Channels so logging never blocks the UI thread
+Wired Firebase Remote Config as the runtime control plane for the whole pipeline
+```
+
+### Deep dive panels (`problem` / `decision` / `insight`)
+- `problem`: one sentence naming the constraint or failure mode, no solution talk yet.
+- `decision`: what was actually built, with exact class/file names in backticks (e.g. `` `CustomResponseInterceptor` ``). State the mechanism plainly, don't narrate the exploration that led there.
+- `insight`: the non-obvious tradeoff or reasoning, the thing a reviewer would ask "why did you do it that way" about. It's fine to state a limitation directly ("not per-log instant, though").
+
+```
+problem:  'Relying on engineers to hand-write a log at every failure site
+           guarantees the important ones are missing exactly when an
+           incident hits.'
+decision: 'An OkHttp application interceptor (`CustomResponseInterceptor`)
+           times every request and, when the response code is in the
+           server-pushed `httpCodes` allowlist, emits a structured log.'
+insight:  'It is fail-closed: if masking throws on a malformed payload,
+           the log is dropped, not shipped raw.'
+```
+
+### Tone checklist before publishing copy
+- Would this sentence survive being read by another engineer who worked on it? If it sounds like a press release, rewrite it.
+- Every claim of impact should be a measured number or a named, verifiable outcome, not an adjective.
+- No first-person "I" needed in card copy: state what was built/decided directly ("Built X", not "I built X").
 
 ---
 
