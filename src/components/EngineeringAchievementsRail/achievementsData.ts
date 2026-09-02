@@ -8,7 +8,7 @@ const DOMAIN_CASE_STUDY_IDS: Record<string, string[]> = {
   'platform-engineering': ['flutter-integration', 'logging-system'],
   'security-engineering': ['ml-kit-liveness'],
   'platform-optimization': ['android-optimization'],
-  'product-engineering': ['payment-experience', 'multi-account-architecture'],
+  'product-engineering': ['payment-experience', 'app-security'],
   'performance-engineering': ['medical-chart-optimization'],
   'offline-first-architecture': ['ecg-background-sync'],
 }
