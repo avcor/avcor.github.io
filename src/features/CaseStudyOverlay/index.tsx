@@ -4,6 +4,7 @@ import { Check, ChevronDown, Share2 } from 'lucide-react'
 import CaseStudyGallery from '../../pages/CaseStudyGallery'
 import LoggingCaseStudyGallery from '../../pages/LoggingCaseStudyGallery'
 import AttendanceCaseStudyGallery from '../../pages/AttendanceCaseStudyGallery'
+import SecurityCaseStudyGallery from '../../pages/SecurityCaseStudyGallery'
 import PlatformOptimizationCaseStudyGallery from '../../pages/PlatformOptimizationCaseStudyGallery'
 import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
 import styles from './CaseStudyOverlay.module.css'
@@ -15,6 +16,7 @@ const GALLERIES: Record<string, ComponentType> = {
   'flutter-integration': CaseStudyGallery,
   'logging-system': LoggingCaseStudyGallery,
   'ml-kit-liveness': AttendanceCaseStudyGallery,
+  'app-security': SecurityCaseStudyGallery,
   'android-optimization': PlatformOptimizationCaseStudyGallery,
 }
 

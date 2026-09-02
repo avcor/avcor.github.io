@@ -113,9 +113,9 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
     nodeIds: ['product-engineering', 'payment-experience'],
   },
   {
-    id: 'product-engineering_multi-account-architecture',
+    id: 'product-engineering_app-security',
     d: 'M561.5 272H551L541 282H530',
-    nodeIds: ['product-engineering', 'multi-account-architecture'],
+    nodeIds: ['product-engineering', 'app-security'],
   },
   {
     id: 'offline-first-architecture_center',
@@ -186,8 +186,8 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
     innerDot: { cx: 563.5, cy: 236.5 },
   },
   {
-    id: 'multi-account-architecture',
-    label: 'Multi-Account Architecture',
+    id: 'app-security',
+    label: 'App Security',
     pillPath:
       'M573 259.5H677C680.59 259.5 683.5 262.41 683.5 266V276C683.5 279.59 680.59 282.5 677 282.5H573C569.41 282.5 566.5 279.59 566.5 276V266C566.5 262.41 569.41 259.5 573 259.5Z',
     text: { x: 625, y: 271 },
@@ -218,13 +218,12 @@ export const LEFT_BLEED_MARKER_FRACTION = (() => {
 })()
 
 /**
- * Horizontal position of the "Multi-Account Architecture" accent line, as a
- * fraction of the circuit's viewBox width. Used to cap how far the board's
- * right-bleed growth can shift content before that label crosses the
- * viewport's right edge.
+ * Horizontal position of the "App Security" accent line, as a fraction of the
+ * circuit's viewBox width. Used to cap how far the board's right-bleed growth
+ * can shift content before that label crosses the viewport's right edge.
  */
 export const RIGHT_BLEED_MARKER_FRACTION = (() => {
-  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'multi-account-architecture')?.accentLine
+  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'app-security')?.accentLine
   const viewBoxWidth = Number(CIRCUIT_VIEWBOX.split(' ')[2])
   return marker ? marker.x / viewBoxWidth : 1
 })()
