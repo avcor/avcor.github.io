@@ -1,0 +1,212 @@
+.wrapper {
+  position: relative;
+  height: 100%;
+  /* Bottom-edge blend: fade region for the mask on .imageGroup, matching the
+     Flutter case study's screenshot treatment exactly. Percentages are of
+     the whole stage's height (0% = top, 100% = visible bottom), not any one
+     card's — so the fade is one continuous gradient across the full group. */
+  --fade-solid: 78%;
+  --fade-end: 100%;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Fills the whole stage and carries the mask — every card inside fades
+   together against the same gradient, exactly like Flutter's imageGroup.
+   Small top inset so the front card doesn't sit flush against the very top
+   edge of the component. */
+.imageGroup {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Front frame: top-anchored like Flutter's .frame, crisp and interactive.
+   Oversized (like Flutter's height:133%) so it genuinely fills the stage
+   top-to-bottom and bleeds past the bottom edge — clipped by .stage's
+   overflow:hidden — instead of stopping short and leaving a gap beneath it. */
+.cardFront {
+  top: 4%;
+  transform: translateX(-50%);
+  width: 84%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.cardFront .miniWindow {
+  height: 100%;
+}
+
+.cardFront .miniImage {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+.cardFront:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 6px;
+}
+
+/* Back frames: bottom-anchored like Flutter's .frameSide, dimmed, peeking
+   out from behind via a pure horizontal offset — no rotation. */
+.cardBackLeft,
+.cardBackRight {
+  --side-peek: 34%;
+  bottom: 0;
+  width: 68%;
+  pointer-events: none;
+  filter: brightness(0.5);
+  z-index: 0;
+}
+
+.cardBackLeft {
+  transform: translateX(calc(-50% - var(--side-peek)));
+}
+
+.cardBackRight {
+  transform: translateX(calc(-50% + var(--side-peek)));
+}
+
+/* Bare screenshot for the two peeking cards — no window chrome, matching
+   Flutter's plain .frameSide (only the front card wears the mac-window). */
+.backImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.94 / 1;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ── Mini window (title bar + image), used by the front card only ── */
+.miniWindow {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-white-a08);
+  box-shadow: var(--shadow-lg);
+}
+
+.miniTitleBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  flex-shrink: 0;
+  background: var(--color-white-a12);
+  border-bottom: 1px solid var(--color-white-a15);
+}
+
+.trafficDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.trafficRed {
+  background: var(--color-macos-red);
+}
+
+.trafficYellow {
+  background: var(--color-macos-yellow);
+}
+
+.trafficGreen {
+  background: var(--color-macos-green);
+}
+
+.miniImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Actual screenshots run ~1.94:1; crop tighter so the mostly-blank lower
+     portion of some captures doesn't dominate the card. */
+  aspect-ratio: 1.94 / 1;
+  object-fit: cover;
+  object-position: top;
+}
+
+.enlargeButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--color-white-a04);
+  border: 1px solid var(--color-white-a08);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  color: var(--color-text-primary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.enlargeButton svg {
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.enlargeButton:hover {
+  background: var(--color-white-a07);
+  border-color: var(--color-white-a15);
+}
+
+.enlargeButton:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .wrapper {
+    height: 300px;
+  }
+
+  .cardFront {
+    width: 90%;
+  }
+
+  .cardBackLeft,
+  .cardBackRight {
+    width: 74%;
+    --side-peek: 30%;
+  }
+
+  .enlargeButton {
+    right: 12px;
+    bottom: 12px;
+  }
+}

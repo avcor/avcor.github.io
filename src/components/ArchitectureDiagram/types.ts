@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 export interface MapNode {
   id: string
@@ -61,4 +62,6 @@ export interface DeepDivePanel {
   proof?: Proof
   /** Shown in place of a proof — orients the reader to the map itself. */
   guide?: string
+  /** Tools that would surface this flaw (profilers, vitals dashboards, etc). */
+  tags?: { icon: ReactNode; label: string }[]
 }
