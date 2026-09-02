@@ -131,6 +131,17 @@ src/styles/palettes/
 └── palette-deep-purple.css
 ```
 
+### Tech-Stack Tag Icons
+
+Case study pages show tool/topic tags (e.g. the intro tag row). Each tag's icon and color follow a strict lookup order, don't skip steps or guess:
+
+1. **Real icon exists?** Use `react-icons/si` (Simple Icons). Verify the icon name actually exists in that package before using it, don't invent one.
+2. **Real brand color?** Look up the tool's actual hex from Simple Icons' own dataset (or another authoritative brand source), not from memory or a plausible-looking guess. Store it in `theme.css` under `--color-brand-*` with a comment naming the source/reasoning (e.g. "Google Play triangle, blue segment").
+3. **No official icon/brand color exists** (e.g. OkHttp, ExoPlayer — libraries with no public logo): fall back to a neutral `lucide-react` icon, and give it its own tint stored in `theme.css` under `--color-tag-*`, clearly commented as "no official logo/brand color, recognition tint only" so it's never mistaken for a real brand color later.
+4. **Domain/topic tags** (e.g. Storage, Cold Start, Build Size — not tools, describe what was fixed) always use a `--color-tag-*` fallback tint the same way, since they have no brand identity by definition.
+
+Every tag on a given page must render in a visually distinct color, real brand hexes take priority and are never changed to make room for a fallback tint; pick a fallback hue that doesn't collide with the real ones already on that page. Never reuse a `--color-brand-*` value for an unrelated fallback tag, and never hardcode a hex directly in a component, always add the token to `theme.css` first per the Core Rule above.
+
 ---
 
 ## Responsive Design

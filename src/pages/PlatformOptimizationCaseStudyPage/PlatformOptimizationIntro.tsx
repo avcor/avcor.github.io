@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Network, Shrink } from 'lucide-react'
-import { SiGlide, SiKotlin } from 'react-icons/si'
+import { Database, HardDrive, Network, Timer } from 'lucide-react'
+import { SiFirebase, SiGoogleplay } from 'react-icons/si'
 import styles from './PlatformOptimizationIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -15,15 +15,17 @@ function fadeUp(delay: number) {
 }
 
 interface Tag {
-  icon: ReactNode
+  icon?: ReactNode
   label: string
 }
 
 const tags: Tag[] = [
-  { icon: <SiKotlin size={13} color="var(--color-brand-kotlin)" />, label: 'Kotlin' },
-  { icon: <Network size={14} strokeWidth={1.75} />, label: 'OkHttp' },
-  { icon: <SiGlide size={13} />, label: 'Glide' },
-  { icon: <Shrink size={14} strokeWidth={1.75} />, label: 'ProGuard/R8' },
+  { icon: <Network size={14} strokeWidth={1.75} color="var(--color-tag-okhttp)" />, label: 'OkHttp' },
+  { icon: <SiGoogleplay size={13} color="var(--color-brand-googleplay)" />, label: 'Play Console Vitals' },
+  { icon: <SiFirebase size={13} color="var(--color-brand-firebase)" />, label: 'Firebase Crashlytics' },
+  { icon: <HardDrive size={14} strokeWidth={1.75} color="var(--color-tag-storage)" />, label: 'Storage' },
+  { icon: <Timer size={14} strokeWidth={1.75} color="var(--color-tag-coldstart)" />, label: 'Cold Start' },
+  { icon: <Database size={14} strokeWidth={1.75} color="var(--color-tag-buildsize)" />, label: 'Build Size' },
 ]
 
 export default function PlatformOptimizationIntro() {

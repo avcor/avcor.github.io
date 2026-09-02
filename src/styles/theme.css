@@ -118,7 +118,7 @@
   /* ── Tech-stack brand icon colors ────────────────────────────
      Fixed brand identities (not part of the swappable palette).
      Tuned to stay legible on the near-black background; the
-     no-brand tags (Channels, OkHttp) stay on --color-primary. */
+     no-brand tags (Channels) stay on --color-primary. */
   --color-brand-kotlin:       #7F52FF;   /* Kotlin purple */
   --color-brand-sqlite:       #4BA9D9;   /* SQLite blue (lightened for contrast) */
   --color-brand-android:      #3DDC84;   /* Android green */
@@ -128,7 +128,16 @@
   --color-brand-githubactions: #2088FF;  /* GitHub Actions blue */
   --color-brand-google:       #4285F4;   /* Google blue (ML Kit) */
   --color-brand-googlemaps:   #34A853;   /* Google Maps green (Geofencing) */
-  --color-brand-googleplay:   #EA4335;   /* Google Play red (FusedLocationProvider) */
+  --color-brand-googleplay:   #00C9FF;   /* Google Play triangle, blue segment */
+  --color-brand-glide:        #18BED4;   /* Glide cyan */
+
+  /* No official logo/brand color exists for these: recognition tints
+     only, each distinct so no two fallback tags read as the same color. */
+  --color-tag-okhttp:         #58A6FF;   /* OkHttp: network blue */
+  --color-tag-exoplayer:      #FF7043;   /* ExoPlayer: media orange */
+  --color-tag-storage:        #A78BFA;   /* Storage: violet */
+  --color-tag-coldstart:      #F87171;   /* Cold Start: coral */
+  --color-tag-buildsize:      #F472B6;   /* Build Size: pink */
 
   /* macOS window chrome — fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;
