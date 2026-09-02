@@ -1,0 +1,37 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0 64px;
+}
+
+.topRow {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-height: 340px;
+  margin-bottom: 8px;
+}
+
+.intro {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.product {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .topRow {
+    flex-direction: column;
+    flex: none;
+    gap: 16px;
+  }
+}

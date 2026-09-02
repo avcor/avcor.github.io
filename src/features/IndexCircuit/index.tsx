@@ -22,6 +22,7 @@ const OPENABLE_CASE_STUDY_IDS = new Set([
   'ml-kit-liveness',
   'app-security',
   'android-optimization',
+  'medical-chart-optimization',
 ])
 
 interface IndexCircuitProps {
