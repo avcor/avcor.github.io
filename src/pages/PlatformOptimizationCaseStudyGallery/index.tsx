@@ -2,16 +2,16 @@ import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import PlatformOptimizationCaseStudyPage from '../PlatformOptimizationCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
-import PanelIndex from '../../components/ArchitectureDiagram/PanelIndex'
+import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
 import { DEEP_DIVE_PANELS } from '../PlatformOptimizationArchitecturePage/deepDiveData'
+import { MAP_CONNECTORS, MAP_NODES, MAP_TITLE, MAP_VIEWBOX } from '../PlatformOptimizationArchitecturePage/lifecycleMapData'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
-import localStyles from './PlatformOptimizationCaseStudyGallery.module.css'
 
 const SPY_ITEMS: SpySection[] = [
   { id: 'overview', label: 'Overview' },
-  { id: 'architecture', label: 'System architecture' },
+  { id: 'architecture', label: 'Optimization areas' },
 ]
 
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
@@ -32,11 +32,6 @@ export default function PlatformOptimizationCaseStudyGallery() {
     [selected],
   )
 
-  const indexItems = useMemo(
-    () => DEEP_DIVE_PANELS.map((p) => ({ id: p.id, index: p.index, eyebrow: p.eyebrow, icon: p.icon })),
-    [],
-  )
-
   return (
     <section id="platform-optimization" className={styles.page} ref={scrollRef}>
       <div className={styles.layout}>
@@ -51,8 +46,16 @@ export default function PlatformOptimizationCaseStudyGallery() {
 
           <section id="architecture" className={styles.sectionLocked}>
             <div className={styles.arch}>
-              <div className={`${styles.archMap} ${localStyles.archMapCenter}`}>
-                <PanelIndex items={indexItems} activeId={selected} onSelect={setSelected} />
+              <div className={styles.archMap}>
+                <LifecycleMap
+                  nodes={MAP_NODES}
+                  connectors={MAP_CONNECTORS}
+                  title={MAP_TITLE}
+                  viewBox={MAP_VIEWBOX}
+                  activePanelId={selected}
+                  onSelect={setSelected}
+                  idSuffix="platform"
+                />
               </div>
 
               <div className={styles.archDetail}>

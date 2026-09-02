@@ -1,7 +1,0 @@
-/* No lifecycle-map diagram for this gallery (5 independent optimization areas,
-   not one linear flow) — PanelIndex stands in, centered in the same slot. */
-.archMapCenter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
