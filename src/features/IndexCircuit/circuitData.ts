@@ -61,9 +61,9 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
     nodeIds: ['logging-system', 'platform-engineering'],
   },
   {
-    id: 'android-14-migration_platform-modernization',
+    id: 'android-optimization_platform-optimization',
     d: 'M186 254.5L194 262.5',
-    nodeIds: ['android-14-migration', 'platform-modernization'],
+    nodeIds: ['android-optimization', 'platform-optimization'],
   },
   {
     id: 'medical-chart-optimization_performance-engineering',
@@ -76,9 +76,9 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
     nodeIds: ['platform-engineering'],
   },
   {
-    id: 'platform-modernization_center',
+    id: 'platform-optimization_center',
     d: 'M250.5 266H265.5L290 241.5H313',
-    nodeIds: ['platform-modernization'],
+    nodeIds: ['platform-optimization'],
   },
   {
     id: 'performance-engineering_center',
@@ -149,8 +149,8 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
     innerDot: { cx: 198.5, cy: 104.5 },
   },
   {
-    id: 'android-14-migration',
-    label: 'Android 14 Migration',
+    id: 'android-optimization',
+    label: 'Platform Optimization',
     pillPath:
       'M97 242.5H175C178.59 242.5 181.5 245.41 181.5 249V259C181.5 262.59 178.59 265.5 175 265.5H97C93.4101 265.5 90.5 262.59 90.5 259V249C90.5 245.41 93.4101 242.5 97 242.5Z',
     text: { x: 136, y: 254 },
@@ -207,12 +207,12 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
 ]
 
 /**
- * Horizontal position of the "Android 14 Migration" accent line, as a fraction
+ * Horizontal position of the "Platform Optimization" accent line, as a fraction
  * of the circuit's viewBox width. Used to align the left-bleed pcb image so it
  * never renders that pill's label underneath the left panel's text.
  */
 export const LEFT_BLEED_MARKER_FRACTION = (() => {
-  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'android-14-migration')?.accentLine
+  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'android-optimization')?.accentLine
   const viewBoxWidth = Number(CIRCUIT_VIEWBOX.split(' ')[2])
   return marker ? marker.x / viewBoxWidth : 0
 })()
@@ -243,8 +243,8 @@ export const CIRCUIT_DOMAINS: CircuitDomain[] = [
     icon: Shield,
   },
   {
-    id: 'platform-modernization',
-    lines: ['03', 'Platform', 'Modernization'],
+    id: 'platform-optimization',
+    lines: ['03', 'Platform', 'Optimization'],
     rect: { x: 203.5, y: 257.5, width: 37, height: 40, rx: 4.5 },
     icon: Rocket,
   },

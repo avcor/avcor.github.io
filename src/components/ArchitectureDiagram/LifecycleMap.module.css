@@ -128,7 +128,7 @@
 .title {
   fill: var(--color-text-muted);
   font-family: var(--font-hand);
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 600;
   text-anchor: middle;
   cursor: pointer;
@@ -215,7 +215,7 @@
 .nodeLabel {
   fill: var(--color-text-primary);
   font-family: var(--font-hand);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   text-anchor: middle;
   dominant-baseline: middle;

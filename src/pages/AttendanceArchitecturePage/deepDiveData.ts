@@ -13,7 +13,7 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     problem:
       'Client-side distance math can be spoofed by a fake-GPS app, so the location check has to be a source of truth the client cannot fabricate.',
     decision:
-      '`AttendanceDialogRepo` takes a fresh high-accuracy GPS fix (15s timeout), then calls `GET /institutionalSetting/geofence/location/validate`. The camera button stays disabled, and switches to a retry action, until that call succeeds.',
+      '`AttendanceDialogRepo` takes a fresh high-accuracy GPS fix (15s timeout), then calls a server-side geofence validation endpoint. The camera button stays disabled, and switches to a retry action, until that call succeeds.',
     insight:
       'Geofencing is entirely server-side by design, no radius or coordinate ever ships in the app. It is also independently feature-flagged per institution.',
     watermark: 'Location',
@@ -43,7 +43,7 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     problem:
       'GPS accuracy degrades indoors, exactly where most staff punch in, so location alone is not always a reliable signal.',
     decision:
-      'On Wi-Fi, the app resolves its public IP by cross-checking three independent lookup services and validates it server-side against `/institutionalSetting/staticIpConfiguration/ip/validate`, run in parallel with the geofence check.',
+      'On Wi-Fi, the app resolves its public IP by cross-checking three independent lookup services and validates it server-side against an approved-IP-range endpoint, run in parallel with the geofence check.',
     insight:
       'This is an independently flagged, optional layer, not a replacement for geofencing. Institutions choose either, both, or neither based on their campus network layout.',
     watermark: 'Network',
@@ -142,7 +142,7 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     problem:
       'A punch record with no evidence attached is a claim, not proof, and is hard to audit after the fact.',
     decision:
-      '`PunchInViewModel` orchestrates the punch and delegates the network calls to `PunchImageRepo`: fetch a signed URL, upload the selfie, then post `registerSelfiePunch` with user id, timestamp, lat/long, reverse-geocoded address, public IP, device info, and the resulting media id. An explicit consent checkbox gates both the camera and the final submit.',
+      '`PunchInViewModel` orchestrates the punch and delegates the network calls to `PunchImageRepo`: fetch a signed URL, upload the selfie, then register the punch with user id, timestamp, lat/long, reverse-geocoded address, public IP, device info, and the resulting media id. An explicit consent checkbox gates both the camera and the final submit.',
     insight:
       'The pipeline is fail-visible, not fail-silent: upload or registration errors surface as a retryable state, and the locally cached selfie is cleaned up either way, so a failed attempt is never silently counted as a punch.',
     watermark: 'Upload',
