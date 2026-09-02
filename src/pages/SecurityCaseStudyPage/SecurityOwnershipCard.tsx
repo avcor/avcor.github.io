@@ -2,11 +2,11 @@ import InfoCard from '../FlutterCaseStudyPage/InfoCard'
 import styles from '../FlutterCaseStudyPage/OwnershipCard.module.css'
 
 const ownershipPoints = [
-  'Built the encrypted token store on Android Keystore, with legacy-plaintext migration and self-healing rebuild on keystore corruption',
-  'Diagnosed and fixed a production ANR from Keystore2 Binder contention by pre-warming and process-caching the encrypted prefs at app start',
-  'Implemented dual-layer certificate pinning with pins and signer digests XOR-obfuscated so they cannot be recovered with strings',
-  'Built RootDetectionManager from scratch: root, Magisk/Zygisk/KernelSU, and Frida detection, mirrored in a native JNI layer',
-  'Added signing-certificate verification against obfuscated trusted hashes, so a patched, re-signed build fails to run, handling app-signing key-rotation lineage',
+  'Built the Keystore-backed token store, with self-healing rebuild on keystore corruption',
+  'Fixed a production ANR by pre-warming and caching the encrypted prefs at app start',
+  'Implemented dual-layer certificate pinning with XOR-obfuscated pins',
+  'Built the root, hook, and Frida detection engine from scratch, mirrored in native JNI',
+  'Added signing-certificate verification, so a re-signed build fails to run',
 ]
 
 export default function SecurityOwnershipCard() {

@@ -13,7 +13,7 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     index: '01',
     eyebrow: 'Tamper Detection',
     icon: ShieldAlert,
-    headingLines: ['A 1,200-line detection engine,', 'built from scratch, no', 'RootBeer, no Play Integrity.'],
+    headingLines: ['Detection engine,', 'built from scratch, no', 'RootBeer, no Play Integrity.'],
     accentIndex: 1,
     impact: 'Root, Magisk/Zygisk/KernelSU, and Frida detection with zero third-party security libraries',
     problem:

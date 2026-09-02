@@ -44,10 +44,9 @@ export default function SecurityIntro() {
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className={styles.description}>
-          Digiicampus handles attendance, payments, and student records on devices we
-          don't control. Certificate pinning, a Keystore-backed token store, and a
-          from-scratch tamper-detection engine close the gap between an app that looks
-          secure and a binary that can be trusted.
+          Digiicampus handles payments and student records on devices we don't control.
+          Pinning, a Keystore-backed token store, and a from-scratch tamper-detection
+          engine make the binary itself trustworthy, not just the app.
         </motion.p>
 
         <motion.div {...fadeUp(0.42)} className={styles.tags}>

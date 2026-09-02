@@ -11,14 +11,14 @@ interface ImpactItem {
   description: string
 }
 
-const heroLine = 'Zero Pins In The Clear'
+const heroLines = ['Zero Pins', 'In The Clear']
 const heroCaveat =
   'Pin hashes and signer digests are XOR-obfuscated, so `strings apk.apk | grep sha256` returns nothing, the technique a tester used to locate the pinning code.'
 
 const items: ImpactItem[] = [
-  { icon: KeyRound, title: 'Self-Healing Token Store', description: 'Keystore-backed, survives OS keystore migrations without bricking login.' },
-  { icon: ShieldAlert, title: '1,200-Line Detection Engine', description: 'Root, hook, and signature checks with zero third-party security libraries.' },
-  { icon: ScanLine, title: 'Fail-Open By Design', description: 'Indeterminate signals never lock a user out, only confirmed tampering does.' },
+  { icon: KeyRound, title: 'Self-Healing Token Store', description: 'Keystore-backed, survives keystore corruption without bricking login.' },
+  { icon: ShieldAlert, title: 'Detection Engine', description: 'Root, hook, and signature checks, zero third-party libraries.' },
+  { icon: ScanLine, title: 'Fail-Open By Design', description: 'Only confirmed tampering blocks; the unsure case never does.' },
 ]
 
 export default function SecurityImpactBar() {
@@ -39,7 +39,11 @@ export default function SecurityImpactBar() {
         <div className={`${styles.itemWrap} ${styles.heroWrap}`}>
           <div className={styles.hero}>
             <div className={styles.heroValue}>
-              {heroLine}
+              <span className={styles.heroLines}>
+                {heroLines.map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </span>
               <InfoTooltip text={heroCaveat} />
             </div>
           </div>
