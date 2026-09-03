@@ -18,7 +18,11 @@
   align-items: center;
   height: 44px;
   gap: 4px;
-  padding: 4px;
+  /* Horizontal padding > vertical: at the rounded end caps the active pill's
+     cap must stay concentric with the track's cap, else the gap visibly
+     tightens at the curve. 7px makes the caps share a center (equal gap all
+     around the arc); 4px top/bottom keeps the straight-edge gap matched. */
+  padding: 4px 7px;
   background: linear-gradient(180deg, var(--color-white-a08), var(--color-white-a03));
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
