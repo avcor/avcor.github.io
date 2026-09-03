@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Database, GitBranch, Radio, TabletSmartphone } from 'lucide-react'
-import styles from './DozeeIntro.module.css'
+import { Database, TabletSmartphone } from 'lucide-react'
+import styles from './ChartOptimizationIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -21,12 +21,10 @@ interface Tag {
 // NOTE: tag icons are provisional pending confirmed brand-mark verification.
 const tags: Tag[] = [
   { icon: <TabletSmartphone size={13} />, label: 'React Native' },
-  { icon: <GitBranch size={13} />, label: 'Redux' },
   { icon: <Database size={13} />, label: 'WatermelonDB' },
-  { icon: <Radio size={13} />, label: 'BLE' },
 ]
 
-export default function DozeeIntro() {
+export default function ChartOptimizationIntro() {
   return (
     <div className={styles.column}>
       <div className={styles.textLayer}>
@@ -42,9 +40,8 @@ export default function DozeeIntro() {
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className={styles.description}>
-          Dozee Home turns raw vitals and a shared pod into charts a family can read and
-          profiles they can switch between. Chart accuracy on a phone-sized screen and a
-          clean handoff between medical profiles were both non-negotiable.
+          A chart that takes 5 seconds to draw, or mislabels its own axis, does not read
+          as accurate, even when the underlying data is.
         </motion.p>
 
         <motion.div {...fadeUp(0.42)} className={styles.tags}>

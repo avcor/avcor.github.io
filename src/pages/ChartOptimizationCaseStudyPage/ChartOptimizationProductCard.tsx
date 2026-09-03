@@ -1,31 +1,29 @@
 import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Maximize2 } from 'lucide-react'
+import respirationDayShot from '../../assets/screenshots/dozee-chart-respiration-day.png'
+import sleepDayShot from '../../assets/screenshots/dozee-chart-sleep-day.png'
+import respirationWeekShot from '../../assets/screenshots/dozee-chart-respiration-week.png'
 import ScreenshotLightbox from '../FlutterCaseStudyPage/ScreenshotLightbox'
-import styles from './FeatureProductCard.module.css'
+import styles from './ChartOptimizationProductCard.module.css'
 
-interface Screenshot {
-  src: string
-  alt: string
-}
+const screenshots = [
+  { src: respirationDayShot, alt: 'Respiration Rate, Day view: min/average/max RPM and a full night line chart against the healthy range' },
+  { src: sleepDayShot, alt: 'Sleep, Day view: sleep time, duration, wakeup time, and an awake/sleep timeline chart' },
+  { src: respirationWeekShot, alt: 'Respiration Rate, Week view: daily min/max range chart across the week' },
+]
 
-interface FeatureProductCardProps {
-  /** Fan visuals use the first three (cover, left peek, right peek); the
-   *  lightbox cycles through the full array. */
-  screenshots: Screenshot[]
-}
-
+const count = screenshots.length
 const defaultIndex = 0
 
-export default function FeatureProductCard({ screenshots }: FeatureProductCardProps) {
-  const count = screenshots.length
+export default function ChartOptimizationProductCard() {
   const [activeIndex, setActiveIndex] = useState(defaultIndex)
   const [isZoomOpen, setIsZoomOpen] = useState(false)
   const [isEntered, setIsEntered] = useState(false)
 
   const go = useCallback((dir: number) => {
     setActiveIndex((i) => (i + dir + count) % count)
-  }, [count])
+  }, [])
 
   const openLightbox = useCallback(() => {
     setActiveIndex(defaultIndex)
@@ -49,9 +47,8 @@ export default function FeatureProductCard({ screenshots }: FeatureProductCardPr
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-10%' }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
       onAnimationComplete={() => setIsEntered(true)}
       className={styles.wrapper}
     >
