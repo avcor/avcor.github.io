@@ -151,6 +151,23 @@ Each tag's icon and color follow a strict lookup order, don't skip steps or gues
 
 Every tag on a given page must render in a visually distinct color, real brand hexes take priority and are never changed to make room for a fallback tint; pick a fallback hue that doesn't collide with the real ones already on that page. Never reuse a `--color-brand-*` value for an unrelated fallback tag, and never hardcode a hex directly in a component, always add the token to `theme.css` first per the Core Rule above.
 
+If two candidate tags would legitimately share the same icon and color (e.g. "Kotlin" and "Coroutines / Flow", both genuinely Kotlin-brand), don't list both as separate tags just because the copy mentions both concepts, they'd render as visual duplicates. Merge them into one tag (e.g. "Kotlin & Coroutines") instead of forcing an artificial distinct color onto something that is not actually a different brand.
+
+### How Tags Are Used
+
+Tags live in a page's `*Intro.tsx` component (e.g. `PaymentIntro.tsx`) as a local `tags: Tag[]` array of `{ icon: ReactNode, label: string }`, rendered inside `motion.div className={styles.tags}` as a row of `.tag` pills. Each icon is a `react-icons/si` or `lucide-react` component sized `13`, colored via an inline `color="var(--color-...)"` prop, never a hardcoded hex. This is the same pattern across every case study's Intro component, don't invent a new rendering approach per page.
+
+Tags are the recruiter-facing search surface for the whole site (see the note at the top of this section), so when writing a new case study's ownership/impact copy, always ask which competency tags apply before defaulting to a purely technical tag list.
+
+### Adding a New Tag
+
+1. Decide which kind it is: tool/library, domain/topic, or competency/soft-skill (see the three kinds above).
+2. Check it doesn't already exist as a token in `theme.css` (`--color-brand-*` or `--color-tag-*`) under a different name, reuse rather than duplicate.
+3. Run the icon/color lookup order above (real icon + real brand hex, or a `lucide-react` fallback + fallback tint) and confirm the icon name actually exists in the package before writing it, don't guess.
+4. Add the token to `theme.css` first, with a comment stating the source (for a brand hex) or "no official logo/brand color, recognition tint only" / "competency tag, recognition tint only" (for a fallback tint).
+5. Check it against every other tag already on that same page for a color collision (see the distinctness rule above); if it would collide or duplicate an existing tag's meaning, merge or pick a different fallback hue instead of adding it as-is.
+6. Add `{ icon: <Icon size={13} color="var(--color-...)" />, label: '...' }` to that page's `tags` array in its `*Intro.tsx` file.
+
 ---
 
 ## Responsive Design

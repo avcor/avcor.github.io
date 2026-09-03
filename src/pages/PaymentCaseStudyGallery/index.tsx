@@ -22,7 +22,7 @@ const ease = [0.16, 1, 0.3, 1] as const
 
 const SPY_ITEMS: SpySection[] = [
   { id: 'overview', label: 'Overview' },
-  { id: 'collaboration', label: 'One Screen, Three Teams' },
+  { id: 'collaboration', label: 'Team Alignment' },
   { id: 'payment-flow', label: 'Payment Flow' },
 ]
 
@@ -54,7 +54,7 @@ export default function PaymentCaseStudyGallery() {
     <section id="payment-experience" className={styles.page} ref={scrollRef}>
       <div className={styles.layout}>
         <aside className={styles.spyCol}>
-          <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} compact />
+          <SpyBar sections={SPY_ITEMS} activeId={scrollActive} onJump={onJump} />
         </aside>
 
         <div className={styles.sections}>
