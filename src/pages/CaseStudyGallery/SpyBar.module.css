@@ -12,7 +12,8 @@
   position: relative;
 }
 
-/* Connecting spine behind the markers. */
+/* Connecting spine behind the markers. Meaningless with a single node, so
+   it's suppressed via .single below. */
 .list::before {
   content: '';
   position: absolute;
@@ -21,6 +22,10 @@
   bottom: 14px;
   width: 1px;
   background: var(--color-white-a08);
+}
+
+.spy.single .list::before {
+  display: none;
 }
 
 .item {
@@ -80,6 +85,12 @@
     height: 100%;
     justify-content: space-between;
     gap: 0;
+  }
+
+  /* A lone node has nothing to distribute space-between, which collapses it
+     to the top instead of the middle of the band — center it directly. */
+  .spy.single .list {
+    justify-content: center;
   }
 
   .list::before {

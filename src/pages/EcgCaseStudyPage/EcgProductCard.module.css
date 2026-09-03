@@ -20,24 +20,26 @@
   overflow: hidden;
 }
 
-/* Holds all three screenshots so they composite as one layer before the mask
-   fades them. Masking the images individually would let the side images (which
-   sit behind the main one) show through the main image's faded bottom instead
-   of the page background. */
+/* Holds the single cover screenshot so it fades against the same gradient
+   used across the other product cards. */
 .imageGroup {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
   mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
 }
 
+/* One landscape screenshot (the ECG waveform capture), sized to width so it
+   fills the stage instead of the portrait height-based sizing used when
+   there were stacked phone frames. */
 .frame {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 133.33%;
-  width: auto;
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
   border: none;
   background: transparent;
   padding: 0;
@@ -53,38 +55,9 @@
 
 .frame img {
   display: block;
-  height: 100%;
-  width: auto;
-}
-
-/* The two remaining screenshots, tucked behind the main one — shorter, dimmed,
-   and offset outward so they just peek past its sides. Decorative only. */
-.frameSide {
-  --side-peek: 60%; /* how far each side image pokes out from behind the main */
-  position: absolute;
-  bottom: 0; /* base aligned with the main image's base */
-  height: 80%; /* smaller in height than the main frame */
-  width: auto;
-  z-index: 0;
-  pointer-events: none;
-  filter: brightness(0.5);
-  overflow: hidden; /* clip the zoomed image's overflowing bottom */
-}
-
-.frameSide img {
-  display: block;
-  height: 120%; /* zoomed in a little; the extra height is clipped at the bottom */
-  width: auto;
-}
-
-.frameLeft {
-  left: 50%;
-  transform: translateX(calc(-50% - var(--side-peek)));
-}
-
-.frameRight {
-  left: 50%;
-  transform: translateX(calc(-50% + var(--side-peek)));
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
 }
 
 .enlargeButton {

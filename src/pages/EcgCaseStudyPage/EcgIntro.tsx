@@ -38,16 +38,16 @@ export default function EcgIntro() {
         </motion.div>
 
         <motion.h1 {...fadeUp(0.15)} className={styles.heading}>
-          <span className={styles.headingLine}>A doctor takes an ECG and moves on,</span>
-          <span className={styles.headingLineAccent}>the record uploads on its own</span>
-          <span className={styles.headingLine}>and stays reviewable either way.</span>
+          <span className={styles.headingLine}>A doctor takes an ECG.</span>
+          <span className={styles.headingLineAccent}>The record uploads on its own.</span>
+          <span className={styles.headingLine}>It stays reviewable either way.</span>
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className={styles.description}>
-          A wired ECG device connects to the phone, captures the reading, and turns it
-          into a PDF the doctor can review immediately or later. Upload happens in the
-          background so it never blocks the doctor's flow, and the report stays
-          available locally if the network does not cooperate.
+          A wired ECG device connects to the phone and captures the reading.
+          It turns into a PDF the doctor can review now or later. Upload runs
+          in the background, so it never blocks the doctor's flow. The report
+          stays available locally even without network.
         </motion.p>
 
         <motion.div {...fadeUp(0.42)} className={styles.tags}>

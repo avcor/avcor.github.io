@@ -1,27 +1,30 @@
 import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Maximize2 } from 'lucide-react'
-import uploadQueueShot from '../../assets/screenshots/ecg-upload-queue.png'
 import homeShot from '../../assets/screenshots/ecg-home.png'
-import devicePairingShot from '../../assets/screenshots/ecg-device-pairing.png'
+import patientQrShot from '../../assets/screenshots/ecg-patient-qr.png'
+import patientFormShot from '../../assets/screenshots/ecg-patient-form.png'
 import liveCaptureShot from '../../assets/screenshots/ecg-live-capture.png'
+import recordsListShot from '../../assets/screenshots/ecg-records-list.png'
 import reportPreviewShot from '../../assets/screenshots/ecg-report-preview.png'
+import recordDetailShot from '../../assets/screenshots/ecg-record-detail.png'
 import ScreenshotLightbox from '../FlutterCaseStudyPage/ScreenshotLightbox'
 import styles from './EcgProductCard.module.css'
 
-/** First 3 are portrait and drive the frame + side-peeks (indices 0-2 are
- *  load-bearing for that layout). The rest are landscape, capture-mode
- *  screens that only ever appear once the lightbox carousel is open. */
+/** Ordered to match the user flow. The cover (defaultIndex) is the live
+ *  capture screen since it's the only one showing the ECG graph itself. */
 const screenshots = [
-  { src: uploadQueueShot, alt: 'ECG Records list, two recordings marked Upload pending, uploaded automatically once the network is back' },
   { src: homeShot, alt: 'Home screen, Take ECG and ECG Records entry points' },
-  { src: devicePairingShot, alt: 'Take ECG screen, QR pairing to the wired Dozee device or manual patient/device lookup' },
+  { src: patientQrShot, alt: 'Take ECG screen, QR pairing to the wired Dozee device' },
+  { src: patientFormShot, alt: 'Take ECG screen, manual patient details entry for a non-Dozee device' },
   { src: liveCaptureShot, alt: 'Live 12-lead ECG capture, waveforms streaming in from the wired Dozee device' },
-  { src: reportPreviewShot, alt: 'Generated ECG PDF report with patient details, diagnosis, and a share action' },
+  { src: recordsListShot, alt: 'ECG Records list, two recordings marked Upload pending, uploaded automatically once the network is back' },
+  { src: reportPreviewShot, alt: 'Generated ECG PDF report with patient details and a share action' },
+  { src: recordDetailShot, alt: 'ECG report detail view with diagnosis notes and a Done action' },
 ]
 
 const count = screenshots.length
-const defaultIndex = 0
+const defaultIndex = 3
 
 export default function EcgProductCard() {
   const [activeIndex, setActiveIndex] = useState(defaultIndex)
@@ -61,13 +64,6 @@ export default function EcgProductCard() {
     >
       <div className={styles.stage}>
         <div className={styles.imageGroup}>
-          <div className={`${styles.frameSide} ${styles.frameLeft}`} aria-hidden="true">
-            <img src={screenshots[1].src} alt="" draggable={false} />
-          </div>
-          <div className={`${styles.frameSide} ${styles.frameRight}`} aria-hidden="true">
-            <img src={screenshots[2].src} alt="" draggable={false} />
-          </div>
-
           <button
             type="button"
             className={styles.frame}
