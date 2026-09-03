@@ -138,6 +138,10 @@
   --color-tag-storage:        #A78BFA;   /* Storage: violet */
   --color-tag-coldstart:      #F87171;   /* Cold Start: coral */
   --color-tag-buildsize:      #F472B6;   /* Build Size: pink */
+  --color-tag-coroutines:     #FBBF24;   /* Coroutines: no separate Simple Icons mark from Kotlin, amber */
+  --color-tag-wiredconn:      #38BDF8;   /* USB / Wired Connection: no brand mark, sky blue */
+  --color-tag-offline:        #FB7185;   /* Offline-First: no brand mark, rose */
+  --color-tag-pdf:            #FB923C;   /* PDF Generation: no brand mark, orange */
 
   /* macOS window chrome — fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;
