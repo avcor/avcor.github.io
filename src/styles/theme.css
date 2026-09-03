@@ -142,6 +142,15 @@
   --color-tag-wiredconn:      #38BDF8;   /* USB / Wired Connection: no brand mark, sky blue */
   --color-tag-offline:        #FB7185;   /* Offline-First: no brand mark, rose */
   --color-tag-pdf:            #FB923C;   /* PDF Generation: no brand mark, orange */
+  --color-tag-concurrency:    #22D3EE;   /* Concurrency: cyan, domain tint */
+  --color-tag-caching:        #FBBF24;   /* Caching / API reduction: amber, domain tint */
+  --color-tag-mvvm:           #818CF8;   /* MVVM / StateFlow: indigo, domain tint */
+
+  /* Competency / soft-skill tags: recognition tints only, never a real
+     brand hex, since these describe a skill, not a tool. */
+  --color-tag-product-building: #FB7185; /* Product Building: rose, competency tint */
+  --color-tag-cross-team:       #38BDF8; /* Cross-team Communication: sky, competency tint */
+  --color-tag-ux-iteration:     #A3E635; /* UX Iteration: lime, competency tint */
 
   /* macOS window chrome — fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;

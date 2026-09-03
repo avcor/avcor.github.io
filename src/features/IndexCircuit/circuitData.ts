@@ -160,7 +160,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
   },
   {
     id: 'medical-chart-optimization',
-    label: 'Medical Chart Optimization',
+    label: 'Dozee Home',
     pillPath:
       'M113 386.5H217C220.59 386.5 223.5 389.41 223.5 393V404C223.5 407.59 220.59 410.5 217 410.5H113C109.41 410.5 106.5 407.59 106.5 404V393C106.5 389.41 109.41 386.5 113 386.5Z',
     text: { x: 165, y: 398.5 },

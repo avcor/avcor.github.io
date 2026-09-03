@@ -1,0 +1,127 @@
+.wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  --fade-solid: 78%;
+  --fade-end: 100%;
+}
+
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imageGroup {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 133.33%;
+  width: auto;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.frame:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 6px;
+}
+
+.frame img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+.frameSide {
+  --side-peek: 60%;
+  position: absolute;
+  bottom: 0;
+  height: 80%;
+  width: auto;
+  z-index: 0;
+  pointer-events: none;
+  filter: brightness(0.5);
+  overflow: hidden;
+}
+
+.frameSide img {
+  display: block;
+  height: 120%;
+  width: auto;
+}
+
+.frameLeft {
+  left: 50%;
+  transform: translateX(calc(-50% - var(--side-peek)));
+}
+
+.frameRight {
+  left: 50%;
+  transform: translateX(calc(-50% + var(--side-peek)));
+}
+
+.enlargeButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--color-white-a04);
+  border: 1px solid var(--color-white-a08);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  color: var(--color-text-primary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.enlargeButton svg {
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.enlargeButton:hover {
+  background: var(--color-white-a07);
+  border-color: var(--color-white-a15);
+}
+
+.enlargeButton:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .wrapper {
+    height: 320px;
+  }
+
+  .enlargeButton {
+    right: 12px;
+    bottom: 12px;
+  }
+}
