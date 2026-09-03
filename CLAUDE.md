@@ -131,16 +131,42 @@ src/styles/palettes/
 └── palette-deep-purple.css
 ```
 
-### Tech-Stack Tag Icons
+### Case Study Tags
 
-Case study pages show tool/topic tags (e.g. the intro tag row). Each tag's icon and color follow a strict lookup order, don't skip steps or guess:
+Case study pages show a tag row in the intro. Tags are not only tech. They are the primary way a recruiter searches and filters this portfolio, so a case study should carry the mix that actually describes the work: tools used, but also the competencies and soft skills demonstrated (requirements gathering, stakeholder alignment, product thinking, cross-team communication). A payment screen built after aligning three teams is as much a "Stakeholder Alignment" case study as a "Kotlin" one, tag it both ways.
 
-1. **Real icon exists?** Use `react-icons/si` (Simple Icons). Verify the icon name actually exists in that package before using it, don't invent one.
-2. **Real brand color?** Look up the tool's actual hex from Simple Icons' own dataset (or another authoritative brand source), not from memory or a plausible-looking guess. Store it in `theme.css` under `--color-brand-*` with a comment naming the source/reasoning (e.g. "Google Play triangle, blue segment").
+Pick tags from three kinds, and don't force every case study to be tech-heavy:
+
+- **Tool / library tags** (Kotlin, ML Kit, Retrofit): a named technology.
+- **Domain / topic tags** (Storage, Cold Start, Concurrency, Caching): what was worked on, no brand identity.
+- **Competency / soft-skill tags** (Requirements Gathering, Stakeholder Alignment, Product Thinking, UX Iteration, Cross-team Communication, Scope Definition): the human skill the work demonstrates. Use plain recruiter-facing phrasing a person would actually search, not internal jargon.
+
+Each tag's icon and color follow a strict lookup order, don't skip steps or guess:
+
+1. **Real icon exists?** (tool tags only) Use `react-icons/si` (Simple Icons). Verify the icon name actually exists in that package before using it, don't invent one.
+2. **Real brand color?** (tool tags only) Look up the tool's actual hex from Simple Icons' own dataset (or another authoritative brand source), not from memory or a plausible-looking guess. Store it in `theme.css` under `--color-brand-*` with a comment naming the source/reasoning (e.g. "Google Play triangle, blue segment").
 3. **No official icon/brand color exists** (e.g. OkHttp, ExoPlayer — libraries with no public logo): fall back to a neutral `lucide-react` icon, and give it its own tint stored in `theme.css` under `--color-tag-*`, clearly commented as "no official logo/brand color, recognition tint only" so it's never mistaken for a real brand color later.
-4. **Domain/topic tags** (e.g. Storage, Cold Start, Build Size — not tools, describe what was fixed) always use a `--color-tag-*` fallback tint the same way, since they have no brand identity by definition.
+4. **Domain / topic tags** (e.g. Storage, Cold Start, Build Size — not tools, describe what was fixed) always use a `--color-tag-*` fallback tint the same way, since they have no brand identity by definition.
+5. **Competency / soft-skill tags** (e.g. Stakeholder Alignment, Product Thinking) follow the same fallback path as domain tags: a neutral `lucide-react` icon (e.g. `Users`, `Compass`, `MessageSquare`, `Target`) plus a `--color-tag-*` tint, commented as "competency tag, recognition tint only". Never give a soft skill a `--color-brand-*` value, it is not a brand.
 
 Every tag on a given page must render in a visually distinct color, real brand hexes take priority and are never changed to make room for a fallback tint; pick a fallback hue that doesn't collide with the real ones already on that page. Never reuse a `--color-brand-*` value for an unrelated fallback tag, and never hardcode a hex directly in a component, always add the token to `theme.css` first per the Core Rule above.
+
+If two candidate tags would legitimately share the same icon and color (e.g. "Kotlin" and "Coroutines / Flow", both genuinely Kotlin-brand), don't list both as separate tags just because the copy mentions both concepts, they'd render as visual duplicates. Merge them into one tag (e.g. "Kotlin & Coroutines") instead of forcing an artificial distinct color onto something that is not actually a different brand.
+
+### How Tags Are Used
+
+Tags live in a page's `*Intro.tsx` component (e.g. `PaymentIntro.tsx`) as a local `tags: Tag[]` array of `{ icon: ReactNode, label: string }`, rendered inside `motion.div className={styles.tags}` as a row of `.tag` pills. Each icon is a `react-icons/si` or `lucide-react` component sized `13`, colored via an inline `color="var(--color-...)"` prop, never a hardcoded hex. This is the same pattern across every case study's Intro component, don't invent a new rendering approach per page.
+
+Tags are the recruiter-facing search surface for the whole site (see the note at the top of this section), so when writing a new case study's ownership/impact copy, always ask which competency tags apply before defaulting to a purely technical tag list.
+
+### Adding a New Tag
+
+1. Decide which kind it is: tool/library, domain/topic, or competency/soft-skill (see the three kinds above).
+2. Check it doesn't already exist as a token in `theme.css` (`--color-brand-*` or `--color-tag-*`) under a different name, reuse rather than duplicate.
+3. Run the icon/color lookup order above (real icon + real brand hex, or a `lucide-react` fallback + fallback tint) and confirm the icon name actually exists in the package before writing it, don't guess.
+4. Add the token to `theme.css` first, with a comment stating the source (for a brand hex) or "no official logo/brand color, recognition tint only" / "competency tag, recognition tint only" (for a fallback tint).
+5. Check it against every other tag already on that same page for a color collision (see the distinctness rule above); if it would collide or duplicate an existing tag's meaning, merge or pick a different fallback hue instead of adding it as-is.
+6. Add `{ icon: <Icon size={13} color="var(--color-...)" />, label: '...' }` to that page's `tags` array in its `*Intro.tsx` file.
 
 ---
 
