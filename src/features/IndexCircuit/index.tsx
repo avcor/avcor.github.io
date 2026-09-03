@@ -22,6 +22,7 @@ const OPENABLE_CASE_STUDY_IDS = new Set([
   'ml-kit-liveness',
   'app-security',
   'android-optimization',
+  'ecg-background-sync',
   'medical-chart-optimization',
   'payment-experience',
 ])

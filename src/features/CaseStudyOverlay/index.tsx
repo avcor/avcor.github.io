@@ -6,6 +6,7 @@ import LoggingCaseStudyGallery from '../../pages/LoggingCaseStudyGallery'
 import AttendanceCaseStudyGallery from '../../pages/AttendanceCaseStudyGallery'
 import SecurityCaseStudyGallery from '../../pages/SecurityCaseStudyGallery'
 import PlatformOptimizationCaseStudyGallery from '../../pages/PlatformOptimizationCaseStudyGallery'
+import EcgCaseStudyGallery from '../../pages/EcgCaseStudyGallery'
 import DozeeCaseStudyGallery from '../../pages/DozeeCaseStudyGallery'
 import PaymentCaseStudyGallery from '../../pages/PaymentCaseStudyGallery'
 import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
@@ -20,6 +21,7 @@ const GALLERIES: Record<string, ComponentType> = {
   'ml-kit-liveness': AttendanceCaseStudyGallery,
   'app-security': SecurityCaseStudyGallery,
   'android-optimization': PlatformOptimizationCaseStudyGallery,
+  'ecg-background-sync': EcgCaseStudyGallery,
   'medical-chart-optimization': DozeeCaseStudyGallery,
   'payment-experience': PaymentCaseStudyGallery,
 }

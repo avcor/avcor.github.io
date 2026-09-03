@@ -17,7 +17,7 @@ interface SpyBarProps {
 export default function SpyBar({ sections, activeId, onJump, compact = false }: SpyBarProps) {
   return (
     <nav
-      className={`${styles.spy} ${compact ? styles.compact : ''}`}
+      className={`${styles.spy} ${compact ? styles.compact : ''} ${sections.length === 1 ? styles.single : ''}`}
       aria-label="Case study sections"
     >
       <ol className={styles.list}>
