@@ -27,8 +27,8 @@
 .imageGroup {
   position: absolute;
   inset: 0;
-  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
-  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  -webkit-mask-image: linear-gradient(to bottom, var(--color-bg-card) var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, var(--color-bg-card) var(--fade-solid), transparent var(--fade-end));
 }
 
 .frame {
@@ -57,7 +57,7 @@
   width: auto;
 }
 
-/* The two remaining screenshots, tucked behind the main one — shorter, dimmed,
+/* The two remaining screenshots, tucked behind the main one, shorter, dimmed,
    and offset outward so they just peek past its sides. Decorative only. */
 .frameSide {
   --side-peek: 60%; /* how far each side image pokes out from behind the main */

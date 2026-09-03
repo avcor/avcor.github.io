@@ -1,4 +1,3 @@
-import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import PaymentCaseStudyPage from '../PaymentCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
@@ -14,7 +13,8 @@ import {
   FLOW_MAP_TITLE,
   FLOW_MAP_VIEWBOX,
 } from '../PaymentArchitecturePage/lifecycleMapData'
-import { useScrollSpy } from '../../hooks/useScrollSpy'
+import { useGalleryScroll } from '../../hooks/useGalleryScroll'
+import { usePanelSelection } from '../../hooks/usePanelSelection'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -29,26 +29,17 @@ const SPY_ITEMS: SpySection[] = [
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function PaymentCaseStudyGallery() {
-  const scrollRef = useRef<HTMLElement>(null)
-  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
-  const [selectedCollab, setSelectedCollab] = useState('requirements-alignment')
-  const [selectedFlow, setSelectedFlow] = useState('order-and-gateway')
-
-  const onJump = (id: string) => {
-    const container = scrollRef.current
-    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
-    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
-  }
-
-  const selectedCollabPanel = useMemo(
-    () => COLLABORATION_PANELS.find((p) => p.id === selectedCollab) ?? COLLABORATION_PANELS[0],
-    [selectedCollab],
-  )
-
-  const selectedFlowPanel = useMemo(
-    () => PAYMENT_FLOW_PANELS.find((p) => p.id === selectedFlow) ?? PAYMENT_FLOW_PANELS[0],
-    [selectedFlow],
-  )
+  const { scrollRef, activeId: scrollActive, onJump } = useGalleryScroll(SCROLL_IDS)
+  const {
+    selected: selectedCollab,
+    setSelected: setSelectedCollab,
+    selectedPanel: selectedCollabPanel,
+  } = usePanelSelection(COLLABORATION_PANELS, 'requirements-alignment')
+  const {
+    selected: selectedFlow,
+    setSelected: setSelectedFlow,
+    selectedPanel: selectedFlowPanel,
+  } = usePanelSelection(PAYMENT_FLOW_PANELS, 'order-and-gateway')
 
   return (
     <section id="payment-experience" className={styles.page} ref={scrollRef}>

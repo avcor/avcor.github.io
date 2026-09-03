@@ -20,7 +20,7 @@
   cursor: default;
 }
 
-/* macOS-style window frame for the enlarged view — same chrome grammar as
+/* macOS-style window frame for the enlarged view, same chrome grammar as
    LoggingProductCard's title bar, scaled up for the lightbox. Width is NOT
    capped here: the frame shrink-wraps to whatever width .windowImage
    actually renders at (capped on the image itself below), so the title bar

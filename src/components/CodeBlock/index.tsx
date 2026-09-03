@@ -6,7 +6,7 @@ interface CodeBlockProps {
 }
 
 /**
- * Restrained, near-monochrome code display. No external highlighter — the only
+ * Restrained, near-monochrome code display. No external highlighter, the only
  * distinction drawn is comments (dimmed) vs. code (default), which reads calmer
  * than rainbow syntax and matches the site's minimal grammar. Self-contained.
  */

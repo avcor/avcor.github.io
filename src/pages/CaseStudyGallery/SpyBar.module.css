@@ -66,7 +66,7 @@
    pushing the rail wide. */
 @media (min-width: 901px) {
   /* Stretches to a viewport-relative band and lets the items distribute
-     across it (space-between) instead of a fixed px gap — so the spacing
+     across it (space-between) instead of a fixed px gap, so the spacing
      itself grows or shrinks with the available height rather than being a
      magic number tuned for one screen size. */
   .spy {
@@ -100,7 +100,7 @@
     bottom: 6px;
   }
 
-  /* Natural height — sized to each item's own marker + label, not a
+  /* Natural height, sized to each item's own marker + label, not a
      shared fixed box, so a short label (e.g. "Overview") doesn't leave
      dead space behind it before the next node. */
   .item {

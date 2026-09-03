@@ -60,7 +60,7 @@ export interface DeepDivePanel {
   watermark: string
   /** The proof artifact. Omitted for panels that instead set `guide`. */
   proof?: Proof
-  /** Shown in place of a proof — orients the reader to the map itself. */
+  /** Shown in place of a proof, orients the reader to the map itself. */
   guide?: string
   /** Tools that would surface this flaw (profilers, vitals dashboards, etc). */
   tags?: { icon: ReactNode; label: string }[]

@@ -1,11 +1,11 @@
-import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import AttendanceCaseStudyPage from '../AttendanceCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
 import { DEEP_DIVE_PANELS } from '../AttendanceArchitecturePage/deepDiveData'
 import { MAP_CONNECTORS, MAP_NODES, MAP_TITLE, MAP_VIEWBOX } from '../AttendanceArchitecturePage/lifecycleMapData'
-import { useScrollSpy } from '../../hooks/useScrollSpy'
+import { useGalleryScroll } from '../../hooks/useGalleryScroll'
+import { usePanelSelection } from '../../hooks/usePanelSelection'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -17,20 +17,8 @@ const SPY_ITEMS: SpySection[] = [
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function AttendanceCaseStudyGallery() {
-  const scrollRef = useRef<HTMLElement>(null)
-  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
-  const [selected, setSelected] = useState('geofence-validation')
-
-  const onJump = (id: string) => {
-    const container = scrollRef.current
-    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
-    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
-  }
-
-  const selectedPanel = useMemo(
-    () => DEEP_DIVE_PANELS.find((p) => p.id === selected) ?? DEEP_DIVE_PANELS[0],
-    [selected],
-  )
+  const { scrollRef, activeId: scrollActive, onJump } = useGalleryScroll(SCROLL_IDS)
+  const { selected, setSelected, selectedPanel } = usePanelSelection(DEEP_DIVE_PANELS, 'geofence-validation')
 
   return (
     <section id="ml-kit-liveness" className={styles.page} ref={scrollRef}>

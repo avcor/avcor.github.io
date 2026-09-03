@@ -31,7 +31,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = 'var(--color
 
   return (
     <div className={styles.container} style={{ width: size, height: size }}>
-      {/* SVG layer — rings, glow, glass background */}
+      {/* SVG layer, rings, glow, glass background */}
       <svg
         width={size}
         height={size}
@@ -85,7 +85,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = 'var(--color
         {/* Dark glass fill */}
         <circle cx={C} cy={C} r={outerR} className={styles.glassFill} fillOpacity="0.93" />
 
-        {/* Outer ring — gradient stroke + glow */}
+        {/* Outer ring, gradient stroke + glow */}
         <circle
           cx={C} cy={C} r={outerR}
           stroke={`url(#${ids.ringGrad})`}
@@ -93,7 +93,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = 'var(--color
           filter={`url(#${ids.ringGlow})`}
         />
 
-        {/* Inner ring — thinner, very low opacity */}
+        {/* Inner ring, thinner, very low opacity */}
         <circle
           cx={C} cy={C} r={innerR}
           stroke={color}
@@ -110,7 +110,7 @@ export default function GlassBadge({ icon: Icon, size = 52, color = 'var(--color
         />
       </svg>
 
-      {/* Lucide icon — centred on top of the SVG layer */}
+      {/* Lucide icon, centred on top of the SVG layer */}
       <div className={styles.iconLayer}>
         <Icon
           size={Math.round(size * 0.38)}

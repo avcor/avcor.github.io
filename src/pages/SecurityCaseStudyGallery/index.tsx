@@ -1,4 +1,3 @@
-import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import SecurityCaseStudyPage from '../SecurityCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
@@ -17,7 +16,8 @@ import {
   MAP_TITLE as RUNTIME_MAP_TITLE,
   MAP_VIEWBOX as RUNTIME_MAP_VIEWBOX,
 } from '../SecurityRuntimePage/lifecycleMapData'
-import { useScrollSpy } from '../../hooks/useScrollSpy'
+import { useGalleryScroll } from '../../hooks/useGalleryScroll'
+import { usePanelSelection } from '../../hooks/usePanelSelection'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -30,26 +30,13 @@ const SPY_ITEMS: SpySection[] = [
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function SecurityCaseStudyGallery() {
-  const scrollRef = useRef<HTMLElement>(null)
-  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
-  const [selected, setSelected] = useState('obfuscated-cert-pinning')
-  const [selectedRuntime, setSelectedRuntime] = useState('root-hook-detection')
-
-  const onJump = (id: string) => {
-    const container = scrollRef.current
-    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
-    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
-  }
-
-  const selectedPanel = useMemo(
-    () => DEEP_DIVE_PANELS.find((p) => p.id === selected) ?? DEEP_DIVE_PANELS[0],
-    [selected],
-  )
-
-  const selectedRuntimePanel = useMemo(
-    () => RUNTIME_DEEP_DIVE_PANELS.find((p) => p.id === selectedRuntime) ?? RUNTIME_DEEP_DIVE_PANELS[0],
-    [selectedRuntime],
-  )
+  const { scrollRef, activeId: scrollActive, onJump } = useGalleryScroll(SCROLL_IDS)
+  const { selected, setSelected, selectedPanel } = usePanelSelection(DEEP_DIVE_PANELS, 'obfuscated-cert-pinning')
+  const {
+    selected: selectedRuntime,
+    setSelected: setSelectedRuntime,
+    selectedPanel: selectedRuntimePanel,
+  } = usePanelSelection(RUNTIME_DEEP_DIVE_PANELS, 'root-hook-detection')
 
   return (
     <section id="app-security-platform" className={styles.page} ref={scrollRef}>

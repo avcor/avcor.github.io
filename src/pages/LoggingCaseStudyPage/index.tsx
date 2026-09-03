@@ -6,7 +6,7 @@ import LoggingImpactBar from './LoggingImpactBar'
 import styles from './LoggingCaseStudyPage.module.css'
 
 /** Overview: kept lean (ownership + impact + product image), no room for the
- *  production-investigation stories — those get their own section so this
+ *  production-investigation stories, those get their own section so this
  *  screen stays about what was owned and the impact made. */
 export default function LoggingCaseStudyPage() {
   return (

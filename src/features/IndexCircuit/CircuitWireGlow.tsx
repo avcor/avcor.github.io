@@ -4,13 +4,13 @@ import styles from './IndexCircuit.module.css'
 interface CircuitWireGlowProps {
   /** Wire path data, verbatim from the blueprint */
   d: string
-  /** 'idle' (thin flat line, always on) or 'active' (green, full glow —
+  /** 'idle' (thin flat line, always on) or 'active' (green, full glow,
    *  only while on the hovered route). */
   tone: 'idle' | 'active'
 }
 
 /** Symmetric brightness bands centered on the path's own midpoint, in
- *  viewBox units (narrowest/brightest first) — layering them creates a
+ *  viewBox units (narrowest/brightest first), layering them creates a
  *  hotspot that smoothly fades toward both ends instead of a hard edge. */
 const HOTSPOT_HALF_WIDTHS = [14, 38, 76] as const
 const ACTIVE_BANDS = ['activeHotspotInner', 'activeHotspotMid', 'activeHotspotOuter'] as const
@@ -26,7 +26,7 @@ function centeredBandDash(pathLength: number, halfWidth: number) {
 
 /**
  * A circuit wire's glow. In its dormant `idle` tone it's just a thin flat
- * core line — no bloom, no hotspot — kept minimal until hovered. In its
+ * core line, no bloom, no hotspot, kept minimal until hovered. In its
  * `active` (green) tone, hover adds the full treatment: a soft blurred
  * halo plus a hotspot brightest at the path's own midpoint, gradually
  * dimming toward both ends. No shapes, no motion.

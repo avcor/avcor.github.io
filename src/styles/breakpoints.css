@@ -1,5 +1,5 @@
 /* src/styles/breakpoints.css
-   Define all breakpoints here — never scatter magic numbers across components. */
+   Define all breakpoints here, never scatter magic numbers across components. */
 
 :root {
   --bp-sm:  640px;   /* Large phones, landscape */

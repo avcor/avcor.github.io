@@ -36,7 +36,7 @@ function MiniWindow({ src, alt }: { src: string; alt: string }) {
  * edge into the page, the front frame is top-anchored (with its mac-window
  * chrome), and the two back frames are bare images, bottom-anchored and
  * dimmed, peeking out from either side via a pure horizontal offset (no
- * rotation, no window chrome — same as Flutter's plain .frameSide).
+ * rotation, no window chrome, same as Flutter's plain .frameSide).
  */
 export default function LoggingProductCard() {
   const [activeIndex, setActiveIndex] = useState(defaultIndex)

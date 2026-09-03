@@ -19,8 +19,8 @@ const DEFAULT_TRANSFORM: Transform = { scale: 1, x: 0, y: 0 }
  * Pan/zoom for a fixed-size canvas (button-driven zoom, drag to pan),
  * clamped so the content can never be zoomed or panned fully out of view:
  * at scale 1 panning is locked (nothing to pan yet), and the max pan
- * distance grows only as fast as the content grows past the container edge
- * — so some part of it is always on screen. Zoom always anchors on the
+ * distance grows only as fast as the content grows past the container edge,
+ * so some part of it is always on screen. Zoom always anchors on the
  * container's own centre rather than the cursor, which keeps repeated
  * zooming from drifting the content toward an edge.
  *
@@ -85,7 +85,7 @@ export function usePanZoom({ minScale = 1, maxScale = 2.5, zoomStep = 1.3 }: Pan
       const dx = e.clientX - s.startX
       const dy = e.clientY - s.startY
 
-      // Below the threshold this is still a plain click — don't capture the
+      // Below the threshold this is still a plain click, don't capture the
       // pointer or move anything, so a node's own onClick fires normally.
       if (!s.dragging) {
         if (Math.abs(dx) < 4 && Math.abs(dy) < 4) return

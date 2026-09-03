@@ -11,7 +11,7 @@ interface ScreenshotLightboxProps {
   onPrev?: () => void
   onNext?: () => void
   /** Wraps the enlarged image in a macOS-style window frame (title bar +
-   *  traffic lights) — for screenshots of an actual desktop app window,
+   *  traffic lights), for screenshots of an actual desktop app window,
    *  rather than a mobile app screen. */
   windowChrome?: boolean
 }

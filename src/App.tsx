@@ -13,7 +13,7 @@ export default function App() {
       <ImpactPage />
       <IndexPage />
 
-      {/* Case study details are no longer a scroll section — they slide up as a
+      {/* Case study details are no longer a scroll section, they slide up as a
           sheet when a leaf node is selected on the index circuit. */}
       <CaseStudyOverlay />
     </CaseStudyOverlayProvider>

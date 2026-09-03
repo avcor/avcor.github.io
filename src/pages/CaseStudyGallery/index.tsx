@@ -1,4 +1,3 @@
-import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import FlutterCaseStudyPage from '../FlutterCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
@@ -17,7 +16,8 @@ import {
   MAP_TITLE as CICD_MAP_TITLE,
   MAP_VIEWBOX as CICD_MAP_VIEWBOX,
 } from '../CiCdArchitecturePage/pipelineMapData'
-import { useScrollSpy } from '../../hooks/useScrollSpy'
+import { useGalleryScroll } from '../../hooks/useGalleryScroll'
+import { usePanelSelection } from '../../hooks/usePanelSelection'
 import SpyBar, { type SpySection } from './SpyBar'
 import styles from './CaseStudyGallery.module.css'
 
@@ -31,26 +31,13 @@ const SPY_ITEMS: SpySection[] = [
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function CaseStudyGallery() {
-  const scrollRef = useRef<HTMLElement>(null)
-  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
-  const [selected, setSelected] = useState('seam')
-  const [selectedCiCd, setSelectedCiCd] = useState('scaffold-regen')
-
-  const onJump = (id: string) => {
-    const container = scrollRef.current
-    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
-    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
-  }
-
-  const selectedPanel = useMemo(
-    () => DEEP_DIVE_PANELS.find((p) => p.id === selected) ?? DEEP_DIVE_PANELS[0],
-    [selected],
-  )
-
-  const selectedCiCdPanel = useMemo(
-    () => CICD_DEEP_DIVE_PANELS.find((p) => p.id === selectedCiCd) ?? CICD_DEEP_DIVE_PANELS[0],
-    [selectedCiCd],
-  )
+  const { scrollRef, activeId: scrollActive, onJump } = useGalleryScroll(SCROLL_IDS)
+  const { selected, setSelected, selectedPanel } = usePanelSelection(DEEP_DIVE_PANELS, 'seam')
+  const {
+    selected: selectedCiCd,
+    setSelected: setSelectedCiCd,
+    selectedPanel: selectedCiCdPanel,
+  } = usePanelSelection(CICD_DEEP_DIVE_PANELS, 'scaffold-regen')
 
   return (
     <section id="flutter-platform" className={styles.page} ref={scrollRef}>

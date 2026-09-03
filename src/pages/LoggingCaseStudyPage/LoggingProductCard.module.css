@@ -4,7 +4,7 @@
   /* Bottom-edge blend: fade region for the mask on .imageGroup, matching the
      Flutter case study's screenshot treatment exactly. Percentages are of
      the whole stage's height (0% = top, 100% = visible bottom), not any one
-     card's — so the fade is one continuous gradient across the full group. */
+     card's, so the fade is one continuous gradient across the full group. */
   --fade-solid: 78%;
   --fade-end: 100%;
 }
@@ -16,7 +16,7 @@
   overflow: hidden;
 }
 
-/* Fills the whole stage and carries the mask — every card inside fades
+/* Fills the whole stage and carries the mask, every card inside fades
    together against the same gradient, exactly like Flutter's imageGroup.
    Small top inset so the front card doesn't sit flush against the very top
    edge of the component. */
@@ -26,8 +26,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
-  mask-image: linear-gradient(to bottom, #000 var(--fade-solid), transparent var(--fade-end));
+  -webkit-mask-image: linear-gradient(to bottom, var(--color-bg-card) var(--fade-solid), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, var(--color-bg-card) var(--fade-solid), transparent var(--fade-end));
 }
 
 .card {
@@ -39,8 +39,8 @@
 
 /* Front frame: top-anchored like Flutter's .frame, crisp and interactive.
    Oversized (like Flutter's height:133%) so it genuinely fills the stage
-   top-to-bottom and bleeds past the bottom edge — clipped by .stage's
-   overflow:hidden — instead of stopping short and leaving a gap beneath it. */
+   top-to-bottom and bleeds past the bottom edge, clipped by .stage's
+   overflow:hidden, instead of stopping short and leaving a gap beneath it. */
 .cardFront {
   top: 4%;
   transform: translateX(-50%);
@@ -70,7 +70,7 @@
 }
 
 /* Back frames: bottom-anchored like Flutter's .frameSide, dimmed, peeking
-   out from behind via a pure horizontal offset — no rotation. */
+   out from behind via a pure horizontal offset, no rotation. */
 .cardBackLeft,
 .cardBackRight {
   --side-peek: 34%;
@@ -89,7 +89,7 @@
   transform: translateX(calc(-50% + var(--side-peek)));
 }
 
-/* Bare screenshot for the two peeking cards — no window chrome, matching
+/* Bare screenshot for the two peeking cards, no window chrome, matching
    Flutter's plain .frameSide (only the front card wears the mac-window). */
 .backImage {
   display: block;

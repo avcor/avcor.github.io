@@ -4,9 +4,9 @@ import styles from './IndexCircuit.module.css'
 interface CircuitWirePulseProps {
   /** Concatenated path data for the full route the pulse should travel (leaf → domain → center) */
   d: string
-  /** Unique key identifying the currently hovered target — changing it restarts the pulse cleanly */
+  /** Unique key identifying the currently hovered target, changing it restarts the pulse cleanly */
   pulseKey: string
-  /** Travel the path end → start instead — used when current should flow
+  /** Travel the path end → start instead, used when current should flow
    *  outward from the center chip rather than inward toward it */
   reverse?: boolean
 }
@@ -39,7 +39,7 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
 /**
  * Renders a single traveling electrical pulse along an SVG path: a bright
  * head orb with an 8–12px Gaussian-blurred bloom. The wire's own stroke
- * color never changes — this layer is the entire hover effect. Position is
+ * color never changes, this layer is the entire hover effect. Position is
  * driven by rAF + getPointAtLength (eased, not linear) so the motion surges
  * and settles like current through a PCB trace, not a dot crawling at
  * constant speed.
@@ -97,7 +97,7 @@ export default function CircuitWirePulse({ d, pulseKey, reverse = false }: Circu
 
       <path ref={measureRef} d={d} fill="none" stroke="none" />
 
-      {/* Head — blurred bloom halo behind a small sharp core, exact position via getPointAtLength */}
+      {/* Head, blurred bloom halo behind a small sharp core, exact position via getPointAtLength */}
       <g ref={headGroupRef}>
         <circle r={3.2} className={styles.pulseHead} style={{ filter: `url(#${blurHead})` }} />
         <circle r={1.1} className={styles.pulseHeadCore} />

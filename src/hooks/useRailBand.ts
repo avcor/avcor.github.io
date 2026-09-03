@@ -10,8 +10,8 @@ interface RailBand {
 }
 
 /**
- * Measures the left rail band — the distance from the container's left edge to
- * the rail's right edge (its content-driven width plus outer margin) — so the
+ * Measures the left rail band, the distance from the container's left edge to
+ * the rail's right edge (its content-driven width plus outer margin), so the
  * same amount of space can be mirrored on the right, centering the slide content
  * on the page without hard-coding the rail width. Returns '0px' when the rail is
  * hidden (below the desktop breakpoint) so the mirror collapses automatically.

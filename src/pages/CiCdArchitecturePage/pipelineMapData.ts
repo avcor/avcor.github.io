@@ -36,26 +36,26 @@ export const MAP_NODES: MapNode[] = [
 ]
 
 export const MAP_CONNECTORS: MapConnector[] = [
-  // ── Forward spine — straight down the centre (x=220) ──
+  // ── Forward spine, straight down the centre (x=220) ──
   { id: 'regen-boundary', d: 'M220 84 V120', endMarker: 'dot' },
   { id: 'ndk-variant', d: 'M220 326 V362', endMarker: 'dot' },
   { id: 'variant-symbol', d: 'M220 406 V442', endMarker: 'dot' },
 
-  // ── Boundary's fan-out — diagonals from distinct points on boundary's
+  // ── Boundary's fan-out, diagonals from distinct points on boundary's
   //    bottom edge, so they diverge instead of crossing ──
   { id: 'boundary-ci', d: 'M195 164 L110 204' },
   { id: 'boundary-local', d: 'M245 164 L365 204' },
 
   // ── Reconverge onto ndk's top edge from two more diagonals. Labels sit
   //    under each node's own centre (CI's / Local's), pushed out to that
-  //    side rather than crowding the shared funnel between the diagonals —
+  //    side rather than crowding the shared funnel between the diagonals,
   //    same idea as the loop-back's "next release" sitting in its own lane,
   //    but pulled in just enough to stay inside the canvas (unlike a true
   //    edge position, which clips against the sheet at this label length) ──
   { id: 'ci-ndk', d: 'M116 246 L195 282', label: 'no Flutter checkout', labelX: 150, labelY: 264 },
   { id: 'local-ndk', d: 'M358 246 L245 282', label: 'hot reload', labelX: 300, labelY: 264 },
 
-  // ── Loop-back — routed outside the cluster in its own channel, closing
+  // ── Loop-back, routed outside the cluster in its own channel, closing
   //    the release cycle back at scaffold regen ──
   { id: 'symbol-regen', d: 'M150 464 H24 Q16 464 16 456 V56 Q16 48 24 48 H160', label: 'next release', labelX: 16, labelY: 260 },
 ]

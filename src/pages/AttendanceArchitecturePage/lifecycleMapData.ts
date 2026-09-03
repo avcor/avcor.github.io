@@ -29,7 +29,7 @@ export const MAP_CONNECTORS: MapConnector[] = [
   { id: 'location-gate-capture', d: 'M110 90 L170 154', endMarker: 'dot' },
   { id: 'network-gate-capture', d: 'M390 90 L330 154', endMarker: 'dot' },
 
-  // ── Forward spine — straight down the centre (x=250) ──
+  // ── Forward spine, straight down the centre (x=250) ──
   { id: 'capture-liveness', d: 'M250 200 V254', endMarker: 'dot' },
   { id: 'liveness-identity', d: 'M250 300 V354', endMarker: 'dot' },
   { id: 'identity-upload', d: 'M250 400 V434', endMarker: 'dot' },

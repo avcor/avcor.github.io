@@ -34,7 +34,7 @@ const headlineSecondary = [
 export default function Home() {
   return (
     <main id="hero-section" className={styles.page}>
-      {/* ── Particle canvas — full viewport, behind content ── */}
+      {/* ── Particle canvas, full viewport, behind content ── */}
       <HeroCanvas />
 
       {/* ── Content layer ── */}

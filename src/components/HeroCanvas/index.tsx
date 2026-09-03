@@ -15,9 +15,17 @@ export default function HeroCanvas() {
 
     const ctx = canvas.getContext('2d')!
 
-    // Off-screen canvas — used for soft-edge name reveal compositing
+    // Off-screen canvas: used for soft-edge name reveal compositing
     const revealCanvas = document.createElement('canvas')
     const rCtx = revealCanvas.getContext('2d')!
+
+    // Pull the base fill color from the theme token so a palette swap
+    // reaches the canvas. `white` is a 6-digit hex from --color-white;
+    // append a 2-digit alpha to get a canvas-ready 8-digit hex.
+    const white = getComputedStyle(document.documentElement)
+      .getPropertyValue('--color-white').trim()
+    const withAlpha = (a: number) =>
+      white + Math.round(a * 255).toString(16).padStart(2, '0')
 
     // Layout vars (recomputed on resize)
     let fontSize = 0, lineH = 0, textX = 0, textY = 0, font = ''
@@ -55,44 +63,44 @@ export default function HeroCanvas() {
 
       const hasMouse = smooth.x > -100
 
-      // ── Layer 1: ghost name — always present at ~4% ──────────────────────
+      // ── Layer 1: ghost name, always present at ~4% ───────────────────────
       ctx.save()
       ctx.globalAlpha = 0.022
-      ctx.fillStyle   = '#ffffff'
+      ctx.fillStyle   = white
       ctx.textAlign   = 'right'
       ctx.font        = font
       ctx.fillText('ABHISHEK', textX, textY)
       ctx.fillText('VERMA',    textX, textY + lineH)
       ctx.restore()
 
-      // ── Layer 2: cursor-reveal — name brightens under the CSS glow ──────
+      // ── Layer 2: cursor-reveal, name brightens under the CSS glow ───────
       //    Technique: draw a soft radial gradient as a luminance mask on the
       //    off-screen canvas, then composite the brighter name into that shape.
       if (hasMouse) {
         rCtx.clearRect(0, 0, W, H)
 
-        // Step A — paint the radial soft mask (white center → transparent edge)
+        // Step A: paint the radial soft mask (white center to transparent edge)
         const mask = rCtx.createRadialGradient(
           smooth.x, smooth.y, 0,
           smooth.x, smooth.y, 340,
         )
-        mask.addColorStop(0,   'rgba(255,255,255,1)')
-        mask.addColorStop(0.4, 'rgba(255,255,255,0.65)')
-        mask.addColorStop(0.8, 'rgba(255,255,255,0.15)')
-        mask.addColorStop(1,   'rgba(255,255,255,0)')
+        mask.addColorStop(0,   withAlpha(1))
+        mask.addColorStop(0.4, withAlpha(0.65))
+        mask.addColorStop(0.8, withAlpha(0.15))
+        mask.addColorStop(1,   withAlpha(0))
         rCtx.fillStyle = mask
         rCtx.fillRect(0, 0, W, H)
 
-        // Step B — paint the bright name, clipped to that mask shape
+        // Step B: paint the bright name, clipped to that mask shape
         rCtx.globalCompositeOperation = 'source-in'
-        rCtx.fillStyle = 'rgba(255,255,255,0.52)'
+        rCtx.fillStyle = withAlpha(0.52)
         rCtx.font      = font
         rCtx.textAlign = 'right'
         rCtx.fillText('ABHISHEK', textX, textY)
         rCtx.fillText('VERMA',    textX, textY + lineH)
         rCtx.globalCompositeOperation = 'source-over'
 
-        // Step C — composite result onto main canvas
+        // Step C: composite result onto main canvas
         ctx.drawImage(revealCanvas, 0, 0)
       }
 

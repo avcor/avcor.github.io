@@ -1,7 +1,6 @@
-import { useRef } from 'react'
 import ChartOptimizationCaseStudyPage from '../ChartOptimizationCaseStudyPage'
 import ManagingProfileCaseStudyPage from '../ManagingProfileCaseStudyPage'
-import { useScrollSpy } from '../../hooks/useScrollSpy'
+import { useGalleryScroll } from '../../hooks/useGalleryScroll'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -19,14 +18,7 @@ const SPY_ITEMS: SpySection[] = [
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function DozeeCaseStudyGallery() {
-  const scrollRef = useRef<HTMLElement>(null)
-  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
-
-  const onJump = (id: string) => {
-    const container = scrollRef.current
-    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
-    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
-  }
+  const { scrollRef, activeId: scrollActive, onJump } = useGalleryScroll(SCROLL_IDS)
 
   return (
     <section id="dozee-home" className={styles.page} ref={scrollRef}>

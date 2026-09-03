@@ -9,7 +9,7 @@
 
 /* Same 3-line tagline treatment as the Overview page's own intro heading
    ("Diagnose production / from structured logs, / not user reports."),
-   same size, same accent-line-in-the-middle grammar — this section reads as
+   same size, same accent-line-in-the-middle grammar, this section reads as
    a peer headline, not a smaller sub-header with a separate subtitle line. */
 .heading {
   flex-shrink: 0;
@@ -37,7 +37,7 @@
 }
 
 /* Matches Overview's intro description exactly (same size, color, max
-   width) — the short factual line under the heading. */
+   width), the short factual line under the heading. */
 .description {
   margin: 16px 0 0;
   font-size: 0.9rem;

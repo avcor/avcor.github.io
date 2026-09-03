@@ -1,4 +1,3 @@
-import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import LoggingCaseStudyPage from '../LoggingCaseStudyPage'
 import LoggingEngineeringInAction from '../LoggingEngineeringInAction'
@@ -6,7 +5,8 @@ import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
 import { DEEP_DIVE_PANELS } from '../LoggingArchitecturePage/deepDiveData'
 import { MAP_CONNECTORS, MAP_NODES, MAP_TITLE, MAP_VIEWBOX } from '../LoggingArchitecturePage/lifecycleMapData'
-import { useScrollSpy } from '../../hooks/useScrollSpy'
+import { useGalleryScroll } from '../../hooks/useGalleryScroll'
+import { usePanelSelection } from '../../hooks/usePanelSelection'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -22,20 +22,8 @@ const SPY_ITEMS: SpySection[] = [
 const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 
 export default function LoggingCaseStudyGallery() {
-  const scrollRef = useRef<HTMLElement>(null)
-  const scrollActive = useScrollSpy(SCROLL_IDS, scrollRef)
-  const [selected, setSelected] = useState('log-capture')
-
-  const onJump = (id: string) => {
-    const container = scrollRef.current
-    const el = container?.querySelector<HTMLElement>(`#${CSS.escape(id)}`)
-    if (container && el) container.scrollTo({ top: el.offsetTop, behavior: 'smooth' })
-  }
-
-  const selectedPanel = useMemo(
-    () => DEEP_DIVE_PANELS.find((p) => p.id === selected) ?? DEEP_DIVE_PANELS[0],
-    [selected],
-  )
+  const { scrollRef, activeId: scrollActive, onJump } = useGalleryScroll(SCROLL_IDS)
+  const { selected, setSelected, selectedPanel } = usePanelSelection(DEEP_DIVE_PANELS, 'log-capture')
 
   return (
     <section id="logging-system" className={styles.page} ref={scrollRef}>

@@ -48,7 +48,7 @@
   min-width: 0;
 }
 
-/* Mirrors .spyCol on the opposite edge — sticky, vertically centred, purely
+/* Mirrors .spyCol on the opposite edge, sticky, vertically centred, purely
    a decorative tag rather than nav, so it carries no interaction state. */
 .labelCol {
   position: sticky;

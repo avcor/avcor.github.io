@@ -40,14 +40,14 @@ export const MAP_NODES: MapNode[] = [
 ]
 
 export const MAP_CONNECTORS: MapConnector[] = [
-  // ── Forward spine — straight down the centre (x=225) ──
+  // ── Forward spine, straight down the centre (x=225) ──
   { id: 'capture-dispatch', d: 'M225 84 V120', endMarker: 'dot' },
   { id: 'dispatch-mask', d: 'M225 166 V204', endMarker: 'dot' },
 
-  // ── Remote Config governs dispatch — a control line, not data flow ──
+  // ── Remote Config governs dispatch, a control line, not data flow ──
   { id: 'remote-config-dispatch', d: 'M350 104 L292 143', label: 'governs', labelX: 336, labelY: 118 },
 
-  // ── Mask's fan-out — diagonals from distinct points on mask's bottom edge ──
+  // ── Mask's fan-out, diagonals from distinct points on mask's bottom edge ──
   { id: 'mask-batch', d: 'M200 248 L120 288', label: 'default', labelX: 145, labelY: 266 },
   { id: 'mask-immediate', d: 'M250 248 L365 288', label: 'critical', labelX: 320, labelY: 266 },
 

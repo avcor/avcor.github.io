@@ -1,7 +1,7 @@
 /* ============================================================
    ACTIVE PALETTE: Neon Green (Dark)
    To swap palettes: replace the values below with a palette
-   from src/styles/palettes/ — nothing else needs to change.
+   from src/styles/palettes/ (nothing else needs to change).
    ============================================================ */
 
 :root {
@@ -21,7 +21,7 @@
   --color-text-secondary: #63D471;   /* Muted green labels */
   --color-text-disabled:  #2a3530;
   --color-text-inverse:   #050608;
-  --color-text-ghost:     rgba(142, 142, 147, 0.10);   /* Decorative background watermark text (subtle) */
+  --color-text-ghost:     #8E8E931A;   /* Decorative background watermark text (subtle) */
 
   /* Borders */
   --color-border:         #1A1F24;
@@ -35,83 +35,83 @@
 
   /* Glow */
   --color-glow:           #7DFF8A;   /* Hover/glow accent */
-  --color-idle-glow:      #F8FEE8;   /* Warm white w/ subtle green tint — dormant wire glow */
+  --color-idle-glow:      #F8FEE8;   /* Warm white w/ subtle green tint (dormant wire glow) */
 
-  /* Typography — change this one line to test a different font family */
+  /* Typography: change this one line to test a different font family */
   --font-primary: 'Google Sans Flex', 'Inter', sans-serif;
   --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
   --font-hand: 'Caveat', 'Comic Sans MS', cursive;
 
   /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.5);
-  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.6);
-  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.7);
+  --shadow-sm:  0 1px 3px #00000080;
+  --shadow-md:  0 4px 12px #00000099;
+  --shadow-lg:  0 8px 24px #000000B3;
 
   /* ── Extended fills ──────────────────────────────────────── */
   --color-white:              #FFFFFF;
   --color-bg-card:            #000000;      /* Ultra-dark card inner fill */
   --color-bg-glass:           #050d07;      /* SVG glass badge dark fill */
-  --color-bg-stats:           rgba(10, 13, 16, 0.95);  /* Frosted stats panel */
-  --color-overlay-backdrop:   rgba(0, 0, 0, 0.75);     /* Full-screen modal backdrop */
+  --color-bg-stats:           #0A0D10F2;    /* Frosted stats panel */
+  --color-overlay-backdrop:   #000000BF;    /* Full-screen modal backdrop */
   --color-text-muted:         #82888B;      /* Muted description text */
   --color-connector-dot:      #a0a0a1;      /* Solid fill for circuit connector dots */
 
   /* text-primary at opacity */
-  --color-text-primary-a38:   rgba(230, 237, 243, 0.38);
-  --color-text-primary-a40:   rgba(230, 237, 243, 0.40);
-  --color-text-primary-a85:   rgba(230, 237, 243, 0.85);
+  --color-text-primary-a38:   #E6EDF361;
+  --color-text-primary-a40:   #E6EDF366;
+  --color-text-primary-a85:   #E6EDF3D9;
 
   /* text-secondary at opacity */
-  --color-text-secondary-a60: rgba(139, 148, 158, 0.60);
+  --color-text-secondary-a60: #8B949E99;
 
   /* White overlays */
-  --color-white-a03:          rgba(255, 255, 255, 0.03);
-  --color-white-a04:          rgba(255, 255, 255, 0.04);
-  --color-white-a07:          rgba(255, 255, 255, 0.07);
-  --color-white-a08:          rgba(255, 255, 255, 0.08);
-  --color-white-a12:          rgba(255, 255, 255, 0.12);
-  --color-white-a15:          rgba(255, 255, 255, 0.15);
-  --color-white-a22:          rgba(255, 255, 255, 0.22);
-  --color-white-a25:          rgba(255, 255, 255, 0.25);
-  --color-white-a28:          rgba(255, 255, 255, 0.28);
-  --color-white-a40:          rgba(255, 255, 255, 0.40);
-  --color-white-a45:          rgba(255, 255, 255, 0.45);
+  --color-white-a03:          #FFFFFF08;
+  --color-white-a04:          #FFFFFF0A;
+  --color-white-a07:          #FFFFFF12;
+  --color-white-a08:          #FFFFFF14;
+  --color-white-a12:          #FFFFFF1F;
+  --color-white-a15:          #FFFFFF26;
+  --color-white-a22:          #FFFFFF38;
+  --color-white-a25:          #FFFFFF40;
+  --color-white-a28:          #FFFFFF47;
+  --color-white-a40:          #FFFFFF66;
+  --color-white-a45:          #FFFFFF73;
 
   /* Primary color at opacity (update with --color-primary when swapping palette) */
-  --color-primary-a06:        rgba(91, 255, 106, 0.06);
-  --color-primary-a10:        rgba(91, 255, 106, 0.10);
-  --color-primary-a12:        rgba(91, 255, 106, 0.12);
-  --color-primary-a15:        rgba(91, 255, 106, 0.15);
-  --color-primary-a18:        rgba(91, 255, 106, 0.18);
-  --color-primary-a20:        rgba(91, 255, 106, 0.20);
-  --color-primary-a32:        rgba(91, 255, 106, 0.32);
-  --color-primary-a55:        rgba(91, 255, 106, 0.55);
-  --color-primary-a60:        rgba(91, 255, 106, 0.60);
-  --color-primary-a80:        rgba(91, 255, 106, 0.80);
+  --color-primary-a06:        #5BFF6A0F;
+  --color-primary-a10:        #5BFF6A1A;
+  --color-primary-a12:        #5BFF6A1F;
+  --color-primary-a15:        #5BFF6A26;
+  --color-primary-a18:        #5BFF6A2E;
+  --color-primary-a20:        #5BFF6A33;
+  --color-primary-a32:        #5BFF6A52;
+  --color-primary-a55:        #5BFF6A8C;
+  --color-primary-a60:        #5BFF6A99;
+  --color-primary-a80:        #5BFF6ACC;
 
-  /* Info color at opacity (CI/CD diagram — Flutter CI accent) */
-  --color-info-a15:           rgba(88, 166, 255, 0.15);
-  --color-info-a32:           rgba(88, 166, 255, 0.32);
+  /* Info color at opacity (CI/CD diagram, Flutter CI accent) */
+  --color-info-a15:           #58A6FF26;
+  --color-info-a32:           #58A6FF52;
 
   /* Error color at opacity */
-  --color-error-a20:          rgba(248, 81, 73, 0.20);
-  --color-error-a32:          rgba(248, 81, 73, 0.32);
+  --color-error-a20:          #F8514933;
+  --color-error-a32:          #F8514952;
 
   /* Primary-dim at opacity */
-  --color-primary-dim-a06:    rgba(46, 204, 113, 0.06);
-  --color-primary-dim-a16:    rgba(46, 204, 113, 0.16);
+  --color-primary-dim-a06:    #2ECC710F;
+  --color-primary-dim-a16:    #2ECC7129;
 
   /* Card gradient border (update with palette primary when swapping) */
-  --color-card-grad-bright:   rgba(160, 255, 210, 0.18);
-  --color-card-grad-mid:      rgba(120, 255, 180, 0.08);
-  --color-card-grad-subtle:   rgba(80,  255, 150, 0.03);
+  --color-card-grad-bright:   #A0FFD22E;
+  --color-card-grad-mid:      #78FFB414;
+  --color-card-grad-subtle:   #50FF9608;
 
   /* Card inner glow shadows (update with palette primary when swapping) */
-  --color-card-glow-outer:    rgba(110, 255, 170, 0.10);
-  --color-card-glow-top:      rgba(160, 255, 210, 0.08);
-  --color-card-glow-bottom:   rgba(80,  255, 150, 0.025);
+  --color-card-glow-outer:    #6EFFAA1A;
+  --color-card-glow-top:      #A0FFD214;
+  --color-card-glow-bottom:   #50FF9606;
 
-  /* Extended accents — app-icon / dashboard tile tints (phone mockup) */
+  /* Extended accents: app-icon / dashboard tile tints (phone mockup) */
   --color-accent-purple:      #a78bfa;
   --color-accent-teal:        #2dd4bf;
 
@@ -152,7 +152,7 @@
   --color-tag-cross-team:       #38BDF8; /* Cross-team Communication: sky, competency tint */
   --color-tag-ux-iteration:     #A3E635; /* UX Iteration: lime, competency tint */
 
-  /* macOS window chrome — fixed traffic-light identity, not swappable palette */
+  /* macOS window chrome: fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;
   --color-macos-yellow:       #FEBC2E;
   --color-macos-green:        #28C840;

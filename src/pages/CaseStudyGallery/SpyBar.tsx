@@ -9,7 +9,7 @@ interface SpyBarProps {
   sections: SpySection[]
   activeId: string
   onJump: (id: string) => void
-  /** Shrinks the vertical band items distribute across — for galleries with
+  /** Shrinks the vertical band items distribute across, for galleries with
    *  few sections, where the default band spreads them too far apart. */
   compact?: boolean
 }

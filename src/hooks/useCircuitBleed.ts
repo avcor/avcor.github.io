@@ -16,7 +16,7 @@ function getStackBreakpoint(): number {
 /**
  * Computes a marginLeft/width pair that lets the circuit board bleed left,
  * underneath the left panel, without ever pushing `leftMarkerFraction` past
- * the panel's right edge — then grows the board further to the right,
+ * the panel's right edge, then grows the board further to the right,
  * shifting its content rightward without ever pushing `rightMarkerFraction`
  * past the viewport's right edge.
  */
@@ -47,7 +47,7 @@ export function useCircuitBleed(
 
       // Right bleed: grow the board wider on the right so the right marker
       // shifts rightward, capped so it stays EDGE_BUFFER_PX clear of the
-      // viewport's right edge. Solved first, independent of left bleed —
+      // viewport's right edge. Solved first, independent of left bleed,
       // widening the board only ever moves the right marker further right.
       const targetRightMarkerX = window.innerWidth - EDGE_BUFFER_PX
       const rightBleed = Math.max(

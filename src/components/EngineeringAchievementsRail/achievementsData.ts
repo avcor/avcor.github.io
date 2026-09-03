@@ -1,6 +1,6 @@
 import { CIRCUIT_DOMAINS, CIRCUIT_CASE_STUDIES } from '../../features/IndexCircuit/circuitData'
 
-/** Which leaf case studies belong to each domain — mirrors the wire
+/** Which leaf case studies belong to each domain, mirrors the wire
  *  groupings in circuitData.ts (`${caseStudy}_${domain}` wire ids), kept
  *  as an explicit map here since the rail only needs the grouping, not
  *  the wire geometry. */

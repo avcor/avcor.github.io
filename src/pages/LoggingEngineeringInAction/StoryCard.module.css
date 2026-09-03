@@ -54,7 +54,7 @@
 /* Matches Overview's InfoCard body text (Business Problem / My Ownership) as
    actually rendered: InfoCard's <p> tags carry no class of their own, so the
    global `p { font-size: var(--font-size-base) }` rule in typography.css
-   overrides the *inherited* 1.05rem from .bodyLarge — the real rendered size
+   overrides the *inherited* 1.05rem from .bodyLarge, the real rendered size
    is 1rem (--font-size-base), not the 1.05rem the component CSS nominally
    sets. Matching the pixel value that's actually on screen, not the source. */
 .rowText {

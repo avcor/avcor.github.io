@@ -67,7 +67,7 @@ export default function PageDots() {
 
         return (
           <div key={id} className={styles.dotWrapper}>
-            {/* Label — fades in on hover */}
+            {/* Label, fades in on hover */}
             <span className={`${styles.label} ${isActive ? styles.labelActive : ''}`}>
               {label}
             </span>

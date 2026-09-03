@@ -64,7 +64,7 @@
   flex: 0 0 auto;
 }
 
-/* Hero is a claim, not a number — sized to read as a headline, not a stat tile. */
+/* Hero is a claim, not a number: sized to read as a headline, not a stat tile. */
 .hero {
   display: flex;
   flex-direction: column;

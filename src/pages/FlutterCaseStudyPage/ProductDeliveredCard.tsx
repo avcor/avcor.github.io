@@ -8,9 +8,9 @@ import ScreenshotLightbox from './ScreenshotLightbox'
 import styles from './ProductDeliveredCard.module.css'
 
 const screenshots = [
-  { src: screenshot1, alt: 'Access Management Dashboard — hosteller list' },
-  { src: screenshot2, alt: 'Access Management Dashboard — student detail sheet' },
-  { src: screenshot3, alt: 'Pass Console — pass request history' },
+  { src: screenshot1, alt: 'Access Management Dashboard: hosteller list' },
+  { src: screenshot2, alt: 'Access Management Dashboard: student detail sheet' },
+  { src: screenshot3, alt: 'Pass Console: pass request history' },
 ]
 
 const count = screenshots.length

@@ -3,7 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 
 /**
  * Geometry extracted 1:1 from the blueprint SVG (Frame 2.svg, viewBox 0 0 758 462).
- * Coordinates are the single source of truth — do not reposition or resize.
+ * Coordinates are the single source of truth, do not reposition or resize.
  */
 
 export interface CircuitCaseStudy {
@@ -25,7 +25,7 @@ export interface CircuitDomain {
   id: string
   /** Label lines, e.g. ['01', 'Platform', 'Engineering'] */
   lines: string[]
-  /** Chip region rect, verbatim from the blueprint — label anchors flush-left to rect.x */
+  /** Chip region rect, verbatim from the blueprint, label anchors flush-left to rect.x */
   rect: { x: number; y: number; width: number; height: number; rx: number }
   /** Icon representing the domain, rendered centered inside the chip's rect */
   icon: LucideIcon
@@ -40,7 +40,7 @@ export interface CircuitWire {
   id: string
   /** Path segment, verbatim from the blueprint */
   d: string
-  /** Case-study / domain ids this wire touches — used to highlight it on hover */
+  /** Case-study / domain ids this wire touches, used to highlight it on hover */
   nodeIds: string[]
 }
 
@@ -90,7 +90,7 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
   },
   /* Right-side wires: the blueprint drew these center → outward, but the
      traveling pulse follows path direction, and current must flow inward
-     (leaf → chip → center) like the left side — so each `d` below is the
+     (leaf → chip → center) like the left side, so each `d` below is the
      blueprint path with its point order reversed. Geometry is unchanged. */
   {
     id: 'security-engineering_center',
@@ -197,7 +197,7 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
   },
   {
     id: 'ecg-background-sync',
-    label: 'Ecg background Sync',
+    label: 'ECG Background Sync',
     pillPath:
       'M544 386.5H633C636.59 386.5 639.5 389.41 639.5 393V404C639.5 407.59 636.59 410.5 633 410.5H544C540.41 410.5 537.5 407.59 537.5 404V393C537.5 389.41 540.41 386.5 544 386.5Z',
     text: { x: 588.5, y: 398.5 },
@@ -267,11 +267,11 @@ export const CIRCUIT_DOMAINS: CircuitDomain[] = [
   },
 ]
 
-/** The hub every trunk wire converges into — a premium microchip-style
+/** The hub every trunk wire converges into, a premium microchip-style
  *  card, verbatim placement from the blueprint. */
 export const CIRCUIT_CENTER_CARD = {
   rect: { x: 328.5, y: 205.5, width: 77, height: 86, rx: 4.5 },
-  /** Outer framing box around the card, verbatim from the blueprint —
+  /** Outer framing box around the card, verbatim from the blueprint,
    *  carries the outward light-escape glow while the board is lit. */
   outerRect: { x: 321.5, y: 198.5, width: 90, height: 99, rx: 5.5 },
   label: 'AV',
