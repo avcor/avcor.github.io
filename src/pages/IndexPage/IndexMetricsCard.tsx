@@ -10,8 +10,8 @@ interface Metric {
 
 const metrics: Metric[] = [
   { icon: Cpu,      value: '6',        label: 'Domains'        },
-  { icon: FileText, value: '10',       label: 'Case Studies'   },
-  { icon: Users,    value: 'Millions', label: 'Users Impacted' },
+  { icon: FileText, value: '9',        label: 'Case Studies'   },
+  { icon: Users,    value: '500K+',    label: 'Users Impacted' },
 ]
 
 export default function IndexMetricsCard() {

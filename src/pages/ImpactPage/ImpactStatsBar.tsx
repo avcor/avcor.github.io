@@ -25,7 +25,7 @@ export default function ImpactStatsBar() {
           <div>
             <div className={styles.title}>Impact that scales</div>
             <div className={styles.description}>
-              Every metric here represents a problem solved for thousands of users, with
+              Every metric here represents a problem solved for 500K+ users, with
               reliability, speed and trust.
             </div>
           </div>

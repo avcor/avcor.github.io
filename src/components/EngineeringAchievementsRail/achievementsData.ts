@@ -6,9 +6,9 @@ import { CIRCUIT_DOMAINS, CIRCUIT_CASE_STUDIES } from '../../features/IndexCircu
  *  the wire geometry. */
 const DOMAIN_CASE_STUDY_IDS: Record<string, string[]> = {
   'platform-engineering': ['flutter-integration', 'logging-system'],
-  'security-engineering': ['ml-kit-liveness'],
+  'security-engineering': ['app-security'],
   'platform-optimization': ['android-optimization'],
-  'product-engineering': ['payment-experience', 'app-security'],
+  'product-engineering': ['payment-experience', 'ml-kit-liveness'],
   'performance-engineering': ['medical-chart-optimization'],
   'offline-first-architecture': ['ecg-background-sync'],
 }

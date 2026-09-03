@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import Nav from '../../components/Nav'
 import IndexCircuit from '../../features/IndexCircuit'
 import {
   LEFT_BLEED_MARKER_FRACTION,
@@ -21,11 +20,6 @@ export default function IndexPage() {
 
   return (
     <section id="index" className={styles.page}>
-      <header className={styles.header}>
-        <span className={styles.logo}>AV</span>
-        <Nav />
-      </header>
-
       <div className={styles.content}>
         <IndexLeftPanel ref={leftPanelRef} />
         <div className={styles.rightColumn} ref={rightColumnRef}>

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import Nav from '../../components/Nav'
 import ScrollIndicator from '../../components/ScrollIndicator'
 import HeroCanvas from '../../components/HeroCanvas'
 import styles from './Home.module.css'
@@ -39,14 +38,6 @@ export default function Home() {
 
       {/* ── Content layer ── */}
       <div className={styles.contentLayer}>
-        {/* Header */}
-        <header className={styles.header}>
-          <motion.div {...fadeUp(0.1, 0.7)}>
-            <span className={styles.logo}>AV</span>
-          </motion.div>
-          <Nav />
-        </header>
-
         {/* Hero text */}
         <section className={styles.heroSection}>
           <h1 className={styles.headline}>

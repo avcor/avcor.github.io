@@ -1,22 +1,23 @@
-import { Zap, Clock, Code2, Shield, TrendingUp, LayoutGrid, Users, Database, Cloud } from 'lucide-react'
-import Nav from '../../components/Nav'
+import { Clock, Gauge, Shield, HardDrive, TrendingUp, ScanFace, Activity, Users, Cloud } from 'lucide-react'
 import MetricCard from '../../components/MetricCard'
 import ImpactLeftColumn from './ImpactLeftColumn'
 import ImpactStatsBar from './ImpactStatsBar'
 import styles from './ImpactPage.module.css'
 
-// ─── Card data ────────────────────────────────────────────────────────────────
-
+/** One card per case study (9 total), each metric pulled from that case
+ *  study's own Impact Bar so this page never drifts from what the case
+ *  studies actually claim. Ordered to match the circuit's domain order:
+ *  Platform, Security, Optimization, Product, Performance, Offline. */
 const cards = [
-  { icon: Zap,        metricPrefix: '4s →',  metric: 'Instant',         title: 'Flutter Engine Startup',    description: 'Optimized engine initialization and warmup to make Flutter screens load instantly.' },
-  { icon: Clock,      metricPrefix: '90m →', metric: '18m',             title: 'CI/CD Pipeline',            description: 'Reduced build and deploy time to Firebase App Distribution from 90 minutes to 18.' },
-  { icon: Code2,                             metric: '100+',            title: 'Files Modernized',          description: 'Migrated legacy codebase, removed outdated libraries and enabled modern Android stack.' },
-  { icon: Shield,                            metric: 'Fraud Prevented', title: 'Attendance Verification',   description: 'Implemented liveness verification to prevent proxy attendance using images or videos.' },
-  { icon: TrendingUp,                        metric: '20%',             title: 'Faster Development',        description: 'Adoption of Kotlin, Coroutines, Flow and Jetpack libraries improved team velocity.' },
-  { icon: LayoutGrid,                        metric: '15%',             title: 'Reduced UI Testing Time',   description: 'Architecture and state improvements reduced UI test cycles significantly.' },
-  { icon: Users,                             metric: 'Seamless',        title: 'Multi-Tenant Switching',    description: 'Designed secure and reliable account switching across roles and tenants.' },
-  { icon: Database,                          metric: '9000+',           title: 'Data Points Processed',     description: 'Optimized chart processing and rendering from 5 seconds to under 2 seconds.' },
-  { icon: Cloud,                             metric: 'Offline',         title: 'Reliable Data Sync',        description: 'Background uploads with WorkManager ensure no data loss even offline.' },
+  { icon: Clock,     metricPrefix: '90m →',  metric: '18m',               title: 'CI/CD Pipeline',           description: 'Reduced build and deploy time to Firebase App Distribution from 90 minutes to 18.' },
+  { icon: Gauge,                             metric: '~50x Fewer',        title: 'Batched Log Delivery',     description: 'Writes batched instead of per-event; the pipeline never blocks the UI thread.' },
+  { icon: Shield,                            metric: 'Zero Pins',        title: 'Layered Security',         description: 'Certificate pinning, binary tamper detection, and a keystore-backed token store resilient to corruption.' },
+  { icon: HardDrive, metricPrefix: '45GB →', metric: '200MB',             title: 'Storage Reclaimed',        description: 'Eliminated unlimited caches and un-evicted uploads, driven by production telemetry.' },
+  { icon: TrendingUp, metricPrefix: '5 Calls →', metric: '1 Load',        title: 'API Calls Reduced',        description: 'Shared settings cached once per session instead of re-fetched per tab.' },
+  { icon: ScanFace,                          metric: 'Zero Fraud',       title: 'Attendance Verification',  description: 'Liveness verification blocks proxy punching from a photo, video, or off-site location.' },
+  { icon: Activity,  metricPrefix: '5s →',   metric: '<2s',               title: 'Chart Draw Time',          description: 'Optimized processing and rendering of 9,000+ data points per session.' },
+  { icon: Users,                             metric: 'Zero Flicker',     title: 'Profile Switching',        description: 'One state transition updates the UI once, not per intermediate Redux read.' },
+  { icon: Cloud,                             metric: 'No Upload Wait',   title: 'Background ECG Upload',    description: 'WorkManager retries a failed or pending upload; the report stays reviewable offline.' },
 ]
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -24,11 +25,6 @@ const cards = [
 export default function ImpactPage() {
   return (
     <section id="work" className={styles.page}>
-      <header className={styles.header}>
-        <span className={styles.logo}>AV</span>
-        <Nav activeLink="Work" />
-      </header>
-
       <div className={styles.content}>
         <ImpactLeftColumn />
 

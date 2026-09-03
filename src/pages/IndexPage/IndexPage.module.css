@@ -5,21 +5,7 @@
   flex-direction: column;
   overflow: hidden;
   font-family: var(--font-primary);
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 48px;
-  flex-shrink: 0;
-}
-
-.logo {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--color-white);
+  padding-top: 72px;
 }
 
 .content {
@@ -44,10 +30,6 @@
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .header {
-    padding: 14px 32px;
-  }
-
   .content {
     padding: 0 32px 32px;
   }
@@ -57,10 +39,7 @@
   .page {
     height: auto;
     overflow: auto;
-  }
-
-  .header {
-    padding: 20px 20px;
+    padding-top: 64px;
   }
 
   .content {

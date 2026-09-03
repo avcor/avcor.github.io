@@ -98,9 +98,9 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
     nodeIds: ['security-engineering'],
   },
   {
-    id: 'security-engineering_ml-kit-liveness',
+    id: 'security-engineering_app-security',
     d: 'M524.5 104.5H509L491 122.5H479',
-    nodeIds: ['security-engineering', 'ml-kit-liveness'],
+    nodeIds: ['security-engineering', 'app-security'],
   },
   {
     id: 'product-engineering_center',
@@ -113,9 +113,9 @@ export const CIRCUIT_WIRES: CircuitWire[] = [
     nodeIds: ['product-engineering', 'payment-experience'],
   },
   {
-    id: 'product-engineering_app-security',
+    id: 'product-engineering_ml-kit-liveness',
     d: 'M561.5 272H551L541 282H530',
-    nodeIds: ['product-engineering', 'app-security'],
+    nodeIds: ['product-engineering', 'ml-kit-liveness'],
   },
   {
     id: 'offline-first-architecture_center',
@@ -168,8 +168,8 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
     innerDot: { cx: 225.5, cy: 398.5 },
   },
   {
-    id: 'ml-kit-liveness',
-    label: 'ML Kit Liveness',
+    id: 'app-security',
+    label: 'App Security',
     pillPath:
       'M536 93.5H645C648.59 93.5 651.5 96.4101 651.5 100V110C651.5 113.59 648.59 116.5 645 116.5H536C532.41 116.5 529.5 113.59 529.5 110V100C529.5 96.5225 532.231 93.6831 535.665 93.5088L536 93.5Z',
     text: { x: 590.5, y: 105 },
@@ -186,8 +186,8 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
     innerDot: { cx: 563.5, cy: 236.5 },
   },
   {
-    id: 'app-security',
-    label: 'App Security',
+    id: 'ml-kit-liveness',
+    label: 'ML Kit Liveness',
     pillPath:
       'M573 259.5H677C680.59 259.5 683.5 262.41 683.5 266V276C683.5 279.59 680.59 282.5 677 282.5H573C569.41 282.5 566.5 279.59 566.5 276V266C566.5 262.41 569.41 259.5 573 259.5Z',
     text: { x: 625, y: 271 },
@@ -218,12 +218,12 @@ export const LEFT_BLEED_MARKER_FRACTION = (() => {
 })()
 
 /**
- * Horizontal position of the "App Security" accent line, as a fraction of the
- * circuit's viewBox width. Used to cap how far the board's right-bleed growth
- * can shift content before that label crosses the viewport's right edge.
+ * Horizontal position of the "ML Kit Liveness" accent line, as a fraction of
+ * the circuit's viewBox width. Used to cap how far the board's right-bleed
+ * growth can shift content before that label crosses the viewport's right edge.
  */
 export const RIGHT_BLEED_MARKER_FRACTION = (() => {
-  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'app-security')?.accentLine
+  const marker = CIRCUIT_CASE_STUDIES.find((s) => s.id === 'ml-kit-liveness')?.accentLine
   const viewBoxWidth = Number(CIRCUIT_VIEWBOX.split(' ')[2])
   return marker ? marker.x / viewBoxWidth : 1
 })()
@@ -231,37 +231,37 @@ export const RIGHT_BLEED_MARKER_FRACTION = (() => {
 export const CIRCUIT_DOMAINS: CircuitDomain[] = [
   {
     id: 'platform-engineering',
-    lines: ['01', 'Platform', 'Engineering'],
+    lines: ['01', 'Platform'],
     rect: { x: 268.5, y: 100.5, width: 40, height: 41, rx: 4.5 },
     icon: Layers,
   },
   {
     id: 'security-engineering',
-    lines: ['02', 'Security', 'Engineering'],
+    lines: ['02', 'Security'],
     rect: { x: 431.5, y: 104.5, width: 38, height: 40, rx: 4.5 },
     icon: Shield,
   },
   {
     id: 'platform-optimization',
-    lines: ['03', 'Platform', 'Optimization'],
+    lines: ['03', 'Optimization'],
     rect: { x: 203.5, y: 257.5, width: 37, height: 40, rx: 4.5 },
     icon: Rocket,
   },
   {
     id: 'product-engineering',
-    lines: ['04', 'Product', 'Engineering'],
+    lines: ['04', 'Product'],
     rect: { x: 483.5, y: 264.5, width: 38, height: 41, rx: 4.5 },
     icon: Package,
   },
   {
     id: 'performance-engineering',
-    lines: ['05', 'Performance', 'Engineering'],
+    lines: ['05', 'Performance'],
     rect: { x: 263.5, y: 382.5, width: 41, height: 42, rx: 4.5 },
     icon: Gauge,
   },
   {
     id: 'offline-first-architecture',
-    lines: ['06', 'Offline-first', 'Architecture'],
+    lines: ['06', 'Offline'],
     rect: { x: 446.5, y: 382.5, width: 40, height: 42, rx: 4.5 },
     icon: CloudOff,
   },

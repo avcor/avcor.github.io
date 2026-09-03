@@ -1,4 +1,4 @@
-import CursorGlow from './components/CursorGlow'
+import SiteHeader from './components/SiteHeader'
 import Home from './pages/Home'
 import ImpactPage from './pages/ImpactPage'
 import IndexPage from './pages/IndexPage'
@@ -8,7 +8,7 @@ import { CaseStudyOverlayProvider } from './context/CaseStudyOverlayContext'
 export default function App() {
   return (
     <CaseStudyOverlayProvider>
-      <CursorGlow />
+      <SiteHeader />
       <Home />
       <ImpactPage />
       <IndexPage />
