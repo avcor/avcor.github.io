@@ -39,15 +39,14 @@ export default function PaymentIntro() {
         </motion.div>
 
         <motion.h1 {...fadeUp(0.15)} className={styles.heading}>
-          <span className={styles.headingLine}>A student sees where they stand on fees</span>
+          <span className={styles.headingLine}>Where a student stands on fees,</span>
           <span className={styles.headingLineAccent}>at a glance,</span>
-          <span className={styles.headingLine}>without a wall of numbers.</span>
+          <span className={styles.headingLine}>not a wall of numbers.</span>
         </motion.h1>
 
         <motion.p {...fadeUp(0.3)} className={styles.description}>
-          The payment module shows a student their financial status in one screen: what
-          is due, what is cleared, and what they can pay next. Requirements were vague
-          at the start, so the work was as much product definition as it was Android.
+          One screen: what's due, what's cleared, what to pay next. Requirements
+          started vague, so this was as much product work as Android.
         </motion.p>
 
         <motion.div {...fadeUp(0.42)} className={styles.tags}>
