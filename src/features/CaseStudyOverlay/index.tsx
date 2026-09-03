@@ -7,6 +7,7 @@ import AttendanceCaseStudyGallery from '../../pages/AttendanceCaseStudyGallery'
 import SecurityCaseStudyGallery from '../../pages/SecurityCaseStudyGallery'
 import PlatformOptimizationCaseStudyGallery from '../../pages/PlatformOptimizationCaseStudyGallery'
 import DozeeCaseStudyGallery from '../../pages/DozeeCaseStudyGallery'
+import PaymentCaseStudyGallery from '../../pages/PaymentCaseStudyGallery'
 import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
 import styles from './CaseStudyOverlay.module.css'
 
@@ -20,6 +21,7 @@ const GALLERIES: Record<string, ComponentType> = {
   'app-security': SecurityCaseStudyGallery,
   'android-optimization': PlatformOptimizationCaseStudyGallery,
   'medical-chart-optimization': DozeeCaseStudyGallery,
+  'payment-experience': PaymentCaseStudyGallery,
 }
 
 /**

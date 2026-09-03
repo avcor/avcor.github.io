@@ -23,6 +23,7 @@ const OPENABLE_CASE_STUDY_IDS = new Set([
   'app-security',
   'android-optimization',
   'medical-chart-optimization',
+  'payment-experience',
 ])
 
 interface IndexCircuitProps {
