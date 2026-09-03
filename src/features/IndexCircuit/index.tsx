@@ -21,6 +21,7 @@ const OPENABLE_CASE_STUDY_IDS = new Set([
   'logging-system',
   'ml-kit-liveness',
   'android-optimization',
+  'payment-experience',
 ])
 
 interface IndexCircuitProps {
