@@ -72,23 +72,27 @@ export default function DeepDivePanel({
 
       {/* ── Left: narrative ── */}
       <div className={styles.left}>
-        <motion.div {...fadeUp(0.02)} className={styles.eyebrow}>
-          <GlassBadge icon={panel.icon} size={40} />
-          <span className={styles.eyebrowText}>
-            {panel.index} · {panel.eyebrow}
-          </span>
-        </motion.div>
-
-        <motion.h2 {...fadeUp(0.06)} className={styles.heading}>
-          {panel.headingLines.map((line, i) => (
-            <span
-              key={line}
-              className={i === panel.accentIndex ? styles.headingAccent : styles.headingLine}
-            >
-              {line}
+        {/* Title stays pinned to the top of the scroll container while the
+            rest of the panel's content scrolls underneath it. */}
+        <div className={styles.header}>
+          <motion.div {...fadeUp(0.02)} className={styles.eyebrow}>
+            <GlassBadge icon={panel.icon} size={40} />
+            <span className={styles.eyebrowText}>
+              {panel.index} · {panel.eyebrow}
             </span>
-          ))}
-        </motion.h2>
+          </motion.div>
+
+          <motion.h2 {...fadeUp(0.06)} className={styles.heading}>
+            {panel.headingLines.map((line, i) => (
+              <span
+                key={line}
+                className={i === panel.accentIndex ? styles.headingAccent : styles.headingLine}
+              >
+                {line}
+              </span>
+            ))}
+          </motion.h2>
+        </div>
 
         <motion.div {...fadeUp(0.1)} className={styles.impact}>
           {panel.impact}

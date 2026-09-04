@@ -48,6 +48,21 @@
   color: var(--color-white-a40);
 }
 
+/* ── Header (eyebrow + heading): stays put while .archDetail scrolls the
+   rest of the panel underneath it. Static by default; the stacked variant
+   (the only one placed inside a scrolling container today) pins it. */
+.header {
+  position: static;
+}
+
+.stacked .header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding-bottom: 4px;
+  background: var(--color-bg-card);
+}
+
 /* ── Heading ── */
 .heading {
   font-weight: 700;
