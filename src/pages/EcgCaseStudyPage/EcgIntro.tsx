@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { SiAndroid, SiKotlin } from 'react-icons/si'
-import { FileText, Usb, WifiOff, Workflow } from 'lucide-react'
+import { FileText, HeartPulse, Usb, WifiOff, Workflow } from 'lucide-react'
 import styles from './EcgIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -20,6 +20,7 @@ interface Tag {
 }
 
 const tags: Tag[] = [
+  { icon: <HeartPulse size={13} color="var(--color-tag-ecg)" />, label: 'ECG' },
   { icon: <SiKotlin size={13} color="var(--color-brand-kotlin)" />, label: 'Kotlin' },
   { icon: <SiAndroid size={13} color="var(--color-brand-android)" />, label: 'WorkManager' },
   { icon: <Workflow size={13} color="var(--color-tag-coroutines)" />, label: 'Coroutines' },

@@ -147,6 +147,7 @@
   --color-tag-wiredconn:      #38BDF8;   /* USB / Wired Connection: no brand mark, sky blue */
   --color-tag-offline:        #FB7185;   /* Offline-First: no brand mark, rose */
   --color-tag-pdf:            #FB923C;   /* PDF Generation: no brand mark, orange */
+  --color-tag-ecg:            #2DD4BF;   /* ECG: no brand mark, teal */
   --color-tag-concurrency:    #22D3EE;   /* Concurrency: cyan, domain tint */
   --color-tag-caching:        #FBBF24;   /* Caching / API reduction: amber, domain tint */
   --color-tag-mvvm:           #818CF8;   /* MVVM / StateFlow: indigo, domain tint */
