@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
+import { ShieldAlert } from 'lucide-react'
 import { SiAndroid, SiGoogle, SiGooglemaps, SiGoogleplay, SiKotlin } from 'react-icons/si'
 import styles from './AttendanceIntro.module.css'
 
@@ -24,6 +25,7 @@ const tags: Tag[] = [
   { icon: <SiAndroid size={13} color="var(--color-brand-android)" />, label: 'CameraX' },
   { icon: <SiGooglemaps size={13} color="var(--color-brand-googlemaps)" />, label: 'Geofencing' },
   { icon: <SiGoogleplay size={13} color="var(--color-brand-googleplay)" />, label: 'FusedLocationProvider' },
+  { icon: <ShieldAlert size={13} color="var(--color-tag-fraud)" />, label: 'Fraud Prevention' },
 ]
 
 export default function AttendanceIntro() {

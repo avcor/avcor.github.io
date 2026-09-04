@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Network, Workflow } from 'lucide-react'
+import { Network, ShieldCheck, Workflow } from 'lucide-react'
 import { SiAndroid, SiFirebase, SiGrafana, SiKotlin, SiSqlite } from 'react-icons/si'
 import styles from './LoggingIntro.module.css'
 
@@ -21,12 +21,13 @@ interface Tag {
 
 const tags: Tag[] = [
   { icon: <SiKotlin size={13} color="var(--color-brand-kotlin)" />, label: 'Kotlin' },
-  { icon: <Workflow size={14} strokeWidth={1.75} />, label: 'Channels' },
+  { icon: <Workflow size={13} color="var(--color-tag-channels)" />, label: 'Channels' },
   { icon: <SiSqlite size={13} color="var(--color-brand-sqlite)" />, label: 'Room' },
   { icon: <SiAndroid size={13} color="var(--color-brand-android)" />, label: 'WorkManager' },
-  { icon: <Network size={14} strokeWidth={1.75} />, label: 'OkHttp' },
+  { icon: <Network size={13} color="var(--color-tag-okhttp)" />, label: 'OkHttp' },
   { icon: <SiGrafana size={13} color="var(--color-brand-grafana)" />, label: 'Grafana Loki' },
   { icon: <SiFirebase size={13} color="var(--color-brand-firebase)" />, label: 'Remote Config' },
+  { icon: <ShieldCheck size={13} color="var(--color-tag-privacy)" />, label: 'Data Privacy' },
 ]
 
 export default function LoggingIntro() {

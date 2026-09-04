@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Database, HardDrive, Network, Timer } from 'lucide-react'
-import { SiFirebase, SiGoogleplay } from 'react-icons/si'
+import { Database, HardDrive, Network, PlayCircle, Timer } from 'lucide-react'
+import { SiFirebase, SiGlide, SiGoogleplay } from 'react-icons/si'
 import styles from './PlatformOptimizationIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -20,12 +20,14 @@ interface Tag {
 }
 
 const tags: Tag[] = [
-  { icon: <Network size={14} strokeWidth={1.75} color="var(--color-tag-okhttp)" />, label: 'OkHttp' },
+  { icon: <Network size={13} color="var(--color-tag-okhttp)" />, label: 'OkHttp' },
+  { icon: <SiGlide size={13} color="var(--color-brand-glide)" />, label: 'Glide' },
+  { icon: <PlayCircle size={13} color="var(--color-tag-exoplayer)" />, label: 'ExoPlayer' },
   { icon: <SiGoogleplay size={13} color="var(--color-brand-googleplay)" />, label: 'Play Console Vitals' },
   { icon: <SiFirebase size={13} color="var(--color-brand-firebase)" />, label: 'Firebase Crashlytics' },
-  { icon: <HardDrive size={14} strokeWidth={1.75} color="var(--color-tag-storage)" />, label: 'Storage' },
-  { icon: <Timer size={14} strokeWidth={1.75} color="var(--color-tag-coldstart)" />, label: 'Cold Start' },
-  { icon: <Database size={14} strokeWidth={1.75} color="var(--color-tag-buildsize)" />, label: 'Build Size' },
+  { icon: <HardDrive size={13} color="var(--color-tag-storage)" />, label: 'Storage' },
+  { icon: <Timer size={13} color="var(--color-tag-coldstart)" />, label: 'Cold Start' },
+  { icon: <Database size={13} color="var(--color-tag-buildsize)" />, label: 'Build Size' },
 ]
 
 export default function PlatformOptimizationIntro() {

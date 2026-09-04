@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Binary, KeyRound, Lock, ScrollText } from 'lucide-react'
+import { Binary, KeyRound, Network, ScrollText } from 'lucide-react'
+import { SiKotlin } from 'react-icons/si'
 import styles from './SecurityIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -18,14 +19,14 @@ interface Tag {
   label: string
 }
 
-// NOTE: tag set is provisional, pending confirmed brand-mark icons. Only
-// technologies the app actually uses are listed (Frida/RootBeer removed, they
-// are detection targets, not dependencies). Using neutral lucide glyphs for now.
+// Only technologies the app actually uses are listed (Frida/RootBeer removed,
+// they are detection targets, not dependencies).
 const tags: Tag[] = [
-  { icon: <Lock size={13} />, label: 'OkHttp' },
-  { icon: <Binary size={13} />, label: 'C / JNI' },
-  { icon: <KeyRound size={13} />, label: 'Android Keystore' },
-  { icon: <ScrollText size={13} />, label: 'ProGuard / R8' },
+  { icon: <SiKotlin size={13} color="var(--color-brand-kotlin)" />, label: 'Kotlin' },
+  { icon: <Network size={13} color="var(--color-tag-okhttp)" />, label: 'OkHttp' },
+  { icon: <Binary size={13} color="var(--color-tag-cjni)" />, label: 'C / JNI' },
+  { icon: <KeyRound size={13} color="var(--color-tag-keystore)" />, label: 'Android Keystore' },
+  { icon: <ScrollText size={13} color="var(--color-tag-proguard)" />, label: 'ProGuard / R8' },
 ]
 
 export default function SecurityIntro() {

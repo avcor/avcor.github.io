@@ -155,13 +155,23 @@
   --color-tag-optimization:   #FB923C;   /* Optimization: domain tint, orange */
   --color-tag-performance:    #A78BFA;   /* Performance: domain tint, violet */
   --color-tag-wifi:           #FBBF24;   /* Wi-Fi: no official logo/brand color, recognition tint only */
-  --color-tag-hardware:       #FB7185;   /* Hardware Integration: domain tint, rose */
+  --color-tag-hardware:       #F472B6;   /* Hardware Integration: domain tint, pink (distinct from Offline-First's rose on the ECG page) */
+  --color-tag-architecture:   #C4B5FD;   /* Architecture: domain tint, violet */
+  --color-tag-modular:        #FBBF24;   /* Modular: domain tint, amber */
+  --color-tag-cicd:           #F472B6;   /* CI/CD: domain tint, pink */
+  --color-tag-channels:       #FB7185;   /* Channels: no separate Simple Icons mark from Kotlin, rose */
+  --color-tag-privacy:        #22D3EE;   /* Data Privacy / GDPR: domain tint, cyan */
+  --color-tag-cjni:           #FB923C;   /* C / JNI: no brand mark, orange */
+  --color-tag-keystore:       #34D399;   /* Android Keystore: no separate Simple Icons mark, green */
+  --color-tag-proguard:       #F472B6;   /* ProGuard / R8: no brand mark, pink */
+  --color-tag-fraud:          #F87171;   /* Fraud Prevention: domain tint, coral */
 
   /* Competency / soft-skill tags: recognition tints only, never a real
      brand hex, since these describe a skill, not a tool. */
   --color-tag-product-building: #FB7185; /* Product Building: rose, competency tint */
   --color-tag-cross-team:       #38BDF8; /* Cross-team Communication: sky, competency tint */
   --color-tag-ux-iteration:     #A3E635; /* UX Iteration: lime, competency tint */
+  --color-tag-tech-evaluation:  #E879F9; /* Technology Evaluation: fuchsia, competency tint */
 
   /* macOS window chrome: fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;

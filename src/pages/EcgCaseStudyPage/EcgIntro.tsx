@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { SiAndroid, SiKotlin } from 'react-icons/si'
-import { FileText, HeartPulse, Usb, WifiOff, Workflow } from 'lucide-react'
+import { Cpu, FileText, HeartPulse, Usb, WifiOff, Workflow } from 'lucide-react'
 import styles from './EcgIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -27,6 +27,7 @@ const tags: Tag[] = [
   { icon: <Usb size={13} color="var(--color-tag-wiredconn)" />, label: 'Wired Connection' },
   { icon: <WifiOff size={13} color="var(--color-tag-offline)" />, label: 'Offline-First' },
   { icon: <FileText size={13} color="var(--color-tag-pdf)" />, label: 'PDF Generation' },
+  { icon: <Cpu size={13} color="var(--color-tag-hardware)" />, label: 'Hardware Integration' },
 ]
 
 export default function EcgIntro() {
