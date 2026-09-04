@@ -130,6 +130,11 @@
   --color-brand-googlemaps:   #34A853;   /* Google Maps green (Geofencing) */
   --color-brand-googleplay:   #00C9FF;   /* Google Play triangle, blue segment */
   --color-brand-glide:        #18BED4;   /* Glide cyan */
+  --color-brand-react:        #61DAFB;   /* React Native uses the React atom mark/color, from Simple Icons */
+  --color-brand-typescript:   #3178C6;   /* TypeScript blue, from Simple Icons */
+  --color-brand-chartjs:      #FF6384;   /* Chart.js pink, from Simple Icons */
+  --color-brand-redux:        #764ABC;   /* Redux purple, from Simple Icons */
+  --color-brand-bluetooth:    #0082FC;   /* Bluetooth blue, from Simple Icons */
 
   /* No official logo/brand color exists for these: recognition tints
      only, each distinct so no two fallback tags read as the same color. */
@@ -145,6 +150,11 @@
   --color-tag-concurrency:    #22D3EE;   /* Concurrency: cyan, domain tint */
   --color-tag-caching:        #FBBF24;   /* Caching / API reduction: amber, domain tint */
   --color-tag-mvvm:           #818CF8;   /* MVVM / StateFlow: indigo, domain tint */
+  --color-tag-watermelondb:   #FDE047;   /* WatermelonDB: no official logo/brand color, recognition tint only */
+  --color-tag-optimization:   #FB923C;   /* Optimization: domain tint, orange */
+  --color-tag-performance:    #A78BFA;   /* Performance: domain tint, violet */
+  --color-tag-wifi:           #FBBF24;   /* Wi-Fi: no official logo/brand color, recognition tint only */
+  --color-tag-hardware:       #FB7185;   /* Hardware Integration: domain tint, rose */
 
   /* Competency / soft-skill tags: recognition tints only, never a real
      brand hex, since these describe a skill, not a tool. */

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Database, TabletSmartphone } from 'lucide-react'
+import { SiChartdotjs, SiReact, SiTypescript } from 'react-icons/si'
+import { Database, Gauge, Zap } from 'lucide-react'
 import styles from './ChartOptimizationIntro.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -18,10 +19,13 @@ interface Tag {
   label: string
 }
 
-// NOTE: tag icons are provisional pending confirmed brand-mark verification.
 const tags: Tag[] = [
-  { icon: <TabletSmartphone size={13} />, label: 'React Native' },
-  { icon: <Database size={13} />, label: 'WatermelonDB' },
+  { icon: <SiReact size={13} color="var(--color-brand-react)" />, label: 'React Native' },
+  { icon: <SiTypescript size={13} color="var(--color-brand-typescript)" />, label: 'TypeScript' },
+  { icon: <SiChartdotjs size={13} color="var(--color-brand-chartjs)" />, label: 'Chart.js' },
+  { icon: <Database size={13} color="var(--color-tag-watermelondb)" />, label: 'WatermelonDB' },
+  { icon: <Gauge size={13} color="var(--color-tag-optimization)" />, label: 'Optimization' },
+  { icon: <Zap size={13} color="var(--color-tag-performance)" />, label: 'Performance' },
 ]
 
 export default function ChartOptimizationIntro() {
