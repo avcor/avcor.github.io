@@ -19,6 +19,7 @@ import {
 } from '../SecurityRuntimePage/lifecycleMapData'
 import { useGalleryScroll } from '../../hooks/useGalleryScroll'
 import { usePanelSelection } from '../../hooks/usePanelSelection'
+import { useResetScrollOnChange } from '../../hooks/useResetScrollOnChange'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -38,6 +39,8 @@ export default function SecurityCaseStudyGallery() {
     setSelected: setSelectedRuntime,
     selectedPanel: selectedRuntimePanel,
   } = usePanelSelection(RUNTIME_DEEP_DIVE_PANELS, 'root-hook-detection')
+  const archDetailRef = useResetScrollOnChange(selected)
+  const archDetailRuntimeRef = useResetScrollOnChange(selectedRuntime)
 
   return (
     <section id="app-security-platform" className={styles.page} ref={scrollRef}>
@@ -65,7 +68,7 @@ export default function SecurityCaseStudyGallery() {
                 />
               </div>
 
-              <div className={styles.archDetail}>
+              <div className={styles.archDetail} ref={archDetailRef}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selected}
@@ -96,7 +99,7 @@ export default function SecurityCaseStudyGallery() {
                 />
               </div>
 
-              <div className={styles.archDetail}>
+              <div className={styles.archDetail} ref={archDetailRuntimeRef}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedRuntime}

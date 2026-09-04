@@ -16,6 +16,7 @@ import {
 } from '../PaymentArchitecturePage/lifecycleMapData'
 import { useGalleryScroll } from '../../hooks/useGalleryScroll'
 import { usePanelSelection } from '../../hooks/usePanelSelection'
+import { useResetScrollOnChange } from '../../hooks/useResetScrollOnChange'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -41,6 +42,8 @@ export default function PaymentCaseStudyGallery() {
     setSelected: setSelectedFlow,
     selectedPanel: selectedFlowPanel,
   } = usePanelSelection(PAYMENT_FLOW_PANELS, 'order-and-gateway')
+  const archDetailCollabRef = useResetScrollOnChange(selectedCollab)
+  const archDetailFlowRef = useResetScrollOnChange(selectedFlow)
 
   return (
     <section id="payment-experience" className={styles.page} ref={scrollRef}>
@@ -68,7 +71,7 @@ export default function PaymentCaseStudyGallery() {
                 />
               </div>
 
-              <div className={styles.archDetail}>
+              <div className={styles.archDetail} ref={archDetailCollabRef}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedCollab}
@@ -99,7 +102,7 @@ export default function PaymentCaseStudyGallery() {
                 />
               </div>
 
-              <div className={styles.archDetail}>
+              <div className={styles.archDetail} ref={archDetailFlowRef}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedFlow}

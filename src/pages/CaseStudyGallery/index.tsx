@@ -19,6 +19,7 @@ import {
 } from '../CiCdArchitecturePage/pipelineMapData'
 import { useGalleryScroll } from '../../hooks/useGalleryScroll'
 import { usePanelSelection } from '../../hooks/usePanelSelection'
+import { useResetScrollOnChange } from '../../hooks/useResetScrollOnChange'
 import SpyBar, { type SpySection } from './SpyBar'
 import styles from './CaseStudyGallery.module.css'
 
@@ -39,6 +40,8 @@ export default function CaseStudyGallery() {
     setSelected: setSelectedCiCd,
     selectedPanel: selectedCiCdPanel,
   } = usePanelSelection(CICD_DEEP_DIVE_PANELS, 'scaffold-regen')
+  const archDetailRef = useResetScrollOnChange(selected)
+  const archDetailCiCdRef = useResetScrollOnChange(selectedCiCd)
 
   return (
     <section id="flutter-platform" className={styles.page} ref={scrollRef}>
@@ -66,7 +69,7 @@ export default function CaseStudyGallery() {
                 />
               </div>
 
-              <div className={styles.archDetail}>
+              <div className={styles.archDetail} ref={archDetailRef}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selected}
@@ -97,7 +100,7 @@ export default function CaseStudyGallery() {
                 />
               </div>
 
-              <div className={styles.archDetail}>
+              <div className={styles.archDetail} ref={archDetailCiCdRef}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedCiCd}

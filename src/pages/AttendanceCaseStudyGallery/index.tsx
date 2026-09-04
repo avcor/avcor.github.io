@@ -7,6 +7,7 @@ import { DEEP_DIVE_PANELS } from '../AttendanceArchitecturePage/deepDiveData'
 import { MAP_CONNECTORS, MAP_NODES, MAP_TITLE, MAP_VIEWBOX } from '../AttendanceArchitecturePage/lifecycleMapData'
 import { useGalleryScroll } from '../../hooks/useGalleryScroll'
 import { usePanelSelection } from '../../hooks/usePanelSelection'
+import { useResetScrollOnChange } from '../../hooks/useResetScrollOnChange'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
 import styles from '../CaseStudyGallery/CaseStudyGallery.module.css'
 
@@ -20,6 +21,7 @@ const SCROLL_IDS = SPY_ITEMS.map((s) => s.id)
 export default function AttendanceCaseStudyGallery() {
   const { scrollRef, activeId: scrollActive, onJump } = useGalleryScroll(SCROLL_IDS)
   const { selected, setSelected, selectedPanel } = usePanelSelection(DEEP_DIVE_PANELS, 'geofence-validation')
+  const archDetailRef = useResetScrollOnChange(selected)
 
   return (
     <section id="ml-kit-liveness" className={styles.page} ref={scrollRef}>
@@ -47,7 +49,7 @@ export default function AttendanceCaseStudyGallery() {
                 />
               </div>
 
-              <div className={styles.archDetail}>
+              <div className={styles.archDetail} ref={archDetailRef}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selected}
