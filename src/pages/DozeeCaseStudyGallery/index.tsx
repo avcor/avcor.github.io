@@ -1,3 +1,4 @@
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import ChartOptimizationCaseStudyPage from '../ChartOptimizationCaseStudyPage'
 import ManagingProfileCaseStudyPage from '../ManagingProfileCaseStudyPage'
 import { useGalleryScroll } from '../../hooks/useGalleryScroll'
@@ -37,9 +38,7 @@ export default function DozeeCaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>Dozee Home</span>
-        </aside>
+        <CaseStudyLabelCol category="Performance" name="Dozee Home" />
       </div>
     </section>
   )

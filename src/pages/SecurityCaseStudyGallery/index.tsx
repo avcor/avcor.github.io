@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import SecurityCaseStudyPage from '../SecurityCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
@@ -113,9 +114,7 @@ export default function SecurityCaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>App Security</span>
-        </aside>
+        <CaseStudyLabelCol category="Security" name="App Security" />
       </div>
     </section>
   )

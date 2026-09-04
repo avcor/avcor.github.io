@@ -1,3 +1,4 @@
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import EcgCaseStudyPage from '../EcgCaseStudyPage'
 import { useGalleryScroll } from '../../hooks/useGalleryScroll'
 import SpyBar, { type SpySection } from '../CaseStudyGallery/SpyBar'
@@ -23,9 +24,7 @@ export default function EcgCaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>ECG Background Sync</span>
-        </aside>
+        <CaseStudyLabelCol category="Offline" name="ECG Background Sync" />
       </div>
     </section>
   )

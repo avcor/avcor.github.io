@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import FlutterCaseStudyPage from '../FlutterCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
@@ -114,9 +115,7 @@ export default function CaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>Flutter Integration</span>
-        </aside>
+        <CaseStudyLabelCol category="Platform" name="Flutter Integration" />
       </div>
     </section>
   )

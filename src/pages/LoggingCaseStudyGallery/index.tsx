@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import LoggingCaseStudyPage from '../LoggingCaseStudyPage'
 import LoggingEngineeringInAction from '../LoggingEngineeringInAction'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
@@ -73,9 +74,7 @@ export default function LoggingCaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>Logging System</span>
-        </aside>
+        <CaseStudyLabelCol category="Platform" name="Logging System" />
       </div>
     </section>
   )

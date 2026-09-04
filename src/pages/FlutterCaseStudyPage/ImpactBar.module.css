@@ -4,7 +4,9 @@
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  padding: 18px 24px;
+  /* No left padding: must line up with the intro column and the
+     InfoCard rows above it, which also have none on the left. */
+  padding: 18px 24px 18px 0;
   border-top: 1px solid var(--color-white-a08);
 }
 
@@ -142,7 +144,7 @@
 
 @media (min-width: 1025px) and (max-height: 860px) {
   .panel {
-    padding: 18px 22px;
+    padding: 18px 22px 18px 0;
     gap: 8px;
   }
 

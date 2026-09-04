@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import PlatformOptimizationCaseStudyPage from '../PlatformOptimizationCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
@@ -64,9 +65,7 @@ export default function PlatformOptimizationCaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>Platform Optimization</span>
-        </aside>
+        <CaseStudyLabelCol category="Optimization" name="Platform Optimization" />
       </div>
     </section>
   )

@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import AttendanceCaseStudyPage from '../AttendanceCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
@@ -64,9 +65,7 @@ export default function AttendanceCaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>ML Kit Liveness</span>
-        </aside>
+        <CaseStudyLabelCol category="Product" name="ML Kit Liveness" />
       </div>
     </section>
   )

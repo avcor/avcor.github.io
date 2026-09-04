@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import CaseStudyLabelCol from '../../components/CaseStudyLabelCol'
 import PaymentCaseStudyPage from '../PaymentCaseStudyPage'
 import DeepDivePanel from '../../components/ArchitectureDiagram/DeepDivePanel'
 import LifecycleMap from '../../components/ArchitectureDiagram/LifecycleMap'
@@ -116,9 +117,7 @@ export default function PaymentCaseStudyGallery() {
           </section>
         </div>
 
-        <aside className={styles.labelCol}>
-          <span className={styles.verticalLabel}>Payment Experience</span>
-        </aside>
+        <CaseStudyLabelCol category="Product" name="Payment Experience" />
       </div>
     </section>
   )

@@ -1,0 +1,41 @@
+/* Mirrors the spy rail on the opposite edge, sticky, vertically centred,
+   purely a decorative tag rather than nav, so it carries no interaction state. */
+.labelCol {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: -48px;
+  padding-right: 16px;
+}
+
+.verticalLabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-white-a25);
+  white-space: nowrap;
+}
+
+/* The domain this case study belongs to on the index circuit, distinguished
+   from the case study name by the "/" separator alone, same color as the
+   rest of the label so it reads as one continuous tag. */
+.category,
+.dot {
+  color: inherit;
+}
+
+@media (max-width: 900px) {
+  .labelCol {
+    display: none;
+  }
+}
