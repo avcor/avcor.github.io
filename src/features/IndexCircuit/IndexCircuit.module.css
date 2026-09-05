@@ -195,9 +195,11 @@
 }
 
 /* Hover targets, pill path and chip rect, hit-tested over their full area
-   (not just the visible outline) so hovering anywhere in the box counts */
+   (not just the visible outline) so hovering anywhere in the box counts.
+   Cursor stays the browser default here: only leaf pills are actually
+   clickable, and they get their pointer cursor from .clickable on the
+   wrapping <g> instead, so main/sub chips (hover-only) don't look like links. */
 .hoverTarget {
-  cursor: pointer;
   pointer-events: all;
 }
 
@@ -331,9 +333,9 @@
   opacity: 0.12;
 }
 
-/* Invisible hit area covering the whole card, driving the hover glow above */
+/* Invisible hit area covering the whole card, driving the hover glow above.
+   Hover-only (no click action), so cursor stays the browser default. */
 .centerCardHoverTarget {
-  cursor: pointer;
   pointer-events: all;
 }
 
