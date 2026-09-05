@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion'
-import type { LucideIcon } from 'lucide-react'
-import GlassBadge from '../GlassBadge'
 import styles from './MetricCard.module.css'
 
 interface MetricCardProps {
-  icon: LucideIcon
   metric: string
   metricPrefix?: string
   title: string
@@ -13,7 +10,6 @@ interface MetricCardProps {
 }
 
 export default function MetricCard({
-  icon: Icon,
   metric,
   metricPrefix,
   title,
@@ -29,16 +25,12 @@ export default function MetricCard({
       className={styles.wrapper}
     >
       <div className={styles.inner}>
-        {/* ── Icon + Metric row ── */}
-        <div className={styles.iconRow}>
-          <GlassBadge icon={Icon} size={52} />
-
-          <div className={styles.metricValue}>
-            {metricPrefix && (
-              <span className={styles.metricPrefix}>{metricPrefix}</span>
-            )}
-            <span className={styles.metricNumber}>{metric}</span>
-          </div>
+        {/* ── Metric ── */}
+        <div className={styles.metricValue}>
+          {metricPrefix && (
+            <span className={styles.metricPrefix}>{metricPrefix}</span>
+          )}
+          <span className={styles.metricNumber}>{metric}</span>
         </div>
 
         {/* ── Title ── */}

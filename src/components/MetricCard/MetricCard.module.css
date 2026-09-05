@@ -27,12 +27,6 @@
     inset 0 -10px 24px var(--color-card-glow-bottom);
 }
 
-.iconRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .metricValue {
   font-size: 1.45rem;
   font-weight: 600;
