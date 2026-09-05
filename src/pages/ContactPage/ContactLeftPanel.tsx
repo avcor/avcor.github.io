@@ -16,33 +16,27 @@ function fadeUp(delay: number) {
 export default function ContactLeftPanel() {
   return (
     <div className={styles.column}>
-      {/* 1. Eyebrow */}
-      <motion.div {...fadeUp(0.1)} className={styles.eyebrow}>
-        <span className={styles.eyebrowText}>03 / Contact</span>
-        <span className={styles.eyebrowLine} />
-      </motion.div>
-
-      {/* 2. Heading */}
+      {/* 1. Heading */}
       <motion.h2 {...fadeUp(0.2)} className={styles.heading}>
         <span className={styles.headingLine}>Let&apos;s</span>
         <span className={styles.headingLineAccent}>connect.</span>
       </motion.h2>
 
-      {/* 3. Supporting text */}
+      {/* 2. Supporting text */}
       <motion.p {...fadeUp(0.3)} className={styles.description}>
         Good products start
         <br />
         with a conversation.
       </motion.p>
 
-      {/* 4. Contact links */}
+      {/* 3. Contact links */}
       <motion.div {...fadeUp(0.4)} className={styles.links}>
         {CONTACT_LINKS.map((link) => (
           <ContactLinkRow key={link.label} link={link} />
         ))}
       </motion.div>
 
-      {/* 5. Location / availability */}
+      {/* 4. Location / availability */}
       <motion.div {...fadeUp(0.5)} className={styles.location}>
         <span className={styles.locationDot} />
         <span>{LOCATION.base}</span>

@@ -25,7 +25,7 @@ export default function ContactPage() {
             connections={[]}
             showLabels={false}
             animate
-            preserveAspectRatio="xMidYMid slice"
+            preserveAspectRatio="xMidYMid meet"
           />
         </div>
       </div>

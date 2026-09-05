@@ -22,7 +22,7 @@
   min-width: 0;
   /* Shape of the map box: width comes from the flex layout above, this
      ratio decides the height. Try 21/9, 4/3, 1/1, etc. */
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   max-height: 100%;
   position: relative;
   z-index: 1;

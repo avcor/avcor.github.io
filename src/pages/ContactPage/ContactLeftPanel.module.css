@@ -8,31 +8,7 @@
   z-index: 2;
 }
 
-/* ── 1. Eyebrow ── */
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 36px;
-}
-
-.eyebrowText {
-  font-size: 0.63rem;
-  font-weight: 600;
-  color: var(--color-white-a40);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.eyebrowLine {
-  width: 32px;
-  height: 1px;
-  background: var(--color-border);
-  flex-shrink: 0;
-}
-
-/* ── 2. Heading ── */
+/* ── 1. Heading ── */
 .heading {
   font-weight: 700;
   line-height: 1.04;
@@ -52,7 +28,7 @@
   color: var(--color-primary);
 }
 
-/* ── 3. Description ── */
+/* ── 2. Description ── */
 .description {
   font-size: 1.05rem;
   font-weight: 400;
@@ -61,14 +37,14 @@
   margin-bottom: 36px;
 }
 
-/* ── 4. Contact links ── */
+/* ── 3. Contact links ── */
 .links {
   display: flex;
   flex-direction: column;
   margin-bottom: 36px;
 }
 
-/* ── 5. Location ── */
+/* ── 4. Location ── */
 .location {
   display: flex;
   align-items: center;
@@ -97,10 +73,6 @@
 @media (max-width: 768px) {
   .column {
     max-width: 100%;
-  }
-
-  .eyebrow {
-    margin-bottom: 24px;
   }
 
   .description {
