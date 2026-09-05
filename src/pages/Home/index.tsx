@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import ScrollHint from '../../components/ScrollHint'
-import HeroCanvas from '../../components/HeroCanvas'
 import styles from './Home.module.css'
 
 // ─── Animation presets ───────────────────────────────────────────────────────
@@ -33,9 +32,6 @@ const headlineSecondary = [
 export default function Home() {
   return (
     <main id="hero-section" className={styles.page}>
-      {/* ── Particle canvas, full viewport, behind content ── */}
-      <HeroCanvas />
-
       {/* ── Content layer ── */}
       <div className={styles.contentLayer}>
         {/* Hero text */}
@@ -70,9 +66,11 @@ export default function Home() {
             <br />
             behind what truly matters.
           </motion.p>
-
-          <ScrollHint label="Scroll to explore" />
         </section>
+
+        <div className={styles.scrollHintWrap}>
+          <ScrollHint label="Scroll to explore" />
+        </div>
       </div>
     </main>
   )

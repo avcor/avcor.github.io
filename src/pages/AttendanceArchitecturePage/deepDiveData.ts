@@ -16,7 +16,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`AttendanceDialogRepo` takes a fresh high-accuracy GPS fix (15s timeout), then calls a server-side geofence validation endpoint. The camera button stays disabled, and switches to a retry action, until that call succeeds.',
     insight:
       'Geofencing is entirely server-side by design, no radius or coordinate ever ships in the app. It is also independently feature-flagged per institution.',
-    watermark: 'Location',
     proof: {
       kind: 'flow',
       steps: [
@@ -46,7 +45,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       'On Wi-Fi, the app resolves its public IP by cross-checking three independent lookup services and validates it server-side against an approved-IP-range endpoint, run in parallel with the geofence check.',
     insight:
       'This is an independently flagged, optional layer, not a replacement for geofencing. Institutions choose either, both, or neither based on their campus network layout.',
-    watermark: 'Network',
     proof: {
       kind: 'table',
       columns: ['Service', 'Role'],
@@ -73,7 +71,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`CircleCameraCaptureActivity` is the only producer of the `CAPTURE_ABSOLUTE_PATH` the punch flow accepts, capturing live via CameraX\'s front camera with no import or attach path anywhere in the flow.',
     insight:
       '`onStop()` force-finishes the activity if it is backgrounded (app switch, incoming call, screen lock), so a live session cannot be paused and swapped for a still image mid-capture.',
-    watermark: 'Capture',
     guide:
       '`CircleCameraCaptureActivity` is the single entry point into everything below: liveness and identity continuity both run on frames from this one live session, not a separate step.',
   },
@@ -91,7 +88,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`processImageForLiveness` shuffles 2 of 3 head-turn directions (`LookLeft`, `LookRight`, `LookDown`) per session and appends a mandatory `Blink` step requiring two full blinks, tracked with ML Kit\'s `FaceDetectorOptions` (`LANDMARK_MODE_ALL`, `CLASSIFICATION_MODE_ALL`, `enableTracking()`) running on live camera frames.',
     insight:
       "Head-pose thresholds (ML Kit's `headEulerAngleX`/`headEulerAngleY`) must hold for 10 consecutive frames (about 0.33s) before advancing. Each blink needs an open, closed, open transition in ML Kit's eye-open probability, and two of them, with a 300ms debounce between, so a single lucky frame cannot fake either step.",
-    watermark: 'Liveness',
     proof: {
       kind: 'table',
       columns: ['ML Kit config', 'Output used', 'Check it powers'],
@@ -118,7 +114,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       "The first detected face's ML Kit `trackingId` is captured as `initialFaceId`; every later frame is compared against it. A mismatch, more than one face, or missing ML Kit eye and nose landmarks (glasses, caps) shows a blocking dialog and restarts the challenge.",
     insight:
       'Low light is rejected on the same pass (average luma below 60), so a dim room cannot be used to defeat the multi-face or landmark checks by hiding detail from ML Kit.',
-    watermark: 'Identity',
     proof: {
       kind: 'table',
       columns: ['Check', 'Trigger', 'Result'],
@@ -145,7 +140,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`PunchInViewModel` orchestrates the punch and delegates the network calls to `PunchImageRepo`: fetch a signed URL, upload the selfie, then register the punch with user id, timestamp, lat/long, reverse-geocoded address, public IP, device info, and the resulting media id. An explicit consent checkbox gates both the camera and the final submit.',
     insight:
       'The pipeline is fail-visible, not fail-silent: upload or registration errors surface as a retryable state, and the locally cached selfie is cleaned up either way, so a failed attempt is never silently counted as a punch.',
-    watermark: 'Upload',
     proof: {
       kind: 'table',
       columns: ['Field', 'Type', 'Source'],

@@ -54,6 +54,14 @@
   margin-bottom: 40px;
 }
 
+/* Pinned to the viewport corner, independent of how tall the centered hero
+   text block is, instead of trailing it in the flex flow. */
+.scrollHintWrap {
+  position: absolute;
+  left: 48px;
+  bottom: 40px;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .contentLayer {
@@ -66,5 +74,10 @@
 
   .headline {
     max-width: 100%;
+  }
+
+  .scrollHintWrap {
+    left: 24px;
+    bottom: 24px;
   }
 }

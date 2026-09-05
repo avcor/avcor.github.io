@@ -18,7 +18,6 @@ export const COLLABORATION_PANELS: DeepDivePanel[] = [
       'Ran the requirement down with the Product Manager: who opens the screen, what they check first, and which edge cases are real (carry over, penalty, scholarship, waiver, excess, instalments). The agreed answer set the row order and what got cut.',
     insight:
       'The tab layout still branches on user type and feature flags at runtime, so the same alignment holds for a parent, a prospective student, and an alumni without three separate screens.',
-    watermark: 'Spec',
     proof: {
       kind: 'table',
       columns: ['User type', 'Sees first'],
@@ -45,7 +44,6 @@ export const COLLABORATION_PANELS: DeepDivePanel[] = [
       'Walked the UI iteration through all three teams before writing code: mobile for feasibility, backend for which data was actually available, product for what students needed to see first. Any new API was a joint call with backend, weighed against reusing an existing endpoint.',
     insight:
       'This is where most of the calendar time went, not in the Kotlin. Getting three teams to agree on one row order up front is what let the build phase move fast and stay unchanged through review.',
-    watermark: 'Align',
     proof: {
       kind: 'table',
       columns: ['Team', 'Owned'],
@@ -75,7 +73,6 @@ export const PAYMENT_FLOW_PANELS: DeepDivePanel[] = [
       'The app posts the fee and amount to get back an orderId, guarded against double taps. Only after that does it ask the backend which gateways are available for that order, and render them as options.',
     insight:
       "The backend decides which gateways are even offered, filtering out any the student can't use (a missing phone number, for instance) before the list ever reaches the screen.",
-    watermark: 'Order',
     proof: {
       kind: 'flow',
       steps: [
@@ -104,7 +101,6 @@ export const PAYMENT_FLOW_PANELS: DeepDivePanel[] = [
       "The checkout WebView's user-agent is rewritten to a clean browser string before load, and the gateway's form is submitted as a self-submitting HTML form with every field escaped. A separate native SDK path handles loan-based checkout, no WebView at all.",
     insight:
       'Both checkout paths, hosted and native, are handed the same orderId, so everything downstream, confirmation and history, works identically regardless of which one the student went through.',
-    watermark: 'Checkout',
     proof: {
       kind: 'table',
       columns: ['Rail', 'How it renders'],
@@ -129,7 +125,6 @@ export const PAYMENT_FLOW_PANELS: DeepDivePanel[] = [
       'The redirect handler only decides where to route the student next. Whether the payment actually succeeded is decided separately, by the backend asking the gateway directly, never by anything the client reports.',
     insight:
       'If the screen loads before that server-side check finishes, the order simply reads as pending until it updates, it is never guessed at.',
-    watermark: 'Verify',
     proof: {
       kind: 'flow',
       steps: [

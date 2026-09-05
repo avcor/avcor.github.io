@@ -66,10 +66,6 @@ export default function DeepDivePanel({
 }: DeepDivePanelProps) {
   return (
     <div className={`${styles.panel} ${variant === 'stacked' ? styles.stacked : ''}`}>
-      <span className={styles.watermark} aria-hidden="true">
-        {panel.watermark}
-      </span>
-
       {/* ── Left: narrative ── */}
       <div className={styles.left}>
         {/* Title stays pinned to the top of the scroll container while the

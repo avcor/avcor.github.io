@@ -16,7 +16,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`tool/setup.sh --permissions` re-patches `AndroidManifest.xml`, `build.gradle` manifestPlaceholders, and `Info.plist` idempotently after every `pub get`. `--doctor` is a read-only check that warns when the scaffold has drifted.',
     insight:
       'The fix is not "don\'t regenerate," it\'s making the regeneration harmless: the patch step is scripted and runs automatically in CI, not remembered by a developer.',
-    watermark: 'Regen',
     proof: {
       kind: 'flow',
       steps: [
@@ -41,7 +40,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`flutter build aar` publishes a versioned AAR into a local Maven repo. `build.gradle` branches on an `isCI` flag: CI resolves the prebuilt AAR from that repo (transitively pulling the per-ABI engine AARs via its POM), local builds depend on `project(":flutter")` directly.',
     insight:
       '`evaluationDependsOn(":flutter")` only runs when the Flutter source module is actually present, so CI never has to check it out just to read one Gradle extension property.',
-    watermark: 'Boundary',
     proof: {
       kind: 'table',
       columns: ['Context', 'Dependency source', 'What it buys'],
@@ -66,7 +64,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`ndkVersion` reads `project(":flutter").extensions.getByName("flutter").ndkVersion` locally, so it can never drift from whatever Flutter SDK digii-mobile points to. CI has no `:flutter` module to query, so the resolved value is a comment-documented hardcoded fallback.',
     insight:
       'The CI fallback is a real coupling, not a convenience: bump the Flutter SDK and forget to update the CI constant, and the failure is a silent size regression, not a build error.',
-    watermark: 'NDK',
     proof: {
       kind: 'code',
       filename: 'app/build.gradle',
@@ -90,7 +87,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`switchToNonRelease` and `switchToRelease` Copy tasks stage the correct file, and an `afterEvaluate` block force-wires them as a `dependsOn` for every relevant per-variant task, so the swap runs whether or not anyone remembers it.',
     insight:
       '`registerDependencies()` looks up each task by name and only wires it if present, which is what makes the same block safe across build-type task graphs that don\'t all exist for every variant.',
-    watermark: 'Variant',
     proof: {
       kind: 'code',
       filename: 'app/build.gradle',
@@ -116,7 +112,6 @@ registerDependencies(nonReleaseTasksQa, "switchToNonRelease")`,
       '`flutter build apk --release --obfuscate --split-debug-info=build/symbols/android` writes de-obfuscation maps alongside the APK; a post-build `llvm-strip` pass removes Flutter 3.41\'s unstripped `libflutter.so`. `build/symbols/android` is archived with every release.',
     insight:
       '`tool/release.sh` currently signs with the debug keystore; it\'s flagged in the script\'s own README, not hidden, precisely because the production keystore wiring is still an open item, not an oversight.',
-    watermark: 'Sign',
     proof: {
       kind: 'table',
       columns: ['Step', 'Flag / tool', 'Why'],

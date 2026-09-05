@@ -22,7 +22,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       "`ApiClient.java` runs two independent pinning layers: OkHttp's `CertificatePinner` as the primary enforcement, and a custom `PinVerificationInterceptor` that walks the peer certificate chain and computes SPKI SHA-256 per certificate. Pins are stored as XOR-obfuscated byte arrays, decoded only at runtime, and pin against issuing intermediates rather than leaf certificates.",
     insight:
       'Pinning intermediates instead of leaves is deliberate: public CAs rotate leaf certificates on a roughly 90 day cycle and cloud load balancers issue fresh wildcard leaves on renewal, either would brick the app on a routine certificate rotation if pinned directly.',
-    watermark: 'Pinning',
     proof: {
       kind: 'table',
       columns: ['Layer', 'Role'],
@@ -48,7 +47,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`network_security_config.xml` sets `cleartextTrafficPermitted=false` at the root, with a domain-scoped pin set (10 SHA-256 pins, includeSubdomains), and one narrow, exact-host cleartext exception for a logging origin, flagged in the config as temporary pending HTTPS support on that origin.',
     insight:
       'debug-overrides only trusts user-installed proxy CAs on debuggable builds, so a rooted device running a release build cannot MITM traffic just by installing a proxy CA, a common debugging assumption the config deliberately does not extend to release.',
-    watermark: 'Network',
     proof: {
       kind: 'code',
       filename: 'res/xml/network_security_config.xml',
@@ -83,7 +81,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`Utils.getSecurePrefs` wraps AndroidX `EncryptedSharedPreferences` on a Keystore `MasterKey` (AES256_SIV key wrapping, AES256_GCM value encryption), auto-migrates the legacy plaintext store on first read, and on catching `KeyStoreException` / `AEADBadTagException` / Tink keyset errors, wipes and rebuilds the encrypted file once instead of leaving the user locked out.',
     insight:
       'Scope is deliberate: the store holds the session token, the one credential worth Keystore-grade protection, not the general local cache. The instance is process-cached and pre-warmed in `Application.onCreate()`, added after a production ANR traced to Keystore2 Binder contention blocking the main thread for 5+ seconds. The security fix and the performance fix were the same change.',
-    watermark: 'Keystore',
     proof: {
       kind: 'flow',
       steps: [
@@ -112,7 +109,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       '`AndroidJSInterface` exposes a single no-argument `onClicked()` callback, nothing else, and `PaymentGatewayActivity` matches every redirect against a regex allowlist (success/failure patterns plus known fee paths) in `shouldOverrideUrlLoading` before treating it as a payment outcome.',
     insight:
       "The bridge's minimalism is the control, not a restriction added afterward: there is no method to widen scope later, since arbitrary data-passing was never built in the first place. Payment details are only ever entered on the provider's page, never handled by the app.",
-    watermark: 'WebView',
     proof: {
       kind: 'table',
       columns: ['Surface', 'Exposed to JS', 'Notes'],

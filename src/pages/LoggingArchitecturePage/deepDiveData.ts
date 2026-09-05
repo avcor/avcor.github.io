@@ -16,7 +16,6 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
       'An OkHttp application interceptor (`CustomResponseInterceptor`) times every request and, when the response code is in the server-pushed `httpCodes` allowlist, emits a structured log: method, route, response code, duration, masked queries. HTTP 401 is exempt from that gate: it is logged unconditionally, immediately, through a separate forensic path. Manual `RegisterLog` calls add domain events on top of that automatic network layer.',
     insight:
       'The URL is templated into a `commonURL` by replacing ids, emails, and phones with placeholders, so `/user/4821/fee` and `/user/9033/fee` collapse to one searchable route instead of thousands of unique ones. That templating lives in `RequestLog` (`LogReportGenericModels.kt`), built from the data the interceptor hands it, not inline in the interceptor itself.',
-    watermark: 'Capture',
     proof: {
       kind: 'code',
       filename: 'CustomResponseInterceptor.java',
@@ -46,7 +45,6 @@ if (getHttpCodes().contains(response.code())) {
       'Producers do a non-blocking `channel.trySend` and return immediately. A single consumer coroutine on `Dispatchers.IO` drains the channel, batching up to 50 logs or every 200ms, and writes each batch in one Room transaction.',
     insight:
       'Batching turns a per-log `launch` plus single-row insert into one transaction per 50 logs, roughly 50x fewer writes. The channel uses `BufferOverflow.DROP_OLDEST`, so under a burst the newest logs win instead of back-pressuring the producer. `BATCH_SIZE` and `FLUSH_WINDOW_MS` are fixed constants in code, not remote-config knobs. See [[remote-config|Runtime Control]] for what actually is tunable.',
-    watermark: 'Async',
     proof: {
       kind: 'code',
       filename: 'LokiLocal.kt',
@@ -75,7 +73,6 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
       'A masking layer runs on the sender’s IO coroutine, before the Room insert and before upload. It walks JSON recursively (including JSON-in-string), falls back to regex for URLs and query params, and matches keys on word boundaries so `company` never trips the `pan` rule.',
     insight:
       'It is fail-closed: if masking throws on a malformed payload, the log is dropped, not shipped raw. A 100-entry LRU cache and an O(n) early-exit scan keep the common case cheap.',
-    watermark: 'Mask',
     proof: {
       kind: 'table',
       columns: ['Category', 'Example keys', 'Action'],
@@ -102,7 +99,6 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
       'Batch mode persists masked logs to Room and uploads them later via a `CoroutineWorker` gated on `NetworkType.CONNECTED`. Immediate mode skips the DB and posts straight to Loki through an in-memory pipeline that caps outbound work at 4 concurrent POSTs.',
     insight:
       'The tradeoff is explicit: batch survives process death because it is on disk; immediate does not, since in-flight logs live only in memory. Immediate is not per-log instant, though: it runs the same 50-log/200ms micro-batch window as the DB path, then fans out via the semaphore instead of writing to Room. It is reserved for high-priority diagnostics (401s, short-TTL token dumps) where skipping disk latency beats durability.',
-    watermark: 'Deliver',
     proof: {
       kind: 'table',
       columns: ['Mode', 'Path', 'Guarantee'],
@@ -127,7 +123,6 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
       'Firebase Remote Config drives most of the pipeline: on/off, allowed levels, upload batch size and periodic upload interval, retention days and max stored logs, which HTTP status codes are logged, and whether response bodies are captured.',
     insight:
       'In prod, for `safeLevels=["error"]` every INFO/WARN call is discarded on the spot, just a level check, no serialize, no DB row. During an incident, a Remote Config push widens it to include warn/info, and those calls start flowing for more signal. Revert after, and they stop again: no cleanup, no leftover cost. The remote `batch_size` knob controls a different number, how many rows the upload worker reads per Room query per upload cycle, and `duration_min` controls how often that worker runs, with a 15-minute floor enforced by WorkManager.',
-    watermark: 'Config',
     proof: {
       kind: 'table',
       columns: ['Knob', 'Controls', 'Prod default'],
@@ -156,7 +151,6 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
       'Response bodies are peeked with a 64KB cap; each message is capped at 10KB with a three-step truncation (drop body, then size metadata, then UTF-8-safe byte trim); the DB is capped at 10k rows / 10 days; channels drop oldest under overload.',
     insight:
       'The CursorWindow "row too big" case is handled in the worker itself: it deletes the offending oldest row and continues, so one pathological log cannot wedge the whole upload.',
-    watermark: 'Limits',
     proof: {
       kind: 'table',
       columns: ['Limit', 'Value', 'Prevents'],
@@ -183,7 +177,6 @@ dao.insertAll(batch)   // one transaction, ~50x cheaper`,
       'A `PASSTHROUGH_MARKER`-wrapped message bypasses the GDPR masker and the 10KB truncation for two paths only: short-TTL auth full-dumps and an unconditional per-401 diagnostic. Both are sent through immediate mode so they reach the server without waiting on the batch window, then the marker is stripped at the last hop in `LokiRepo`, right before the bytes hit the wire.',
     insight:
       'Volley and the OkHttp interceptor share the same client, so one auth call can trigger the dump twice a few ms apart; a 5-second, 64-entry LRU dedup cache keyed on (source, token) drops the duplicate. PII in the body is still masked: only the JWT `token` field and the raw headers ship unmasked, and that stream is access-restricted in Loki because a raw Auth-Token is a replayable bearer.',
-    watermark: 'Forensics',
     proof: {
       kind: 'table',
       columns: ['Field', 'Treatment', 'Why'],

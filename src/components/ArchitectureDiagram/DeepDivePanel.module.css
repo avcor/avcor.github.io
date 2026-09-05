@@ -8,22 +8,6 @@
   overflow: hidden;
 }
 
-/* Per-panel watermark, echoing the Overview's GhostBackdrop grammar. */
-.watermark {
-  position: absolute;
-  right: -0.5rem;
-  bottom: -1.5rem;
-  z-index: 0;
-  font-family: var(--font-primary);
-  font-weight: 700;
-  letter-spacing: 2px;
-  line-height: 1;
-  white-space: nowrap;
-  color: var(--color-text-ghost);
-  font-size: clamp(4rem, 14vw, 12rem);
-  pointer-events: none;
-}
-
 .left {
   position: relative;
   z-index: 1;
@@ -284,10 +268,6 @@
   box-shadow: var(--shadow-lg);
 }
 
-.stacked .watermark {
-  display: none;
-}
-
 .stacked .headingLine,
 .stacked .headingAccent {
   font-size: clamp(1.5rem, 2vw, 2rem);
@@ -332,9 +312,5 @@
     height: auto;
     align-items: stretch;
     padding: 8px 0 32px;
-  }
-
-  .watermark {
-    display: none;
   }
 }

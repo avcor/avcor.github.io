@@ -57,7 +57,6 @@ export interface DeepDivePanel {
   problem: string
   decision: string
   insight: string
-  watermark: string
   /** The proof artifact. Omitted for panels that instead set `guide`. */
   proof?: Proof
   /** Shown in place of a proof, orients the reader to the map itself. */
