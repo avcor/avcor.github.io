@@ -15,6 +15,13 @@
   min-height: 44px;
 }
 
+.icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-white);
+}
+
 .labelSpacer {
   flex: 1;
   min-width: 0;
@@ -28,14 +35,14 @@
 .label {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 30px;
   display: flex;
   align-items: center;
   height: 100%;
-  max-width: calc(100% - 44px - 14px);
+  max-width: calc(100% - 44px - 14px - 30px);
   padding: 0;
   overflow: hidden;
-  color: var(--color-white-a45);
+  color: var(--color-white);
   font-size: 1.05rem;
   font-weight: 500;
   text-align: left;
