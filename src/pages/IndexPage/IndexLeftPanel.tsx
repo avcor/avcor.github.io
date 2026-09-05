@@ -1,6 +1,5 @@
 import { forwardRef } from 'react'
 import { motion } from 'framer-motion'
-import ScrollHint from '../../components/ScrollHint'
 import IndexMetricsCard from './IndexMetricsCard'
 import IndexImpactCard from './IndexImpactCard'
 import styles from './IndexLeftPanel.module.css'
@@ -45,9 +44,6 @@ const IndexLeftPanel = forwardRef<HTMLDivElement>(function IndexLeftPanel(_props
         </motion.div>
 
       </div>
-
-      {/* 6. Scroll indicator */}
-      <ScrollHint label="Scroll to explore" />
 
     </div>
   )

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import ScrollHint from '../../components/ScrollHint'
 import styles from './ImpactLeftColumn.module.css'
 
 export default function ImpactLeftColumn() {
@@ -30,8 +29,6 @@ export default function ImpactLeftColumn() {
           className={styles.label}
         >
           <span className={styles.labelDot} />
-          <span className={styles.labelNum}>02</span>
-          <span className={styles.labelDivider} />
           <span className={styles.labelText}>Impact at a glance</span>
         </motion.div>
 
@@ -60,9 +57,6 @@ export default function ImpactLeftColumn() {
           productivity and trust at scale.
         </motion.p>
       </div>
-
-      {/* ── Scroll hint (mouse capsule) ── */}
-      <ScrollHint label="Scroll to explore work" />
     </div>
   )
 }
