@@ -11,7 +11,6 @@ export default function ContactPage() {
 
         <div className={styles.mapColumn}>
           <DottedWorldMap
-            className={styles.map}
             density="medium"
             dotRadius={0.2}
             edgeFade={0}
@@ -19,6 +18,7 @@ export default function ContactPage() {
             edgeMinOpacity={0.9}
             fadeSteps={10}
             dotColor={MAP_DOT_COLORS.bright}
+            landOpacity={0.55}
             metallic={false}
             accent={MAP_DOT_COLORS.mapAccent}
             markers={[{ id: 'del', label: 'New Delhi', lat: 28.6139, lng: 77.209 }]}

@@ -29,10 +29,6 @@
   overflow: hidden;
 }
 
-.map {
-  opacity: 0.55;
-}
-
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .content {
@@ -60,7 +56,6 @@
 
   .mapColumn {
     height: 220px;
-    opacity: 0.6;
     order: 2;
   }
 }

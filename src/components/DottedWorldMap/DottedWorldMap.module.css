@@ -20,6 +20,23 @@
     fill 0.15s ease;
 }
 
+/* Soft outer bloom behind the marker dot, additively blended so it reads
+   as light rather than a flat colored disc. Two radii layered for a
+   gradual falloff instead of one hard-edged blur ring. */
+.markerGlowOuter,
+.markerGlowInner {
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.markerGlowOuter {
+  filter: blur(2.2px);
+}
+
+.markerGlowInner {
+  filter: blur(0.9px);
+}
+
 .markerLabel {
   pointer-events: none;
 }

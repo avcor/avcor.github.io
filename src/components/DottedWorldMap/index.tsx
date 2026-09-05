@@ -23,6 +23,9 @@ interface DottedWorldMapProps {
    *  the original), or "high" (1°, ~16.5k, resolves island chains). */
   density?: DottedWorldMapDensity
   dotColor?: string
+  /** Dims only the land dot-matrix, not markers/labels, so a caller can
+   *  fade the background map without also dimming a marker's white label. */
+  landOpacity?: number
   /** Renders land dots with a diagonal brushed-steel gradient instead of a
    *  flat dotColor fill. */
   metallic?: boolean
@@ -42,6 +45,13 @@ interface DottedWorldMapProps {
   markers?: DottedWorldMapMarker[]
   connections?: DottedWorldMapConnection[]
   accent?: string
+  /** Marker's hot center color, distinct from the surrounding `accent`
+   *  glow so the dot can read as a bright core inside a softer halo. */
+  markerCoreColor?: string
+  /** Multiplies every marker glow layer's opacity; 1 = the tuned default,
+   *  0 turns the bloom off, >1 pushes it brighter. The only place glow
+   *  strength is controlled, no brightness is hardcoded in the layers. */
+  markerGlowIntensity?: number
   showLabels?: boolean
   animate?: boolean
   onMarkerSelect?: (marker: DottedWorldMapMarker) => void
@@ -351,6 +361,7 @@ function dotPath(cells: [number, number, number][], r: number) {
 export default function DottedWorldMap({
   density = 'medium',
   dotColor = 'var(--color-white-a25)',
+  landOpacity = 1,
   metallic = false,
   dotRadius,
   edgeFade,
@@ -360,6 +371,8 @@ export default function DottedWorldMap({
   markers = [],
   connections = [],
   accent = 'var(--color-primary)',
+  markerCoreColor = 'var(--color-glow)',
+  markerGlowIntensity = 1,
   showLabels = false,
   animate = true,
   onMarkerSelect,
@@ -448,91 +461,114 @@ export default function DottedWorldMap({
       role="img"
       aria-label={`World map with ${markers.length} marked location${markers.length === 1 ? '' : 's'}`}
     >
-      {metallic && (
-        <defs>
-          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--color-map-dot-metallic-highlight)" />
-            <stop offset="55%" stopColor="var(--color-map-dot-metallic-mid)" />
-            <stop offset="100%" stopColor="var(--color-map-dot-metallic-shadow)" />
-          </linearGradient>
-        </defs>
-      )}
+        {metallic && (
+          <defs>
+            <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="var(--color-map-dot-metallic-highlight)" />
+              <stop offset="55%" stopColor="var(--color-map-dot-metallic-mid)" />
+              <stop offset="100%" stopColor="var(--color-map-dot-metallic-shadow)" />
+            </linearGradient>
+          </defs>
+        )}
 
-      {layers.map((l) => (
-        <path
-          key={l.key}
-          d={l.d}
-          fill={metallic ? `url(#${gradientId})` : dotColor}
-          fillOpacity={l.opacity}
-          shapeRendering="geometricPrecision"
-        />
-      ))}
+        <g opacity={landOpacity}>
+          {layers.map((l) => (
+            <path
+              key={l.key}
+              d={l.d}
+              fill={metallic ? `url(#${gradientId})` : dotColor}
+              fillOpacity={l.opacity}
+              shapeRendering="geometricPrecision"
+            />
+          ))}
+        </g>
 
-      {links.map((l) => (
-        <path
-          key={l.i}
-          d={l.d}
-          fill="none"
-          stroke={accent}
-          strokeWidth={0.28}
-          strokeOpacity={0.5}
-          strokeLinecap="round"
-          className={animate ? styles.link : undefined}
-          style={animate ? { animationDelay: `${l.i * 0.18}s` } : undefined}
-        />
-      ))}
+        {links.map((l) => (
+          <path
+            key={l.i}
+            d={l.d}
+            fill="none"
+            stroke={accent}
+            strokeWidth={0.28}
+            strokeOpacity={0.5}
+            strokeLinecap="round"
+            className={animate ? styles.link : undefined}
+            style={animate ? { animationDelay: `${l.i * 0.18}s` } : undefined}
+          />
+        ))}
 
-      {placed.map((m) => {
-        const size = m.size ?? 0.85
-        const color = m.color ?? accent
-        const on = hovered === m.id
-        return (
-          <g
-            key={m.id}
-            onMouseEnter={() => setHovered(m.id)}
-            onMouseLeave={() => setHovered(null)}
-            onClick={() => select(m)}
-            onFocus={() => setHovered(m.id)}
-            onBlur={() => setHovered(null)}
-            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && select(m)}
-            tabIndex={onMarkerSelect ? 0 : -1}
-            className={styles.marker}
-            style={{ cursor: onMarkerSelect ? 'pointer' : 'default' }}
-          >
-            {animate && (
+        {placed.map((m) => {
+          const size = m.size ?? 0.85
+          const color = m.color ?? accent
+          const on = hovered === m.id
+          return (
+            <g
+              key={m.id}
+              onMouseEnter={() => setHovered(m.id)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => select(m)}
+              onFocus={() => setHovered(m.id)}
+              onBlur={() => setHovered(null)}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && select(m)}
+              tabIndex={onMarkerSelect ? 0 : -1}
+              className={styles.marker}
+              style={{ cursor: onMarkerSelect ? 'pointer' : 'default' }}
+            >
+              {animate && (
+                <circle
+                  cx={m.x}
+                  cy={m.y}
+                  r={size}
+                  fill={color}
+                  className={styles.ping}
+                  style={{ animationDelay: `${(m.x % 7) * 0.35}s` }}
+                />
+              )}
+              {/* Neon bloom: two blurred, additively-blended halos behind the
+               *  bright core, fading outward. Opacity is base * markerGlowIntensity
+               *  throughout, so brightness only ever changes via that prop. */}
               <circle
                 cx={m.x}
                 cy={m.y}
-                r={size}
+                r={size * (on ? 4.2 : 3.4)}
                 fill={color}
-                className={styles.ping}
-                style={{ animationDelay: `${(m.x % 7) * 0.35}s` }}
+                opacity={(on ? 0.22 : 0.16) * markerGlowIntensity}
+                className={styles.markerGlowOuter}
               />
-            )}
-            <circle
-              cx={m.x}
-              cy={m.y}
-              r={size * (on ? 1.35 : 1)}
-              fill={color}
-              className={styles.markerDot}
-              style={{ filter: `drop-shadow(0 0 2px ${color}) drop-shadow(0 0 4px ${color})` }}
-            />
-            {(showLabels || on) && (
-              <text
-                x={m.x + size + 1}
-                y={m.y + 0.85}
-                fontSize={2.4}
-                fill={on ? 'var(--color-text-primary)' : 'var(--color-text-secondary)'}
-                fontFamily="inherit"
-                fontWeight={on ? 600 : 500}
-                className={styles.markerLabel}
-              >
-                {m.label}
-              </text>
-            )}
-          </g>
-        )
-      })}
-    </svg>
+              <circle
+                cx={m.x}
+                cy={m.y}
+                r={size * (on ? 2.2 : 1.8)}
+                fill={color}
+                opacity={(on ? 0.55 : 0.4) * markerGlowIntensity}
+                className={styles.markerGlowInner}
+              />
+              <circle
+                cx={m.x}
+                cy={m.y}
+                r={size * (on ? 1.35 : 1) * 0.55}
+                fill={markerCoreColor}
+                className={styles.markerDot}
+                style={{
+                  filter: `drop-shadow(0 0 1.5px ${color}) drop-shadow(0 0 3px ${color}) drop-shadow(0 0 6px ${color})`,
+                }}
+              />
+              {(showLabels || on) && (
+                <text
+                  x={m.x + size + 1}
+                  y={m.y + 0.85}
+                  fontSize={2.4}
+                  fill="var(--color-white)"
+                  fontFamily="inherit"
+                  fontWeight={on ? 600 : 500}
+                  className={styles.markerLabel}
+                >
+                  {m.label}
+                </text>
+              )}
+            </g>
+          )
+        })}
+      </svg>
   )
 }
