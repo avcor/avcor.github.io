@@ -1,6 +1,7 @@
 import ContactLeftPanel from './ContactLeftPanel'
 import DottedWorldMap from '../../components/DottedWorldMap'
 import { MAP_DOT_COLORS } from '../../config/mapColors'
+import avMonogram from '../../assets/av-monogram.png'
 import styles from './ContactPage.module.css'
 
 export default function ContactPage() {
@@ -29,6 +30,8 @@ export default function ContactPage() {
           />
         </div>
       </div>
+
+      <img src={avMonogram} alt="AV monogram" className={styles.monogram} />
     </section>
   )
 }

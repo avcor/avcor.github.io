@@ -38,6 +38,10 @@
   font-weight: 700;
 }
 
+.headlineAccent {
+  color: var(--color-primary);
+}
+
 .headlineSecondary {
   display: block;
   font-size: clamp(1.4rem, 2.8vw, 2.8rem);
@@ -62,6 +66,17 @@
   bottom: 40px;
 }
 
+/* Pinned to the opposite viewport corner from the scroll hint. */
+.signature {
+  position: absolute;
+  right: 48px;
+  bottom: 0px;
+  width: clamp(96px, 20vw, 20vw);
+  height: auto;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .contentLayer {
@@ -79,5 +94,11 @@
   .scrollHintWrap {
     left: 24px;
     bottom: 24px;
+  }
+
+  .signature {
+    right: 24px;
+    bottom: 24px;
+    width: clamp(72px, 18vw, 100px);
   }
 }

@@ -1,4 +1,5 @@
 .page {
+  position: relative;
   height: 100vh;
   background: var(--color-bg-base);
   display: flex;
@@ -6,6 +7,17 @@
   overflow: hidden;
   font-family: var(--font-primary);
   padding-top: 0;
+}
+
+.monogram {
+  position: absolute;
+  right: 48px;
+  bottom: 40px;
+  width: clamp(72px, 8vw, 110px);
+  height: auto;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .content {
@@ -57,5 +69,11 @@
   .mapColumn {
     height: 220px;
     order: 2;
+  }
+
+  .monogram {
+    right: 24px;
+    bottom: 20px;
+    width: clamp(40px, 20vw, 20vw);
   }
 }

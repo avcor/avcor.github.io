@@ -7,8 +7,8 @@ const ease = [0.16, 1, 0.3, 1] as const
 /** The site's real scroll sections, in document order. */
 const SECTIONS = [
   { id: 'hero-section', label: 'Home' },
-  { id: 'work', label: 'Work' },
-  { id: 'index', label: 'Index' },
+  { id: 'work', label: 'Impact' },
+  { id: 'index', label: 'Work' },
   { id: 'contact', label: 'Contact' },
 ]
 
