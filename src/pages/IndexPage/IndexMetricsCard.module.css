@@ -1,19 +1,12 @@
 /* ── Card shell ── */
 .card {
-  border-radius: 16px;
-  padding: 1px;
+  cursor: default;
 }
 
 /* ── Three-column grid ── */
 .grid {
-  background: transparent;
-  border-radius: 15px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: 0;
-  box-shadow:
-    inset 0 0 0 1px var(--color-white-a07),
-    inset 0 1px 0   var(--color-white-a08);
 }
 
 /* ── Single metric column ── */
@@ -61,12 +54,12 @@
   white-space: nowrap;
 }
 
-/* ── Vertical divider (inset from top and bottom) ── */
+/* ── Vertical divider (short, centered segment, not full-bleed) ── */
 .divider {
   position: absolute;
   right: 0;
-  top: 20%;
-  bottom: 20%;
+  top: 10%;
+  bottom: 10%;
   width: 1px;
   background: var(--color-white-a08);
   pointer-events: none;
