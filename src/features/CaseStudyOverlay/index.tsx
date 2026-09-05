@@ -1,4 +1,4 @@
-import { useEffect, useState, type ComponentType } from 'react'
+import { useEffect, type ComponentType } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Share2 } from 'lucide-react'
 import CaseStudyGallery from '../../pages/CaseStudyGallery'
@@ -10,6 +10,7 @@ import EcgCaseStudyGallery from '../../pages/EcgCaseStudyGallery'
 import DozeeCaseStudyGallery from '../../pages/DozeeCaseStudyGallery'
 import PaymentCaseStudyGallery from '../../pages/PaymentCaseStudyGallery'
 import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
+import { useCopyToClipboard } from '../../hooks/useCopyToClipboard'
 import styles from './CaseStudyOverlay.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -35,7 +36,7 @@ export default function CaseStudyOverlay() {
   const { openId, close } = useCaseStudyOverlay()
   const isOpen = openId !== null
   const Gallery = openId ? GALLERIES[openId] : null
-  const [copied, setCopied] = useState(false)
+  const { copied, copy, reset } = useCopyToClipboard()
 
   // Escape to close + lock the page behind the sheet while it's open.
   useEffect(() => {
@@ -54,19 +55,12 @@ export default function CaseStudyOverlay() {
 
   // Reset the "copied" affordance whenever a fresh sheet opens.
   useEffect(() => {
-    setCopied(false)
-  }, [openId])
+    reset()
+  }, [openId, reset])
 
-  const onShare = async () => {
+  const onShare = () => {
     if (!openId) return
-    const url = `${window.location.origin}${window.location.pathname}#case-study/${openId}`
-    try {
-      await navigator.clipboard.writeText(url)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1800)
-    } catch {
-      window.prompt('Copy this link:', url)
-    }
+    copy(`${window.location.origin}${window.location.pathname}#case-study/${openId}`)
   }
 
   return (

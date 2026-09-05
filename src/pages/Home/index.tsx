@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import ScrollIndicator from '../../components/ScrollIndicator'
+import ScrollHint from '../../components/ScrollHint'
 import HeroCanvas from '../../components/HeroCanvas'
 import styles from './Home.module.css'
 
@@ -71,7 +71,7 @@ export default function Home() {
             behind what truly matters.
           </motion.p>
 
-          <ScrollIndicator />
+          <ScrollHint label="Scroll to explore" />
         </section>
       </div>
     </main>

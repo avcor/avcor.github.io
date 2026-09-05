@@ -1,0 +1,64 @@
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 14px;
+  padding: 14px 0;
+  min-height: 44px;
+}
+
+.labelSpacer {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: transparent;
+  font-size: 1.05rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-width: calc(100% - 44px - 14px);
+  padding: 0;
+  overflow: hidden;
+  color: var(--color-white-a45);
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.label:hover {
+  color: var(--color-text-primary);
+}
+
+.copied {
+  color: var(--color-text-primary);
+}
+
+.arrow {
+  color: var(--color-white-a25);
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.link:hover .arrow {
+  transform: translateX(4px);
+  color: var(--color-primary);
+}
