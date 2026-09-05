@@ -3,7 +3,7 @@
 export const MAP_DOT_COLORS = {
   faint: 'var(--color-white-a12)',
   muted: 'var(--color-white-a25)',
-  bright: 'var(--color-white-a40)',
+  bright: 'var(--color-map-dot-bright)',
   primary: 'var(--color-primary)',
   brightGreen: 'var(--color-glow)',
   mapAccent: 'var(--color-map-accent)',

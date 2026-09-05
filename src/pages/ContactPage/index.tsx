@@ -15,9 +15,9 @@ export default function ContactPage() {
             density="medium"
             dotRadius={0.2}
             edgeFade={0}
-            edgeMinScale={0.7}
-            edgeMinOpacity={1}
-            fadeSteps={8}
+            edgeMinScale={0.8}
+            edgeMinOpacity={0.9}
+            fadeSteps={10}
             dotColor={MAP_DOT_COLORS.bright}
             metallic={false}
             accent={MAP_DOT_COLORS.mapAccent}

@@ -184,6 +184,11 @@
      map's location dot can be tuned without affecting the site-wide accent. */
   --color-map-accent:                 #5AFF6A;
 
+  /* Dotted world map: base dot color, independent of --color-white-a40 so the
+     map's brightness can be tuned without affecting the many unrelated text/
+     stroke uses of that shared token. */
+  --color-map-dot-bright:             #FFFFFF70;
+
   /* macOS window chrome: fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;
   --color-macos-yellow:       #FEBC2E;
