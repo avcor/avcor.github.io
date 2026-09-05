@@ -87,14 +87,14 @@
 
 .heading {
   font-weight: 700;
-  line-height: 1.06;
+  line-height: 1.04;
   letter-spacing: -0.035em;
-  margin: 0;
+  margin: 0 0 20px;
 }
 
 .headingLine {
   display: block;
-  font-size: clamp(1.9rem, 2.8vw, 3.1rem);
+  font-size: clamp(2.6rem, 4vw, 4.4rem);
   color: var(--color-white);
 }
 
@@ -103,11 +103,12 @@
 }
 
 .description {
-  margin-top: 20px;
-  font-size: 0.92rem;
+  font-size: 1.15rem;
   font-weight: 400;
   color: var(--color-white-a45);
   line-height: 1.7;
+  max-width: 30ch;
+  margin-bottom: 28px;
 }
 
 /* ── Responsive ── */
