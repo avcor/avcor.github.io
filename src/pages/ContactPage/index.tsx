@@ -22,7 +22,7 @@ export default function ContactPage() {
             landOpacity={0.55}
             metallic={false}
             accent={MAP_DOT_COLORS.mapAccent}
-            markers={[{ id: 'del', label: 'New Delhi', lat: 28.6139, lng: 77.209 }]}
+            markers={[{ id: 'del', label: 'New Delhi\nGMT +5:30', lat: 28.6139, lng: 77.209 }]}
             connections={[]}
             showLabels={false}
             animate

@@ -563,7 +563,11 @@ export default function DottedWorldMap({
                   fontWeight={on ? 600 : 500}
                   className={styles.markerLabel}
                 >
-                  {m.label}
+                  {m.label.split('\n').map((line, i) => (
+                    <tspan key={line} x={m.x + size + 1} dy={i === 0 ? 0 : '1.2em'}>
+                      {line}
+                    </tspan>
+                  ))}
                 </text>
               )}
             </g>
