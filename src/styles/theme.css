@@ -173,6 +173,13 @@
   --color-tag-ux-iteration:     #A3E635; /* UX Iteration: lime, competency tint */
   --color-tag-tech-evaluation:  #E879F9; /* Technology Evaluation: fuchsia, competency tint */
 
+  /* Dotted world map: metallic sheen gradient stops, decorative only, no
+     brand identity. Diagonal highlight-to-shadow ramp reads as brushed
+     steel on the near-black background. */
+  --color-map-dot-metallic-highlight: #E8ECEF;
+  --color-map-dot-metallic-mid:       #9BA3AC;
+  --color-map-dot-metallic-shadow:    #4A515A;
+
   /* macOS window chrome: fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;
   --color-macos-yellow:       #FEBC2E;
