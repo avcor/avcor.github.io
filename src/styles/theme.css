@@ -180,6 +180,10 @@
   --color-map-dot-metallic-mid:       #9BA3AC;
   --color-map-dot-metallic-shadow:    #4A515A;
 
+  /* Dotted world map: marker accent, independent of --color-primary so the
+     map's location dot can be tuned without affecting the site-wide accent. */
+  --color-map-accent:                 #5AFF6A;
+
   /* macOS window chrome: fixed traffic-light identity, not swappable palette */
   --color-macos-red:          #FF5F57;
   --color-macos-yellow:       #FEBC2E;

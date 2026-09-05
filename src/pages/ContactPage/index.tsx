@@ -20,12 +20,12 @@ export default function ContactPage() {
             fadeSteps={8}
             dotColor={MAP_DOT_COLORS.bright}
             metallic={false}
-            accent="var(--color-primary)"
-            markers={[]}
+            accent={MAP_DOT_COLORS.mapAccent}
+            markers={[{ id: 'del', label: 'New Delhi', lat: 28.6139, lng: 77.209 }]}
             connections={[]}
             showLabels={false}
             animate
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="xMidYMid slice"
           />
         </div>
       </div>

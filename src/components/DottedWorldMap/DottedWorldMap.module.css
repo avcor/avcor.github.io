@@ -15,7 +15,9 @@
 }
 
 .markerDot {
-  transition: r 0.15s ease;
+  transition:
+    r 0.15s ease,
+    fill 0.15s ease;
 }
 
 .markerLabel {

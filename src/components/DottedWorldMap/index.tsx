@@ -514,9 +514,8 @@ export default function DottedWorldMap({
               cy={m.y}
               r={size * (on ? 1.35 : 1)}
               fill={color}
-              stroke="var(--color-white)"
-              strokeWidth={0.3}
               className={styles.markerDot}
+              style={{ filter: `drop-shadow(0 0 2px ${color}) drop-shadow(0 0 4px ${color})` }}
             />
             {(showLabels || on) && (
               <text

@@ -5,6 +5,8 @@ export const MAP_DOT_COLORS = {
   muted: 'var(--color-white-a25)',
   bright: 'var(--color-white-a40)',
   primary: 'var(--color-primary)',
+  brightGreen: 'var(--color-glow)',
+  mapAccent: 'var(--color-map-accent)',
 } as const
 
 export type MapDotColorName = keyof typeof MAP_DOT_COLORS
