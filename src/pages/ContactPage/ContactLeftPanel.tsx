@@ -18,15 +18,15 @@ export default function ContactLeftPanel() {
     <div className={styles.column}>
       {/* 1. Heading */}
       <motion.h2 {...fadeUp(0.2)} className={styles.heading}>
-        <span className={styles.headingLine}>Let&apos;s</span>
-        <span className={styles.headingLineAccent}>connect.</span>
+        <span className={styles.headingLine}>Let&apos;s start</span>
+        <span className={styles.headingLineAccent}>with hello.</span>
       </motion.h2>
 
       {/* 2. Supporting text */}
       <motion.p {...fadeUp(0.3)} className={styles.description}>
-        Good products start
+        Picked these because I actually
         <br />
-        with a conversation.
+        check them.
       </motion.p>
 
       {/* 3. Contact links */}
