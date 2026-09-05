@@ -22,8 +22,19 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 15px;
+  gap: 0;
   min-height: 0;
+}
+
+/* Grid dividers only, no boxed cards: drop the shared edge each card's
+   right/bottom neighbor would otherwise double up on, and strip the outer
+   edge so the divider grammar stays internal to the grid. */
+.rightColumn > :nth-child(3n)::after {
+  display: none;
+}
+
+.rightColumn > :nth-last-child(-n + 3)::before {
+  display: none;
 }
 
 /* ── Responsive ── */
@@ -31,6 +42,22 @@
   .rightColumn {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
+  }
+
+  .rightColumn > :nth-child(3n)::after {
+    display: block;
+  }
+
+  .rightColumn > :nth-child(2n)::after {
+    display: none;
+  }
+
+  .rightColumn > :nth-last-child(-n + 3)::before {
+    display: block;
+  }
+
+  .rightColumn > :last-child::before {
+    display: none;
   }
 }
 
@@ -50,5 +77,17 @@
   .rightColumn {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
+  }
+
+  .rightColumn > :nth-child(n)::after {
+    display: none;
+  }
+
+  .rightColumn > :nth-child(n)::before {
+    display: block;
+  }
+
+  .rightColumn > :last-child::before {
+    display: none;
   }
 }

@@ -100,16 +100,6 @@
   --color-primary-dim-a06:    #2ECC710F;
   --color-primary-dim-a16:    #2ECC7129;
 
-  /* Card gradient border (update with palette primary when swapping) */
-  --color-card-grad-bright:   #A0FFD22E;
-  --color-card-grad-mid:      #78FFB414;
-  --color-card-grad-subtle:   #50FF9608;
-
-  /* Card inner glow shadows (update with palette primary when swapping) */
-  --color-card-glow-outer:    #6EFFAA1A;
-  --color-card-glow-top:      #A0FFD214;
-  --color-card-glow-bottom:   #50FF9606;
-
   /* Extended accents: app-icon / dashboard tile tints (phone mockup) */
   --color-accent-purple:      #a78bfa;
   --color-accent-teal:        #2dd4bf;
