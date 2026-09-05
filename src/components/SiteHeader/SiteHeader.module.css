@@ -24,8 +24,8 @@
      around the arc); 4px top/bottom keeps the straight-edge gap matched. */
   padding: 4px 7px;
   background: linear-gradient(180deg, var(--color-white-a08), var(--color-white-a03));
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(100%);
+  -webkit-backdrop-filter: blur(24px) saturate(100%);
   border: 1px solid var(--color-white-a12);
   border-radius: 9999px;
   box-shadow:
@@ -64,10 +64,7 @@
   left: 0;
   right: 0;
   border-radius: 9999px;
-  /* Match the site's resting "primary surface" pattern (see RecruiterPill):
-     soft tinted fill + subtle border, instead of a bare bright ring that
-     pops off the glass. */
-  background: var(--color-primary-faint);
+  background: transparent;
   box-shadow: inset 0 0 0 1px var(--color-primary-a32);
   z-index: 0;
 }
