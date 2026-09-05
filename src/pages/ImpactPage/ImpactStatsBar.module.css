@@ -14,12 +14,15 @@
   gap: 24px;
 }
 
+/* min-width floor (not 0) keeps the title/description from being squeezed
+   into a multi-line wrap: without it, flex-shrink:0 on .statsGroup forces
+   this side to absorb the entire deficit instead of the stats reflowing. */
 .left {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   flex: 1;
-  min-width: 0;
+  min-width: 260px;
 }
 
 .title {
@@ -88,6 +91,24 @@
 }
 
 /* ── Responsive ── */
+
+/* Once .left hits its min-width floor above, there's no room left for
+   .statsGroup at its natural width, so let it wrap to a second line
+   instead of overflowing the panel. Matches --bp-xl (1280px): this is
+   the "standard desktop" tier, one below the wide-desktop layout the
+   base rules assume. */
+@media (max-width: 1279px) {
+  .statsGroup {
+    flex-shrink: 1;
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+
+  .statDivider {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .wrapper {
     padding: 16px 20px;
@@ -97,6 +118,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  .left {
+    min-width: 0;
   }
 
   .divider {
