@@ -45,6 +45,11 @@ interface DottedWorldMapProps {
   showLabels?: boolean
   animate?: boolean
   onMarkerSelect?: (marker: DottedWorldMapMarker) => void
+  /** SVG preserveAspectRatio. "meet" (default) letterboxes to fit the
+   *  container without cropping; "slice" fills the container on both axes,
+   *  cropping whichever side overflows, so the container's height actually
+   *  changes what's visible instead of just adding empty space. */
+  preserveAspectRatio?: string
   className?: string
   style?: CSSProperties
 }
@@ -358,6 +363,7 @@ export default function DottedWorldMap({
   showLabels = false,
   animate = true,
   onMarkerSelect,
+  preserveAspectRatio = 'xMidYMid meet',
   className,
   style,
 }: DottedWorldMapProps) {
@@ -436,6 +442,7 @@ export default function DottedWorldMap({
   return (
     <svg
       viewBox={`0 0 ${cols} ${rows}`}
+      preserveAspectRatio={preserveAspectRatio}
       className={className}
       style={{ width: '100%', height: '100%', display: 'block', ...style }}
       role="img"

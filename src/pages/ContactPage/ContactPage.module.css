@@ -20,9 +20,13 @@
 .mapColumn {
   flex: 1.4;
   min-width: 0;
-  height: 80%;
+  /* Shape of the map box: width comes from the flex layout above, this
+     ratio decides the height. Try 21/9, 4/3, 1/1, etc. */
+  aspect-ratio: 16 / 9;
+  max-height: 100%;
   position: relative;
   z-index: 1;
+  overflow: hidden;
 }
 
 .map {
@@ -36,7 +40,7 @@
   }
 
   .mapColumn {
-    height: 60%;
+    aspect-ratio: 4 / 3;
   }
 }
 

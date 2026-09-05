@@ -1,5 +1,6 @@
 import ContactLeftPanel from './ContactLeftPanel'
 import DottedWorldMap from '../../components/DottedWorldMap'
+import { MAP_DOT_COLORS } from '../../config/mapColors'
 import styles from './ContactPage.module.css'
 
 export default function ContactPage() {
@@ -12,18 +13,19 @@ export default function ContactPage() {
           <DottedWorldMap
             className={styles.map}
             density="medium"
-            dotRadius={0.38}
-            edgeFade={2}
-            edgeMinScale={0.3}
-            edgeMinOpacity={0.4}
+            dotRadius={0.2}
+            edgeFade={0}
+            edgeMinScale={0.7}
+            edgeMinOpacity={1}
             fadeSteps={8}
-            dotColor="var(--color-white-a25)"
+            dotColor={MAP_DOT_COLORS.bright}
             metallic={false}
             accent="var(--color-primary)"
             markers={[]}
             connections={[]}
             showLabels={false}
             animate
+            preserveAspectRatio="xMidYMid slice"
           />
         </div>
       </div>
