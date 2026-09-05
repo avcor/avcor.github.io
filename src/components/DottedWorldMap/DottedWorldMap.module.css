@@ -1,0 +1,56 @@
+.link {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.ping {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ping 2.6s ease-out infinite;
+}
+
+.marker {
+  outline: none;
+}
+
+.markerDot {
+  transition: r 0.15s ease;
+}
+
+.markerLabel {
+  pointer-events: none;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .ping {
+    animation: none;
+    opacity: 0.18;
+  }
+}

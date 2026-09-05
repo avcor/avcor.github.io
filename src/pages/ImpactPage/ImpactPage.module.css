@@ -5,7 +5,7 @@
   flex-direction: column;
   overflow: hidden;
   font-family: var(--font-primary);
-  padding-top: 72px;
+  padding-top: 0;
 }
 
 .content {
@@ -38,7 +38,7 @@
   .page {
     height: auto;
     overflow: auto;
-    padding-top: 64px;
+    padding-top: 0;
   }
 
   .content {

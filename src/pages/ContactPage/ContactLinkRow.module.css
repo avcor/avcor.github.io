@@ -1,0 +1,31 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  color: var(--color-white-a45);
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  min-height: 44px;
+}
+
+.label {
+  transition: color 0.2s ease;
+}
+
+.arrow {
+  color: var(--color-white-a25);
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.row:hover {
+  color: var(--color-text-primary);
+}
+
+.row:hover .arrow {
+  transform: translateX(4px);
+  color: var(--color-primary);
+}

@@ -4,11 +4,12 @@ import styles from './SiteHeader.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
-/** The site's 3 real scroll sections, in document order. */
+/** The site's real scroll sections, in document order. */
 const SECTIONS = [
   { id: 'hero-section', label: 'Home' },
   { id: 'work', label: 'Work' },
   { id: 'index', label: 'Index' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 const SECTION_IDS = SECTIONS.map((s) => s.id)
