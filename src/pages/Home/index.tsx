@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import ScrollHint from '../../components/ScrollHint'
-import signatureAnimation from '../../assets/abhishek-signature.gif'
+import signatureImage from '../../assets/abhishek-signature.png'
 import styles from './Home.module.css'
 
 // ─── Animation presets ───────────────────────────────────────────────────────
 
 const ease = [0.16, 1, 0.3, 1] as const
 
-// Headline/subtext fades finish at 1.95s (last of the delay+duration pairs
-// below). The signature <img> is mounted at that point rather than just
-// faded in, since a GIF starts playing on mount regardless of CSS opacity.
-const SIGNATURE_START_DELAY_MS = 1950
+// Starts while the headline/subtext fades (which finish at 1.95s) are still
+// wrapping up, so the signature doesn't feel like it's waiting around.
+const SIGNATURE_START_DELAY_MS = 900
 
-// Length of the signature GIF's own draw-on animation. A GIF's loop count is
-// baked into the file and browsers just honor it, so the only way to stop it
-// after one pass is to swap the <img> to a frozen frame once this elapses.
-const SIGNATURE_GIF_DURATION_MS = 1500
+// A static PNG can't draw itself the way the old GIF did, so the "written"
+// feel is faked with a left-to-right clip-path wipe over this duration.
+const SIGNATURE_REVEAL_DURATION_S = 1.4
 
 function fadeUp(delay: number, duration = 0.9) {
   return {
@@ -42,32 +40,11 @@ const headlineSecondary = [
 
 export default function Home() {
   const [showSignature, setShowSignature] = useState(false)
-  const [frozenSignatureSrc, setFrozenSignatureSrc] = useState<string | null>(null)
-  const signatureImgRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSignature(true), SIGNATURE_START_DELAY_MS)
     return () => clearTimeout(timer)
   }, [])
-
-  const handleSignatureLoad = () => {
-    // Swapping to the frozen data URL below fires another load event on
-    // this same <img>; skip re-arming the freeze timer for that one.
-    if (frozenSignatureSrc) return
-
-    // The GIF only starts animating once it has actually loaded, not at
-    // mount time, so the freeze timer has to be anchored here.
-    setTimeout(() => {
-      const img = signatureImgRef.current
-      if (!img) return
-
-      const canvas = document.createElement('canvas')
-      canvas.width = img.naturalWidth
-      canvas.height = img.naturalHeight
-      canvas.getContext('2d')?.drawImage(img, 0, 0)
-      setFrozenSignatureSrc(canvas.toDataURL())
-    }, SIGNATURE_GIF_DURATION_MS)
-  }
 
   return (
     <main id="hero-section" className={styles.page}>
@@ -121,14 +98,12 @@ export default function Home() {
 
         {showSignature && (
           <motion.img
-            ref={signatureImgRef}
-            src={frozenSignatureSrc ?? signatureAnimation}
+            src={signatureImage}
             alt="Abhishek's signature"
             className={styles.signature}
-            onLoad={handleSignatureLoad}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, ease }}
+            initial={{ opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+            animate={{ opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
+            transition={{ duration: SIGNATURE_REVEAL_DURATION_S, ease }}
           />
         )}
       </div>
