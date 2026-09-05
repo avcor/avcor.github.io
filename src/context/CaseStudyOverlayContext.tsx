@@ -1,21 +1,5 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react'
-
-interface CaseStudyOverlayValue {
-  /** id of the case study whose details sheet is open, or null when closed. */
-  openId: string | null
-  open: (id: string) => void
-  close: () => void
-}
-
-const CaseStudyOverlayContext = createContext<CaseStudyOverlayValue | null>(null)
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { CaseStudyOverlayContext } from './caseStudyOverlayContextValue'
 
 /** Deep-link prefix: a shared URL like `#case-study/flutter-integration` opens
  *  that case study's sheet directly on load, distinct from plain section
@@ -54,12 +38,4 @@ export function CaseStudyOverlayProvider({ children }: { children: ReactNode }) 
   return (
     <CaseStudyOverlayContext.Provider value={value}>{children}</CaseStudyOverlayContext.Provider>
   )
-}
-
-export function useCaseStudyOverlay() {
-  const ctx = useContext(CaseStudyOverlayContext)
-  if (!ctx) {
-    throw new Error('useCaseStudyOverlay must be used within a CaseStudyOverlayProvider')
-  }
-  return ctx
 }

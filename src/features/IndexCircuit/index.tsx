@@ -15,7 +15,7 @@ import {
   useCircuitHighlight,
   type HoveredNode,
 } from '../../hooks/useCircuitHighlight'
-import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
+import { useCaseStudyOverlay } from '../../hooks/useCaseStudyOverlay'
 import pcb from '../../assets/pcb.png'
 import styles from './IndexCircuit.module.css'
 

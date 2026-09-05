@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from './PageDots.module.css'
 
@@ -34,6 +34,10 @@ export default function PageDots() {
     return () => observers.forEach(o => o.disconnect())
   }, [])
 
+  const goTo = useCallback((i: number) => {
+    document.getElementById(SECTIONS[i].id)?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
+
   // Arrow / PageUp / PageDown keyboard navigation
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -51,11 +55,7 @@ export default function PageDots() {
 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [active])
-
-  const goTo = (i: number) => {
-    document.getElementById(SECTIONS[i].id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+  }, [active, goTo])
 
   return (
     <div className={styles.container}>

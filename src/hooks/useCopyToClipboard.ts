@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
  */
 export function useCopyToClipboard(resetDelay = 1800) {
   const [copied, setCopied] = useState(false)
-  const timeoutRef = useRef<number>()
+  const timeoutRef = useRef<number | undefined>(undefined)
 
   useEffect(() => () => window.clearTimeout(timeoutRef.current), [])
 

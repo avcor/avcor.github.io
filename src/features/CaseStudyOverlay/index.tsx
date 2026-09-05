@@ -9,7 +9,7 @@ import PlatformOptimizationCaseStudyGallery from '../../pages/PlatformOptimizati
 import EcgCaseStudyGallery from '../../pages/EcgCaseStudyGallery'
 import DozeeCaseStudyGallery from '../../pages/DozeeCaseStudyGallery'
 import PaymentCaseStudyGallery from '../../pages/PaymentCaseStudyGallery'
-import { useCaseStudyOverlay } from '../../context/CaseStudyOverlayContext'
+import { useCaseStudyOverlay } from '../../hooks/useCaseStudyOverlay'
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard'
 import styles from './CaseStudyOverlay.module.css'
 
