@@ -8,13 +8,13 @@ import styles from './Home.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
-// Starts while the headline/subtext fades (which finish at 1.95s) are still
-// wrapping up, so the signature doesn't feel like it's waiting around.
-const SIGNATURE_START_DELAY_MS = 900
+// Matches the headline's own start delay (0.5s) so the signature reveals
+// alongside the text instead of visibly lagging behind it.
+const SIGNATURE_START_DELAY_MS = 500
 
 // A static PNG can't draw itself the way the old GIF did, so the "written"
 // feel is faked with a left-to-right clip-path wipe over this duration.
-const SIGNATURE_REVEAL_DURATION_S = 1.4
+const SIGNATURE_REVEAL_DURATION_S = 5
 
 function fadeUp(delay: number, duration = 0.9) {
   return {
