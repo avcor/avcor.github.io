@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  gap: 4px;
   min-height: 44px;
 }
 
@@ -22,39 +23,18 @@
   color: var(--color-white);
 }
 
-.labelSpacer {
+.label {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
-  color: transparent;
-  font-size: 1.05rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.label {
-  position: absolute;
-  top: 0;
-  left: 30px;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  max-width: calc(100% - 44px - 14px - 30px);
-  padding: 0;
   overflow: hidden;
   color: var(--color-white);
   font-size: 1.05rem;
   font-weight: 500;
-  text-align: left;
   white-space: nowrap;
   transition: color 0.2s ease;
 }
 
-.label:hover {
-  color: var(--color-text-primary);
-}
-
-.copied {
+.link:hover .label {
   color: var(--color-text-primary);
 }
 
@@ -68,4 +48,30 @@
 .link:hover .arrow {
   transform: translateX(4px);
   color: var(--color-primary);
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  color: var(--color-white-a40);
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.copyBtn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-white-a08);
+}
+
+.copyBtn:focus-visible {
+  outline: 1px solid var(--color-primary-a60);
+  outline-offset: 2px;
 }

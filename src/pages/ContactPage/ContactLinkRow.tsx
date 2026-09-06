@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { ArrowRight, Mail, Phone } from 'lucide-react'
+import { ArrowRight, Check, Copy, Mail, Phone } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import type { ContactLink } from '../../config/contact'
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard'
@@ -35,18 +35,20 @@ export default function ContactLinkRow({ link }: ContactLinkRowProps) {
         aria-label={`Open ${link.label}`}
       >
         <span className={styles.icon}>{LINK_ICONS[link.label]}</span>
-        <span className={styles.labelSpacer} aria-hidden="true">
-          {link.label}
-        </span>
+        <span className={styles.label}>{link.label}</span>
         <ArrowRight size={16} className={styles.arrow} />
       </a>
 
+      {/* Explicit fallback: the link above may fail silently if the user has
+       * no handler app registered (e.g. no telephony app on Linux), so copying
+       * the raw value is always available as its own visible action. */}
       <button
         type="button"
-        className={`${styles.label} ${copied ? styles.copied : ''}`}
+        className={styles.copyBtn}
         onClick={() => copy(copyValue)}
+        aria-label={`Copy ${link.label.toLowerCase()}`}
       >
-        {copied ? 'Copied!' : link.label}
+        {copied ? <Check size={16} /> : <Copy size={16} />}
       </button>
     </div>
   )
