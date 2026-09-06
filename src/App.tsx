@@ -5,8 +5,11 @@ import IndexPage from './pages/IndexPage'
 import ContactPage from './pages/ContactPage'
 import CaseStudyOverlay from './features/CaseStudyOverlay'
 import { CaseStudyOverlayProvider } from './context/CaseStudyOverlayContext'
+import { useAnalyticsPageView } from './hooks/useAnalyticsPageView'
 
 export default function App() {
+  useAnalyticsPageView()
+
   return (
     <CaseStudyOverlayProvider>
       <SiteHeader />

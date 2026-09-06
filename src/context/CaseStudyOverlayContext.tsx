@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { CaseStudyOverlayContext } from './caseStudyOverlayContextValue'
+import { trackEvent } from '../services/analytics'
 
 /** Deep-link prefix: a shared URL like `#case-study/flutter-integration` opens
  *  that case study's sheet directly on load, distinct from plain section
@@ -24,6 +25,7 @@ export function CaseStudyOverlayProvider({ children }: { children: ReactNode }) 
   const open = useCallback((id: string) => {
     setOpenId(id)
     window.history.pushState(null, '', `${HASH_PREFIX}${id}`)
+    trackEvent('case_study_open', { case_study_id: id })
   }, [])
 
   const close = useCallback(() => {

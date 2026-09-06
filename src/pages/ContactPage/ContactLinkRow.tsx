@@ -3,6 +3,7 @@ import { ArrowRight, Check, Copy, Mail, Phone } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import type { ContactLink } from '../../config/contact'
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard'
+import { trackEvent } from '../../services/analytics'
 import styles from './ContactLinkRow.module.css'
 
 interface ContactLinkRowProps {
@@ -33,6 +34,7 @@ export default function ContactLinkRow({ link }: ContactLinkRowProps) {
         target={external ? '_blank' : undefined}
         rel={external ? 'noreferrer' : undefined}
         aria-label={`Open ${link.label}`}
+        onClick={() => trackEvent('contact_click', { label: link.label })}
       >
         <span className={styles.icon}>{LINK_ICONS[link.label]}</span>
         <span className={styles.label}>{link.label}</span>
@@ -45,7 +47,10 @@ export default function ContactLinkRow({ link }: ContactLinkRowProps) {
       <button
         type="button"
         className={styles.copyBtn}
-        onClick={() => copy(copyValue)}
+        onClick={() => {
+          copy(copyValue)
+          trackEvent('contact_copy', { label: link.label })
+        }}
         aria-label={`Copy ${link.label.toLowerCase()}`}
       >
         {copied ? <Check size={16} /> : <Copy size={16} />}

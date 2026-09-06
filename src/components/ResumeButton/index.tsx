@@ -1,4 +1,5 @@
 import { Download } from 'lucide-react'
+import { trackEvent } from '../../services/analytics'
 import styles from './ResumeButton.module.css'
 
 const RESUME_URL =
@@ -11,6 +12,7 @@ export default function ResumeButton() {
       target="_blank"
       rel="noopener noreferrer"
       className={styles.button}
+      onClick={() => trackEvent('resume_download')}
     >
       <Download size={14} />
       Resume
