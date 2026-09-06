@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
+import ResumeButton from '../ResumeButton'
 import styles from './SiteHeader.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -47,6 +48,7 @@ export default function SiteHeader() {
           </a>
         ))}
       </nav>
+      <ResumeButton />
     </motion.header>
   )
 }
