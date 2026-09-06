@@ -21,7 +21,7 @@ export default function ImpactStatsBar() {
       >
         {/* Left: sparkle + heading + description */}
         <div className={styles.left}>
-          <Sparkles size={28} color="var(--color-primary)" style={{ flexShrink: 0, marginTop: 1 }} />
+          <Sparkles size={28} color="var(--color-primary)" className={styles.sparkleIcon} />
           <div>
             <div className={styles.title}>Impact that scales</div>
             <div className={styles.description}>

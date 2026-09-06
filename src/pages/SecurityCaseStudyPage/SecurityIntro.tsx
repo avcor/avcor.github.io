@@ -1,27 +1,10 @@
-import type { ReactNode } from 'react'
-import { motion } from 'framer-motion'
 import { Binary, KeyRound, Network, ScrollText } from 'lucide-react'
 import { SiKotlin } from 'react-icons/si'
-import styles from './SecurityIntro.module.css'
-
-const ease = [0.16, 1, 0.3, 1] as const
-
-function fadeUp(delay: number) {
-  return {
-    initial: { opacity: 0, y: 14 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.65, delay, ease },
-  }
-}
-
-interface Tag {
-  icon: ReactNode
-  label: string
-}
+import CaseStudyIntro, { type CaseStudyIntroTag } from '../../components/CaseStudyIntro'
 
 // Only technologies the app actually uses are listed (Frida/RootBeer removed,
 // they are detection targets, not dependencies).
-const tags: Tag[] = [
+const tags: CaseStudyIntroTag[] = [
   { icon: <SiKotlin size={13} color="var(--color-brand-kotlin)" />, label: 'Kotlin' },
   { icon: <Network size={13} color="var(--color-tag-okhttp)" />, label: 'OkHttp' },
   { icon: <Binary size={13} color="var(--color-tag-cjni)" />, label: 'C / JNI' },
@@ -31,34 +14,12 @@ const tags: Tag[] = [
 
 export default function SecurityIntro() {
   return (
-    <div className={styles.column}>
-      <div className={styles.textLayer}>
-        <motion.div {...fadeUp(0.05)} className={styles.eyebrow}>
-          <span className={styles.eyebrowDash} />
-          <span>App Security Hardening</span>
-        </motion.div>
-
-        <motion.h1 {...fadeUp(0.15)} className={styles.heading}>
-          <span className={styles.headingLine}>The device isn't trusted,</span>
-          <span className={styles.headingLineAccent}>the network isn't trusted,</span>
-          <span className={styles.headingLine}>the binary isn't trusted.</span>
-        </motion.h1>
-
-        <motion.p {...fadeUp(0.3)} className={styles.description}>
-          Digiicampus handles payments and student records on devices we don't control.
-          Pinning, a Keystore-backed token store, and a from-scratch tamper-detection
-          engine make the binary itself trustworthy, not just the app.
-        </motion.p>
-
-        <motion.div {...fadeUp(0.42)} className={styles.tags}>
-          {tags.map(({ icon, label }) => (
-            <span key={label} className={styles.tag}>
-              {icon}
-              {label}
-            </span>
-          ))}
-        </motion.div>
-      </div>
-    </div>
+    <CaseStudyIntro
+      eyebrow="App Security Hardening"
+      headingLines={["The device isn't trusted,", "the network isn't trusted,", "the binary isn't trusted."]}
+      description="Digiicampus handles payments and student records on devices we don't control. Pinning, a Keystore-backed token store, and a from-scratch tamper-detection engine make the binary itself trustworthy, not just the app."
+      descriptionMaxWidth="46ch"
+      tags={tags}
+    />
   )
 }

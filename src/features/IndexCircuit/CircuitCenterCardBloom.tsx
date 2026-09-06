@@ -45,7 +45,7 @@ export default function CircuitCenterCardBloom({ outerRect, bloomMaskId }: Circu
             y={outerRect.y - BLOOM_MASK_MARGIN}
             width={outerRect.width + BLOOM_MASK_MARGIN * 2}
             height={outerRect.height + BLOOM_MASK_MARGIN * 2}
-            style={{ fill: 'var(--color-white)' }}
+            fill="var(--color-white)"
           />
           <rect
             x={outerRect.x}
@@ -53,7 +53,7 @@ export default function CircuitCenterCardBloom({ outerRect, bloomMaskId }: Circu
             width={outerRect.width}
             height={outerRect.height}
             rx={outerRect.rx}
-            style={{ fill: 'var(--color-bg-card)' }}
+            fill="var(--color-bg-card)"
           />
         </mask>
         {/* Per-layer Gaussian blurs with enlarged filter regions, CSS

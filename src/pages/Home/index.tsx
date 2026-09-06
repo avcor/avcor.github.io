@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import ScrollHint from '../../components/ScrollHint'
+import { useDelayedReveal } from '../../hooks/useDelayedReveal'
 import signatureImage from '../../assets/abhishek-signature.png'
 import styles from './Home.module.css'
 
@@ -39,12 +39,7 @@ const headlineSecondary = [
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const [showSignature, setShowSignature] = useState(false)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowSignature(true), SIGNATURE_START_DELAY_MS)
-    return () => clearTimeout(timer)
-  }, [])
+  const showSignature = useDelayedReveal(SIGNATURE_START_DELAY_MS)
 
   return (
     <main id="hero-section" className={styles.page}>
