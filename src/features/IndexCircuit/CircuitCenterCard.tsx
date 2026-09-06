@@ -1,8 +1,18 @@
 import { useId, useState, type CSSProperties } from 'react'
+import avMonogram from '../../assets/av-monogram.png'
 import { CIRCUIT_CENTER_CARD } from './circuitData'
 import CircuitCenterCardGrid from './CircuitCenterCardGrid'
 import CircuitCenterCardBloom from './CircuitCenterCardBloom'
 import styles from './IndexCircuit.module.css'
+
+/** Native aspect ratio (width / height) of the AV monogram asset, used to
+ *  size it at the same font-size the "AV" text label used, without
+ *  distorting it. */
+const AV_MONOGRAM_ASPECT_RATIO = 1665 / 945
+/** Matches .centerCardLabel's font-size, the monogram replaces that text
+ *  1:1 so it reads as the same size the letters did. */
+const AV_MONOGRAM_HEIGHT = 22
+const AV_MONOGRAM_WIDTH = AV_MONOGRAM_HEIGHT * AV_MONOGRAM_ASPECT_RATIO
 
 interface CircuitCenterCardProps {
   /** Whether anything on the board is currently hovered/highlighted, the
@@ -31,7 +41,7 @@ export default function CircuitCenterCard({
   isHighlighted = false,
   onHoverChange,
 }: CircuitCenterCardProps) {
-  const { rect, outerRect, label } = CIRCUIT_CENTER_CARD
+  const { rect, outerRect } = CIRCUIT_CENTER_CARD
   const [isCardHovered, setIsCardHovered] = useState(false)
   /** The neon treatment (border strip + green dot matrix) fires both when
    *  the card itself is hovered and whenever a wire path is glowing,
@@ -40,8 +50,11 @@ export default function CircuitCenterCard({
   const cardClipId = useId()
   const borderGradientId = useId()
   const bloomMaskId = useId()
+  const logoMaskId = useId()
   const centerX = rect.x + rect.width / 2
   const centerY = rect.y + rect.height / 2
+  const logoX = centerX - AV_MONOGRAM_WIDTH / 2
+  const logoY = centerY - AV_MONOGRAM_HEIGHT / 2
   const accentStyle: AccentCSSProperties = {
     '--center-card-accent': isGlowing ? 'var(--color-primary)' : 'var(--color-idle-glow)',
   }
@@ -124,16 +137,40 @@ export default function CircuitCenterCard({
         }}
       />
 
-      {/* Center label, crisp text always visible, bloom halo only while
-       *  the card is hovered or a wire path is glowing */}
+      {/* Center mark, the AV monogram masked by its own alpha so it tints
+       *  with the same accent color the "AV" text used, crisp version always
+       *  visible, bloom halo only while the card is hovered or a wire path
+       *  is glowing */}
+      <defs>
+        <mask id={logoMaskId}>
+          <image
+            href={avMonogram}
+            x={logoX}
+            y={logoY}
+            width={AV_MONOGRAM_WIDTH}
+            height={AV_MONOGRAM_HEIGHT}
+            preserveAspectRatio="xMidYMid meet"
+          />
+        </mask>
+      </defs>
       {isGlowing && (
-        <text x={centerX} y={centerY} dominantBaseline="central" className={styles.centerCardLabelGlow}>
-          {label}
-        </text>
+        <rect
+          x={logoX}
+          y={logoY}
+          width={AV_MONOGRAM_WIDTH}
+          height={AV_MONOGRAM_HEIGHT}
+          mask={`url(#${logoMaskId})`}
+          className={styles.centerCardLabelGlow}
+        />
       )}
-      <text x={centerX} y={centerY} dominantBaseline="central" className={styles.centerCardLabel}>
-        {label}
-      </text>
+      <rect
+        x={logoX}
+        y={logoY}
+        width={AV_MONOGRAM_WIDTH}
+        height={AV_MONOGRAM_HEIGHT}
+        mask={`url(#${logoMaskId})`}
+        className={styles.centerCardLabel}
+      />
     </g>
   )
 }

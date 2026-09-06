@@ -274,5 +274,4 @@ export const CIRCUIT_CENTER_CARD = {
   /** Outer framing box around the card, verbatim from the blueprint,
    *  carries the outward light-escape glow while the board is lit. */
   outerRect: { x: 321.5, y: 198.5, width: 90, height: 99, rx: 5.5 },
-  label: 'AV',
 }

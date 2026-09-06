@@ -341,19 +341,11 @@
 
 .centerCardLabel {
   fill: var(--center-card-accent);
-  font-family: var(--font-primary);
-  font-size: 22px;
-  font-weight: var(--font-weight-bold);
-  text-anchor: middle;
   pointer-events: none;
 }
 
 .centerCardLabelGlow {
   fill: var(--center-card-accent);
-  font-family: var(--font-primary);
-  font-size: 22px;
-  font-weight: var(--font-weight-bold);
-  text-anchor: middle;
   pointer-events: none;
   opacity: 0.7;
   filter: blur(3px);
