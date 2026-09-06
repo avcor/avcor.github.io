@@ -12,7 +12,7 @@ const cards = [
   {                         metric: '4.5 Stars',       title: 'Cross-Team UX Delivery',    description: 'Collaborated across remote engineering, design, and product teams to ship UX improvements.' },
   {                         metric: 'Zero Pins',        title: 'Layered Security',         description: 'Certificate pinning, binary tamper detection, and a keystore-backed token store resilient to corruption.' },
   { metricPrefix: '92MB →', metric: '54.8MB',            title: 'Size Regression Fixed',    description: 'Traced and reverted an app size regression with no runtime cost.' },
-  {                         metric: '~99.5%',           title: 'Storage Reclaimed',        description: 'Cut device storage by ~99.5% for existing installs and enforced a hard ceiling for new ones.' },
+  { metricPrefix: '45GB →', metric: '200MB',           title: 'Storage Reclaimed',        description: 'Cut device storage by ~99.5% for existing installs and enforced a hard ceiling for new ones.' },
   {                         metric: 'Zero Fraud',       title: 'Attendance Verification',  description: 'Liveness verification blocks proxy punching from a photo, video, or off-site location.' },
   { metricPrefix: '96.23% →', metric: '99.94%',         title: 'Crash-Free Sessions',      description: 'Root-caused memory leaks, race conditions, and lifecycle defects in production.' },
   { metricPrefix: '5s →',   metric: '<2s',               title: 'Chart Draw Time',          description: 'Optimized processing and rendering of 9,000+ data points per session.' },
