@@ -11,33 +11,65 @@
   gap: 12px;
   padding: 0 48px;
   font-family: var(--font-primary);
+  animation: headerIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+/* Entrance runs on `top`, not transform/opacity: either of those would make
+   the header a backdrop root and kill the glass bar's refraction. */
+@keyframes headerIn {
+  from {
+    top: -72px;
+  }
+  to {
+    top: 0;
+  }
+}
+
+/* Every layer liquid-glass-react emits (glass container + 4 overlays) shares
+   this one grid cell, so they render on top of each other instead of stacking
+   down the flow. */
+.trackShell {
+  display: grid;
+  place-items: center;
+}
+
+.trackShell > * {
+  grid-area: 1 / 1;
+}
+
+/* The library's two rim-highlight spans paint with `mix-blend-mode`, which
+   makes the header an isolated group. Chrome then treats that group as a
+   backdrop root, and the glass has no page content left to sample: the bar
+   renders but stops refracting. Normal blending keeps the rim and the
+   refraction; the second span carries no opacity of its own, so it is toned
+   down here. */
+.trackShell > span {
+  mix-blend-mode: normal !important;
+  opacity: 0.4;
+}
+
+/* The library positions its overlay layers with top/left 50% and cancels that
+   with translate(-50%, -50%); the glass container itself only gets `relative`
+   from a Tailwind class this project does not build, so it is set here to keep
+   all layers on the same origin. */
+.glass {
+  position: relative;
+  top: 50%;
+  left: 50%;
 }
 
 .track {
   position: relative;
   display: flex;
   align-items: center;
-  height: 44px;
+  height: 36px;
   gap: 4px;
-  /* Horizontal padding > vertical: at the rounded end caps the active pill's
-     cap must stay concentric with the track's cap, else the gap visibly
-     tightens at the curve. 7px makes the caps share a center (equal gap all
-     around the arc); 4px top/bottom keeps the straight-edge gap matched. */
-  padding: 4px 7px;
-  background: linear-gradient(180deg, var(--color-white-a08), var(--color-white-a03));
-  backdrop-filter: blur(24px) saturate(100%);
-  -webkit-backdrop-filter: blur(24px) saturate(100%);
-  border: 1px solid var(--color-white-a12);
-  border-radius: 9999px;
-  box-shadow:
-    var(--shadow-md),
-    inset 0 1px 0 var(--color-white-a22),
-    inset 0 -1px 0 var(--color-white-a04);
 }
 
 .link {
   position: relative;
   display: inline-flex;
+  font-family: var(--font-primary);
   align-items: center;
   justify-content: center;
   height: 36px;
