@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { MousePointerClick, Minus, Plus, RotateCcw } from 'lucide-react'
+import GlassSurface from '../GlassSurface'
 import styles from './LifecycleMap.module.css'
 
 interface LifecycleMapControlsProps {
@@ -25,46 +26,59 @@ export default function LifecycleMapControls({
   return (
     <>
       <motion.div
-        className={styles.zoomControls}
-        initial={{ opacity: 0, scale: 0.92 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        className={styles.zoomSlot}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.45, ease: easeOut }}
       >
-        <button
-          type="button"
-          className={styles.zoomButton}
-          onClick={zoomOut}
-          disabled={!canZoomOut}
-          aria-label="Zoom out"
-        >
-          <Minus size={16} strokeWidth={2} />
-        </button>
-        {isZoomed && (
-          <button type="button" className={styles.zoomButton} onClick={reset} aria-label="Reset view">
-            <RotateCcw size={15} strokeWidth={2} />
-          </button>
-        )}
-        <button
-          type="button"
-          className={styles.zoomButton}
-          onClick={zoomIn}
-          disabled={!canZoomIn}
-          aria-label="Zoom in"
-        >
-          <Plus size={16} strokeWidth={2} />
-        </button>
+        <GlassSurface padding="4px">
+          <div className={styles.zoomControls}>
+            <button
+              type="button"
+              className={styles.zoomButton}
+              onClick={zoomOut}
+              disabled={!canZoomOut}
+              aria-label="Zoom out"
+            >
+              <Minus size={16} strokeWidth={2} />
+            </button>
+            {isZoomed && (
+              <button
+                type="button"
+                className={styles.zoomButton}
+                onClick={reset}
+                aria-label="Reset view"
+              >
+                <RotateCcw size={15} strokeWidth={2} />
+              </button>
+            )}
+            <button
+              type="button"
+              className={styles.zoomButton}
+              onClick={zoomIn}
+              disabled={!canZoomIn}
+              aria-label="Zoom in"
+            >
+              <Plus size={16} strokeWidth={2} />
+            </button>
+          </div>
+        </GlassSurface>
       </motion.div>
 
       <motion.div
-        className={styles.hint}
-        initial={{ opacity: 0, scale: 0.92 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        className={styles.hintSlot}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.45, delay: 0.1, ease: easeOut }}
       >
-        <MousePointerClick size={16} strokeWidth={2} />
-        Drag to pan
+        <GlassSurface>
+          <div className={styles.hint}>
+            <MousePointerClick size={16} strokeWidth={2} />
+            Drag to pan
+          </div>
+        </GlassSurface>
       </motion.div>
     </>
   )

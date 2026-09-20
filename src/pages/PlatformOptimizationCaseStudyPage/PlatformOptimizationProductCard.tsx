@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Maximize2 } from 'lucide-react'
+import GlassButton from '../../components/GlassButton'
 import coldStartShot from '../../assets/screenshots/play-console-cold-start.png'
 import appSizeShot from '../../assets/screenshots/play-console-app-size.png'
 import crashFreeShot from '../../assets/screenshots/crashlytics-crash-free.png'
@@ -88,18 +89,21 @@ export default function PlatformOptimizationProductCard() {
         </div>
 
         {isEntered && (
-          <motion.button
-            type="button"
-            className={styles.enlargeButton}
-            onClick={openLightbox}
-            aria-label="Enlarge screenshots"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+          <motion.div
+            className={styles.enlargeSlot}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Maximize2 size={16} strokeWidth={2} />
-            <span>Click to Enlarge</span>
-          </motion.button>
+            <GlassButton
+              className={styles.enlargeButton}
+              onClick={openLightbox}
+              ariaLabel="Enlarge screenshots"
+            >
+              <Maximize2 size={16} strokeWidth={2} />
+              <span>Click to Enlarge</span>
+            </GlassButton>
+          </motion.div>
         )}
       </div>
 

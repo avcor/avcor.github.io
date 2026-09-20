@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Maximize2 } from 'lucide-react'
+import GlassButton from '../../components/GlassButton'
 import gateShot from '../../assets/screenshots/attendance-gate-check.png'
 import livenessShot from '../../assets/screenshots/attendance-liveness-capture.png'
 import punchShot from '../../assets/screenshots/attendance-punch-complete.png'
@@ -72,18 +73,21 @@ export default function AttendanceProductCard() {
         </div>
 
         {isEntered && (
-          <motion.button
-            type="button"
-            className={styles.enlargeButton}
-            onClick={openLightbox}
-            aria-label="Enlarge screenshot"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+          <motion.div
+            className={styles.enlargeSlot}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Maximize2 size={16} strokeWidth={2} />
-            <span>Click to Enlarge</span>
-          </motion.button>
+            <GlassButton
+              className={styles.enlargeButton}
+              onClick={openLightbox}
+              ariaLabel="Enlarge screenshot"
+            >
+              <Maximize2 size={16} strokeWidth={2} />
+              <span>Click to Enlarge</span>
+            </GlassButton>
+          </motion.div>
         )}
       </div>
 

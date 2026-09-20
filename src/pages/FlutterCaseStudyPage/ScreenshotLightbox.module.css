@@ -77,28 +77,28 @@
   object-fit: contain;
 }
 
-.closeButton {
+/* The glass surface is the positioned element; the button inside keeps only
+   its box and its icon. */
+.closeSlot {
   position: fixed;
   top: 24px;
   right: 24px;
+  z-index: 1;
+}
+
+.closeButton {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-white-a04);
-  border: 1px solid var(--color-white-a08);
-  backdrop-filter: blur(20px);
   color: var(--color-error);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .closeButton:hover {
   color: var(--color-error);
-  border-color: var(--color-error-a32);
-  background: var(--color-error-a20);
 }
 
 .closeButton:focus-visible {
@@ -106,28 +106,26 @@
   outline-offset: 2px;
 }
 
-.navButton {
+.navSlot {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
+}
+
+.navButton {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-white-a04);
-  border: 1px solid var(--color-white-a08);
-  backdrop-filter: blur(20px);
   color: var(--color-text-primary);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .navButton:hover {
   color: var(--color-primary);
-  border-color: var(--color-primary-a32);
-  background: var(--color-primary-a20);
 }
 
 .navButton:focus-visible {
@@ -135,11 +133,11 @@
   outline-offset: 2px;
 }
 
-.navButtonLeft {
+.navSlotLeft {
   left: 24px;
 }
 
-.navButtonRight {
+.navSlotRight {
   right: 24px;
 }
 
@@ -148,16 +146,16 @@
     padding: 20px;
   }
 
-  .closeButton {
+  .closeSlot {
     top: 16px;
     right: 16px;
   }
 
-  .navButtonLeft {
+  .navSlotLeft {
     left: 12px;
   }
 
-  .navButtonRight {
+  .navSlotRight {
     right: 12px;
   }
 }

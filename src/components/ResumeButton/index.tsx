@@ -1,4 +1,5 @@
 import { Download } from 'lucide-react'
+import GlassSurface from '../GlassSurface'
 import { trackEvent } from '../../services/analytics'
 import styles from './ResumeButton.module.css'
 
@@ -7,15 +8,17 @@ const RESUME_URL =
 
 export default function ResumeButton() {
   return (
-    <a
-      href={RESUME_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={styles.button}
-      onClick={() => trackEvent('resume_download')}
-    >
-      <Download size={14} />
-      Resume
-    </a>
+    <GlassSurface>
+      <a
+        href={RESUME_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.button}
+        onClick={() => trackEvent('resume_download')}
+      >
+        <Download size={14} />
+        Resume
+      </a>
+    </GlassSurface>
   )
 }

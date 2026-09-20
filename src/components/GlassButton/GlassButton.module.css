@@ -1,0 +1,18 @@
+/* The glass draws the surface, so the button itself only carries its box and
+   its text. Wrapped in :where() so it carries no specificity: a caller's own
+   class always wins over these resets, whatever order the bundler emits. */
+:where(.button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+:where(.button):disabled {
+  cursor: not-allowed;
+}

@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion'
-import LiquidGlass from 'liquid-glass-react'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
+import GlassSurface from '../GlassSurface'
 import ResumeButton from '../ResumeButton'
 import styles from './SiteHeader.module.css'
+
+const ease = [0.16, 1, 0.3, 1] as const
 
 /** The site's real scroll sections, in document order. */
 const SECTIONS = [
@@ -19,54 +21,39 @@ const SECTION_IDS = SECTIONS.map((s) => s.id)
  * highlighting. Mounted once in App, floats above all 3 stacked full-viewport
  * sections rather than being rebuilt inside each one.
  *
- * The pill's surface comes from `liquid-glass-react` (SVG displacement +
- * backdrop blur), not from CSS. The library renders its glass container and
- * four overlay layers as flow siblings, each offset by top/left 50% and pulled
- * back by translate(-50%, -50%), so `.trackShell` stacks them all into one
- * grid cell where those two offsets cancel out.
- *
- * The header itself is a plain element and slides in from CSS. An inline
- * `opacity` or `transform` left behind by a framer entrance animation turns it
- * into its own backdrop root in Chrome, and the glass then has nothing to
- * sample: the bar renders, but the page scrolls under it unrefracted.
+ * The pill's surface is a `GlassSurface`, tuned from `config/glass.ts`.
  */
 export default function SiteHeader() {
   const activeId = useScrollSpy(SECTION_IDS)
 
   return (
-    <header className={styles.header}>
-      <div className={styles.trackShell}>
-        <LiquidGlass
-          className={styles.glass}
-          cornerRadius={9999}
-          padding="4px 7px"
-          displacementScale={60}
-          blurAmount={0.2}
-          saturation={130}
-          aberrationIntensity={2}
-          elasticity={0}
-        >
-          <nav className={styles.track} aria-label="Section">
-            {SECTIONS.map(({ id, label }) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className={`${styles.link} ${activeId === id ? styles.linkActive : ''}`}
-              >
-                {activeId === id && (
-                  <motion.span
-                    layoutId="navPill"
-                    className={styles.pillBg}
-                    transition={{ duration: 0.2, ease: 'easeInOut' }}
-                  />
-                )}
-                <span className={styles.linkLabel}>{label}</span>
-              </a>
-            ))}
-          </nav>
-        </LiquidGlass>
-      </div>
+    <motion.header
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.3, ease }}
+      className={styles.header}
+    >
+      <GlassSurface padding="4px 7px">
+        <nav className={styles.track} aria-label="Section">
+          {SECTIONS.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={`${styles.link} ${activeId === id ? styles.linkActive : ''}`}
+            >
+              {activeId === id && (
+                <motion.span
+                  layoutId="navPill"
+                  className={styles.pillBg}
+                  transition={{ duration: 0.2, ease: 'easeInOut' }}
+                />
+              )}
+              <span className={styles.linkLabel}>{label}</span>
+            </a>
+          ))}
+        </nav>
+      </GlassSurface>
       <ResumeButton />
-    </header>
+    </motion.header>
   )
 }

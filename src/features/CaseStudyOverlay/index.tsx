@@ -1,6 +1,7 @@
 import { useEffect, type ComponentType } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Share2 } from 'lucide-react'
+import GlassSurface from '../../components/GlassSurface'
 import CaseStudyGallery from '../../pages/CaseStudyGallery'
 import LoggingCaseStudyGallery from '../../pages/LoggingCaseStudyGallery'
 import AttendanceCaseStudyGallery from '../../pages/AttendanceCaseStudyGallery'
@@ -85,19 +86,23 @@ export default function CaseStudyOverlay() {
             aria-modal="true"
             aria-label="Case study details"
           >
-            <button type="button" className={styles.close} onClick={close} aria-label="Close details">
-              <ChevronDown size={18} strokeWidth={2} />
-            </button>
+            <GlassSurface className={styles.closeSlot}>
+              <button type="button" className={styles.close} onClick={close} aria-label="Close details">
+                <ChevronDown size={18} strokeWidth={2} />
+              </button>
+            </GlassSurface>
 
-            <button
-              type="button"
-              className={styles.share}
-              onClick={onShare}
-              aria-label="Copy link to this case study"
-            >
-              {copied ? <Check size={16} strokeWidth={2} /> : <Share2 size={16} strokeWidth={2} />}
-              <span>{copied ? 'Link copied' : 'Share'}</span>
-            </button>
+            <GlassSurface className={styles.shareSlot}>
+              <button
+                type="button"
+                className={styles.share}
+                onClick={onShare}
+                aria-label="Copy link to this case study"
+              >
+                {copied ? <Check size={16} strokeWidth={2} /> : <Share2 size={16} strokeWidth={2} />}
+                <span>{copied ? 'Link copied' : 'Share'}</span>
+              </button>
+            </GlassSurface>
 
             {Gallery && <Gallery />}
           </motion.div>

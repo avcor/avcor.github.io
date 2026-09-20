@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Maximize2 } from 'lucide-react'
+import GlassButton from '../../components/GlassButton'
 import screenshot1 from '../../assets/screenshots/access-management-dashboard.png'
 import screenshot2 from '../../assets/screenshots/access-management-dashboard-detail.png'
 import screenshot3 from '../../assets/screenshots/pass-console.png'
@@ -19,10 +20,10 @@ const defaultIndex = 0
 export default function ProductDeliveredCard() {
   const [activeIndex, setActiveIndex] = useState(defaultIndex)
   const [isZoomOpen, setIsZoomOpen] = useState(false)
-  // Chrome can't composite the button's backdrop-filter while an ancestor is
-  // mid-transform (the overlay slide-up + this card's own entry animation),
-  // which paints the glass flat until the transform settles. Mount the button
-  // only after the entry animation finishes so the blur is correct on first paint.
+  // Chrome paints the glass flat while an ancestor is mid-transform (the
+  // overlay slide-up + this card's own entry animation). Mounting the button
+  // only after the entry animation finishes keeps the refraction correct on
+  // first paint.
   const [isEntered, setIsEntered] = useState(false)
 
   const go = useCallback((dir: number) => {
@@ -76,18 +77,21 @@ export default function ProductDeliveredCard() {
         </div>
 
         {isEntered && (
-          <motion.button
-            type="button"
-            className={styles.enlargeButton}
-            onClick={openLightbox}
-            aria-label="Enlarge screenshot"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+          <motion.div
+            className={styles.enlargeSlot}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Maximize2 size={16} strokeWidth={2} />
-            <span>Click to Enlarge</span>
-          </motion.button>
+            <GlassButton
+              className={styles.enlargeButton}
+              onClick={openLightbox}
+              ariaLabel="Enlarge screenshot"
+            >
+              <Maximize2 size={16} strokeWidth={2} />
+              <span>Click to Enlarge</span>
+            </GlassButton>
+          </motion.div>
         )}
       </div>
 

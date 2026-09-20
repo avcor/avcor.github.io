@@ -79,27 +79,27 @@
   transform: translateX(calc(-50% + var(--side-peek)));
 }
 
-.enlargeButton {
+/* The glass surface is the positioned element now; the button inside it
+   only carries its box and its label. */
+.enlargeSlot {
   position: absolute;
   right: 16px;
   bottom: 16px;
   z-index: 2;
+}
+
+.enlargeButton {
   display: flex;
   align-items: center;
   gap: 8px;
   height: 40px;
   padding: 0 16px;
-  border-radius: 999px;
-  background: var(--color-white-a04);
-  border: 1px solid var(--color-white-a08);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
   color: var(--color-text-primary);
   font-size: 0.82rem;
   font-weight: 500;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
 .enlargeButton svg {
@@ -108,8 +108,7 @@
 }
 
 .enlargeButton:hover {
-  background: var(--color-white-a07);
-  border-color: var(--color-white-a15);
+  color: var(--color-primary);
 }
 
 .enlargeButton:focus-visible {

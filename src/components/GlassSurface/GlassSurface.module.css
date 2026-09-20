@@ -1,0 +1,49 @@
+/* liquid-glass-react emits its glass container and four overlay layers as flow
+   siblings. Stacking them into one grid cell puts them back on top of each
+   other: each layer offsets itself by top/left 50% and pulls back by
+   translate(-50%, -50%), and in a shared cell those two cancel out. */
+.shell {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.shell > * {
+  grid-area: 1 / 1;
+}
+
+/* Only the glass container is left in flow, so the shell is sized purely by
+   the content. The overlay layers are drawn at the width the library last
+   measured, and leaving them in flow makes that stale width the width it
+   measures next: the surface then locks at whatever size it happened to start
+   at and never fits its content again. */
+.shell > *:not(.glass) {
+  position: absolute !important;
+}
+
+/* The two rim-highlight spans paint with `mix-blend-mode`, which makes their
+   nearest stacking context an isolated group. Chrome treats that group as a
+   backdrop root, so the glass has no page content left to sample and renders
+   flat. Normal blending keeps the rim and keeps the refraction; the second
+   span carries no opacity of its own, so it is toned down here. */
+.shell > span {
+  mix-blend-mode: normal !important;
+  opacity: 0.4;
+}
+
+/* The library takes `position: relative` from a Tailwind class this project
+   does not build, and its layers cancel a top/left 50% offset with a
+   translate. Setting both here keeps every layer on the same origin. */
+.glass {
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+
+/* The library hardcodes `font: 500 20px/1 system-ui` and a drop shadow on the
+   wrapper it puts around children, as inline styles. Resetting them here is
+   what lets each caller keep its own typography inside the glass. */
+.shell :global(.glass) > div {
+  font: inherit !important;
+  text-shadow: none !important;
+}

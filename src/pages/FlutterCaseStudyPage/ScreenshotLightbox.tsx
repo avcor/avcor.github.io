@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import GlassSurface from '../../components/GlassSurface'
 import styles from './ScreenshotLightbox.module.css'
 
 interface ScreenshotLightboxProps {
@@ -54,36 +55,53 @@ export default function ScreenshotLightbox({
         aria-modal="true"
         aria-label={alt}
       >
-        <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Close enlarged view">
-          <X size={20} strokeWidth={2} />
-        </button>
-
-        {onPrev && (
+        <GlassSurface className={styles.closeSlot} cornerRadius={22}>
           <button
             type="button"
-            className={`${styles.navButton} ${styles.navButtonLeft}`}
-            onClick={(e) => {
-              e.stopPropagation()
-              onPrev()
-            }}
-            aria-label="Show previous screenshot"
+            className={styles.closeButton}
+            onClick={onClose}
+            aria-label="Close enlarged view"
           >
-            <ChevronLeft size={20} strokeWidth={2} />
+            <X size={20} strokeWidth={2} />
           </button>
+        </GlassSurface>
+
+        {onPrev && (
+          <GlassSurface
+            className={`${styles.navSlot} ${styles.navSlotLeft}`}
+            cornerRadius={24}
+          >
+            <button
+              type="button"
+              className={styles.navButton}
+              onClick={(e) => {
+                e.stopPropagation()
+                onPrev()
+              }}
+              aria-label="Show previous screenshot"
+            >
+              <ChevronLeft size={20} strokeWidth={2} />
+            </button>
+          </GlassSurface>
         )}
 
         {onNext && (
-          <button
-            type="button"
-            className={`${styles.navButton} ${styles.navButtonRight}`}
-            onClick={(e) => {
-              e.stopPropagation()
-              onNext()
-            }}
-            aria-label="Show next screenshot"
+          <GlassSurface
+            className={`${styles.navSlot} ${styles.navSlotRight}`}
+            cornerRadius={24}
           >
-            <ChevronRight size={20} strokeWidth={2} />
-          </button>
+            <button
+              type="button"
+              className={styles.navButton}
+              onClick={(e) => {
+                e.stopPropagation()
+                onNext()
+              }}
+              aria-label="Show next screenshot"
+            >
+              <ChevronRight size={20} strokeWidth={2} />
+            </button>
+          </GlassSurface>
         )}
 
         {windowChrome ? (
