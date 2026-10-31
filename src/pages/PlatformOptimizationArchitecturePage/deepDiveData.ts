@@ -36,7 +36,7 @@ export const DEEP_DIVE_PANELS: DeepDivePanel[] = [
     icon: Timer,
     headingLines: ['Three ad hoc threads,', 'one coordinated startup', 'thread.'],
     accentIndex: 1,
-    impact: 'Slow cold start down to 0.78% in production (from ~1.05% in April 2026)',
+    impact: 'ANR rate down to 0.44% in production, from 2.65%',
     problem:
       'Application.onCreate had grown three independent background threads plus synchronous Keystore, Firebase, and security-probe work, any of which could block the main thread on real devices.',
     decision:

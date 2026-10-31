@@ -14,7 +14,7 @@ const heroLine = '45 GB to 200 MB'
 const heroDescription = '99.5% storage reduction for existing installs; new installs never exceed the ~200 MB cache ceiling.'
 
 const items: ImpactItem[] = [
-  { icon: Timer, title: 'Cold Start ANRs Fixed', description: 'Slow cold start down to 0.78%, from ~1.05% in April 2026.' },
+  { icon: Timer, title: 'ANR Rate Cut', description: 'ANR rate down to 0.44%, from 2.65%.' },
   { icon: Database, title: 'Flutter Size Regression', description: '~92MB back down to 54.8MB.' },
   { icon: Layers, title: 'View Recycling Restored', description: 'RecyclerView nested in NestedScrollView fixed.' },
 ]

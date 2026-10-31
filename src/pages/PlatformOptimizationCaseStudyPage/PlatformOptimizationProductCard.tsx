@@ -2,17 +2,18 @@ import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Maximize2 } from 'lucide-react'
 import GlassButton from '../../components/GlassButton'
-import coldStartShot from '../../assets/screenshots/play-console-cold-start.png'
 import appSizeShot from '../../assets/screenshots/play-console-app-size.png'
 import crashFreeShot from '../../assets/screenshots/crashlytics-crash-free.png'
 import ScreenshotLightbox from '../FlutterCaseStudyPage/ScreenshotLightbox'
 import styles from './PlatformOptimizationProductCard.module.css'
 
 const screenshots = [
-  { src: coldStartShot, alt: 'Play Console Android vitals, slow cold start over time, down to 0.78%' },
   { src: appSizeShot, alt: 'Play Console Android vitals, app download size over time, 54.8MB reference device' },
   { src: crashFreeShot, alt: 'Firebase Crashlytics, 99.99% crash-free users, latest release' },
 ]
+
+/** Back-of-stack slots, filled in order by the screenshots after the front one. */
+const backSlots = [styles.cardBackLeft, styles.cardBackRight]
 
 const count = screenshots.length
 const defaultIndex = 0
@@ -31,8 +32,8 @@ function MiniWindow({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-/** Three production dashboards, not app screens: cold start, app size, and
- *  crash-free rate, stacked exactly like Logging's Grafana screenshots. */
+/** Production dashboards, not app screens: app size and crash-free rate,
+ *  stacked like Logging's Grafana screenshots. */
 export default function PlatformOptimizationProductCard() {
   const [activeIndex, setActiveIndex] = useState(defaultIndex)
   const [isZoomOpen, setIsZoomOpen] = useState(false)
@@ -71,12 +72,11 @@ export default function PlatformOptimizationProductCard() {
     >
       <div className={styles.stage}>
         <div className={styles.imageGroup}>
-          <div className={`${styles.card} ${styles.cardBackLeft}`} aria-hidden="true">
-            <img src={screenshots[1].src} alt="" draggable={false} className={styles.backImage} />
-          </div>
-          <div className={`${styles.card} ${styles.cardBackRight}`} aria-hidden="true">
-            <img src={screenshots[2].src} alt="" draggable={false} className={styles.backImage} />
-          </div>
+          {screenshots.slice(1, backSlots.length + 1).map((shot, i) => (
+            <div key={shot.src} className={`${styles.card} ${backSlots[i]}`} aria-hidden="true">
+              <img src={shot.src} alt="" draggable={false} className={styles.backImage} />
+            </div>
+          ))}
 
           <button
             type="button"
