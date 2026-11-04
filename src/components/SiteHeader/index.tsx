@@ -1,20 +1,12 @@
 import { motion } from 'framer-motion'
+import { SITE_SECTIONS, SITE_SECTION_IDS } from '../../config/siteSections'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
+import { trackEvent } from '../../services/analytics'
 import GlassSurface from '../GlassSurface'
 import ResumeButton from '../ResumeButton'
 import styles from './SiteHeader.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
-
-/** The site's real scroll sections, in document order. */
-const SECTIONS = [
-  { id: 'hero-section', label: 'Home' },
-  { id: 'work', label: 'Impact' },
-  { id: 'index', label: 'Work' },
-  { id: 'contact', label: 'Contact' },
-]
-
-const SECTION_IDS = SECTIONS.map((s) => s.id)
 
 /**
  * Fixed, sticky site-wide header: brand mark + section nav with scroll-spy
@@ -24,7 +16,7 @@ const SECTION_IDS = SECTIONS.map((s) => s.id)
  * The pill's surface is a `GlassSurface`, tuned from `config/glass.ts`.
  */
 export default function SiteHeader() {
-  const activeId = useScrollSpy(SECTION_IDS)
+  const activeId = useScrollSpy(SITE_SECTION_IDS)
 
   return (
     <motion.header
@@ -35,10 +27,11 @@ export default function SiteHeader() {
     >
       <GlassSurface padding="4px 7px">
         <nav className={styles.track} aria-label="Section">
-          {SECTIONS.map(({ id, label }) => (
+          {SITE_SECTIONS.map(({ id, label }) => (
             <a
               key={id}
               href={`#${id}`}
+              onClick={() => trackEvent('nav_click', { section_id: id })}
               className={`${styles.link} ${activeId === id ? styles.linkActive : ''}`}
             >
               {activeId === id && (

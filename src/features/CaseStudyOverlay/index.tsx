@@ -12,6 +12,7 @@ import DozeeCaseStudyGallery from '../../pages/DozeeCaseStudyGallery'
 import PaymentCaseStudyGallery from '../../pages/PaymentCaseStudyGallery'
 import { useCaseStudyOverlay } from '../../hooks/useCaseStudyOverlay'
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard'
+import { trackEvent } from '../../services/analytics'
 import styles from './CaseStudyOverlay.module.css'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -62,6 +63,7 @@ export default function CaseStudyOverlay() {
   const onShare = () => {
     if (!openId) return
     copy(`${window.location.origin}${window.location.pathname}#case-study/${openId}`)
+    trackEvent('case_study_share', { case_study_id: openId })
   }
 
   return (

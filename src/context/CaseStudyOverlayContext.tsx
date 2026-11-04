@@ -1,36 +1,34 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { CaseStudyOverlayContext } from './caseStudyOverlayContextValue'
-import { trackEvent } from '../services/analytics'
-
-/** Deep-link prefix: a shared URL like `#case-study/flutter-integration` opens
- *  that case study's sheet directly on load, distinct from plain section
- *  anchors (`#work`, `#about`, ...). */
-const HASH_PREFIX = '#case-study/'
-
-function idFromHash(hash: string): string | null {
-  return hash.startsWith(HASH_PREFIX) ? hash.slice(HASH_PREFIX.length) : null
-}
+import { useCaseStudyAnalytics, type CaseStudyOpenSource } from '../hooks/useCaseStudyAnalytics'
+import { CASE_STUDY_HASH_PREFIX, caseStudyIdFromHash } from '../utils/caseStudyHash'
 
 export function CaseStudyOverlayProvider({ children }: { children: ReactNode }) {
-  const [openId, setOpenId] = useState<string | null>(() => idFromHash(window.location.hash))
+  const [openId, setOpenId] = useState<string | null>(() => caseStudyIdFromHash(window.location.hash))
+  // Whatever opened the sheet last; read by analytics when openId changes.
+  const openSourceRef = useRef<CaseStudyOpenSource>('deep_link')
+  useCaseStudyAnalytics(openId, openSourceRef)
 
   // Back/forward navigation (including the entry pushed by `open`) drives the
   // sheet open/closed in sync with the hash, not just the in-app buttons.
   useEffect(() => {
-    const onPopState = () => setOpenId(idFromHash(window.location.hash))
+    const onPopState = () => {
+      openSourceRef.current = 'history'
+      setOpenId(caseStudyIdFromHash(window.location.hash))
+    }
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
   const open = useCallback((id: string) => {
+    openSourceRef.current = 'click'
     setOpenId(id)
-    window.history.pushState(null, '', `${HASH_PREFIX}${id}`)
-    trackEvent('case_study_open', { case_study_id: id })
+    window.history.pushState(null, '', `${CASE_STUDY_HASH_PREFIX}${id}`)
   }, [])
 
   const close = useCallback(() => {
     setOpenId(null)
-    if (idFromHash(window.location.hash)) {
+    if (caseStudyIdFromHash(window.location.hash)) {
       window.history.replaceState(null, '', window.location.pathname + window.location.search)
     }
   }, [])

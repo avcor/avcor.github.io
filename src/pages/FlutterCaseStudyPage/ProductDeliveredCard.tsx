@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Maximize2 } from 'lucide-react'
 import GlassButton from '../../components/GlassButton'
+import { trackEvent } from '../../services/analytics'
 import screenshot1 from '../../assets/screenshots/access-management-dashboard.png'
 import screenshot2 from '../../assets/screenshots/access-management-dashboard-detail.png'
 import screenshot3 from '../../assets/screenshots/pass-console.png'
@@ -33,6 +34,7 @@ export default function ProductDeliveredCard() {
   const openLightbox = useCallback(() => {
     setActiveIndex(defaultIndex)
     setIsZoomOpen(true)
+    trackEvent('screenshot_zoom', { case_study_id: 'flutter-integration' })
   }, [])
 
   useEffect(() => {

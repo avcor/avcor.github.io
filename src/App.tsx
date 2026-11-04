@@ -6,15 +6,14 @@ import IndexPage from './pages/IndexPage'
 import ContactPage from './pages/ContactPage'
 import CaseStudyOverlay from './features/CaseStudyOverlay'
 import { CaseStudyOverlayProvider } from './context/CaseStudyOverlayContext'
-import { useAnalyticsPageView } from './hooks/useAnalyticsPageView'
+import SiteAnalytics from './features/SiteAnalytics'
 
 export default function App() {
-  useAnalyticsPageView()
-
   return (
     /* Visitors with reduced motion get fades only, no movement */
     <MotionConfig reducedMotion="user">
       <CaseStudyOverlayProvider>
+        <SiteAnalytics />
         <SiteHeader />
         <Home />
         <ImpactPage />
