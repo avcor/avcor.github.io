@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { cubicBezier } from './cubicBezier'
 import styles from './IndexCircuit.module.css'
 
 interface CircuitWirePulseProps {
@@ -9,6 +10,14 @@ interface CircuitWirePulseProps {
   /** Travel the path end → start instead, used when current should flow
    *  outward from the center chip rather than inward toward it */
   reverse?: boolean
+  /** Wait this long before the head appears and starts moving, in ms */
+  delay?: number
+  /** Time for one full traversal, in ms */
+  duration?: number
+  /** Loop forever (hover) or travel once and rest at the end (power-on) */
+  repeat?: boolean
+  /** Maps linear time 0–1 to path progress 0–1 */
+  ease?: (t: number) => number
 }
 
 /** Duration of one full traversal of the path, in ms */
@@ -18,24 +27,6 @@ const TRAVEL_DURATION = 1300
  *  PCB trace instead of crawling at constant speed. */
 const EASE = cubicBezier(0.45, 0, 0.15, 1)
 
-function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
-  const bezierPoint = (t: number, p1: number, p2: number) =>
-    3 * (1 - t) * (1 - t) * t * p1 + 3 * (1 - t) * t * t * p2 + t * t * t
-
-  return (t: number) => {
-    let lo = 0
-    let hi = 1
-    let mid = t
-    for (let i = 0; i < 8; i++) {
-      mid = (lo + hi) / 2
-      const x = bezierPoint(mid, x1, x2)
-      if (x < t) lo = mid
-      else hi = mid
-    }
-    return bezierPoint(mid, y1, y2)
-  }
-}
-
 /**
  * Renders a single traveling electrical pulse along an SVG path: a bright
  * head orb with an 8–12px Gaussian-blurred bloom. The wire's own stroke
@@ -44,7 +35,15 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
  * and settles like current through a PCB trace, not a dot crawling at
  * constant speed.
  */
-export default function CircuitWirePulse({ d, pulseKey, reverse = false }: CircuitWirePulseProps) {
+export default function CircuitWirePulse({
+  d,
+  pulseKey,
+  reverse = false,
+  delay = 0,
+  duration = TRAVEL_DURATION,
+  repeat = true,
+  ease = EASE,
+}: CircuitWirePulseProps) {
   const filterId = useId()
   const measureRef = useRef<SVGPathElement>(null)
   const headGroupRef = useRef<SVGGElement>(null)
@@ -65,17 +64,23 @@ export default function CircuitWirePulse({ d, pulseKey, reverse = false }: Circu
     const start = performance.now()
 
     const tick = (now: number) => {
-      const elapsed = (now - start) % TRAVEL_DURATION
-      const linear = elapsed / TRAVEL_DURATION
-      const progress = reverse ? 1 - EASE(linear) : EASE(linear)
+      const sinceStart = now - start - delay
+      if (sinceStart < 0) {
+        rafRef.current = requestAnimationFrame(tick)
+        return
+      }
+      const done = !repeat && sinceStart >= duration
+      const linear = done ? 1 : (sinceStart % duration) / duration
+      const progress = reverse ? 1 - ease(linear) : ease(linear)
       const point = path.getPointAtLength(progress * pathLength)
       headGroup.setAttribute('transform', `translate(${point.x} ${point.y})`)
-      rafRef.current = requestAnimationFrame(tick)
+      headGroup.setAttribute('visibility', 'visible')
+      if (!done) rafRef.current = requestAnimationFrame(tick)
     }
 
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [pathLength, pulseKey, reverse])
+  }, [pathLength, pulseKey, reverse, delay, duration, repeat, ease])
 
   const blurHead = `${filterId}-head`
 
@@ -97,8 +102,10 @@ export default function CircuitWirePulse({ d, pulseKey, reverse = false }: Circu
 
       <path ref={measureRef} d={d} fill="none" stroke="none" />
 
-      {/* Head, blurred bloom halo behind a small sharp core, exact position via getPointAtLength */}
-      <g ref={headGroupRef}>
+      {/* Head, blurred bloom halo behind a small sharp core, exact position
+       *  via getPointAtLength. Hidden until the first tick places it, so it
+       *  never flashes at the SVG origin or waits visibly during a delay. */}
+      <g ref={headGroupRef} visibility="hidden">
         <circle r={3.2} className={styles.pulseHead} style={{ filter: `url(#${blurHead})` }} />
         <circle r={1.1} className={styles.pulseHeadCore} />
       </g>
