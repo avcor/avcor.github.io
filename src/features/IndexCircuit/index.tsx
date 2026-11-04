@@ -10,11 +10,7 @@ import {
   CIRCUIT_VIEWBOX,
   CIRCUIT_WIRES,
 } from './circuitData'
-import {
-  CENTER_PULSE_ROUTES,
-  useCircuitHighlight,
-  type HoveredNode,
-} from '../../hooks/useCircuitHighlight'
+import { useCircuitHighlight, type HoveredNode } from '../../hooks/useCircuitHighlight'
 import { useCaseStudyOverlay } from '../../hooks/useCaseStudyOverlay'
 import pcb from '../../assets/pcb.png'
 import styles from './IndexCircuit.module.css'
@@ -41,13 +37,8 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
 ) {
   const { open } = useCaseStudyOverlay()
   const [hovered, setHovered] = useState<HoveredNode>(null)
-  const {
-    highlightedWireIds,
-    pulsePath,
-    litWireLeafIds,
-    highlightedLeafIds,
-    highlightedDomainIds,
-  } = useCircuitHighlight(hovered)
+  const { highlightedWireIds, pulseRoutes, litWireLeafIds, highlightedLeafIds } =
+    useCircuitHighlight(hovered)
 
   return (
     <div className={styles.board} style={style} ref={ref}>
@@ -74,22 +65,22 @@ const IndexCircuit = forwardRef<HTMLDivElement, IndexCircuitProps>(function Inde
           }
         />
 
-        {hovered && pulsePath && (
-          <CircuitWirePulse d={pulsePath} pulseKey={`${hovered.type}-${hovered.id}`} />
-        )}
-
-        {/* Center-chip hover, current flows outward from the hub, one
-         *  pulse per domain route, each reaching its leaf nodes */}
-        {hovered?.type === 'center' &&
-          CENTER_PULSE_ROUTES.map((route) => (
-            <CircuitWirePulse key={route.id} d={route.d} pulseKey={`center-${route.id}`} reverse />
+        {/* Current always flows outward from the hub: one pulse per lit
+         *  leaf, center chip to domain chip to leaf, on every hover type */}
+        {hovered &&
+          pulseRoutes.map((route) => (
+            <CircuitWirePulse
+              key={route.id}
+              d={route.d}
+              pulseKey={`${hovered.type}-${hovered.id}-${route.id}`}
+              reverse
+            />
           ))}
 
         {CIRCUIT_DOMAINS.map((domain) => (
           <CircuitDomainChip
             key={domain.id}
             domain={domain}
-            isHighlighted={highlightedDomainIds.has(domain.id)}
             onHoverChange={(isHovered) =>
               setHovered(isHovered ? { id: domain.id, type: 'domain' } : null)
             }
