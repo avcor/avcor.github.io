@@ -94,10 +94,13 @@
 }
 
 /* The glass surface carries the pill; the slot only places it. */
+/* Mobile first: the two-part hint is too wide to share the bottom edge
+   with the zoom controls on a narrow map, so it sits just above them
+   (controls are 40px tall at 10px from the bottom) */
 .hintSlot {
   position: absolute;
   left: 50%;
-  bottom: 10px;
+  bottom: 58px;
   transform: translateX(-50%);
   z-index: 4;
 }
@@ -111,10 +114,28 @@
   color: var(--color-text-primary-a85);
   font-size: 0.82rem;
   font-weight: 500;
+  white-space: nowrap;
 }
 
-.hint svg {
+/* Mobile first: text only, so the two-part hint fits narrow maps */
+.hintIcon {
+  display: none;
   color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.hintSeparator {
+  color: var(--color-text-primary-a40);
+}
+
+@media (min-width: 640px) {
+  .hintSlot {
+    bottom: 10px;
+  }
+
+  .hintIcon {
+    display: block;
+  }
 }
 
 .svg {

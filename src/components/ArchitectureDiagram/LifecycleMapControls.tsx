@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { MousePointerClick, Minus, Plus, RotateCcw } from 'lucide-react'
+import { Hand, MousePointerClick, Minus, Plus, RotateCcw } from 'lucide-react'
+import { useCanHover } from '../../hooks/useCanHover'
 import GlassSurface from '../GlassSurface'
 import styles from './LifecycleMap.module.css'
 
@@ -14,7 +15,8 @@ interface LifecycleMapControlsProps {
 
 const easeOut = [0.16, 1, 0.3, 1] as const
 
-/** Zoom buttons plus the "drag to pan" hint overlaid on a lifecycle map. */
+/** Zoom buttons plus the "click a node / drag to pan" hint overlaid on a
+ *  lifecycle map. */
 export default function LifecycleMapControls({
   isZoomed,
   canZoomIn,
@@ -23,6 +25,8 @@ export default function LifecycleMapControls({
   zoomOut,
   reset,
 }: LifecycleMapControlsProps) {
+  const canHover = useCanHover()
+
   return (
     <>
       <motion.div
@@ -75,7 +79,10 @@ export default function LifecycleMapControls({
       >
         <GlassSurface>
           <div className={styles.hint}>
-            <MousePointerClick size={16} strokeWidth={2} />
+            <MousePointerClick size={16} strokeWidth={2} className={styles.hintIcon} />
+            {canHover ? 'Click' : 'Tap'} a node for details
+            <span className={styles.hintSeparator} aria-hidden="true">·</span>
+            <Hand size={16} strokeWidth={2} className={styles.hintIcon} />
             Drag to pan
           </div>
         </GlassSurface>
