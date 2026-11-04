@@ -113,6 +113,26 @@
   stroke: var(--color-primary);
 }
 
+/* Power-on current trail (CircuitPowerSurge), brighter than the hover
+   glow so the one-time sweep reads clearly */
+.surgeHalo,
+.surgeCore {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-linecap: round;
+}
+
+.surgeHalo {
+  stroke-width: 4;
+  opacity: 0.35;
+  filter: blur(2px);
+}
+
+.surgeCore {
+  stroke-width: 1.2;
+  opacity: 0.95;
+}
+
 /* Blueprint text, sizes are in SVG viewBox units, scale with the board */
 .text {
   fill: var(--color-text-primary);

@@ -206,6 +206,18 @@ export const CIRCUIT_CASE_STUDIES: CircuitCaseStudy[] = [
   },
 ]
 
+/** Leaf nodes wired to open a details sheet. */
+export const OPENABLE_CASE_STUDY_IDS = new Set([
+  'flutter-integration',
+  'logging-system',
+  'ml-kit-liveness',
+  'app-security',
+  'android-optimization',
+  'ecg-background-sync',
+  'medical-chart-optimization',
+  'payment-experience',
+])
+
 /**
  * Horizontal position of the "Platform Optimization" accent line, as a fraction
  * of the circuit's viewBox width. Used to align the left-bleed pcb image so it
@@ -274,4 +286,21 @@ export const CIRCUIT_CENTER_CARD = {
   /** Outer framing box around the card, verbatim from the blueprint,
    *  carries the outward light-escape glow while the board is lit. */
   outerRect: { x: 321.5, y: 198.5, width: 90, height: 99, rx: 5.5 },
+}
+
+/** The click demo: which leaf it presses and where, in viewBox units. Payment Experience sits mid-right with open board above
+ *  it, so the label never covers another pill. */
+const CLICK_HINT_LEAF_ID = 'payment-experience'
+const clickHintText = CIRCUIT_CASE_STUDIES.find((s) => s.id === CLICK_HINT_LEAF_ID)?.text ?? {
+  x: 0,
+  y: 0,
+}
+
+export const CIRCUIT_CLICK_HINT = {
+  leafId: CLICK_HINT_LEAF_ID,
+  /** Ripple center: past the end of the label text, inside the pill's
+   *  right edge, so the ripple never hides the words */
+  clickAt: { x: clickHintText.x + 36, y: clickHintText.y + 4 },
+  /** Label's bottom-center, a little above the pill's top edge */
+  labelAt: { x: clickHintText.x, y: clickHintText.y - 18 },
 }

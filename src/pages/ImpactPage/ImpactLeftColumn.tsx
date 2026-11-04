@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { revealOnScroll } from '../../utils/motion'
 import styles from './ImpactLeftColumn.module.css'
 
 export default function ImpactLeftColumn() {
@@ -22,22 +23,12 @@ export default function ImpactLeftColumn() {
 
       {/* ── Top text block ── */}
       <div className={styles.textBlock}>
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.1 }}
-          className={styles.label}
-        >
+        <motion.div {...revealOnScroll(0.1, { y: 12 })} className={styles.label}>
           <span className={styles.labelDot} />
           <span className={styles.labelText}>Impact at a glance</span>
         </motion.div>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.2 }}
-          className={styles.heading}
-        >
+        <motion.h2 {...revealOnScroll(0.2, { y: 18 })} className={styles.heading}>
           <span className={styles.headingLine}>Engineering</span>
           <span className={styles.headingLine}>decisions that</span>
           <span className={styles.headingLine}>
@@ -46,12 +37,7 @@ export default function ImpactLeftColumn() {
           </span>
         </motion.h2>
 
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.35 }}
-          className={styles.description}
-        >
+        <motion.p {...revealOnScroll(0.35, { y: 12 })} className={styles.description}>
           Metrics that reflect performance,
           <br />
           productivity and trust at scale.

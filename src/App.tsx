@@ -1,3 +1,4 @@
+import { MotionConfig } from 'framer-motion'
 import SiteHeader from './components/SiteHeader'
 import Home from './pages/Home'
 import ImpactPage from './pages/ImpactPage'
@@ -11,16 +12,19 @@ export default function App() {
   useAnalyticsPageView()
 
   return (
-    <CaseStudyOverlayProvider>
-      <SiteHeader />
-      <Home />
-      <ImpactPage />
-      <IndexPage />
-      <ContactPage />
+    /* Visitors with reduced motion get fades only, no movement */
+    <MotionConfig reducedMotion="user">
+      <CaseStudyOverlayProvider>
+        <SiteHeader />
+        <Home />
+        <ImpactPage />
+        <IndexPage />
+        <ContactPage />
 
-      {/* Case study details are no longer a scroll section, they slide up as a
-          sheet when a leaf node is selected on the index circuit. */}
-      <CaseStudyOverlay />
-    </CaseStudyOverlayProvider>
+        {/* Case study details are no longer a scroll section, they slide up as a
+            sheet when a leaf node is selected on the index circuit. */}
+        <CaseStudyOverlay />
+      </CaseStudyOverlayProvider>
+    </MotionConfig>
   )
 }
